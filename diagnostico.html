@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico NBF | Discovery MAX</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0A0A;
+  --panel: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.1);
+  --orange: #F27D26;
+  --green: #00FF00;
+  --text: #F5F2ED;
+  --muted: #888;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
+}
+.container { max-width: 900px; margin: 0 auto; }
+header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+header h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, var(--orange), var(--green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+header p { color: var(--muted); font-size: 14px; }
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.btn {
+  background: var(--orange);
+  color: #000;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(242,125,38,0.3); }
+.btn.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.btn.secondary:hover { background: rgba(255,255,255,0.1); }
+.input {
+  width: 100%;
+  padding: 12px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 16px;
+  margin: 10px 0;
+}
+.input:focus { outline: none; border-color: var(--orange); }
+.tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  margin-right: 8px;
+}
+.tag.spanish { background: rgba(242,125,38,0.2); color: var(--orange); }
+.tag.english { background: rgba(0,255,0,0.2); color: var(--green); }
+.feedback {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  display: none;
+}
+.feedback.correct { background: rgba(0,255,0,0.1); border-left: 3px solid var(--green); }
+.feedback.error { background: rgba(231,76,60,0.1); border-left: 3px solid #E74C3C; }
+.recorder {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+.rec-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.rec-btn.record { background: #E74C3C; color: white; }
+.rec-btn.stop { background: #333; color: white; display: none; }
+.progress { height: 4px; background: #222; border-radius: 2px; margin: 20px 0; overflow: hidden; }
+.progress-bar { height: 100%; background: var(--orange); width: 0%; transition: width 0.3s; }
+.results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+.stat { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; text-align: center; }
+.stat .value { font-size: 24px; font-weight: 700; color: var(--orange); }
+.stat .label { font-size: 12px; color: var(--muted); margin-top: 5px; }
+.share-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+.share-btn {
+  flex: 1; min-width: 120px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+}
+.share-btn.tw { background: #1DA1F2; }
+.share-btn.fb { background: #4267B2; }
+.share-btn.wa { background: #25D366; }
+.hidden { display: none; }
+@media (max-width: 600px) {
+  header h1 { font-size: 22px; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🧠 Diagnóstico de Filtro Cognitivo NBF</h1>
+    <p>"No medimos tu nivel. Medimos cuánto filtra tu cerebro en español."</p>
+    <p style="font-size:12px; margin-top:8px; color:var(--muted);">Basado en la investigación: "La Ilusión de los Exámenes de Nivelación" | Toño Vicas</p>
+  </header>
+
+  <div id="intro-screen" class="card">
+    <h3 style="margin-bottom:15px;">📋 Instrucciones</h3>
+    <ul style="padding-left:20px; color:var(--muted); font-size:14px; line-height:1.8;">
+      <li>Leerás una idea en <strong>español coloquial</strong> (como la piensas internamente).</li>
+      <li>Escribe tu traducción al inglés <strong>sin pensar demasiado</strong> (queremos ver tu primera reacción cerebral).</li>
+      <li>Opcional: Graba tu voz leyéndola para autoevaluación NBF.</li>
+      <li>Al finalizar, recibirás tu <strong>Perfil de Filtro Cognitivo</strong> y recomendación de reingeniería.</li>
+    </ul>
+    <button class="btn" onclick="startQuiz()" style="width:100%; margin-top:20px;">🚀 Iniciar Diagnóstico</button>
+  </div>
+
+  <div id="quiz-screen" class="hidden">
+    <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+    <div class="card" id="question-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <span class="tag spanish">🇪 Pensamiento Hispano</span>
+        <span id="q-counter" style="font-size:12px; color:var(--muted);">1 / 8</span>
+      </div>
+      <h2 id="q-prompt" style="font-size:20px; margin-bottom:15px;"></h2>
+      
+      <textarea id="user-input" class="input" rows="2" placeholder="Escribe tu respuesta en inglés..."></textarea>
+      
+      <div class="recorder">
+        <button class="rec-btn record" id="rec-btn" onclick="toggleRecord()">🎤</button>
+        <span id="rec-status" style="font-size:12px; color:var(--muted);">Graba tu respuesta (opcional)</span>
+        <audio id="rec-playback" controls style="display:none; height:32px; width:200px;"></audio>
+      </div>
+
+      <button class="btn" id="submit-btn" onclick="submitAnswer()">✅ Verificar Estructura</button>
+      
+      <div id="feedback-box" class="feedback"></div>
+      
+      <button class="btn secondary hidden" id="next-btn" onclick="nextQuestion()" style="width:100%; margin-top:15px;">Siguiente Pregunta →</button>
+    </div>
+  </div>
+
+  <div id="results-screen" class="hidden">
+    <div class="card" style="text-align:center;">
+      <h2 style="color:var(--orange); margin-bottom:10px;">📊 Tu Perfil Cognitivo NBF</h2>
+      <p style="color:var(--muted); margin-bottom:20px;">Basado en tu patrón de respuestas automáticas</p>
+      
+      <div class="results-grid">
+        <div class="stat"><div class="value" id="score-val">0%</div><div class="label">Automatización</div></div>
+        <div class="stat"><div class="value" id="filter-val">-</div><div class="label">Filtro Dominante</div></div>
+        <div class="stat"><div class="value" id="time-val">0s</div><div class="label">Tiempo Promedio</div></div>
+      </div>
+
+      <div id="nbf-recommendation" class="card" style="background:rgba(242,125,38,0.1); border-left:3px solid var(--orange); text-align:left; margin:20px 0;"></div>
+
+      <h4 style="margin:20px 0 10px;">🔗 Comparte tu diagnóstico</h4>
+      <div class="share-btns">
+        <button class="share-btn tw" onclick="share('tw')">🐦 Twitter</button>
+        <button class="share-btn fb" onclick="share('fb')">📘 Facebook</button>
+        <button class="share-btn wa" onclick="share('wa')">💬 WhatsApp</button>
+      </div>
+      <button class="btn secondary" onclick="location.reload()" style="width:100%; margin-top:15px;">🔄 Repetir Diagnóstico</button>
+    </div>
+  </div>
+
+  <footer style="text-align:center; margin-top:40px; color:var(--muted); font-size:12px;">
+    © 2026 Discovery MAX Neuroeducation | Método NBF | Toño Vicas
+  </footer>
+</div>
+
+<script>
+// BASE DE DATOS DE PREGUNTAS NBF
+const questions = [
+  {
+    prompt: "Es importante estudiar.",
+    correct: ["it is important to study", "it's important to study"],
+    filter: "subject_omission",
+    nbf: "❌ Filtro: Omisión de Sujeto. Tu cerebro hispano asume el sujeto tácito. En inglés, el pronombre es el 'botón de PLAY' que activa la estructura. ✅ Correcto: 'It is important...'"
+  },
+  {
+    prompt: "¿Te gusta el café?",
+    correct: ["do you like coffee", "do you like coffee?"],
+    filter: "auxiliary_missing",
+    nbf: "❌ Filtro: Auxiliar Ausente. En español preguntas solo con entonación. En inglés necesitas 'Do/Does' para ensamblar la pregunta. ✅ Correcto: 'Do you like...?'"
+  },
+  {
+    prompt: "Ella trabaja en una oficina.",
+    correct: ["she works in an office", "she works in a office"],
+    filter: "third_person",
+    nbf: "❌ Filtro: 3ra Persona (-s). Tu cerebro no automatiza la concordancia morfológica. En inglés, he/she/it exige la marca '-s'. ✅ Correcto: 'She works...'"
+  },
+  {
+    prompt: "No tengo dinero.",
+    correct: ["i don't have money", "i do not have money"],
+    filter: "auxiliary_missing",
+    nbf: "❌ Filtro: Negación Directa. En español niegas con 'no' + verbo. En inglés el auxiliar 'don't' lleva la negación, no el verbo. ✅ Correcto: 'I don't have...'"
+  },
+  {
+    prompt: "Me gusta el café.",
+    correct: ["i like coffee"],
+    filter: "literal_translation",
+    nbf: "❌ Filtro: Traducción Literal. 'Me gusta' se traduce como 'I like', no 'Me likes'. El inglés prioriza Sujeto + Verbo, no objeto + verbo. ✅ Correcto: 'I like coffee.'"
+  },
+  {
+    prompt: "Necesito ir al banco.",
+    correct: ["i need to go to the bank", "i need to go to bank"],
+    filter: "preposition_error",
+    nbf: "❌ Filtro: Activación sin 'to'. En inglés, 'go' necesita 'to' para convertirse en función verbal. Sin 'to', la estructura se cae. ✅ Correcto: 'I need to go to...'"
+  },
+  {
+    prompt: "¿Dónde vives?",
+    correct: ["where do you live", "where do you live?"],
+    filter: "auxiliary_missing",
+    nbf: "❌ Filtro: Pregunta sin Auxiliar. 'Where' no activa el verbo por sí solo. Necesitas 'do' para ensamblar la pregunta. ✅ Correcto: 'Where do you live?'"
+  },
+  {
+    prompt: "Él no come carne.",
+    correct: ["he doesn't eat meat", "he does not eat meat"],
+    filter: "third_person",
+    nbf: "❌ Filtro: Doble Marca. Usas 'doesn't' (ya lleva la 3ra persona) + 'eat' (forma base). No digas 'he doesn't eats'. ✅ Correcto: 'He doesn't eat...'"
+  }
+];
+
+let currentQ = 0;
+let answers = [];
+let startTime = Date.now();
+let mediaRecorder;
+let audioChunks = [];
+
+function startQuiz() {
+  document.getElementById('intro-screen').classList.add('hidden');
+  document.getElementById('quiz-screen').classList.remove('hidden');
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const q = questions[currentQ];
+  document.getElementById('q-prompt').textContent = `"${q.prompt}"`;
+  document.getElementById('q-counter').textContent = `${currentQ + 1} / ${questions.length}`;
+  document.getElementById('progress-bar').style.width = `${((currentQ) / questions.length) * 100}%`;
+  document.getElementById('user-input').value = '';
+  document.getElementById('feedback-box').style.display = 'none';
+  document.getElementById('feedback-box').className = 'feedback';
+  document.getElementById('submit-btn').classList.remove('hidden');
+  document.getElementById('next-btn').classList.add('hidden');
+  document.getElementById('rec-playback').style.display = 'none';
+  document.getElementById('rec-status').textContent = 'Graba tu respuesta (opcional)';
+  document.getElementById('rec-btn').classList.remove('stop');
+  document.getElementById('rec-btn').classList.add('record');
+  document.getElementById('user-input').focus();
+}
+
+function submitAnswer() {
+  const userText = document.getElementById('user-input').value.trim().toLowerCase().replace(/[.,!?]/g, '');
+  if (!userText) return alert('⚠️ Escribe una respuesta antes de verificar.');
+  
+  const q = questions[currentQ];
+  const isCorrect = q.correct.some(c => userText.includes(c.replace(/[.,!?]/g, '')));
+  
+  answers.push({ q: currentQ, correct: isCorrect, text: userText, filter: q.filter });
+  
+  const fb = document.getElementById('feedback-box');
+  fb.style.display = 'block';
+  fb.className = isCorrect ? 'feedback correct' : 'feedback error';
+  fb.innerHTML = isCorrect ? 
+    `✅ <strong>Estructura NBF Correcta.</strong><br>${q.nbf.split('✅')[1]}` : 
+    `❌ <strong>Filtro Detectado:</strong><br>${q.nbf}`;
+  
+  document.getElementById('submit-btn').classList.add('hidden');
+  document.getElementById('next-btn').classList.remove('hidden');
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ < questions.length) {
+    loadQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  document.getElementById('quiz-screen').classList.add('hidden');
+  document.getElementById('results-screen').classList.remove('hidden');
+  
+  const correctCount = answers.filter(a => a.correct).length;
+  const score = Math.round((correctCount / questions.length) * 100);
+  const time = Math.round((Date.now() - startTime) / 1000);
+  
+  // Determinar filtro dominante
+  const filters = answers.filter(a => !a.correct).map(a => a.filter);
+  const filterCounts = {};
+  filters.forEach(f => filterCounts[f] = (filterCounts[f] || 0) + 1);
+  const dominantFilter = Object.keys(filterCounts).reduce((a, b) => filterCounts[a] > filterCounts[b] ? a : b, 'balanced');
+  
+  const filterNames = {
+    subject_omission: "Omisión de Sujeto",
+    auxiliary_missing: "Auxiliares/Modales",
+    third_person: "3ra Persona (-s)",
+    literal_translation: "Traducción Literal",
+    preposition_error: "Activación Funcional",
+    balanced: "Equilibrado"
+  };
+  
+  document.getElementById('score-val').textContent = score + '%';
+  document.getElementById('filter-val').textContent = filterNames[dominantFilter];
+  document.getElementById('time-val').textContent = time + 's';
+  
+  // Recomendación NBF
+  let rec = "";
+  if (score < 40) rec = "🔴 <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'autoengaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural (Pronombres + Auxiliares) antes de avanzar.";
+  else if (score < 70) rec = "🟡 <strong>Fase 2: Reensamblaje Cognitivo.</strong> Tienes conocimiento fragmentado. Cometes errores sistemáticos porque tu cerebro busca 'navajas suizas' (verbos compactos) en lugar de 'piezas Lego'. Enfócate en automatizar los 7 Elementos Determinantes.";
+  else rec = "🟢 <strong>Fase 3: Integración Profunda.</strong> Tu estructura es sólida, pero aún traduces mentalmente en tiempo real. El siguiente paso es la <strong>Producción Espontánea</strong>: eliminar el 'traductor interno' mediante repetición espaciada y audio therapy.";
+  
+  document.getElementById('nbf-recommendation').innerHTML = `<strong>💡 Tu Ruta NBF:</strong><br>${rec}`;
+}
+
+// AUDIO RECORDING (Client-side only)
+async function toggleRecord() {
+  const btn = document.getElementById('rec-btn');
+  const status = document.getElementById('rec-status');
+  const playback = document.getElementById('rec-playback');
+  
+  if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      audioChunks = [];
+      mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        playback.src = audioUrl;
+        playback.style.display = 'block';
+        status.textContent = '✅ Grabación lista. Escúchate y verifica tu estructura.';
+      };
+      mediaRecorder.start();
+      btn.classList.remove('record');
+      btn.classList.add('stop');
+      btn.textContent = '⏹';
+      status.textContent = '🔴 Grabando... Habla claro.';
+    } catch (err) {
+      alert('⚠️ Permiso de micrófono denegado o no soportado.');
+    }
+  } else {
+    mediaRecorder.stop();
+    btn.classList.remove('stop');
+    btn.classList.add('record');
+    btn.textContent = '🎤';
+  }
+}
+
+// SHARE
+function share(platform) {
+  const score = document.getElementById('score-val').textContent;
+  const filter = document.getElementById('filter-val').textContent;
+  const text = `Acabo de hacer el Diagnóstico NBF de @DiscoveryMAX. Mi automatización: ${score}. Filtro dominante: ${filter}. ¿Y tú? #MetodoNBF #AprendeIngles #Neurociencia`;
+  const url = window.location.href;
+  
+  const urls = {
+    tw: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
+    fb: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+    wa: `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`
+  };
+  window.open(urls[platform], '_blank', 'width=600,height=400');
+}
+
+// ENTER KEY TO SUBMIT
+document.addEventListener('keypress', e => {
+  if (e.key === 'Enter' && !e.shiftKey && document.getElementById('quiz-screen').classList.contains('hidden') === false) {
+    e.preventDefault();
+    if (!document.getElementById('submit-btn').classList.contains('hidden')) submitAnswer();
+    else if (!document.getElementById('next-btn').classList.contains('hidden')) nextQuestion();
+  }
+});
+</script>
+</body>
+</html>
