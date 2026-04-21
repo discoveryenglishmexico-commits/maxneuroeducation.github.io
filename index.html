@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discovery MAX - Podcast Neurocognitivo NBF</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-orange: #F27D26;
+      --brand-green: #00FF00;
+      --brand-dark: #0A0A0A;
+      --brand-paper: #F5F2ED;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--brand-dark);
+      color: var(--brand-paper);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    #podcast-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .podcast-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--brand-orange);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .brand-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+    .brand-text p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      opacity: 0.5;
+      margin-top: 4px;
+    }
+    .methodology-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      color: var(--brand-paper);
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .methodology-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .podcast-main {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    @media (min-width: 1024px) {
+      .podcast-main {
+        grid-template-columns: 5fr 7fr;
+      }
+    }
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    .player-column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .host-card {
+      padding: 40px;
+      text-align: center;
+    }
+    .host-avatar-container {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 24px;
+    }
+    .host-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255, 255, 255, 0.05);
+      transition: transform 0.5s ease;
+    }
+    .host-avatar:hover {
+      transform: scale(1.05);
+    }
+    .host-mic-badge {
+      position: absolute;
+      bottom: -8px;
+      right: -8px;
+      background: var(--brand-orange);
+      color: white;
+      padding: 12px;
+      border-radius: 50%;
+      font-size: 18px;
+      box-shadow: 0 4px 20px rgba(242, 125, 38, 0.4);
+    }
+    .host-name {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .host-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--brand-orange);
+    }
+    .audio-visualizer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      height: 60px;
+      margin-top: 30px;
+    }
+    .visualizer-bar {
+      width: 4px;
+      background: var(--brand-orange);
+      border-radius: 2px;
+      animation: none;
+    }
+    .visualizer-bar.active {
+      animation: visualize 0.8s ease-in-out infinite;
+    }
+    @keyframes visualize {
+      0%, 100% { height: 4px; }
+      20% { height: 24px; }
+      40% { height: 8px; }
+      60% { height: 32px; }
+      80% { height: 12px; }
+    }
+    .player-controls {
+      padding: 24px;
+    }
+    .control-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .control-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      opacity: 0.5;
+    }
+    .progress-bar-container {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--brand-orange);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    .control-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .control-btn {
+      background: transparent;
+      border: none;
+      color: var(--brand-paper);
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .control-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .play-btn {
+      width: 64px;
+      height: 64px;
+      background: var(--brand-paper);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .play-btn:hover {
+      transform: scale(1.05);
+      background: white;
+    }
+    .play-icon {
+      font-size: 24px;
+      color: var(--brand-dark);
+    }
+    .transcript-column {
+      max-height: 600px;
+      display: flex;
+      flex-direction: column;
+    }
+    .transcript-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .transcript-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      opacity: 0.5;
+    }
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--brand-green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .live-text {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--brand-green);
+      letter-spacing: 1px;
+    }
+    .transcript-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 40px;
+      scroll-behavior: smooth;
+    }
+    .transcript-content::-webkit-scrollbar {
+      width: 4px;
+    }
+    .transcript-content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .transcript-content::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+    }
+    .transcript-segment {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 32px;
+      opacity: 0.4;
+      transition: all 0.5s ease;
+    }
+    .transcript-segment.active {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+    .segment-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .segment-host {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 8px;
+      border: 1px solid;
+      border-radius: 4px;
+    }
+    .segment-host.host1 {
+      border-color: var(--brand-orange);
+      color: var(--brand-orange);
+    }
+    .segment-host.host2 {
+      border-color: var(--brand-green);
+      color: var(--brand-green);
+    }
+    .segment-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      opacity: 0.3;
+    }
+    .segment-text {
+      font-size: 18px;
+      line-height: 1.8;
+      font-weight: 400;
+    }
+    .transcript-segment.active .segment-text {
+      font-weight: 500;
+    }
+    .methodology-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .methodology-overlay.active {
+      display: flex;
+    }
+    .methodology-panel {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 48px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .close-methodology {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: transparent;
+      border: none;
+      color: var(--brand-paper);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    .close-methodology:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .methodology-header {
+      margin-bottom: 48px;
+    }
+    .methodology-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 36px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .methodology-header p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--brand-orange);
+    }
+    .methodology-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    @media (min-width: 768px) {
+      .methodology-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .methodology-section h3 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 20px;
+      margin-bottom: 24px;
+    }
+    .methodology-icon {
+      font-size: 24px;
+    }
+    .system-card {
+      padding: 16px;
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      margin-bottom: 16px;
+    }
+    .system-card h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .system-card.host1 h4 {
+      color: var(--brand-orange);
+    }
+    .system-card.host2 h4 {
+      color: var(--brand-green);
+    }
+    .system-card p {
+      font-size: 13px;
+      opacity: 0.7;
+      line-height: 1.6;
+    }
+    .elements-list {
+      list-style: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.8;
+    }
+    .elements-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .element-number {
+      color: var(--brand-orange);
+      font-weight: 700;
+    }
+    .pronoun-card {
+      margin-top: 48px;
+      padding: 24px;
+      background: rgba(242, 125, 38, 0.1);
+      border: 1px solid rgba(242, 125, 38, 0.2);
+      border-radius: 24px;
+    }
+    .pronoun-card h4 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+    .pronoun-card p {
+      font-size: 13px;
+      font-style: italic;
+      opacity: 0.8;
+      line-height: 1.8;
+    }
+    .podcast-footer {
+      margin-top: 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 0.3;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 0 16px;
+    }
+    @media (max-width: 768px) {
+      .podcast-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .host-card {
+        padding: 24px;
+      }
+      .host-avatar-container {
+        width: 140px;
+        height: 140px;
+      }
+      .transcript-content {
+        padding: 24px;
+      }
+      .methodology-panel {
+        padding: 24px;
+      }
+      .methodology-header h2 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="podcast-container">
+  
+  <!-- HEADER -->
+  <header class="podcast-header">
+    <div class="brand-logo">
+      <div class="brand-icon">⚡</div>
+      <div class="brand-text">
+        <h1>Discovery Max</h1>
+        <p>NeuroEducation Series</p>
+      </div>
+    </div>
+    <button class="methodology-btn" onclick="toggleMethodology()">
+      <span>ℹ️</span>
+      <span>Metodología NBF</span>
+    </button>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="podcast-main">
+    
+    <!-- COLUMNA IZQUIERDA: PLAYER -->
+    <div class="player-column">
+      <div class="glass-panel host-card">
+        <div class="host-avatar-container">
+          <img id="host-avatar" src="https://picsum.photos/seed/host1/200/200" alt="Host" class="host-avatar">
+          <div class="host-mic-badge">🎤</div>
+        </div>
+        <h2 id="host-name" class="host-name">Analista A</h2>
+        <p id="host-role" class="host-role">Neuro-analista Principal</p>
+        
+        <!-- VISUALIZADOR DE AUDIO -->
+        <div class="audio-visualizer" id="audio-visualizer">
+          <!-- Las barras se generan con JavaScript -->
+        </div>
+      </div>
+
+      <div class="glass-panel player-controls">
+        <div class="control-header">
+          <span class="control-label">Capítulo 04</span>
+          <span class="control-label">Sistemas Operativos</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="control-buttons">
+          <button class="control-btn" onclick="resetPlayback()" title="Reiniciar">
+            <span>🔄</span>
+          </button>
+          <div style="display: flex; gap: 24px; align-items: center;">
+            <button class="control-btn" onclick="previousSegment()" title="Anterior">
+              <span>⏮️</span>
+            </button>
+            <button class="play-btn" id="play-btn" onclick="togglePlay()" title="Reproducir/Pausar">
+              <span class="play-icon" id="play-icon">▶️</span>
+            </button>
+            <button class="control-btn" onclick="nextSegment()" title="Siguiente">
+              <span>⏭️</span>
+            </button>
+          </div>
+          <button class="control-btn" title="Volumen">
+            <span>🔊</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: TRANSCRIPCIÓN -->
+    <div class="glass-panel transcript-column">
+      <div class="transcript-header">
+        <h3 class="transcript-title">Transcripción en Vivo</h3>
+        <div class="live-indicator">
+          <div class="live-dot"></div>
+          <div class="live-dot" style="animation-delay: 0.2s;"></div>
+          <div class="live-dot" style="animation-delay: 0.4s;"></div>
+          <span class="live-text">LIVE</span>
+        </div>
+      </div>
+      <div class="transcript-content" id="transcript-content">
+        <!-- Los segmentos se generan con JavaScript -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="podcast-footer">
+    <span>© 2026 Discovery Max / Toño Vicas</span>
+    <span>Divulgación Científica Neurocognitiva</span>
+  </footer>
+
+  <!-- OVERLAY DE METODOLOGÍA -->
+  <div class="methodology-overlay" id="methodology-overlay">
+    <div class="methodology-panel">
+      <button class="close-methodology" onclick="toggleMethodology()">✕</button>
+      
+      <div class="methodology-header">
+        <h2>Metodología NBF</h2>
+        <p>Neuro-Functional Blueprint</p>
+      </div>
+
+      <div class="methodology-grid">
+        <div class="methodology-section">
+          <h3><span class="methodology-icon">🧠</span> El Choque de Sistemas</h3>
+          <div class="system-card host1">
+            <h4>Español: Navaja Suiza</h4>
+            <p>Basado en verbos compactos que cargan toda la información (tiempo, persona, acción).</p>
+          </div>
+          <div class="system-card host2">
+            <h4>Inglés: Sistema Lego</h4>
+            <p>Basado en sustantivos que se activan y ensamblan pieza por pieza.</p>
+          </div>
+        </div>
+
+        <div class="methodology-section">
+          <h3><span class="methodology-icon">📚</span> 7 Elementos Determinantes</h3>
+          <ul class="elements-list">
+            <li><span class="element-number">01</span> Pronombres Personales (Marcadores)</li>
+            <li><span class="element-number">02</span> Sustantivos</li>
+            <li><span class="element-number">03</span> Preposiciones</li>
+            <li><span class="element-number">04</span> Adjetivos</li>
+            <li><span class="element-number">05</span> Adverbios</li>
+            <li><span class="element-number">06</span> Palabras Auxiliares</li>
+            <li><span class="element-number">07</span> Palabras Modales</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pronoun-card">
+        <h4><span>▶️</span> El Rol del Pronombre</h4>
+        <p>"En inglés, el pronombre no es solo el sujeto; es el botón de PLAY. Es la señal morfológica que le dice al cerebro que el sustantivo que sigue debe ser activado como una acción."</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// DATOS DE LA TRANSCRIPCIÓN (55 segmentos del Episodio 042)
+const TRANSCRIPT = [
+  { id: '1', host: 'Host 1', text: '¿Alguna vez, aprendiendo inglés, ha existido esa sensación de que, sin importar cuántas palabras memorices, algo fundamental simplemente no encaja?' },
+  { id: '2', host: 'Host 2', text: 'Uf, sí. Esa frustración de entenderlo en el papel, pero al momento de querer hablar, la mente se queda en blanco.' },
+  { id: '3', host: 'Host 1', text: 'Totalmente. Es casi paralizante. Es una de las experiencias más comunes y de verdad desesperantes para los que venimos del español.' },
+  { id: '4', host: 'Host 1', text: 'Pues justo de eso vamos a conversar hoy. Vamos a explorar un enfoque, la verdad, radicalmente distinto para entender la estructura del inglés, uno que desafía casi todo lo que nos enseñaron.' },
+  { id: '5', host: 'Host 2', text: 'Sí. Tenemos aquí una serie de documentos que analizan lo que llaman un choque de sistemas operativos entre el español y el inglés.' },
+  { id: '6', host: 'Host 2', text: 'Se basan en una metodología neurocognitiva, la NBF, de un investigador llamado Toño Vicas. Tan pero tan confuso para un cerebro que piensa en español. No se trata de buscar más reglas, sino de encontrar una lógica interna que, bueno, según estas fuentes, podría ser la clave para la fluidez.' },
+  { id: '7', host: 'Host 1', text: 'Y el punto de partida es una pregunta que la verdad suena muy disruptiva. ¿Y si el inglés en realidad no tuviera verbos, tal y como los conocemos nosotros?' },
+  { id: '8', host: 'Host 2', text: 'Esa es la pregunta que lo cambia todo, porque nos obliga a dejar de buscar algo que desde esta perspectiva simplemente no está ahí de la misma manera. A ver, esto hay que desempacarlo con cuidado, porque la frustración más común es pensar ¿me falta vocabulario? ¿necesito más palabras?' },
+  { id: '9', host: 'Host 1', text: 'Claro, el diagnóstico de siempre. Pero por lo que entiendo de estos textos, ese es un diagnóstico completamente erróneo. El problema no es la cantidad de palabras.' },
+  { id: '10', host: 'Host 2', text: 'Eso. Significa que el cerebro de un hablante nativo, para expresar una acción, primero busca el sustantivo exacto que define esa acción. Y solo después lo activa para que funcione como tal. Lo cual es el polo opuesto al español.' },
+  { id: '11', host: 'Host 1', text: 'Aquí nuestro cerebro está programado para buscar el verbo, que es como una navaja suiza. Si yo digo, caminamos, en esa sola palabra ya está la acción, el tiempo, la persona. Es una unidad de información completa.' },
+  { id: '12', host: 'Host 2', text: 'Precisamente. El cerebro hispano busca esa unidad compacta. El cerebro angloparlante, en cambio, busca la pieza específica.' },
+  { id: '13', host: 'Host 2', text: 'El nombre funcional de la cosa. Aquí es donde se pone muy interesante. Usemos el ejemplo que proponen las fuentes con el verbo ir.' },
+  { id: '14', host: 'Host 1', text: 'Perfecto. En español uno puede decir, hoy primero voy a pasar al súper, luego voy a la escuela por mis hijos, más tarde voy a ver a mi hermana y por la tarde fui a sacar la cita. Usamos ir para todo.' },
+  { id: '15', host: 'Host 2', text: 'Es el vehículo multipropósito por excelencia de nuestra lengua. Exacto. Pero, a ver, ¿qué tan grave es el error si uno intenta replicar eso en inglés y usa to go para todo? ¿Se entiende o es un desastre?' },
+  { id: '16', host: 'Host 1', text: 'Es un desastre comunicativo, aunque suene duro. No es que no se entienda la idea general, pero suena increíblemente antinatural, casi infantil.' },
+  { id: '17', host: 'Host 2', text: 'Ah, claro. Para pasar al súper usarían, I\'m going to stop by the store. Para ir por mis hijos, I\'m going to pick up my kids. Para ver a mi hermana, lo natural es, I\'m going to visit my sister.' },
+  { id: '18', host: 'Host 1', text: 'O sea, cada acción exige su nombre funcional específico. Exacto. Y para fui a sacar la cita, dirían, I went to make an appointment. No hay un genérico que funcione bien.' },
+  { id: '19', host: 'Host 2', text: 'Entonces, el choque es inevitable. Mientras nuestro cerebro busca la navaja suiza, el cerebro angloparlante busca, digamos, la llave hexagonal de 3 milímetros exacta. La analogía de que el inglés funciona como un Lego empieza a tener mucho sentido.' },
+  { id: '20', host: 'Host 1', text: 'La analogía del Lego es muy buena y, de hecho, va más allá. Porque en el sistema Lego, si te falta la pieza base, la plataforma, toda la estructura se derrumba.' },
+  { id: '21', host: 'Host 2', text: 'Claro. En inglés, esa pieza base es crucial. La acción no se conjuga, se ensambla. Y si todo se trata de ensamblar piezas, me imagino que la clave no es la pieza de la acción en sí, sino las otras piezas que la rodean.' },
+  { id: '22', host: 'Host 2', text: '¿Es por ahí que va esta metodología NBF? Exactamente por ahí. Si asumimos que el inglés carece de estos verbos autosuficientes que tenemos en español, la conclusión lo cambia todo. Pensar en inglés es pensar en sustantivos.' },
+  { id: '23', host: 'Host 1', text: 'Dejar de cazar el verbo. Eso. Hay que anclarse en el sustantivo. Y para poder construir significado así, la metodología se enfoca en el dominio absoluto de lo que llama los siete elementos determinantes.' },
+  { id: '24', host: 'Host 2', text: 'Esta es la verdadera columna vertebral del idioma. Siete elementos determinantes. Esto suena a que es el núcleo del método. ¿Cuáles son?' },
+  { id: '25', host: 'Host 1', text: 'La lista es muy reveladora. Son uno, pronombres personales directos. Dos, sustantivos. Tres, preposiciones. Cuatro, adjetivos. Cinco, adverbios. Y seis y siete son palabras auxiliares y palabras modales.' },
+  { id: '26', host: 'Host 2', text: 'Un momento, estoy viendo la lista y lo primero que me salta a la vista es que la palabra verbos no está ahí. Y lo segundo, palabras auxiliares, no verbos auxiliares. Las fuentes evitan deliberadamente los términos que todos aprendimos. ¿Por qué?' },
+  { id: '27', host: 'Host 1', text: 'Es que esa decisión es totalmente estratégica y neurocognitiva. Llamarle verbo a una palabra como do o will crea un caos para el hispanohablante.' },
+  { id: '28', host: 'Host 2', text: 'Claro. Nuestro cerebro espera que do funcione como hacer. Al reclasificarlas como palabras auxiliares, se les quita esa carga y se las reubica como lo que son. Herramientas de ensamblaje. Piezas de Lego.' },
+  { id: '29', host: 'Host 1', text: 'Claro. Es un cambio de etiqueta para cambiar la función percibida. De todos esos siete elementos, los documentos ponen un énfasis brutal en el primero, los pronombres personales. ¿Por qué son tan importantes?' },
+  { id: '30', host: 'Host 2', text: 'Porque aquí está el principio que derrumba la enseñanza tradicional. Según este enfoque, en inglés, el pronombre personal I, you, he, she, it no sirve principalmente para identificar quién hace la acción.' },
+  { id: '31', host: 'Host 1', text: 'Ah, no. No. Su función primordial es ser un marcador morfológico. Un marcador morfológico. Suena muy técnico. O sea, para simplificarlo, ¿cuál es su trabajo real en la frase?' },
+  { id: '32', host: 'Host 2', text: 'Su trabajo es ser el botón de play. La presencia del pronombre es la señal que le dice al cerebro que la palabra que viene después, que en esencia es un sustantivo funcional como walk o run, está siendo activada para funcionar como la acción.' },
+  { id: '33', host: 'Host 1', text: 'Es la pieza base del Lego. Exacto. Sin esa pieza no se puede construir nada. OK. Necesito un ejemplo práctico para que esto quede grabado a fuego. El caso clásico.' },
+  { id: '34', host: 'Host 2', text: 'Alguien quiere decir, ella camina sola. Y con su lógica española, omite el pronombre y dice, walk alone. ¿Qué escucha un nativo? Su cerebro no oye un verbo conjugado porque en inglés eso no existe así.' },
+  { id: '35', host: 'Host 1', text: 'Lo que escucha es, en el mejor de los casos, el sustantivo un paseo solitario, a walk alone.' },
+  { id: '36', host: 'Host 2', text: 'Ajá. O lo que es mucho más probable, una orden, un imperativo. Tú camina solo. Pasa todo el tiempo. La ausencia del pronombre she no es un errorcito gramatical. Destruye por completo la intención de la oración.' },
+  { id: '37', host: 'Host 1', text: 'O sea que la famosa regla de, en inglés siempre hay que poner el sujeto, no es un capricho. Para nada. Las fuentes lo llaman un mecanismo de supervivencia sintáctica.' },
+  { id: '38', host: 'Host 2', text: 'Es literalmente el interruptor que enciende la acción. Sin el pronombre la acción no se activa. Esto conecta directamente con el colapso de la pedagogía tradicional. El ejemplo perfecto es la palabra do.' },
+  { id: '39', host: 'Host 1', text: 'Es la pesadilla de todo el que empieza. Totalmente. A ver, describamos el escenario. Al estudiante le enseñan que drive significa manejar. Correcto. La traducción uno a uno.' },
+  { id: '40', host: 'Host 2', text: 'Entonces esa persona intenta aplicar su lógica para preguntar y con toda la lógica del mundo dice, you drive on the highway. Y claro, inmediatamente lo corrigen. Le dicen que no, que es, do you drive on the highway. Ahí está.' },
+  { id: '41', host: 'Host 1', text: 'Ahí se produce el cortocircuito. Exacto. Porque al estudiante le enseñaron que do significa hacer. Su cerebro intenta leerlo literalmente como, hacer tú manejas en la carretera. Es un absurdo.' },
+  { id: '42', host: 'Host 2', text: 'No tiene ningún sentido. Es que es una instrucción contradictoria y el caos no termina ahí. Luego viene la negación. ¿Quieres decir, no como mariscos? Y te corrigen. I do not eat seafood.' },
+  { id: '43', host: 'Host 1', text: '¿Y el pasado? El pasado. Did you eat pizza? La misma palabra eat que antes era como, ahora mágicamente es comiste.' },
+  { id: '44', host: 'Host 2', text: 'No por sí misma, sino por la presencia de estas palabras auxiliares. Palabras que a veces le dicen que significan hacer y otras que no significa nada, solo están ahí. Es una locura cognitiva.' },
+  { id: '45', host: 'Host 1', text: 'Se le pide al cerebro que acepte una contradicción sin darle una lógica. Es la prueba definitiva del sistema de ensamblaje. Claro. Entonces, la respuesta frustrante de, es que es así según el contexto, es en realidad la admisión de un fracaso pedagógico.' },
+  { id: '46', host: 'Host 2', text: 'No nos están dando el manual de instrucciones del sistema. Exacto. Le piden al aprendiz que tenga una intuición que por definición no posee. Es como pedirle que hable y que aprenda a hablar al mismo tiempo. Imposible.' },
+  { id: '47', host: 'Host 1', text: 'Bien. Hagamos una recapitulación de esto porque es mucha información. Hemos explorado este choque fundamental entre una lengua verbocéntrica como el español.' },
+  { id: '48', host: 'Host 2', text: 'El sistema de la navaja suiza. Y una lengua sustantivocéntrica como el inglés que ensambla la acción pieza por pieza. El sistema de los legos.' },
+  { id: '49', host: 'Host 1', text: 'Y si intentas usar la navaja para construir con legos, pues el resultado va a ser un desastre. Y la clave, según estas fuentes, podría estar en un cambio radical de foco. Dejar de obsesionarse con los verbos y centrarse en los siete elementos determinantes. Sí.' },
+  { id: '50', host: 'Host 2', text: 'Entendiendo el rol del pronombre no solo como sujeto, sino como el activador que enciende la máquina. Y el objetivo ya no es memorizar reglas arbitrarias, sino comprender que en inglés las acciones se construyen.' },
+  { id: '51', host: 'Host 1', text: 'La promesa es que entender esta lógica de ensamblaje puede ser la clave para disolver esos bloqueos y esa parálisis al hablar. Y antes de terminar, hay un último punto en los textos que me parece fascinante. Mencionan la enorme creatividad léxica del inglés.' },
+  { id: '52', host: 'Host 2', text: 'Esa capacidad de que nuevos sustantivos se conviertan fácilmente en acciones. Piensa en to Google, to Network, to Photoshop. Eso refuerza toda la teoría.' },
+  { id: '53', host: 'Host 1', text: 'No son verbos nuevos, son sustantivos, nombres de marcas que la gente empieza a activar con un pronombre y un contexto y de repente se vuelven acciones funcionales. Justo a eso iba.' },
+  { id: '54', host: 'Host 2', text: 'Si el inglés está constantemente creando acciones a partir de nuevos sustantivos, ¿qué nos dice eso sobre la cultura que lo moldea? Me pregunto si no será el reflejo de un enfoque sumamente pragmático, funcional, donde lo que importa no es la acción en abstracto, sino el objeto o el concepto específico que se está activando en el mundo.' },
+  { id: '55', host: 'Host 1', text: 'Una pregunta para seguir explorando.' }
+];
+
+// CONFIGURACIÓN DE HOSTS
+const HOSTS = {
+  host1: {
+    name: 'Analista A',
+    role: 'Neuro-analista Principal',
+    color: '#F27D26',
+    avatar: 'https://picsum.photos/seed/host1/200/200'
+  },
+  host2: {
+    name: 'Analista B',
+    role: 'Estratega Cognitivo',
+    color: '#00FF00',
+    avatar: 'https://picsum.photos/seed/host2/200/200'
+  }
+};
+
+// ESTADO DEL REPRODUCTOR
+let currentIndex = 0;
+let isPlaying = false;
+let playbackTimeout = null;
+
+// INICIALIZAR
+document.addEventListener('DOMContentLoaded', function() {
+  initVisualizer();
+  renderTranscript();
+  updatePlayerUI();
+});
+
+// INICIALIZAR VISUALIZADOR
+function initVisualizer() {
+  const visualizer = document.getElementById('audio-visualizer');
+  visualizer.innerHTML = '';
+  
+  for (let i = 0; i < 12; i++) {
+    const bar = document.createElement('div');
+    bar.className = 'visualizer-bar';
+    bar.style.animationDelay = `${i * 0.05}s`;
+    visualizer.appendChild(bar);
+  }
+}
+
+// RENDERIZAR TRANSCRIPCIÓN
+function renderTranscript() {
+  const content = document.getElementById('transcript-content');
+  content.innerHTML = '';
+  
+  TRANSCRIPT.forEach((segment, index) => {
+    const segmentEl = document.createElement('div');
+    segmentEl.className = `transcript-segment ${index === currentIndex ? 'active' : ''}`;
+    segmentEl.id = `segment-${index}`;
+    
+    const host = segment.host === 'Host 1' ? HOSTS.host1 : HOSTS.host2;
+    const time = `${String(index).padStart(2, '0')}:${String((index * 13) % 60).padStart(2, '0')}`;
+    
+    segmentEl.innerHTML = `
+      <div class="segment-meta">
+        <span class="segment-host ${segment.host === 'Host 1' ? 'host1' : 'host2'}">${host.name}</span>
+        <span class="segment-time">${time}</span>
+      </div>
+      <p class="segment-text">${segment.text}</p>
+    `;
+    
+    content.appendChild(segmentEl);
+  });
+  
+  scrollToCurrentSegment();
+}
+
+// SCROLL AL SEGMENTO ACTUAL
+function scrollToCurrentSegment() {
+  const currentSegment = document.getElementById(`segment-${currentIndex}`);
+  if (currentSegment) {
+    currentSegment.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+// ACTUALIZAR UI DEL REPRODUCTOR
+function updatePlayerUI() {
+  const currentSegment = TRANSCRIPT[currentIndex];
+  const host = currentSegment.host === 'Host 1' ? HOSTS.host1 : HOSTS.host2;
+  
+  // Actualizar host
+  document.getElementById('host-avatar').src = host.avatar;
+  document.getElementById('host-name').textContent = host.name;
+  document.getElementById('host-role').textContent = host.role;
+  document.getElementById('host-role').style.color = host.color;
+  
+  // Actualizar visualizador
+  const bars = document.querySelectorAll('.visualizer-bar');
+  bars.forEach(bar => {
+    if (isPlaying) {
+      bar.classList.add('active');
+      bar.style.backgroundColor = host.color;
+    } else {
+      bar.classList.remove('active');
+    }
+  });
+  
+  // Actualizar progreso
+  const progress = ((currentIndex + 1) / TRANSCRIPT.length) * 100;
+  document.getElementById('progress-bar').style.width = `${progress}%`;
+  
+  // Actualizar transcripción
+  document.querySelectorAll('.transcript-segment').forEach((el, index) => {
+    if (index === currentIndex) {
+      el.classList.add('active');
+    } else {
+      el.classList.remove('active');
+    }
+  });
+}
+
+// TOGGLE PLAY/PAUSE
+function togglePlay() {
+  isPlaying = !isPlaying;
+  document.getElementById('play-icon').textContent = isPlaying ? '⏸️' : '▶️';
+  
+  if (isPlaying) {
+    playSegment();
+  } else {
+    pausePlayback();
+  }
+  
+  updatePlayerUI();
+}
+
+// REPRODUCIR SEGMENTO
+function playSegment() {
+  if (currentIndex >= TRANSCRIPT.length - 1) {
+    isPlaying = false;
+    document.getElementById('play-icon').textContent = '▶️';
+    return;
+  }
+  
+  const segmentLength = TRANSCRIPT[currentIndex].text.length * 40;
+  playbackTimeout = setTimeout(() => {
+    currentIndex++;
+    updatePlayerUI();
+    scrollToCurrentSegment();
+    
+    if (isPlaying) {
+      playSegment();
+    }
+  }, Math.max(2000, Math.min(6000, segmentLength)));
+}
+
+// PAUSAR REPRODUCCIÓN
+function pausePlayback() {
+  if (playbackTimeout) {
+    clearTimeout(playbackTimeout);
+    playbackTimeout = null;
+  }
+}
+
+// REINICIAR
+function resetPlayback() {
+  pausePlayback();
+  currentIndex = 0;
+  isPlaying = false;
+  document.getElementById('play-icon').textContent = '▶️';
+  updatePlayerUI();
+}
+
+// SEGMENTO ANTERIOR
+function previousSegment() {
+  if (currentIndex > 0) {
+    pausePlayback();
+    currentIndex--;
+    updatePlayerUI();
+    scrollToCurrentSegment();
+  }
+}
+
+// SEGMENTO SIGUIENTE
+function nextSegment() {
+  if (currentIndex < TRANSCRIPT.length - 1) {
+    pausePlayback();
+    currentIndex++;
+    updatePlayerUI();
+    scrollToCurrentSegment();
+  }
+}
+
+// TOGGLE METODOLOGÍA
+function toggleMethodology() {
+  const overlay = document.getElementById('methodology-overlay');
+  overlay.classList.toggle('active');
+}
+
+// CERRAR OVERLAY AL HACER CLICK FUERA
+document.getElementById('methodology-overlay').addEventListener('click', function(e) {
+  if (e.target === this) {
+    toggleMethodology();
+  }
+});
+</script>
+
+</body>
+</html>
