@@ -1,3 +1,4 @@
+<!-- Reemplaza TODO el código anterior con este -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,7 +17,6 @@
   --muted: #888;
   --error: #E74C3C;
   --success: #27AE60;
-  --warning: #F39C12;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -94,8 +94,7 @@ header p { color: var(--muted); font-size: 14px; }
 }
 .feedback.correct { background: rgba(39,174,96,0.1); border-left-color: var(--success); color: var(--success); }
 .feedback.error { background: rgba(231,76,60,0.1); border-left-color: var(--error); color: var(--error); }
-.feedback.warning { background: rgba(243,156,18,0.1); border-left-color: var(--warning); color: var(--warning); }
-.nbf-rule {
+.nbf-explanation {
   margin-top: 10px;
   padding: 10px;
   background: rgba(0,0,0,0.2);
@@ -122,18 +121,18 @@ header p { color: var(--muted); font-size: 14px; }
   <header>
     <h1>🏆 Diagnóstico Deportivo NBF</h1>
     <p>"Sin sujeto no hay verbo. Sin estructura no hay fluidez."</p>
-    <p style="font-size:12px; margin-top:8px; color:var(--muted);">Basado en el postulado: "Los verbos en inglés no existen para el cerebro hispano" | Toño Vicas</p>
+    <p style="font-size:12px; margin-top:8px; color:var(--muted);">Experimento Comprobatorio: Teoría NBF | Toño Vicas</p>
   </header>
 
   <div id="intro-screen" class="card">
-    <h3 style="margin-bottom:15px;">📋 Instrucciones NBF</h3>
+    <h3 style="margin-bottom:15px;">📋 Instrucciones</h3>
     <ul style="padding-left:20px; color:var(--muted); font-size:14px; line-height:1.8;">
       <li>Leerás una idea en <strong>español coloquial</strong> sobre deportes.</li>
-      <li>Escribe tu traducción al inglés <strong>sin pensar demasiado</strong> (queremos ver tu primera reacción cerebral).</li>
-      <li>El sistema validará <strong>estructura, no vocabulario exacto</strong>.</li>
-      <li>Recibirás feedback neurocognitivo sobre <strong>qué filtro español activaste</strong>.</li>
+      <li>Escribe tu traducción al inglés <strong>sin pensar demasiado</strong> (primera reacción cerebral).</li>
+      <li>Presiona <strong>"Verificar Estructura NBF"</strong> para recibir feedback neurocognitivo.</li>
+      <li>El sistema te explicará <strong>qué filtro español activaste</strong> y por qué.</li>
     </ul>
-    <button class="btn" onclick="startQuiz()" style="width:100%; margin-top:20px;">🚀 Iniciar Diagnóstico Deportivo</button>
+    <button class="btn" onclick="startQuiz()" style="width:100%; margin-top:20px;">🚀 Iniciar Diagnóstico</button>
   </div>
 
   <div id="quiz-screen" class="hidden">
@@ -146,8 +145,6 @@ header p { color: var(--muted); font-size: 14px; }
       <h2 id="q-prompt" style="font-size:20px; margin-bottom:15px;"></h2>
       
       <textarea id="user-input" class="input" rows="2" placeholder="Escribe tu respuesta en inglés..."></textarea>
-      
-      <div class="nbf-rule" id="nbf-hint"></div>
 
       <button class="btn" id="submit-btn" onclick="submitAnswer()">✅ Verificar Estructura NBF</button>
       
@@ -189,8 +186,6 @@ const questions = [
       /i\s+wear\s+comfortable\s+clothes\s+and\s+carry\s+a\s+small\s+mat\s+to\s+(every|each)\s+class/i,
       /i\s+wear\s+comfortable\s+clothes\s+and\s+bring\s+a\s+small\s+mat\s+to\s+(every|each)\s+class/i
     ],
-    allowedSynonyms: { wear: ['wear'], carry: ['carry','bring'], small: ['small'], mat: ['mat'], class: ['class','each class','every class'] },
-    forbiddenWords: ['use','take','little'],
     rules: {
       required: ['i','wear','clothes','carry','mat','class'],
       structure: 'subject + verb1 + object1 + and + verb2 + object2 + preposition + time',
@@ -201,17 +196,20 @@ const questions = [
       missingSubject: {
         pattern: /^(wear|carry|bring)/i,
         message: "❌ Filtro: Omisión de Sujeto. Sin 'I' al inicio, el cerebro interpreta esto como imperativo ('¡Lleva...!').",
-        example: "✅ Correcto: 'I wear comfortable clothes...'"
+        example: "✅ Correcto: 'I wear comfortable clothes...'",
+        nbfExplanation: "🧠 Según NBF: El pronombre 'I' es el botón de PLAY que activa los sustantivos funcionales 'wear' y 'carry'. Sin él, no hay verbo, solo imperativo."
       },
       wrongVerb: {
         pattern: /\b(use|take)\b/i,
         message: "❌ Filtro: Verbo incorrecto. 'Use' o 'take' no son sinónimos estructurales de 'wear' o 'carry' en este contexto.",
-        example: "✅ Correcto: 'I wear... and carry...' (no 'I use... and take...')"
+        example: "✅ Correcto: 'I wear... and carry...' (no 'I use... and take...')",
+        nbfExplanation: "🧠 Según NBF: Cada acción requiere su sustantivo funcional específico. 'Wear' (llevar puesto) ≠ 'use' (usar)."
       },
       wrongAdjective: {
         pattern: /\blittle\s+mat\b/i,
         message: "⚠️ 'Little mat' es gramatical pero cambia el significado. 'Small mat' es la forma natural para tamaño físico.",
-        example: "✅ Preferible: 'a small mat' (tamaño) vs 'a little mat' (afectivo)"
+        example: "✅ Preferible: 'a small mat' (tamaño) vs 'a little mat' (afectivo)",
+        nbfExplanation: "🧠 Según NBF: 'Small' es adjetivo de tamaño objetivo; 'little' implica connotación emocional/afectiva."
       }
     }
   },
@@ -223,8 +221,6 @@ const questions = [
       /it\s+does\s+not\s+take\s+me\s+long\s+to\s+go\s+down\s+(a\s+)?hill/i,
       /it\s+doesn'?t\s+take\s+me\s+long\s+to\s+ski\s+down\s+(the\s+)?hill/i
     ],
-    allowedSynonyms: { go: ['go','ski'], down: ['down'], hill: ['hill','the hill'] },
-    forbiddenWords: ['much time'],
     rules: {
       required: ['it','take','me','long','to','go','down','hill'],
       structure: 'it + auxiliary(negative) + take + object + time-adverb + to + verb + preposition + place',
@@ -235,17 +231,20 @@ const questions = [
       missingAuxiliary: {
         pattern: /it\s+take\s+me/i,
         message: "❌ Filtro: Auxiliar Ausente. En negación, necesitas 'doesn't' antes de 'take'.",
-        example: "✅ Correcto: 'It DOESN'T take me long...'"
+        example: "✅ Correcto: 'It DOESN'T take me long...'",
+        nbfExplanation: "🧠 Según NBF: El auxiliar 'doesn't' es herramienta de ensamblaje, no verbo. Sin él, la estructura se cae."
       },
       wrongTimeExpression: {
         pattern: /much\s+time/i,
         message: "⚠️ 'Much time' es correcto gramaticalmente, pero 'long' es la forma idiomática natural con 'take'.",
-        example: "✅ Más natural: 'It doesn't take me LONG' (no 'much time')"
+        example: "✅ Más natural: 'It doesn't take me LONG' (no 'much time')",
+        nbfExplanation: "🧠 Según NBF: 'Long' funciona como adverbio de tiempo en esta estructura fija; 'much time' es traducción literal del español."
       },
       missingTo: {
         pattern: /go\s+down\s+hill/i,
         message: "❌ Filtro: Activación sin 'to'. 'Go' necesita 'to' para funcionar como sustantivo funcional después de 'take me long'.",
-        example: "✅ Correcto: '...to GO down a hill'"
+        example: "✅ Correcto: '...to GO down a hill'",
+        nbfExplanation: "🧠 Según NBF: La partícula 'to' activa el sustantivo funcional 'go'. Sin 'to', es solo sustantivo, no acción."
       }
     }
   },
@@ -255,8 +254,6 @@ const questions = [
     correctPatterns: [
       /we\s+play\s+with\s+sticks\s+and\s+try\s+to\s+(hit|shoot|strike)\s+the\s+hockey\s+puck\s+into\s+(a\s+)?(net|goal)/i
     ],
-    allowedSynonyms: { hit: ['hit','shoot','strike'], net: ['net','goal','the net','the goal'] },
-    forbiddenWords: ['record','disc','beat'],
     rules: {
       required: ['we','play','sticks','try','to','puck','into'],
       structure: 'subject + verb1 + preposition + object1 + and + verb2 + to + verb3 + object2 + preposition + place',
@@ -267,17 +264,20 @@ const questions = [
       missingSubject: {
         pattern: /^play\s+with/i,
         message: "❌ Filtro: Omisión de Sujeto. Sin 'We', la frase se interpreta como imperativo ('¡Juega con...!').",
-        example: "✅ Correcto: 'WE play with sticks...'"
+        example: "✅ Correcto: 'WE play with sticks...'",
+        nbfExplanation: "🧠 Según NBF: Sin el pronombre 'We', no hay activación de los sustantivos funcionales 'play' y 'try'."
       },
       wrongNoun: {
         pattern: /\b(record|disc)\b/i,
         message: "❌ Filtro: Sustantivo incorrecto. 'Puck' es el término específico para hockey; 'disc' o 'record' cambian el significado.",
-        example: "✅ Correcto: 'the hockey PUCK' (no 'disc' o 'record')"
+        example: "✅ Correcto: 'the hockey PUCK' (no 'disc' o 'record')",
+        nbfExplanation: "🧠 Según NBF: Cada deporte tiene su vocabulario específico. 'Puck' ≠ 'disc' (disco genérico)."
       },
       wrongVerb: {
         pattern: /\bbeat\b/i,
         message: "❌ Filtro: Verbo incorrecto. 'Beat' se usa para competir contra personas/equipos, no para golpear un objeto.",
-        example: "✅ Correcto: 'try to HIT/SHOOT/STRIKE the puck'"
+        example: "✅ Correcto: 'try to HIT/SHOOT/STRIKE the puck'",
+        nbfExplanation: "🧠 Según NBF: 'Beat' = competir/vencer (persona/equipo); 'hit/strike' = golpear (objeto)."
       }
     }
   },
@@ -287,8 +287,6 @@ const questions = [
     correctPatterns: [
       /we\s+play\s+with\s+racquets?\s+and\s+try\s+to\s+hit\s+the\s+ball\s+over\s+(a\s+)?net/i
     ],
-    allowedSynonyms: { racquet: ['racquet','racquets','racket','rackets'], hit: ['hit','pass','send'], over: ['over','above'] },
-    forbiddenWords: [],
     rules: {
       required: ['we','play','racquet','try','to','ball','over','net'],
       structure: 'subject + verb1 + with + object1 + and + verb2 + to + verb3 + object2 + preposition + place',
@@ -299,12 +297,14 @@ const questions = [
       missingSubject: {
         pattern: /^play\s+with/i,
         message: "❌ Filtro: Omisión de Sujeto. 'Play' sin sujeto = imperativo.",
-        example: "✅ Correcto: 'WE play with racquets...'"
+        example: "✅ Correcto: 'WE play with racquets...'",
+        nbfExplanation: "🧠 Según NBF: El sujeto 'We' es obligatorio para activar 'play' y 'try' como acciones."
       },
       wrongPreposition: {
         pattern: /\bthrough\s+the\s+net\b|\bunder\s+the\s+net\b/i,
         message: "❌ Filtro: Preposición incorrecta. En tenis, la pelota va 'over' (por encima) de la red, no 'through' (a través) ni 'under' (debajo).",
-        example: "✅ Correcto: 'hit the ball OVER the net'"
+        example: "✅ Correcto: 'hit the ball OVER the net'",
+        nbfExplanation: "🧠 Según NBF: 'Over' indica dirección por encima de una superficie; 'through' = atravesar; 'under' = debajo."
       }
     }
   },
@@ -314,8 +314,6 @@ const questions = [
     correctPatterns: [
       /we\s+do\s+this\s+in\s+pairs\.?\s*we\s+usually\s+wear\s+white\s+clothes\s+and\s+a\s+dark\s+belt/i
     ],
-    allowedSynonyms: { usually: ['usually','generally','normally'], wear: ['wear','use'], clothes: ['clothes','clothing','outfits'], dark: ['dark','black'] },
-    forbiddenWords: [],
     rules: {
       required: ['we','do','this','in','pairs','wear','white','clothes','dark','belt'],
       structure: 'sentence1: subject+verb+object+preposition+place | sentence2: subject+adverb+verb+adjective+object+and+adjective+object',
@@ -326,12 +324,14 @@ const questions = [
       missingSubjectSecondSentence: {
         pattern: /in\s+pairs\.?\s*usually\s+wear/i,
         message: "❌ Filtro: Omisión de Sujeto en segunda oración. Cada oración independiente requiere su propio sujeto.",
-        example: "✅ Correcto: '...in pairs. WE usually wear...'"
+        example: "✅ Correcto: '...in pairs. WE usually wear...'",
+        nbfExplanation: "🧠 Según NBF: Cada oración independiente necesita su propio 'botón de PLAY' (pronombre sujeto)."
       },
       wrongVerb: {
         pattern: /\buse\s+white\s+clothes\b/i,
         message: "⚠️ 'Use' es gramatical, pero 'wear' es el verbo natural para ropa. NBF prioriza el vocabulario contextual.",
-        example: "✅ Más natural: 'we WEAR white clothes'"
+        example: "✅ Más natural: 'we WEAR white clothes'",
+        nbfExplanation: "🧠 Según NBF: 'Wear' = llevar puesto (ropa); 'use' = utilizar (herramienta/objeto)."
       }
     }
   },
@@ -341,8 +341,6 @@ const questions = [
     correctPatterns: [
       /we\s+go\s+around\s+a\s+track\s+as\s+fast\s+as\s+possible/i
     ],
-    allowedSynonyms: { go: ['go','run'], around: ['around','round'], track: ['track','the track'], fast: ['fast','quickly'] },
-    forbiddenWords: [],
     rules: {
       required: ['we','go','around','track','as','fast','as','possible'],
       structure: 'subject + verb + preposition + object + as + adverb + as + possible',
@@ -353,12 +351,14 @@ const questions = [
       missingSubject: {
         pattern: /^go\s+around/i,
         message: "❌ Filtro: Omisión de Sujeto. 'Go' sin sujeto = orden.",
-        example: "✅ Correcto: 'WE go around a track...'"
+        example: "✅ Correcto: 'WE go around a track...'",
+        nbfExplanation: "🧠 Según NBF: Sin 'We', 'go' se interpreta como imperativo, no como acción declarativa."
       },
       wrongComparative: {
         pattern: /\bso\s+fast\s+as\s+possible\b|\bvery\s+fast\s+possible\b/i,
         message: "❌ Filtro: Estructura comparativa incorrecta. La forma fija es 'as + adjetivo + as + possible'.",
-        example: "✅ Correcto: 'as FAST as possible'"
+        example: "✅ Correcto: 'as FAST as possible'",
+        nbfExplanation: "🧠 Según NBF: 'As...as' es estructura fija de comparación de igualdad; 'so...as' es arcaico/negativo."
       }
     }
   },
@@ -368,8 +368,6 @@ const questions = [
     correctPatterns: [
       /we\s+play\s+in\s+teams\s+and\s+hit\s+a\s+large\s+ball\s+over\s+(a\s+)?net\s+with\s+(our\s+)?hands/i
     ],
-    allowedSynonyms: { teams: ['teams','a team'], hit: ['hit','strike','smash'], large: ['large','big'], hands: ['hands','our hands'] },
-    forbiddenWords: [],
     rules: {
       required: ['we','play','teams','hit','ball','over','net','with','hands'],
       structure: 'subject + verb1 + in + object1 + and + verb2 + article + adjective + object2 + preposition1 + place + preposition2 + instrument',
@@ -380,12 +378,14 @@ const questions = [
       missingSubject: {
         pattern: /^play\s+in\s+teams/i,
         message: "❌ Filtro: Omisión de Sujeto. Cada verbo principal requiere su sujeto explícito.",
-        example: "✅ Correcto: 'WE play in teams...'"
+        example: "✅ Correcto: 'WE play in teams...'",
+        nbfExplanation: "🧠 Según NBF: El pronombre 'We' activa ambos verbos 'play' y 'hit' como acciones coordinadas."
       },
       wrongPrepositionOrder: {
         pattern: /with\s+hands\s+over\s+net/i,
         message: "⚠️ El orden natural en inglés es: acción + dirección + instrumento. 'Over the net with hands' suena más natural.",
-        example: "✅ Preferible: 'hit... over the net WITH hands'"
+        example: "✅ Preferible: 'hit... over the net WITH hands'",
+        nbfExplanation: "🧠 Según NBF: El orden de preposiciones sigue la lógica: MODO → DIRECCIÓN → INSTRUMENTO."
       }
     }
   },
@@ -395,8 +395,6 @@ const questions = [
     correctPatterns: [
       /i\s+do\s+this\s+(two|2)\s+(or|-)?\s+(three|3)\s+times\s+a\s+week\s+at\s+an?\s+outdoor\s+pool/i
     ],
-    allowedSynonyms: { do: ['do','practice','swim'], times: ['times','occasions'], week: ['week','a week'], outdoor: ['outdoor','open-air','outside'] },
-    forbiddenWords: [],
     rules: {
       required: ['i','do','this','times','week','at','pool'],
       structure: 'subject + verb + object + frequency + preposition + place',
@@ -407,12 +405,14 @@ const questions = [
       missingSubject: {
         pattern: /^do\s+this/i,
         message: "❌ Filtro: Omisión de Sujeto. 'Do' sin 'I' = imperativo.",
-        example: "✅ Correcto: 'I do this...'"
+        example: "✅ Correcto: 'I do this...'",
+        nbfExplanation: "🧠 Según NBF: El pronombre 'I' es el activador del sustantivo funcional 'do'."
       },
       wrongOrder: {
         pattern: /at\s+an?\s+outdoor\s+pool\s+.*\s+times\s+a\s+week/i,
         message: "⚠️ En inglés, la frecuencia generalmente va ANTES del lugar específico.",
-        example: "✅ Preferible: '...times a week AT an outdoor pool'"
+        example: "✅ Preferible: '...times a week AT an outdoor pool'",
+        nbfExplanation: "🧠 Según NBF: El orden adverbial en inglés es: MODO → FRECUENCIA → LUGAR → TIEMPO."
       }
     }
   }
@@ -440,7 +440,6 @@ function loadQuestion() {
   document.getElementById('feedback-box').className = 'feedback';
   document.getElementById('submit-btn').classList.remove('hidden');
   document.getElementById('next-btn').classList.add('hidden');
-  document.getElementById('nbf-hint').textContent = `💡 Regla NBF: ${q.rules.nbfNote}`;
   document.getElementById('user-input').focus();
 }
 
@@ -456,43 +455,22 @@ function validateAnswer(userText, question) {
   // 2. Verificar errores comunes específicos
   for (const [errorType, errorConfig] of Object.entries(question.commonErrors)) {
     if (errorConfig.pattern.test(text)) {
-      return { correct: false, message: errorConfig.message, example: errorConfig.example, errorType };
-    }
-  }
-  
-  // 3. Verificar palabras prohibidas
-  if (question.forbiddenWords && question.forbiddenWords.length > 0) {
-    const foundForbidden = question.forbiddenWords.filter(word => 
-      new RegExp(`\\b${word}\\b`, 'i').test(text)
-    );
-    if (foundForbidden.length > 0) {
-      return {
-        correct: false,
-        message: `❌ Palabra(s) incorrecta(s): ${foundForbidden.join(', ')}`,
-        example: `✅ Evita: ${foundForbidden.join(', ')}. Usa los sinónimos permitidos.`,
-        errorType: "forbidden_word"
+      return { 
+        correct: false, 
+        message: errorConfig.message, 
+        example: errorConfig.example,
+        nbfExplanation: errorConfig.nbfExplanation,
+        errorType 
       };
     }
   }
   
-  // 4. Verificar elementos requeridos
-  const missingElements = question.rules.required.filter(element => 
-    !text.includes(element.toLowerCase())
-  );
-  if (missingElements.length > 0) {
-    return {
-      correct: false,
-      message: `❌ Faltan elementos estructurales: ${missingElements.join(', ')}`,
-      example: `✅ Debe incluir: ${question.rules.structure}`,
-      errorType: "missing_element"
-    };
-  }
-  
-  // 5. Error genérico
+  // 3. Error genérico
   return {
     correct: false,
     message: "❌ Revisa la estructura NBF.",
     example: `✅ Patrón esperado: ${question.rules.structure}`,
+    nbfExplanation: question.rules.nbfNote,
     errorType: "structure_error"
   };
 }
@@ -517,10 +495,16 @@ function submitAnswer() {
   
   if (validation.correct) {
     fb.className = 'feedback correct';
-    fb.innerHTML = `<strong>${validation.message}</strong><div class="nbf-rule">${validation.example}</div>`;
+    fb.innerHTML = `<strong>${validation.message}</strong><div class="nbf-explanation">${validation.example}</div>`;
   } else {
     fb.className = 'feedback error';
-    fb.innerHTML = `<strong>${validation.message}</strong><div class="nbf-rule">${validation.example}</div>`;
+    fb.innerHTML = `
+      <strong>${validation.message}</strong>
+      <div class="nbf-explanation">${validation.example}</div>
+      <div class="nbf-explanation" style="margin-top:10px; border-top:1px solid var(--border); padding-top:10px;">
+        ${validation.nbfExplanation}
+      </div>
+    `;
   }
   
   document.getElementById('submit-btn').classList.add('hidden');
@@ -565,7 +549,7 @@ function showResults() {
   
   // Recomendación NBF
   let rec = "";
-  if (score < 40) rec = "🔴 <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'autoengaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural (Pronombres + Auxiliares) antes de avanzar.";
+  if (score < 40) rec = "🔴 <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'auto-engaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural (Pronombres + Auxiliares) antes de avanzar.";
   else if (score < 70) rec = "🟡 <strong>Fase 2: Reensamblaje Cognitivo.</strong> Tienes conocimiento fragmentado. Cometes errores sistemáticos porque tu cerebro busca 'navajas suizas' (verbos compactos) en lugar de 'piezas Lego'. Enfócate en automatizar los 7 Elementos Determinantes.";
   else rec = "🟢 <strong>Fase 3: Integración Profunda.</strong> Tu estructura es sólida, pero aún traduces mentalmente en tiempo real. El siguiente paso es la <strong>Producción Espontánea</strong>: eliminar el 'traductor interno' mediante repetición espaciada y audio therapy.";
   
