@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Deportivo NBF - Discovery MAX</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0A0A;
+  --panel: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.1);
+  --orange: #F27D26;
+  --green: #00FF00;
+  --text: #F5F2ED;
+  --muted: #888;
+  --error: #E74C3C;
+  --success: #27AE60;
+  --warning: #F39C12;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
+}
+.container { max-width: 900px; margin: 0 auto; }
+header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+header h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, var(--orange), var(--green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+header p { color: var(--muted); font-size: 14px; }
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.btn {
+  background: var(--orange);
+  color: #000;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(242,125,38,0.3); }
+.btn.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.btn.secondary:hover { background: rgba(255,255,255,0.1); }
+.input {
+  width: 100%;
+  padding: 12px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 16px;
+  margin: 10px 0;
+  font-family: 'JetBrains Mono', monospace;
+}
+.input:focus { outline: none; border-color: var(--orange); }
+.tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  margin-right: 8px;
+}
+.tag.spanish { background: rgba(242,125,38,0.2); color: var(--orange); }
+.feedback {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  display: none;
+  border-left: 4px solid;
+}
+.feedback.correct { background: rgba(39,174,96,0.1); border-left-color: var(--success); color: var(--success); }
+.feedback.error { background: rgba(231,76,60,0.1); border-left-color: var(--error); color: var(--error); }
+.feedback.warning { background: rgba(243,156,18,0.1); border-left-color: var(--warning); color: var(--warning); }
+.nbf-rule {
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 6px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted);
+}
+.progress { height: 4px; background: #222; border-radius: 2px; margin: 20px 0; overflow: hidden; }
+.progress-bar { height: 100%; background: var(--orange); width: 0%; transition: width 0.3s; }
+.results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+.stat { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; text-align: center; }
+.stat .value { font-size: 24px; font-weight: 700; color: var(--orange); }
+.stat .label { font-size: 12px; color: var(--muted); margin-top: 5px; }
+.hidden { display: none; }
+@media (max-width: 600px) {
+  header h1 { font-size: 22px; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🏆 Diagnóstico Deportivo NBF</h1>
+    <p>"Sin sujeto no hay verbo. Sin estructura no hay fluidez."</p>
+    <p style="font-size:12px; margin-top:8px; color:var(--muted);">Basado en el postulado: "Los verbos en inglés no existen para el cerebro hispano" | Toño Vicas</p>
+  </header>
+
+  <div id="intro-screen" class="card">
+    <h3 style="margin-bottom:15px;">📋 Instrucciones NBF</h3>
+    <ul style="padding-left:20px; color:var(--muted); font-size:14px; line-height:1.8;">
+      <li>Leerás una idea en <strong>español coloquial</strong> sobre deportes.</li>
+      <li>Escribe tu traducción al inglés <strong>sin pensar demasiado</strong> (queremos ver tu primera reacción cerebral).</li>
+      <li>El sistema validará <strong>estructura, no vocabulario exacto</strong>.</li>
+      <li>Recibirás feedback neurocognitivo sobre <strong>qué filtro español activaste</strong>.</li>
+    </ul>
+    <button class="btn" onclick="startQuiz()" style="width:100%; margin-top:20px;">🚀 Iniciar Diagnóstico Deportivo</button>
+  </div>
+
+  <div id="quiz-screen" class="hidden">
+    <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+    <div class="card" id="question-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <span class="tag spanish">🇪🇸 Pensamiento Hispano</span>
+        <span id="q-counter" style="font-size:12px; color:var(--muted);">1 / 8</span>
+      </div>
+      <h2 id="q-prompt" style="font-size:20px; margin-bottom:15px;"></h2>
+      
+      <textarea id="user-input" class="input" rows="2" placeholder="Escribe tu respuesta en inglés..."></textarea>
+      
+      <div class="nbf-rule" id="nbf-hint"></div>
+
+      <button class="btn" id="submit-btn" onclick="submitAnswer()">✅ Verificar Estructura NBF</button>
+      
+      <div id="feedback-box" class="feedback"></div>
+      
+      <button class="btn secondary hidden" id="next-btn" onclick="nextQuestion()" style="width:100%; margin-top:15px;">Siguiente Pregunta →</button>
+    </div>
+  </div>
+
+  <div id="results-screen" class="hidden">
+    <div class="card" style="text-align:center;">
+      <h2 style="color:var(--orange); margin-bottom:10px;">📊 Tu Perfil Estructural Deportivo</h2>
+      <p style="color:var(--muted); margin-bottom:20px;">Basado en tu patrón de respuestas automáticas</p>
+      
+      <div class="results-grid">
+        <div class="stat"><div class="value" id="score-val">0%</div><div class="label">Automatización</div></div>
+        <div class="stat"><div class="value" id="filter-val">-</div><div class="label">Filtro Dominante</div></div>
+        <div class="stat"><div class="value" id="time-val">0s</div><div class="label">Tiempo Promedio</div></div>
+      </div>
+
+      <div id="nbf-recommendation" class="card" style="background:rgba(242,125,38,0.1); border-left:3px solid var(--orange); text-align:left; margin:20px 0;"></div>
+
+      <button class="btn secondary" onclick="location.reload()" style="width:100%; margin-top:15px;">🔄 Repetir Diagnóstico</button>
+    </div>
+  </div>
+
+  <footer style="text-align:center; margin-top:40px; color:var(--muted); font-size:12px;">
+    © 2026 Discovery MAX Neuroeducation | Método NBF | Toño Vicas
+  </footer>
+</div>
+
+<script>
+// BASE DE DATOS NBF - DEPORTES (8 preguntas con validación inteligente)
+const questions = [
+  {
+    prompt: "Llevo ropa cómoda y cargo un pequeño tapete a cada clase.",
+    sport: "YOGA",
+    correctPatterns: [
+      /i\s+wear\s+comfortable\s+clothes\s+and\s+carry\s+a\s+small\s+mat\s+to\s+(every|each)\s+class/i,
+      /i\s+wear\s+comfortable\s+clothes\s+and\s+bring\s+a\s+small\s+mat\s+to\s+(every|each)\s+class/i
+    ],
+    allowedSynonyms: { wear: ['wear'], carry: ['carry','bring'], small: ['small'], mat: ['mat'], class: ['class','each class','every class'] },
+    forbiddenWords: ['use','take','little'],
+    rules: {
+      required: ['i','wear','clothes','carry','mat','class'],
+      structure: 'subject + verb1 + object1 + and + verb2 + object2 + preposition + time',
+      nbfNote: "✅ Estructura NBF: Dos sustantivos funcionales ('wear' y 'carry') activados por el mismo sujeto 'I', unidos por 'and'."
+    },
+    filter: "subject_omission",
+    commonErrors: {
+      missingSubject: {
+        pattern: /^(wear|carry|bring)/i,
+        message: "❌ Filtro: Omisión de Sujeto. Sin 'I' al inicio, el cerebro interpreta esto como imperativo ('¡Lleva...!').",
+        example: "✅ Correcto: 'I wear comfortable clothes...'"
+      },
+      wrongVerb: {
+        pattern: /\b(use|take)\b/i,
+        message: "❌ Filtro: Verbo incorrecto. 'Use' o 'take' no son sinónimos estructurales de 'wear' o 'carry' en este contexto.",
+        example: "✅ Correcto: 'I wear... and carry...' (no 'I use... and take...')"
+      },
+      wrongAdjective: {
+        pattern: /\blittle\s+mat\b/i,
+        message: "⚠️ 'Little mat' es gramatical pero cambia el significado. 'Small mat' es la forma natural para tamaño físico.",
+        example: "✅ Preferible: 'a small mat' (tamaño) vs 'a little mat' (afectivo)"
+      }
+    }
+  },
+  {
+    prompt: "No me lleva mucho tiempo bajar por la colina.",
+    sport: "SKIING",
+    correctPatterns: [
+      /it\s+doesn'?t\s+take\s+me\s+long\s+to\s+go\s+down\s+(a\s+)?hill/i,
+      /it\s+does\s+not\s+take\s+me\s+long\s+to\s+go\s+down\s+(a\s+)?hill/i,
+      /it\s+doesn'?t\s+take\s+me\s+long\s+to\s+ski\s+down\s+(the\s+)?hill/i
+    ],
+    allowedSynonyms: { go: ['go','ski'], down: ['down'], hill: ['hill','the hill'] },
+    forbiddenWords: ['much time'],
+    rules: {
+      required: ['it','take','me','long','to','go','down','hill'],
+      structure: 'it + auxiliary(negative) + take + object + time-adverb + to + verb + preposition + place',
+      nbfNote: "✅ Estructura NBF: 'It' como sujeto dummy + 'doesn't take' (auxiliar negativo) + infinitivo 'to go' activado."
+    },
+    filter: "auxiliary_missing",
+    commonErrors: {
+      missingAuxiliary: {
+        pattern: /it\s+take\s+me/i,
+        message: "❌ Filtro: Auxiliar Ausente. En negación, necesitas 'doesn't' antes de 'take'.",
+        example: "✅ Correcto: 'It DOESN'T take me long...'"
+      },
+      wrongTimeExpression: {
+        pattern: /much\s+time/i,
+        message: "⚠️ 'Much time' es correcto gramaticalmente, pero 'long' es la forma idiomática natural con 'take'.",
+        example: "✅ Más natural: 'It doesn't take me LONG' (no 'much time')"
+      },
+      missingTo: {
+        pattern: /go\s+down\s+hill/i,
+        message: "❌ Filtro: Activación sin 'to'. 'Go' necesita 'to' para funcionar como sustantivo funcional después de 'take me long'.",
+        example: "✅ Correcto: '...to GO down a hill'"
+      }
+    }
+  },
+  {
+    prompt: "Jugamos con palos e intentamos meter el disco de hockey en la portería.",
+    sport: "HOCKEY",
+    correctPatterns: [
+      /we\s+play\s+with\s+sticks\s+and\s+try\s+to\s+(hit|shoot|strike)\s+the\s+hockey\s+puck\s+into\s+(a\s+)?(net|goal)/i
+    ],
+    allowedSynonyms: { hit: ['hit','shoot','strike'], net: ['net','goal','the net','the goal'] },
+    forbiddenWords: ['record','disc','beat'],
+    rules: {
+      required: ['we','play','sticks','try','to','puck','into'],
+      structure: 'subject + verb1 + preposition + object1 + and + verb2 + to + verb3 + object2 + preposition + place',
+      nbfNote: "✅ Estructura NBF: Dos acciones ('play' y 'try') unidas por 'and'; 'try' activa 'to hit' como sustantivo funcional."
+    },
+    filter: "conjunction_error",
+    commonErrors: {
+      missingSubject: {
+        pattern: /^play\s+with/i,
+        message: "❌ Filtro: Omisión de Sujeto. Sin 'We', la frase se interpreta como imperativo ('¡Juega con...!').",
+        example: "✅ Correcto: 'WE play with sticks...'"
+      },
+      wrongNoun: {
+        pattern: /\b(record|disc)\b/i,
+        message: "❌ Filtro: Sustantivo incorrecto. 'Puck' es el término específico para hockey; 'disc' o 'record' cambian el significado.",
+        example: "✅ Correcto: 'the hockey PUCK' (no 'disc' o 'record')"
+      },
+      wrongVerb: {
+        pattern: /\bbeat\b/i,
+        message: "❌ Filtro: Verbo incorrecto. 'Beat' se usa para competir contra personas/equipos, no para golpear un objeto.",
+        example: "✅ Correcto: 'try to HIT/SHOOT/STRIKE the puck'"
+      }
+    }
+  },
+  {
+    prompt: "Jugamos con raquetas e intentamos pasar la pelota por encima de la red.",
+    sport: "TENNIS",
+    correctPatterns: [
+      /we\s+play\s+with\s+racquets?\s+and\s+try\s+to\s+hit\s+the\s+ball\s+over\s+(a\s+)?net/i
+    ],
+    allowedSynonyms: { racquet: ['racquet','racquets','racket','rackets'], hit: ['hit','pass','send'], over: ['over','above'] },
+    forbiddenWords: [],
+    rules: {
+      required: ['we','play','racquet','try','to','ball','over','net'],
+      structure: 'subject + verb1 + with + object1 + and + verb2 + to + verb3 + object2 + preposition + place',
+      nbfNote: "✅ Estructura NBF: Mismo patrón que hockey: sujeto + dos verbos unidos por 'and' + 'to' activando la segunda acción."
+    },
+    filter: "preposition_error",
+    commonErrors: {
+      missingSubject: {
+        pattern: /^play\s+with/i,
+        message: "❌ Filtro: Omisión de Sujeto. 'Play' sin sujeto = imperativo.",
+        example: "✅ Correcto: 'WE play with racquets...'"
+      },
+      wrongPreposition: {
+        pattern: /\bthrough\s+the\s+net\b|\bunder\s+the\s+net\b/i,
+        message: "❌ Filtro: Preposición incorrecta. En tenis, la pelota va 'over' (por encima) de la red, no 'through' (a través) ni 'under' (debajo).",
+        example: "✅ Correcto: 'hit the ball OVER the net'"
+      }
+    }
+  },
+  {
+    prompt: "Esto lo hacemos en parejas. Por lo general llevamos ropa blanca y un cinturón oscuro.",
+    sport: "KARATE",
+    correctPatterns: [
+      /we\s+do\s+this\s+in\s+pairs\.?\s*we\s+usually\s+wear\s+white\s+clothes\s+and\s+a\s+dark\s+belt/i
+    ],
+    allowedSynonyms: { usually: ['usually','generally','normally'], wear: ['wear','use'], clothes: ['clothes','clothing','outfits'], dark: ['dark','black'] },
+    forbiddenWords: [],
+    rules: {
+      required: ['we','do','this','in','pairs','wear','white','clothes','dark','belt'],
+      structure: 'sentence1: subject+verb+object+preposition+place | sentence2: subject+adverb+verb+adjective+object+and+adjective+object',
+      nbfNote: "✅ Estructura NBF: Dos oraciones independientes. Cada una con su propio sujeto 'We' activando sus verbos."
+    },
+    filter: "sentence_structure",
+    commonErrors: {
+      missingSubjectSecondSentence: {
+        pattern: /in\s+pairs\.?\s*usually\s+wear/i,
+        message: "❌ Filtro: Omisión de Sujeto en segunda oración. Cada oración independiente requiere su propio sujeto.",
+        example: "✅ Correcto: '...in pairs. WE usually wear...'"
+      },
+      wrongVerb: {
+        pattern: /\buse\s+white\s+clothes\b/i,
+        message: "⚠️ 'Use' es gramatical, pero 'wear' es el verbo natural para ropa. NBF prioriza el vocabulario contextual.",
+        example: "✅ Más natural: 'we WEAR white clothes'"
+      }
+    }
+  },
+  {
+    prompt: "Le damos vueltas a una pista lo más rápido posible.",
+    sport: "RUNNING",
+    correctPatterns: [
+      /we\s+go\s+around\s+a\s+track\s+as\s+fast\s+as\s+possible/i
+    ],
+    allowedSynonyms: { go: ['go','run'], around: ['around','round'], track: ['track','the track'], fast: ['fast','quickly'] },
+    forbiddenWords: [],
+    rules: {
+      required: ['we','go','around','track','as','fast','as','possible'],
+      structure: 'subject + verb + preposition + object + as + adverb + as + possible',
+      nbfNote: "✅ Estructura NBF: Comparativo de igualdad 'as...as' + 'possible' como adjetivo final."
+    },
+    filter: "comparative_structure",
+    commonErrors: {
+      missingSubject: {
+        pattern: /^go\s+around/i,
+        message: "❌ Filtro: Omisión de Sujeto. 'Go' sin sujeto = orden.",
+        example: "✅ Correcto: 'WE go around a track...'"
+      },
+      wrongComparative: {
+        pattern: /\bso\s+fast\s+as\s+possible\b|\bvery\s+fast\s+possible\b/i,
+        message: "❌ Filtro: Estructura comparativa incorrecta. La forma fija es 'as + adjetivo + as + possible'.",
+        example: "✅ Correcto: 'as FAST as possible'"
+      }
+    }
+  },
+  {
+    prompt: "Jugamos en equipos y golpeamos una pelota grande por encima de la red con las manos.",
+    sport: "VOLLEYBALL",
+    correctPatterns: [
+      /we\s+play\s+in\s+teams\s+and\s+hit\s+a\s+large\s+ball\s+over\s+(a\s+)?net\s+with\s+(our\s+)?hands/i
+    ],
+    allowedSynonyms: { teams: ['teams','a team'], hit: ['hit','strike','smash'], large: ['large','big'], hands: ['hands','our hands'] },
+    forbiddenWords: [],
+    rules: {
+      required: ['we','play','teams','hit','ball','over','net','with','hands'],
+      structure: 'subject + verb1 + in + object1 + and + verb2 + article + adjective + object2 + preposition1 + place + preposition2 + instrument',
+      nbfNote: "✅ Estructura NBF: Tres preposiciones en cadena: 'in teams' (modo), 'over net' (dirección), 'with hands' (instrumento)."
+    },
+    filter: "preposition_chain",
+    commonErrors: {
+      missingSubject: {
+        pattern: /^play\s+in\s+teams/i,
+        message: "❌ Filtro: Omisión de Sujeto. Cada verbo principal requiere su sujeto explícito.",
+        example: "✅ Correcto: 'WE play in teams...'"
+      },
+      wrongPrepositionOrder: {
+        pattern: /with\s+hands\s+over\s+net/i,
+        message: "⚠️ El orden natural en inglés es: acción + dirección + instrumento. 'Over the net with hands' suena más natural.",
+        example: "✅ Preferible: 'hit... over the net WITH hands'"
+      }
+    }
+  },
+  {
+    prompt: "Esto lo hago dos o tres veces por semana en una piscina al aire libre.",
+    sport: "SWIMMING",
+    correctPatterns: [
+      /i\s+do\s+this\s+(two|2)\s+(or|-)?\s+(three|3)\s+times\s+a\s+week\s+at\s+an?\s+outdoor\s+pool/i
+    ],
+    allowedSynonyms: { do: ['do','practice','swim'], times: ['times','occasions'], week: ['week','a week'], outdoor: ['outdoor','open-air','outside'] },
+    forbiddenWords: [],
+    rules: {
+      required: ['i','do','this','times','week','at','pool'],
+      structure: 'subject + verb + object + frequency + preposition + place',
+      nbfNote: "✅ Estructura NBF: Frecuencia ('two or three times a week') va ANTES del lugar ('at an outdoor pool')."
+    },
+    filter: "adverbial_order",
+    commonErrors: {
+      missingSubject: {
+        pattern: /^do\s+this/i,
+        message: "❌ Filtro: Omisión de Sujeto. 'Do' sin 'I' = imperativo.",
+        example: "✅ Correcto: 'I do this...'"
+      },
+      wrongOrder: {
+        pattern: /at\s+an?\s+outdoor\s+pool\s+.*\s+times\s+a\s+week/i,
+        message: "⚠️ En inglés, la frecuencia generalmente va ANTES del lugar específico.",
+        example: "✅ Preferible: '...times a week AT an outdoor pool'"
+      }
+    }
+  }
+];
+
+// VARIABLES DE ESTADO
+let currentQ = 0;
+let answers = [];
+let startTime = Date.now();
+
+// FUNCIONES PRINCIPALES
+function startQuiz() {
+  document.getElementById('intro-screen').classList.add('hidden');
+  document.getElementById('quiz-screen').classList.remove('hidden');
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const q = questions[currentQ];
+  document.getElementById('q-prompt').textContent = `"${q.prompt}"`;
+  document.getElementById('q-counter').textContent = `${currentQ + 1} / ${questions.length}`;
+  document.getElementById('progress-bar').style.width = `${((currentQ) / questions.length) * 100}%`;
+  document.getElementById('user-input').value = '';
+  document.getElementById('feedback-box').style.display = 'none';
+  document.getElementById('feedback-box').className = 'feedback';
+  document.getElementById('submit-btn').classList.remove('hidden');
+  document.getElementById('next-btn').classList.add('hidden');
+  document.getElementById('nbf-hint').textContent = `💡 Regla NBF: ${q.rules.nbfNote}`;
+  document.getElementById('user-input').focus();
+}
+
+function validateAnswer(userText, question) {
+  const text = userText.toLowerCase().trim().replace(/[.,!?;:]/g, '');
+  
+  // 1. Verificar patrón correcto
+  const isCorrect = question.correctPatterns.some(pattern => pattern.test(text));
+  if (isCorrect) {
+    return { correct: true, message: "✅ Estructura NBF Correcta.", example: question.rules.nbfNote };
+  }
+  
+  // 2. Verificar errores comunes específicos
+  for (const [errorType, errorConfig] of Object.entries(question.commonErrors)) {
+    if (errorConfig.pattern.test(text)) {
+      return { correct: false, message: errorConfig.message, example: errorConfig.example, errorType };
+    }
+  }
+  
+  // 3. Verificar palabras prohibidas
+  if (question.forbiddenWords && question.forbiddenWords.length > 0) {
+    const foundForbidden = question.forbiddenWords.filter(word => 
+      new RegExp(`\\b${word}\\b`, 'i').test(text)
+    );
+    if (foundForbidden.length > 0) {
+      return {
+        correct: false,
+        message: `❌ Palabra(s) incorrecta(s): ${foundForbidden.join(', ')}`,
+        example: `✅ Evita: ${foundForbidden.join(', ')}. Usa los sinónimos permitidos.`,
+        errorType: "forbidden_word"
+      };
+    }
+  }
+  
+  // 4. Verificar elementos requeridos
+  const missingElements = question.rules.required.filter(element => 
+    !text.includes(element.toLowerCase())
+  );
+  if (missingElements.length > 0) {
+    return {
+      correct: false,
+      message: `❌ Faltan elementos estructurales: ${missingElements.join(', ')}`,
+      example: `✅ Debe incluir: ${question.rules.structure}`,
+      errorType: "missing_element"
+    };
+  }
+  
+  // 5. Error genérico
+  return {
+    correct: false,
+    message: "❌ Revisa la estructura NBF.",
+    example: `✅ Patrón esperado: ${question.rules.structure}`,
+    errorType: "structure_error"
+  };
+}
+
+function submitAnswer() {
+  const userText = document.getElementById('user-input').value.trim();
+  if (!userText) return alert('⚠️ Escribe una respuesta antes de verificar.');
+  
+  const q = questions[currentQ];
+  const validation = validateAnswer(userText, q);
+  
+  answers.push({ 
+    q: currentQ, 
+    correct: validation.correct, 
+    text: userText, 
+    filter: q.filter,
+    errorType: validation.errorType 
+  });
+  
+  const fb = document.getElementById('feedback-box');
+  fb.style.display = 'block';
+  
+  if (validation.correct) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = `<strong>${validation.message}</strong><div class="nbf-rule">${validation.example}</div>`;
+  } else {
+    fb.className = 'feedback error';
+    fb.innerHTML = `<strong>${validation.message}</strong><div class="nbf-rule">${validation.example}</div>`;
+  }
+  
+  document.getElementById('submit-btn').classList.add('hidden');
+  document.getElementById('next-btn').classList.remove('hidden');
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ < questions.length) loadQuestion();
+  else showResults();
+}
+
+function showResults() {
+  document.getElementById('quiz-screen').classList.add('hidden');
+  document.getElementById('results-screen').classList.remove('hidden');
+  
+  const correctCount = answers.filter(a => a.correct).length;
+  const score = Math.round((correctCount / questions.length) * 100);
+  const time = Math.round((Date.now() - startTime) / 1000);
+  
+  // Determinar filtro dominante
+  const filters = answers.filter(a => !a.correct).map(a => a.filter);
+  const filterCounts = {};
+  filters.forEach(f => filterCounts[f] = (filterCounts[f] || 0) + 1);
+  const dominantFilter = Object.keys(filterCounts).reduce((a, b) => filterCounts[a] > filterCounts[b] ? a : b, 'balanced');
+  
+  const filterNames = {
+    subject_omission: "Omisión de Sujeto",
+    auxiliary_missing: "Auxiliares/Modales",
+    conjunction_error: "Conjunciones",
+    preposition_error: "Preposiciones",
+    sentence_structure: "Estructura de Oración",
+    comparative_structure: "Comparativos",
+    preposition_chain: "Cadena de Preposiciones",
+    adverbial_order: "Orden Adverbial",
+    balanced: "Equilibrado"
+  };
+  
+  document.getElementById('score-val').textContent = score + '%';
+  document.getElementById('filter-val').textContent = filterNames[dominantFilter];
+  document.getElementById('time-val').textContent = time + 's';
+  
+  // Recomendación NBF
+  let rec = "";
+  if (score < 40) rec = "🔴 <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'autoengaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural (Pronombres + Auxiliares) antes de avanzar.";
+  else if (score < 70) rec = "🟡 <strong>Fase 2: Reensamblaje Cognitivo.</strong> Tienes conocimiento fragmentado. Cometes errores sistemáticos porque tu cerebro busca 'navajas suizas' (verbos compactos) en lugar de 'piezas Lego'. Enfócate en automatizar los 7 Elementos Determinantes.";
+  else rec = "🟢 <strong>Fase 3: Integración Profunda.</strong> Tu estructura es sólida, pero aún traduces mentalmente en tiempo real. El siguiente paso es la <strong>Producción Espontánea</strong>: eliminar el 'traductor interno' mediante repetición espaciada y audio therapy.";
+  
+  document.getElementById('nbf-recommendation').innerHTML = `<strong>💡 Tu Ruta NBF Deportiva:</strong><br>${rec}`;
+}
+
+// PREVENIR ENVÍO CON ENTER
+document.addEventListener('keypress', e => {
+  if (e.key === 'Enter' && !e.shiftKey && document.getElementById('quiz-screen').classList.contains('hidden') === false) {
+    e.preventDefault();
+    if (!document.getElementById('submit-btn').classList.contains('hidden')) submitAnswer();
+    else if (!document.getElementById('next-btn').classList.contains('hidden')) nextQuestion();
+  }
+});
+</script>
+</body>
+</html>
