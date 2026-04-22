@@ -16,6 +16,7 @@
   --muted: #888;
   --error: #E74C3C;
   --success: #27AE60;
+  --warning: #F39C12;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -84,7 +85,6 @@ header p { color: var(--muted); font-size: 14px; }
   margin-right: 8px;
 }
 .tag.spanish { background: rgba(242,125,38,0.2); color: var(--orange); }
-.tag.english { background: rgba(0,255,0,0.2); color: var(--green); }
 .feedback {
   margin-top: 15px;
   padding: 15px;
@@ -92,16 +92,9 @@ header p { color: var(--muted); font-size: 14px; }
   display: none;
   border-left: 4px solid;
 }
-.feedback.correct { 
-  background: rgba(39,174,96,0.1); 
-  border-left-color: var(--success); 
-  color: var(--success);
-}
-.feedback.error { 
-  background: rgba(231,76,60,0.1); 
-  border-left-color: var(--error);
-  color: var(--error);
-}
+.feedback.correct { background: rgba(39,174,96,0.1); border-left-color: var(--success); color: var(--success); }
+.feedback.error { background: rgba(231,76,60,0.1); border-left-color: var(--error); color: var(--error); }
+.feedback.warning { background: rgba(243,156,18,0.1); border-left-color: var(--warning); color: var(--warning); }
 .recorder {
   display: flex;
   align-items: center;
@@ -121,10 +114,7 @@ header p { color: var(--muted); font-size: 14px; }
   color: white;
 }
 .rec-btn.recording { background: var(--error); animation: pulse 1s infinite; }
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
-}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 .progress { height: 4px; background: #222; border-radius: 2px; margin: 20px 0; overflow: hidden; }
 .progress-bar { height: 100%; background: var(--orange); width: 0%; transition: width 0.3s; }
 .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
@@ -132,34 +122,12 @@ header p { color: var(--muted); font-size: 14px; }
 .stat .value { font-size: 24px; font-weight: 700; color: var(--orange); }
 .stat .label { font-size: 12px; color: var(--muted); margin-top: 5px; }
 .share-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
-.share-btn {
-  flex: 1; min-width: 120px;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  color: white;
-}
+.share-btn { flex: 1; min-width: 120px; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; color: white; }
 .share-btn.tw { background: #1DA1F2; }
 .share-btn.fb { background: #4267B2; }
 .share-btn.wa { background: #25D366; }
 .hidden { display: none; }
-.error-detail {
-  margin: 10px 0;
-  padding: 10px;
-  background: rgba(231,76,60,0.1);
-  border-radius: 6px;
-  font-size: 13px;
-}
-.correct-example {
-  margin-top: 10px;
-  padding: 10px;
-  background: rgba(39,174,96,0.1);
-  border-radius: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-}
+.nbf-note { margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 6px; font-size: 13px; color: var(--muted); font-style: italic; }
 @media (max-width: 600px) {
   header h1 { font-size: 22px; }
   .card { padding: 16px; }
@@ -239,230 +207,110 @@ header p { color: var(--muted); font-size: 14px; }
 </div>
 
 <script>
-// BASE DE DATOS DE PREGUNTAS CON VALIDACIÓN INTELIGENTE
+// BASE DE DATOS NBF ACTUALIZADA
 const questions = [
   {
     prompt: "Es importante estudiar.",
-    // Múltiples respuestas correctas aceptadas
-    correctPatterns: [
-      /it\s+is\s+important\s+to\s+study/i,
-      /it's\s+important\s+to\s+study/i,
-      /its\s+important\s+to\s+study/i
-    ],
-    // Reglas de validación específicas
+    correctPatterns: [/it\s+is\s+important\s+to\s+study/i, /it's\s+important\s+to\s+study/i],
     rules: {
-      required: ['it', 'important', 'to', 'study'],
-      structure: 'subject + be + adjective + to + verb',
       commonErrors: {
-        missingSubject: {
-          pattern: /^(important|study)/i,
-          message: "❌ Filtro: Omisión de Sujeto. En inglés REQUIERE sujeto explícito 'It'.",
-          example: "✅ Correcto: 'It is important to study'"
-        },
-        missingTo: {
-          pattern: /important\s+study/i,
-          message: "❌ Filtro: Activación sin 'to'. Necesitas 'to' antes del verbo.",
-          example: "✅ Correcto: 'It is important TO study'"
-        }
+        missingSubject: { pattern: /^(important|study)/i, message: "❌ Filtro: Omisión de Sujeto. En inglés REQUIERE sujeto explícito 'It'.", example: "✅ Correcto: 'It is important to study'" }
       }
     },
     filter: "subject_omission",
-    nbf: "El pronombre 'It' es el botón de PLAY que activa la estructura. Sin él, la oración se cae."
+    feedback: { correct: "✅ Estructura NBF Correcta. 'It' es el botón de PLAY que activa la estructura." }
   },
   {
     prompt: "¿Te gusta el café?",
-    correctPatterns: [
-      /do\s+you\s+like\s+coffee/i,
-      /do\s+you\s+like\s+the\s+coffee/i
-    ],
+    correctPatterns: [/do\s+you\s+like\s+coffee/i, /do\s+you\s+like\s+the\s+coffee/i],
     rules: {
-      required: ['do', 'you', 'like'],
-      structure: 'auxiliary + subject + verb + object',
       commonErrors: {
-        missingAuxiliary: {
-          pattern: /^you\s+like\s+coffee/i,
-          message: "❌ Filtro: Auxiliar Ausente. En español preguntas con entonación, en inglés necesitas 'Do'.",
-          example: "✅ Correcto: 'DO you like coffee?'"
-        },
-        wrongOrder: {
-          pattern: /you\s+do\s+like/i,
-          message: "❌ Filtro: Orden incorrecto. El auxiliar va ANTES del sujeto en preguntas.",
-          example: "✅ Correcto: 'DO you like...?' (no 'You do like')"
-        }
+        missingAuxiliary: { pattern: /^you\s+like\s+coffee/i, message: "❌ Filtro: Auxiliar Ausente. En español preguntas con entonación, en inglés necesitas 'Do'.", example: "✅ Correcto: 'DO you like coffee?'" }
       }
     },
     filter: "auxiliary_missing",
-    nbf: "El auxiliar 'Do' es herramienta de ensamblaje, NO es el verbo 'hacer'."
+    feedback: { correct: "✅ Estructura NBF Correcta. El auxiliar 'Do' ensambla la pregunta." }
   },
   {
     prompt: "Ella trabaja en una oficina.",
-    correctPatterns: [
-      /she\s+works?\s+in\s+(an?\s+)?office/i,
-      /she\s+works?\s+at\s+(an?\s+)?office/i
-    ],
+    correctPatterns: [/she\s+works\s+in\s+(an?\s+)?office/i], // ✅ CORREGIDO: ya no es works?
     rules: {
-      required: ['she', 'work'],
-      mustHave: ['s'], // tercera persona
-      structure: 'subject(3rd) + verb-s + preposition + place',
       commonErrors: {
-        missingThirdPerson: {
-          pattern: /she\s+work\s+(in|at)/i,
-          message: "❌ Filtro: 3ra Persona (-s). 'She' exige la marca '-s' en el verbo.",
-          example: "✅ Correcto: 'She WORKS in an office'"
-        },
-        wrongPronoun: {
-          pattern: /her\s+works?/i,
-          message: "❌ Filtro: Pronombre objeto. 'Her' es objeto, necesitas 'She' (sujeto).",
-          example: "✅ Correcto: 'SHE works...' (no 'Her works')"
-        }
+        missingThirdPerson: { pattern: /she\s+work\s+(in|at)/i, message: "❌ Filtro: 3ra Persona (-s). 'She' exige la marca '-s' en el verbo.", example: "✅ Correcto: 'She WORKS in an office'" },
+        wrongPronoun: { pattern: /her\s+works?/i, message: "❌ Filtro: Pronombre objeto. 'Her' es objeto, necesitas 'She' (sujeto).", example: "✅ Correcto: 'SHE works...' (no 'Her works')" }
       }
     },
     filter: "third_person",
-    nbf: "La '-s' en tercera persona es marcador morfológico de supervivencia."
+    feedback: { correct: "✅ Estructura NBF Correcta. La '-s' es marcador morfológico de supervivencia." }
   },
   {
     prompt: "No tengo dinero.",
-    correctPatterns: [
-      /i\s+(do\s+not|don't)\s+have\s+money/i,
-      /i\s+(do\s+not|don't)\s+have\s+any\s+money/i
-    ],
+    correctPatterns: [/i\s+(do\s+not|don't)\s+have\s+money/i, /i\s+(do\s+not|don't)\s+have\s+any\s+money/i],
     rules: {
-      required: ['i', 'have', 'money'],
-      mustHaveAux: ['do', "don't"],
-      structure: 'subject + auxiliary(negative) + verb + object',
       commonErrors: {
-        directNegation: {
-          pattern: /i\s+(no|not)\s+have/i,
-          message: "❌ Filtro: Negación Directa. En español 'no tengo', en inglés necesitas 'don't have'.",
-          example: "✅ Correcto: 'I DON'T have money'"
-        },
-        missingAuxiliary: {
-          pattern: /i\s+have\s+no\s+money/i,
-          message: "⚠️ Aunque es gramatical, suena formal. Lo natural es: 'I don't have money'",
-          example: "✅ Más natural: 'I DON'T have money'"
-        }
+        directNegation: { pattern: /i\s+(no|not)\s+have/i, message: "❌ Filtro: Negación Directa. En español 'no tengo', en inglés necesitas 'don't have'.", example: "✅ Correcto: 'I DON'T have money'" }
       }
     },
     filter: "auxiliary_missing",
-    nbf: "El auxiliar 'don't' lleva la negación, no el verbo principal."
+    feedback: { correct: "✅ Estructura NBF Correcta. El auxiliar 'don't' lleva la negación." }
   },
   {
     prompt: "Me gusta el café.",
-    correctPatterns: [
-      /i\s+like\s+coffee/i,
-      /i\s+like\s+the\s+coffee/i
-    ],
+    correctPatterns: [/i\s+like\s+coffee/i, /i\s+like\s+the\s+coffee/i],
+    acceptableVerbs: ['like', 'love', 'enjoy', 'prefer'], // ✅ NUEVO: Acepta sinónimos estructurales
     rules: {
-      required: ['i', 'like', 'coffee'],
-      structure: 'subject + verb + object',
       commonErrors: {
-        literalTranslation: {
-          pattern: /me\s+like/i,
-          message: "❌ Filtro: Traducción Literal. 'Me gusta' NO es 'Me like'. El inglés usa Sujeto + Verbo.",
-          example: "✅ Correcto: 'I like coffee' (no 'Me like')"
-        },
-        wrongVerb: {
-          pattern: /me\s+likes/i,
-          message: "❌ Doble error: Pronombre objeto + verbo conjugado. Necesitas 'I like'.",
-          example: "✅ Correcto: 'I LIKE coffee'"
-        }
+        literalTranslation: { pattern: /me\s+like/i, message: "❌ Filtro: Traducción Literal. 'Me gusta' NO es 'Me like'. El inglés usa Sujeto + Verbo.", example: "✅ Correcto: 'I like coffee' (no 'Me like')" }
       }
     },
     filter: "literal_translation",
-    nbf: "El inglés prioriza Sujeto + Verbo, no Objeto + Verbo como el español."
+    feedback: { correct: "✅ Estructura SVO Correcta. NBF prioriza Sujeto + Verbo + Objeto." }
   },
   {
     prompt: "Necesito ir al banco.",
-    correctPatterns: [
-      /i\s+need\s+to\s+go\s+to\s+(the\s+)?bank/i,
-      /i\s+need\s+to\s+go\s+to\s+bank/i
-    ],
+    correctPatterns: [/i\s+need\s+to\s+go\s+to\s+(the\s+)?bank/i, /i\s+need\s+to\s+go\s+to\s+bank/i],
     rules: {
-      required: ['need', 'go', 'bank'],
-      mustHave: ['to'], // necesita 'to' antes de go
-      structure: 'subject + need + to + verb + to + place',
       commonErrors: {
-        missingToBeforeGo: {
-          pattern: /need\s+go/i,
-          message: "❌ Filtro: Activación sin 'to'. 'Need' requiere 'to' antes del verbo.",
-          example: "✅ Correcto: 'I need TO go to the bank'"
-        },
-        missingToBeforeBank: {
-          pattern: /go\s+the\s+bank/i,
-          message: "⚠️ Falta 'to' antes de 'the bank'. 'Go' requiere 'to' para dirección.",
-          example: "✅ Correcto: 'I need to go TO the bank'"
-        }
+        missingToBeforeGo: { pattern: /need\s+go/i, message: "❌ Filtro: Activación sin 'to'. 'Need' requiere 'to' antes del verbo.", example: "✅ Correcto: 'I need TO go to the bank'" },
+        missingToBeforeBank: { pattern: /go\s+the\s+bank/i, message: "⚠️ Falta 'to' antes de 'the bank'. 'Go' requiere 'to' para dirección.", example: "✅ Correcto: 'I need to go TO the bank'" }
       }
     },
     filter: "preposition_error",
-    nbf: "La preposición 'to' convierte el objeto en función verbal y de dirección."
+    feedback: { correct: "✅ Estructura NBF Correcta. 'To' activa el sustantivo funcional." }
   },
   {
     prompt: "¿Dónde vives?",
-    correctPatterns: [
-      /where\s+do\s+you\s+live/i,
-      /where\s+do\s+you\s+live\s*\?/i
-    ],
+    correctPatterns: [/where\s+do\s+you\s+live/i, /where\s+do\s+you\s+live\s*\?/i],
     rules: {
-      required: ['where', 'do', 'you', 'live'],
-      structure: 'wh-word + auxiliary + subject + verb',
       commonErrors: {
-        missingAuxiliary: {
-          pattern: /^where\s+you\s+live/i,
-          message: "❌ Filtro: Pregunta sin Auxiliar. 'Where' no activa el verbo por sí solo.",
-          example: "✅ Correcto: 'Where DO you live?'"
-        },
-        wrongVerb: {
-          pattern: /where\s+do\s+you\s+stay/i,
-          message: "⚠️ 'Stay' es temporal. Para residencia permanente usa 'live'.",
-          example: "✅ Mejor: 'Where do you LIVE?'"
-        }
+        missingAuxiliary: { pattern: /^where\s+you\s+live/i, message: "❌ Filtro: Pregunta sin Auxiliar. 'Where' no activa el verbo por sí solo.", example: "✅ Correcto: 'Where DO you live?'" },
+        wrongVerb: { pattern: /where\s+do\s+you\s+stay/i, message: "⚠️ 'Stay' es temporal. Para residencia permanente usa 'live'.", example: "✅ Mejor: 'Where do you LIVE?'" }
       }
     },
     filter: "auxiliary_missing",
-    nbf: "Las preguntas 'Wh-' también requieren auxiliar 'do' para ensamblarse."
+    feedback: { correct: "✅ Estructura NBF Correcta. Las preguntas 'Wh-' también requieren auxiliar 'do'." }
   },
   {
     prompt: "Él no come carne.",
-    correctPatterns: [
-      /he\s+(does\s+not|doesn't)\s+eat\s+meat/i,
-      /he\s+(does\s+not|doesn't)\s+eat\s+any\s+meat/i
-    ],
+    correctPatterns: [/he\s+(does\s+not|doesn't)\s+eat\s+meat/i, /he\s+(does\s+not|doesn't)\s+eat\s+any\s+meat/i],
     rules: {
-      required: ['he', 'eat', 'meat'],
-      mustHaveAux: ['does', "doesn't"],
-      structure: 'subject(3rd) + auxiliary(negative) + verb(base) + object',
       commonErrors: {
-        wrongAuxiliary: {
-          pattern: /he\s+(don't|do\s+not)\s+eat/i,
-          message: "❌ Filtro: Auxiliar incorrecto. 'He' (3ra persona) requiere 'doesn't', no 'don't'.",
-          example: "✅ Correcto: 'He DOESN'T eat meat'"
-        },
-        doubleMarking: {
-          pattern: /doesn't\s+eats/i,
-          message: "❌ Doble marca: 'Doesn't' ya lleva la 3ra persona. El verbo va en forma base.",
-          example: "✅ Correcto: 'He doesn't EAT' (no 'doesn't eats')"
-        },
-        directNegation: {
-          pattern: /he\s+no\s+eat/i,
-          message: "❌ Filtro: Negación directa del español. Necesitas 'doesn't'.",
-          example: "✅ Correcto: 'He DOESN'T eat meat'"
-        }
+        wrongAuxiliary: { pattern: /he\s+(don't|do\s+not)\s+eat/i, message: "❌ Filtro: Auxiliar incorrecto. 'He' (3ra persona) requiere 'doesn't', no 'don't'.", example: "✅ Correcto: 'He DOESN'T eat meat'" },
+        doubleMarking: { pattern: /doesn't\s+eats/i, message: "❌ Doble marca: 'Doesn't' ya lleva la 3ra persona. El verbo va en forma base.", example: "✅ Correcto: 'He doesn't EAT' (no 'doesn't eats')" },
+        directNegation: { pattern: /he\s+no\s+eat/i, message: "❌ Filtro: Negación directa del español. Necesitas 'doesn't'.", example: "✅ Correcto: 'He DOESN'T eat meat'" }
       }
     },
     filter: "third_person",
-    nbf: "'Doesn't' ya contiene la marca de 3ra persona. El verbo principal va en forma base."
+    feedback: { correct: "✅ Estructura NBF Correcta. 'Doesn't' ya contiene la marca de 3ra persona." }
   }
 ];
 
-// VARIABLES DE ESTADO
 let currentQ = 0;
 let answers = [];
 let startTime = Date.now();
 let mediaRecorder;
 let audioChunks = [];
 
-// FUNCIONES PRINCIPALES
 function startQuiz() {
   document.getElementById('intro-screen').classList.add('hidden');
   document.getElementById('quiz-screen').classList.remove('hidden');
@@ -486,71 +334,41 @@ function loadQuestion() {
 }
 
 function validateAnswer(userText, question) {
-  const text = userText.toLowerCase().trim();
+  const text = userText.toLowerCase().trim().replace(/[.,!?;:]/g, '');
   
-  // 1. Verificar patrones correctos
+  // 1. Verificar patrón exacto/correcto
   const isCorrect = question.correctPatterns.some(pattern => pattern.test(text));
-  
   if (isCorrect) {
-    return {
-      correct: true,
-      message: "✅ Estructura NBF Correcta.",
-      example: `Correcto: '${question.correctPatterns[0].source.replace(/[\/^$]/g, '')}'`
-    };
+    return { correct: true, message: question.feedback.correct, example: "" };
   }
   
-  // 2. Verificar errores comunes
+  // 2. Verificar errores NBF específicos
   for (const [errorType, errorConfig] of Object.entries(question.rules.commonErrors)) {
     if (errorConfig.pattern.test(text)) {
+      return { correct: false, message: errorConfig.message, example: errorConfig.example, errorType };
+    }
+  }
+  
+  // 3. ✅ VALIDACIÓN ESTRUCTURAL CON SINÓNIMOS (NUEVO)
+  if (question.acceptableVerbs) {
+    const words = text.split(/\s+/);
+    const verbIndex = words.findIndex(w => question.acceptableVerbs.includes(w));
+    const hasSubject = words.length >= 3 && (words[0] === 'i' || words[0] === 'you' || words[0] === 'we' || words[0] === 'they' || words[0] === 'he' || words[0] === 'she' || words[0] === 'it');
+    
+    if (verbIndex > 0 && hasSubject) {
       return {
-        correct: false,
-        message: errorConfig.message,
-        example: errorConfig.example,
-        errorType: errorType
+        correct: true,
+        message: "✅ Estructura SVO Correcta.",
+        example: `💡 '${words[verbIndex]}' es válido estructuralmente. NBF prioriza la arquitectura Sujeto + Verbo + Objeto sobre el vocabulario exacto.`
       };
     }
   }
   
-  // 3. Verificar elementos requeridos
-  const missingElements = question.rules.required.filter(element => !text.includes(element.toLowerCase()));
-  if (missingElements.length > 0) {
-    return {
-      correct: false,
-      message: `❌ Faltan elementos: ${missingElements.join(', ')}`,
-      example: `✅ Debe incluir: ${question.rules.structure}`
-    };
-  }
-  
-  // 4. Verificar 'must have' (como 's' en 3ra persona)
-  if (question.rules.mustHave) {
-    for (const must of question.rules.mustHave) {
-      if (!text.includes(must)) {
-        return {
-          correct: false,
-          message: `❌ Falta '${must}' requerido en esta estructura.`,
-          example: `✅ Estructura: ${question.rules.structure}`
-        };
-      }
-    }
-  }
-  
-  // 5. Verificar auxiliar requerido
-  if (question.rules.mustHaveAux) {
-    const hasAux = question.rules.mustHaveAux.some(aux => text.includes(aux.toLowerCase()));
-    if (!hasAux) {
-      return {
-        correct: false,
-        message: `❌ Falta auxiliar. Necesitas: ${question.rules.mustHaveAux.join(' o ')}`,
-        example: `✅ Estructura: ${question.rules.structure}`
-      };
-    }
-  }
-  
-  // Si nada coincide, error genérico
+  // 4. Error genérico si nada coincide
   return {
     correct: false,
-    message: "❌ Estructura incorrecta. Revisa los elementos NBF.",
-    example: `✅ Patrón: ${question.rules.structure}`
+    message: "❌ Revisa la estructura NBF.",
+    example: `✅ Patrón esperado: ${question.correctPatterns[0].source.replace(/[\/^$\\]/g, '').replace(/s\+/g, ' ').replace(/\?/g, '')}`
   };
 }
 
@@ -561,27 +379,18 @@ function submitAnswer() {
   const q = questions[currentQ];
   const validation = validateAnswer(userText, q);
   
-  answers.push({ 
-    q: currentQ, 
-    correct: validation.correct, 
-    text: userText, 
-    filter: q.filter,
-    errorType: validation.errorType 
-  });
+  answers.push({ q: currentQ, correct: validation.correct, text: userText, filter: q.filter, errorType: validation.errorType });
   
   const fb = document.getElementById('feedback-box');
   fb.style.display = 'block';
-  fb.className = `feedback ${validation.correct ? 'correct' : 'error'}`;
   
-  let feedbackHTML = `<strong>${validation.message}</strong><br>`;
-  if (validation.example) {
-    feedbackHTML += `<div class="correct-example">${validation.example}</div>`;
+  if (validation.correct) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = `<strong>${validation.message}</strong>${validation.example ? `<div class="nbf-note">${validation.example}</div>` : ''}`;
+  } else {
+    fb.className = 'feedback error';
+    fb.innerHTML = `<strong>${validation.message}</strong><div class="nbf-note">${validation.example}</div>`;
   }
-  if (!validation.correct && q.nbf) {
-    feedbackHTML += `<div class="error-detail">💡 ${q.nbf}</div>`;
-  }
-  
-  fb.innerHTML = feedbackHTML;
   
   document.getElementById('submit-btn').classList.add('hidden');
   document.getElementById('next-btn').classList.remove('hidden');
@@ -589,11 +398,8 @@ function submitAnswer() {
 
 function nextQuestion() {
   currentQ++;
-  if (currentQ < questions.length) {
-    loadQuestion();
-  } else {
-    showResults();
-  }
+  if (currentQ < questions.length) loadQuestion();
+  else showResults();
 }
 
 function showResults() {
@@ -604,7 +410,6 @@ function showResults() {
   const score = Math.round((correctCount / questions.length) * 100);
   const time = Math.round((Date.now() - startTime) / 1000);
   
-  // Determinar filtro dominante
   const filters = answers.filter(a => !a.correct).map(a => a.filter);
   const filterCounts = {};
   filters.forEach(f => filterCounts[f] = (filterCounts[f] || 0) + 1);
@@ -623,7 +428,6 @@ function showResults() {
   document.getElementById('filter-val').textContent = filterNames[dominantFilter];
   document.getElementById('time-val').textContent = time + 's';
   
-  // Recomendación NBF
   let rec = "";
   if (score < 40) rec = "🔴 <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'autoengaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural (Pronombres + Auxiliares) antes de avanzar.";
   else if (score < 70) rec = "🟡 <strong>Fase 2: Reensamblaje Cognitivo.</strong> Tienes conocimiento fragmentado. Cometes errores sistemáticos porque tu cerebro busca 'navajas suizas' (verbos compactos) en lugar de 'piezas Lego'. Enfócate en automatizar los 7 Elementos Determinantes.";
@@ -632,7 +436,6 @@ function showResults() {
   document.getElementById('nbf-recommendation').innerHTML = `<strong>💡 Tu Ruta NBF:</strong><br>${rec}`;
 }
 
-// GRABACIÓN DE AUDIO
 async function toggleRecord() {
   const btn = document.getElementById('rec-btn');
   const status = document.getElementById('rec-status');
@@ -664,13 +467,11 @@ async function toggleRecord() {
   }
 }
 
-// COMPARTIR EN REDES
 function share(platform) {
   const score = document.getElementById('score-val').textContent;
   const filter = document.getElementById('filter-val').textContent;
   const text = `Acabo de hacer el Diagnóstico NBF de @DiscoveryMAX. Mi automatización: ${score}. Filtro dominante: ${filter}. ¿Y tú? #MetodoNBF #AprendeIngles #Neurociencia`;
   const url = window.location.href;
-  
   const urls = {
     tw: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
     fb: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
@@ -679,7 +480,6 @@ function share(platform) {
   window.open(urls[platform], '_blank', 'width=600,height=400');
 }
 
-// PREVENIR ENVÍO CON ENTER
 document.addEventListener('keypress', e => {
   if (e.key === 'Enter' && !e.shiftKey && document.getElementById('quiz-screen').classList.contains('hidden') === false) {
     e.preventDefault();
