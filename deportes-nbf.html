@@ -1,11 +1,10 @@
-<!-- Reemplaza TODO el código anterior con este -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diagnóstico Deportivo NBF - Discovery MAX</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Diagnóstico NBF | Discovery MAX</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #0A0A0A;
@@ -27,7 +26,7 @@ body {
   min-height: 100vh;
   padding: 20px;
 }
-.container { max-width: 900px; margin: 0 auto; }
+.container { max-width: 1000px; margin: 0 auto; }
 header {
   text-align: center;
   margin-bottom: 40px;
@@ -35,15 +34,25 @@ header {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 20px;
+  position: relative;
 }
 header h1 {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
   font-size: 28px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   background: linear-gradient(90deg, var(--orange), var(--green));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 header p { color: var(--muted); font-size: 14px; }
+.method-btn {
+  position: absolute; top: 20px; right: 20px;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text); padding: 8px 16px; border-radius: 20px;
+  cursor: pointer; font-size: 12px; transition: all 0.2s;
+}
+.method-btn:hover { background: rgba(255,255,255,0.1); }
 .card {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -52,57 +61,46 @@ header p { color: var(--muted); font-size: 14px; }
   margin-bottom: 20px;
 }
 .btn {
-  background: var(--orange);
-  color: #000;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
+  background: var(--orange); color: #000; border: none;
+  padding: 12px 24px; border-radius: 8px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; width: 100%;
 }
 .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(242,125,38,0.3); }
 .btn.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
 .btn.secondary:hover { background: rgba(255,255,255,0.1); }
 .input {
-  width: 100%;
-  padding: 12px;
-  background: rgba(0,0,0,0.3);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text);
-  font-size: 16px;
-  margin: 10px 0;
+  width: 100%; padding: 12px; background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); font-size: 16px; margin: 10px 0;
   font-family: 'JetBrains Mono', monospace;
 }
 .input:focus { outline: none; border-color: var(--orange); }
 .tag {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-family: 'JetBrains Mono', monospace;
-  margin-right: 8px;
+  display: inline-block; padding: 4px 8px; border-radius: 4px;
+  font-size: 11px; font-family: 'JetBrains Mono', monospace; margin-right: 8px;
 }
 .tag.spanish { background: rgba(242,125,38,0.2); color: var(--orange); }
 .feedback {
-  margin-top: 15px;
-  padding: 15px;
-  border-radius: 8px;
-  display: none;
-  border-left: 4px solid;
+  margin-top: 15px; padding: 15px; border-radius: 8px;
+  display: none; border-left: 4px solid;
 }
 .feedback.correct { background: rgba(39,174,96,0.1); border-left-color: var(--success); color: var(--success); }
 .feedback.error { background: rgba(231,76,60,0.1); border-left-color: var(--error); color: var(--error); }
-.nbf-explanation {
-  margin-top: 10px;
-  padding: 10px;
-  background: rgba(0,0,0,0.2);
-  border-radius: 6px;
-  font-size: 13px;
-  font-style: italic;
-  color: var(--muted);
+.nbf-note {
+  margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.2);
+  border-radius: 6px; font-size: 13px; font-style: italic; color: var(--muted);
 }
+.recorder {
+  display: flex; align-items: center; gap: 10px; margin: 15px 0;
+  padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;
+}
+.rec-btn {
+  width: 40px; height: 40px; border-radius: 50%; border: none;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  background: var(--orange); color: white; transition: all 0.2s;
+}
+.rec-btn.recording { background: var(--error); animation: pulse 1s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 .progress { height: 4px; background: #222; border-radius: 2px; margin: 20px 0; overflow: hidden; }
 .progress-bar { height: 100%; background: var(--orange); width: 0%; transition: width 0.3s; }
 .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
@@ -110,64 +108,113 @@ header p { color: var(--muted); font-size: 14px; }
 .stat .value { font-size: 24px; font-weight: 700; color: var(--orange); }
 .stat .label { font-size: 12px; color: var(--muted); margin-top: 5px; }
 .hidden { display: none; }
+.visualizer { display: flex; align-items: flex-end; justify-content: center; gap: 4px; height: 40px; margin: 20px 0; }
+.bar { width: 4px; background: var(--orange); border-radius: 2px; transition: height 0.2s; }
+.bar.active { animation: bounce 0.8s infinite alternate; }
+@keyframes bounce { 0% { height: 4px; } 100% { height: 28px; } }
 @media (max-width: 600px) {
   header h1 { font-size: 22px; }
   .card { padding: 16px; }
+  .method-btn { position: static; margin-top: 15px; width: 100%; }
 }
 </style>
 </head>
 <body>
 <div class="container">
   <header>
-    <h1>🏆 Diagnóstico Deportivo NBF</h1>
-    <p>"Sin sujeto no hay verbo. Sin estructura no hay fluidez."</p>
-    <p style="font-size:12px; margin-top:8px; color:var(--muted);">Experimento Comprobatorio: Teoría NBF | Toño Vicas</p>
+    <h1>🧠 Diagnóstico de Filtro Cognitivo NBF</h1>
+    <p>"No medimos tu nivel. Medimos cuánto filtra tu cerebro en español."</p>
+    <button class="method-btn" onclick="toggleMethod()">📖 Metodología NBF</button>
   </header>
 
-  <div id="intro-screen" class="card">
-    <h3 style="margin-bottom:15px;">📋 Instrucciones</h3>
+  <div id="intro" class="card">
+    <h3 style="margin-bottom:15px;">📋 Instrucciones del Experimento</h3>
     <ul style="padding-left:20px; color:var(--muted); font-size:14px; line-height:1.8;">
-      <li>Leerás una idea en <strong>español coloquial</strong> sobre deportes.</li>
+      <li>Leerás una idea en <strong>español coloquial</strong> (como la piensas internamente).</li>
       <li>Escribe tu traducción al inglés <strong>sin pensar demasiado</strong> (primera reacción cerebral).</li>
-      <li>Presiona <strong>"Verificar Estructura NBF"</strong> para recibir feedback neurocognitivo.</li>
-      <li>El sistema te explicará <strong>qué filtro español activaste</strong> y por qué.</li>
+      <li>Opcional: Graba tu voz para autoevaluación fonética.</li>
+      <li>El sistema validará <strong>estructura, no vocabulario exacto</strong>.</li>
+      <li>Recibirás feedback neurocognitivo sobre <strong>qué filtro español activaste</strong>.</li>
     </ul>
-    <button class="btn" onclick="startQuiz()" style="width:100%; margin-top:20px;">🚀 Iniciar Diagnóstico</button>
+    <button class="btn" onclick="startQuiz()">🚀 Iniciar Diagnóstico</button>
   </div>
 
-  <div id="quiz-screen" class="hidden">
-    <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
-    <div class="card" id="question-card">
+  <div id="quiz" class="hidden">
+    <div class="progress"><div class="progress-bar" id="prog"></div></div>
+    <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
         <span class="tag spanish">🇪🇸 Pensamiento Hispano</span>
-        <span id="q-counter" style="font-size:12px; color:var(--muted);">1 / 8</span>
+        <span id="counter" style="font-size:12px; color:var(--muted);">1 / 8</span>
       </div>
-      <h2 id="q-prompt" style="font-size:20px; margin-bottom:15px;"></h2>
+      <h2 id="prompt" style="font-size:20px; margin-bottom:15px;"></h2>
       
-      <textarea id="user-input" class="input" rows="2" placeholder="Escribe tu respuesta en inglés..."></textarea>
+      <textarea id="answer" class="input" rows="2" placeholder="Escribe tu respuesta en inglés..."></textarea>
+      
+      <div class="recorder">
+        <button class="rec-btn" id="recBtn" onclick="toggleRec()">🎤</button>
+        <span id="recStatus" style="font-size:12px; color:var(--muted);">Graba tu respuesta (opcional)</span>
+        <audio id="audioPlay" controls style="display:none; height:32px; width:200px;"></audio>
+      </div>
 
-      <button class="btn" id="submit-btn" onclick="submitAnswer()">✅ Verificar Estructura NBF</button>
-      
-      <div id="feedback-box" class="feedback"></div>
-      
-      <button class="btn secondary hidden" id="next-btn" onclick="nextQuestion()" style="width:100%; margin-top:15px;">Siguiente Pregunta →</button>
+      <button class="btn" id="submitBtn" onclick="validate()">✅ Verificar Estructura NBF</button>
+      <div id="feedback" class="feedback"></div>
+      <button class="btn secondary hidden" id="nextBtn" onclick="next()">Siguiente Pregunta →</button>
+    </div>
+    
+    <div class="visualizer" id="viz">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
     </div>
   </div>
 
-  <div id="results-screen" class="hidden">
+  <div id="results" class="hidden">
     <div class="card" style="text-align:center;">
-      <h2 style="color:var(--orange); margin-bottom:10px;">📊 Tu Perfil Estructural Deportivo</h2>
+      <h2 style="color:var(--orange); margin-bottom:10px;">📊 Tu Perfil Estructural</h2>
       <p style="color:var(--muted); margin-bottom:20px;">Basado en tu patrón de respuestas automáticas</p>
-      
       <div class="results-grid">
-        <div class="stat"><div class="value" id="score-val">0%</div><div class="label">Automatización</div></div>
-        <div class="stat"><div class="value" id="filter-val">-</div><div class="label">Filtro Dominante</div></div>
-        <div class="stat"><div class="value" id="time-val">0s</div><div class="label">Tiempo Promedio</div></div>
+        <div class="stat"><div class="value" id="scoreVal">0%</div><div class="label">Automatización</div></div>
+        <div class="stat"><div class="value" id="filterVal">-</div><div class="label">Filtro Dominante</div></div>
+        <div class="stat"><div class="value" id="timeVal">0s</div><div class="label">Tiempo Promedio</div></div>
       </div>
+      <div id="rec" class="card" style="background:rgba(242,125,38,0.1); border-left:3px solid var(--orange); text-align:left; margin:20px 0;"></div>
+      <button class="btn secondary" onclick="location.reload()">🔄 Repetir Diagnóstico</button>
+    </div>
+  </div>
 
-      <div id="nbf-recommendation" class="card" style="background:rgba(242,125,38,0.1); border-left:3px solid var(--orange); text-align:left; margin:20px 0;"></div>
-
-      <button class="btn secondary" onclick="location.reload()" style="width:100%; margin-top:15px;">🔄 Repetir Diagnóstico</button>
+  <div id="methodOverlay" class="hidden" style="position:fixed; inset:0; background:rgba(10,10,10,0.95); z-index:100; display:flex; align-items:center; justify-content:center; padding:20px;">
+    <div class="card" style="max-width:800px; max-height:90vh; overflow-y:auto; position:relative;">
+      <button onclick="toggleMethod()" style="position:absolute; top:15px; right:15px; background:none; border:none; color:white; font-size:20px; cursor:pointer;">✕</button>
+      <h2 style="font-family:'Playfair Display',serif; font-style:italic; margin-bottom:5px;">Metodología NBF</h2>
+      <p style="color:var(--orange); font-family:'JetBrains Mono',monospace; font-size:12px; margin-bottom:20px;">NEURO-FUNCTIONAL BLUEPRINT</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div>
+          <h3 style="color:var(--orange); margin-bottom:10px;">🧠 El Choque de Sistemas</h3>
+          <div style="padding:15px; background:rgba(255,255,255,0.05); border-radius:8px; margin-bottom:10px;">
+            <strong style="color:var(--orange);">Español: Navaja Suiza</strong>
+            <p style="font-size:13px; color:var(--muted);">Verbos compactos que cargan tiempo, persona y acción en una sola palabra.</p>
+          </div>
+          <div style="padding:15px; background:rgba(255,255,255,0.05); border-radius:8px;">
+            <strong style="color:var(--green);">Inglés: Sistema Lego</strong>
+            <p style="font-size:13px; color:var(--muted);">Sustantivos funcionales que se ensamblan pieza por pieza con activadores.</p>
+          </div>
+        </div>
+        <div>
+          <h3 style="color:var(--green); margin-bottom:10px;">📐 7 Elementos Determinantes</h3>
+          <ul style="list-style:none; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted); line-height:1.8;">
+            <li><span style="color:var(--orange);">01</span> Pronombres Personales (Botón de PLAY)</li>
+            <li><span style="color:var(--orange);">02</span> Sustantivos (Núcleo funcional)</li>
+            <li><span style="color:var(--orange);">03</span> Preposiciones (Conectores estructurales)</li>
+            <li><span style="color:var(--orange);">04</span> Adjetivos (Modificadores estáticos)</li>
+            <li><span style="color:var(--orange);">05</span> Adverbios (Modificadores dinámicos)</li>
+            <li><span style="color:var(--orange);">06</span> Palabras Auxiliares (Herramientas de ensamblaje)</li>
+            <li><span style="color:var(--orange);">07</span> Palabras Modales (Matizadores de posibilidad)</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:20px; padding:15px; background:rgba(242,125,38,0.1); border-radius:8px; font-style:italic; color:var(--muted); font-size:13px;">
+        "En inglés, el pronombre no identifica al sujeto; es el botón de PLAY que activa el sustantivo como acción funcional. Sin él, la estructura colapsa."
+      </div>
     </div>
   </div>
 
@@ -177,393 +224,237 @@ header p { color: var(--muted); font-size: 14px; }
 </div>
 
 <script>
-// BASE DE DATOS NBF - DEPORTES (8 preguntas con validación inteligente)
-const questions = [
+const Q = [
   {
     prompt: "Llevo ropa cómoda y cargo un pequeño tapete a cada clase.",
     sport: "YOGA",
-    correctPatterns: [
-      /i\s+wear\s+comfortable\s+clothes\s+and\s+carry\s+a\s+small\s+mat\s+to\s+(every|each)\s+class/i,
-      /i\s+wear\s+comfortable\s+clothes\s+and\s+bring\s+a\s+small\s+mat\s+to\s+(every|each)\s+class/i
-    ],
-    rules: {
-      required: ['i','wear','clothes','carry','mat','class'],
-      structure: 'subject + verb1 + object1 + and + verb2 + object2 + preposition + time',
-      nbfNote: "✅ Estructura NBF: Dos sustantivos funcionales ('wear' y 'carry') activados por el mismo sujeto 'I', unidos por 'and'."
-    },
-    filter: "subject_omission",
-    commonErrors: {
-      missingSubject: {
-        pattern: /^(wear|carry|bring)/i,
-        message: "❌ Filtro: Omisión de Sujeto. Sin 'I' al inicio, el cerebro interpreta esto como imperativo ('¡Lleva...!').",
-        example: "✅ Correcto: 'I wear comfortable clothes...'",
-        nbfExplanation: "🧠 Según NBF: El pronombre 'I' es el botón de PLAY que activa los sustantivos funcionales 'wear' y 'carry'. Sin él, no hay verbo, solo imperativo."
-      },
-      wrongVerb: {
-        pattern: /\b(use|take)\b/i,
-        message: "❌ Filtro: Verbo incorrecto. 'Use' o 'take' no son sinónimos estructurales de 'wear' o 'carry' en este contexto.",
-        example: "✅ Correcto: 'I wear... and carry...' (no 'I use... and take...')",
-        nbfExplanation: "🧠 Según NBF: Cada acción requiere su sustantivo funcional específico. 'Wear' (llevar puesto) ≠ 'use' (usar)."
-      },
-      wrongAdjective: {
-        pattern: /\blittle\s+mat\b/i,
-        message: "⚠️ 'Little mat' es gramatical pero cambia el significado. 'Small mat' es la forma natural para tamaño físico.",
-        example: "✅ Preferible: 'a small mat' (tamaño) vs 'a little mat' (afectivo)",
-        nbfExplanation: "🧠 Según NBF: 'Small' es adjetivo de tamaño objetivo; 'little' implica connotación emocional/afectiva."
-      }
+    patterns: [/i\s+wear\s+comfortable\s+clothes\s+and\s+(carry|bring)\s+a\s+small\s+mat\s+to\s+(every|each)\s+class/i],
+    rules: { req: ['i','wear','clothes','carry','mat','class'], struct: 'S + V1 + O1 + and + V2 + O2 + prep + time' },
+    errors: {
+      missSubj: { p: /^(wear|carry|bring)/i, m: "❌ Filtro: Omisión de Sujeto. Sin 'I', el cerebro interpreta imperativo.", ex: "✅ 'I wear... and carry...'" },
+      wrongVerb: { p: /\b(use|take)\b/i, m: "❌ Filtro: Verbo incorrecto. 'Use/take' no son sinónimos estructurales aquí.", ex: "✅ 'wear' (llevar puesto) ≠ 'use' (utilizar)" }
     }
   },
   {
     prompt: "No me lleva mucho tiempo bajar por la colina.",
     sport: "SKIING",
-    correctPatterns: [
-      /it\s+doesn'?t\s+take\s+me\s+long\s+to\s+go\s+down\s+(a\s+)?hill/i,
-      /it\s+does\s+not\s+take\s+me\s+long\s+to\s+go\s+down\s+(a\s+)?hill/i,
-      /it\s+doesn'?t\s+take\s+me\s+long\s+to\s+ski\s+down\s+(the\s+)?hill/i
-    ],
-    rules: {
-      required: ['it','take','me','long','to','go','down','hill'],
-      structure: 'it + auxiliary(negative) + take + object + time-adverb + to + verb + preposition + place',
-      nbfNote: "✅ Estructura NBF: 'It' como sujeto dummy + 'doesn't take' (auxiliar negativo) + infinitivo 'to go' activado."
-    },
-    filter: "auxiliary_missing",
-    commonErrors: {
-      missingAuxiliary: {
-        pattern: /it\s+take\s+me/i,
-        message: "❌ Filtro: Auxiliar Ausente. En negación, necesitas 'doesn't' antes de 'take'.",
-        example: "✅ Correcto: 'It DOESN'T take me long...'",
-        nbfExplanation: "🧠 Según NBF: El auxiliar 'doesn't' es herramienta de ensamblaje, no verbo. Sin él, la estructura se cae."
-      },
-      wrongTimeExpression: {
-        pattern: /much\s+time/i,
-        message: "⚠️ 'Much time' es correcto gramaticalmente, pero 'long' es la forma idiomática natural con 'take'.",
-        example: "✅ Más natural: 'It doesn't take me LONG' (no 'much time')",
-        nbfExplanation: "🧠 Según NBF: 'Long' funciona como adverbio de tiempo en esta estructura fija; 'much time' es traducción literal del español."
-      },
-      missingTo: {
-        pattern: /go\s+down\s+hill/i,
-        message: "❌ Filtro: Activación sin 'to'. 'Go' necesita 'to' para funcionar como sustantivo funcional después de 'take me long'.",
-        example: "✅ Correcto: '...to GO down a hill'",
-        nbfExplanation: "🧠 Según NBF: La partícula 'to' activa el sustantivo funcional 'go'. Sin 'to', es solo sustantivo, no acción."
-      }
+    patterns: [/it\s+doesn'?t\s+take\s+me\s+long\s+to\s+(go|ski)\s+down\s+(a\s+)?hill/i],
+    rules: { req: ['it','take','me','long','to','go','down','hill'], struct: 'It + Aux(neg) + take + O + time + to + V + prep + place' },
+    errors: {
+      missAux: { p: /it\s+take\s+me/i, m: "❌ Filtro: Auxiliar Ausente. En negación necesitas 'doesn't'.", ex: "✅ 'It DOESN'T take me long...'" },
+      missTo: { p: /go\s+down\s+hill/i, m: "❌ Filtro: Activación sin 'to'. 'Go' necesita 'to' para funcionar como acción.", ex: "✅ '...to GO down a hill'" }
     }
   },
   {
     prompt: "Jugamos con palos e intentamos meter el disco de hockey en la portería.",
     sport: "HOCKEY",
-    correctPatterns: [
-      /we\s+play\s+with\s+sticks\s+and\s+try\s+to\s+(hit|shoot|strike)\s+the\s+hockey\s+puck\s+into\s+(a\s+)?(net|goal)/i
-    ],
-    rules: {
-      required: ['we','play','sticks','try','to','puck','into'],
-      structure: 'subject + verb1 + preposition + object1 + and + verb2 + to + verb3 + object2 + preposition + place',
-      nbfNote: "✅ Estructura NBF: Dos acciones ('play' y 'try') unidas por 'and'; 'try' activa 'to hit' como sustantivo funcional."
-    },
-    filter: "conjunction_error",
-    commonErrors: {
-      missingSubject: {
-        pattern: /^play\s+with/i,
-        message: "❌ Filtro: Omisión de Sujeto. Sin 'We', la frase se interpreta como imperativo ('¡Juega con...!').",
-        example: "✅ Correcto: 'WE play with sticks...'",
-        nbfExplanation: "🧠 Según NBF: Sin el pronombre 'We', no hay activación de los sustantivos funcionales 'play' y 'try'."
-      },
-      wrongNoun: {
-        pattern: /\b(record|disc)\b/i,
-        message: "❌ Filtro: Sustantivo incorrecto. 'Puck' es el término específico para hockey; 'disc' o 'record' cambian el significado.",
-        example: "✅ Correcto: 'the hockey PUCK' (no 'disc' o 'record')",
-        nbfExplanation: "🧠 Según NBF: Cada deporte tiene su vocabulario específico. 'Puck' ≠ 'disc' (disco genérico)."
-      },
-      wrongVerb: {
-        pattern: /\bbeat\b/i,
-        message: "❌ Filtro: Verbo incorrecto. 'Beat' se usa para competir contra personas/equipos, no para golpear un objeto.",
-        example: "✅ Correcto: 'try to HIT/SHOOT/STRIKE the puck'",
-        nbfExplanation: "🧠 Según NBF: 'Beat' = competir/vencer (persona/equipo); 'hit/strike' = golpear (objeto)."
-      }
+    patterns: [/we\s+play\s+with\s+sticks\s+and\s+try\s+to\s+(hit|shoot|strike)\s+the\s+hockey\s+puck\s+into\s+(a\s+)?(net|goal)/i],
+    rules: { req: ['we','play','sticks','try','to','puck','into'], struct: 'S + V1 + prep + O1 + and + V2 + to + V3 + O2 + prep + place' },
+    errors: {
+      missSubj: { p: /^play\s+with/i, m: "❌ Filtro: Omisión de Sujeto. 'Play' sin 'We' = orden.", ex: "✅ 'WE play with sticks...'" },
+      wrongNoun: { p: /\b(record|disc)\b/i, m: "❌ Filtro: Sustantivo incorrecto. 'Puck' es término específico.", ex: "✅ 'the hockey PUCK'" }
     }
   },
   {
     prompt: "Jugamos con raquetas e intentamos pasar la pelota por encima de la red.",
     sport: "TENNIS",
-    correctPatterns: [
-      /we\s+play\s+with\s+racquets?\s+and\s+try\s+to\s+hit\s+the\s+ball\s+over\s+(a\s+)?net/i
-    ],
-    rules: {
-      required: ['we','play','racquet','try','to','ball','over','net'],
-      structure: 'subject + verb1 + with + object1 + and + verb2 + to + verb3 + object2 + preposition + place',
-      nbfNote: "✅ Estructura NBF: Mismo patrón que hockey: sujeto + dos verbos unidos por 'and' + 'to' activando la segunda acción."
-    },
-    filter: "preposition_error",
-    commonErrors: {
-      missingSubject: {
-        pattern: /^play\s+with/i,
-        message: "❌ Filtro: Omisión de Sujeto. 'Play' sin sujeto = imperativo.",
-        example: "✅ Correcto: 'WE play with racquets...'",
-        nbfExplanation: "🧠 Según NBF: El sujeto 'We' es obligatorio para activar 'play' y 'try' como acciones."
-      },
-      wrongPreposition: {
-        pattern: /\bthrough\s+the\s+net\b|\bunder\s+the\s+net\b/i,
-        message: "❌ Filtro: Preposición incorrecta. En tenis, la pelota va 'over' (por encima) de la red, no 'through' (a través) ni 'under' (debajo).",
-        example: "✅ Correcto: 'hit the ball OVER the net'",
-        nbfExplanation: "🧠 Según NBF: 'Over' indica dirección por encima de una superficie; 'through' = atravesar; 'under' = debajo."
-      }
+    patterns: [/we\s+play\s+with\s+racquets?\s+and\s+try\s+to\s+hit\s+the\s+ball\s+over\s+(a\s+)?net/i],
+    rules: { req: ['we','play','racquet','try','to','ball','over','net'], struct: 'S + V1 + with + O1 + and + V2 + to + V3 + O2 + prep + place' },
+    errors: {
+      missSubj: { p: /^play\s+with/i, m: "❌ Filtro: Omisión de Sujeto.", ex: "✅ 'WE play with racquets...'" },
+      wrongPrep: { p: /\bthrough\s+the\s+net\b|\bunder\s+the\s+net\b/i, m: "❌ Filtro: Preposición incorrecta. La pelota va 'over' (por encima).", ex: "✅ 'hit the ball OVER the net'" }
     }
   },
   {
     prompt: "Esto lo hacemos en parejas. Por lo general llevamos ropa blanca y un cinturón oscuro.",
     sport: "KARATE",
-    correctPatterns: [
-      /we\s+do\s+this\s+in\s+pairs\.?\s*we\s+usually\s+wear\s+white\s+clothes\s+and\s+a\s+dark\s+belt/i
-    ],
-    rules: {
-      required: ['we','do','this','in','pairs','wear','white','clothes','dark','belt'],
-      structure: 'sentence1: subject+verb+object+preposition+place | sentence2: subject+adverb+verb+adjective+object+and+adjective+object',
-      nbfNote: "✅ Estructura NBF: Dos oraciones independientes. Cada una con su propio sujeto 'We' activando sus verbos."
-    },
-    filter: "sentence_structure",
-    commonErrors: {
-      missingSubjectSecondSentence: {
-        pattern: /in\s+pairs\.?\s*usually\s+wear/i,
-        message: "❌ Filtro: Omisión de Sujeto en segunda oración. Cada oración independiente requiere su propio sujeto.",
-        example: "✅ Correcto: '...in pairs. WE usually wear...'",
-        nbfExplanation: "🧠 Según NBF: Cada oración independiente necesita su propio 'botón de PLAY' (pronombre sujeto)."
-      },
-      wrongVerb: {
-        pattern: /\buse\s+white\s+clothes\b/i,
-        message: "⚠️ 'Use' es gramatical, pero 'wear' es el verbo natural para ropa. NBF prioriza el vocabulario contextual.",
-        example: "✅ Más natural: 'we WEAR white clothes'",
-        nbfExplanation: "🧠 Según NBF: 'Wear' = llevar puesto (ropa); 'use' = utilizar (herramienta/objeto)."
-      }
+    patterns: [/we\s+do\s+this\s+in\s+pairs\.?\s*we\s+usually\s+wear\s+white\s+clothes\s+and\s+a\s+dark\s+belt/i],
+    rules: { req: ['we','do','this','in','pairs','wear','white','clothes','dark','belt'], struct: 'Oración 1: S+V+O+prep+place | Oración 2: S+adv+V+adj+O+and+adj+O' },
+    errors: {
+      missSubj2: { p: /in\s+pairs\.?\s*usually\s+wear/i, m: "❌ Filtro: Omisión de Sujeto en 2da oración. Cada oración independiente requiere su propio activador.", ex: "✅ '...in pairs. WE usually wear...'" },
+      wrongVerb: { p: /\buse\s+white\s+clothes\b/i, m: "⚠️ 'Use' es gramatical, pero 'wear' es el verbo natural para ropa.", ex: "✅ 'we WEAR white clothes'" }
     }
   },
   {
     prompt: "Le damos vueltas a una pista lo más rápido posible.",
     sport: "RUNNING",
-    correctPatterns: [
-      /we\s+go\s+around\s+a\s+track\s+as\s+fast\s+as\s+possible/i
-    ],
-    rules: {
-      required: ['we','go','around','track','as','fast','as','possible'],
-      structure: 'subject + verb + preposition + object + as + adverb + as + possible',
-      nbfNote: "✅ Estructura NBF: Comparativo de igualdad 'as...as' + 'possible' como adjetivo final."
-    },
-    filter: "comparative_structure",
-    commonErrors: {
-      missingSubject: {
-        pattern: /^go\s+around/i,
-        message: "❌ Filtro: Omisión de Sujeto. 'Go' sin sujeto = orden.",
-        example: "✅ Correcto: 'WE go around a track...'",
-        nbfExplanation: "🧠 Según NBF: Sin 'We', 'go' se interpreta como imperativo, no como acción declarativa."
-      },
-      wrongComparative: {
-        pattern: /\bso\s+fast\s+as\s+possible\b|\bvery\s+fast\s+possible\b/i,
-        message: "❌ Filtro: Estructura comparativa incorrecta. La forma fija es 'as + adjetivo + as + possible'.",
-        example: "✅ Correcto: 'as FAST as possible'",
-        nbfExplanation: "🧠 Según NBF: 'As...as' es estructura fija de comparación de igualdad; 'so...as' es arcaico/negativo."
-      }
+    patterns: [/we\s+go\s+around\s+a\s+track\s+as\s+fast\s+as\s+possible/i],
+    rules: { req: ['we','go','around','track','as','fast','as','possible'], struct: 'S + V + prep + O + as + adv + as + possible' },
+    errors: {
+      missSubj: { p: /^go\s+around/i, m: "❌ Filtro: Omisión de Sujeto.", ex: "✅ 'WE go around a track...'" },
+      wrongComp: { p: /\bso\s+fast\s+as\s+possible\b|\bvery\s+fast\s+possible\b/i, m: "❌ Filtro: Estructura comparativa incorrecta. Forma fija: 'as + adj + as + possible'.", ex: "✅ 'as FAST as possible'" }
     }
   },
   {
     prompt: "Jugamos en equipos y golpeamos una pelota grande por encima de la red con las manos.",
     sport: "VOLLEYBALL",
-    correctPatterns: [
-      /we\s+play\s+in\s+teams\s+and\s+hit\s+a\s+large\s+ball\s+over\s+(a\s+)?net\s+with\s+(our\s+)?hands/i
-    ],
-    rules: {
-      required: ['we','play','teams','hit','ball','over','net','with','hands'],
-      structure: 'subject + verb1 + in + object1 + and + verb2 + article + adjective + object2 + preposition1 + place + preposition2 + instrument',
-      nbfNote: "✅ Estructura NBF: Tres preposiciones en cadena: 'in teams' (modo), 'over net' (dirección), 'with hands' (instrumento)."
-    },
-    filter: "preposition_chain",
-    commonErrors: {
-      missingSubject: {
-        pattern: /^play\s+in\s+teams/i,
-        message: "❌ Filtro: Omisión de Sujeto. Cada verbo principal requiere su sujeto explícito.",
-        example: "✅ Correcto: 'WE play in teams...'",
-        nbfExplanation: "🧠 Según NBF: El pronombre 'We' activa ambos verbos 'play' y 'hit' como acciones coordinadas."
-      },
-      wrongPrepositionOrder: {
-        pattern: /with\s+hands\s+over\s+net/i,
-        message: "⚠️ El orden natural en inglés es: acción + dirección + instrumento. 'Over the net with hands' suena más natural.",
-        example: "✅ Preferible: 'hit... over the net WITH hands'",
-        nbfExplanation: "🧠 Según NBF: El orden de preposiciones sigue la lógica: MODO → DIRECCIÓN → INSTRUMENTO."
-      }
+    patterns: [/we\s+play\s+in\s+teams\s+and\s+hit\s+a\s+large\s+ball\s+over\s+(a\s+)?net\s+with\s+(our\s+)?hands/i],
+    rules: { req: ['we','play','teams','hit','ball','over','net','with','hands'], struct: 'S + V1 + in + O1 + and + V2 + art + adj + O2 + prep1 + place + prep2 + instrument' },
+    errors: {
+      missSubj: { p: /^play\s+in\s+teams/i, m: "❌ Filtro: Omisión de Sujeto.", ex: "✅ 'WE play in teams...'" },
+      wrongOrder: { p: /with\s+hands\s+over\s+net/i, m: "⚠️ Orden natural: acción + dirección + instrumento.", ex: "✅ 'hit... over the net WITH hands'" }
     }
   },
   {
     prompt: "Esto lo hago dos o tres veces por semana en una piscina al aire libre.",
     sport: "SWIMMING",
-    correctPatterns: [
-      /i\s+do\s+this\s+(two|2)\s+(or|-)?\s+(three|3)\s+times\s+a\s+week\s+at\s+an?\s+outdoor\s+pool/i
-    ],
-    rules: {
-      required: ['i','do','this','times','week','at','pool'],
-      structure: 'subject + verb + object + frequency + preposition + place',
-      nbfNote: "✅ Estructura NBF: Frecuencia ('two or three times a week') va ANTES del lugar ('at an outdoor pool')."
-    },
-    filter: "adverbial_order",
-    commonErrors: {
-      missingSubject: {
-        pattern: /^do\s+this/i,
-        message: "❌ Filtro: Omisión de Sujeto. 'Do' sin 'I' = imperativo.",
-        example: "✅ Correcto: 'I do this...'",
-        nbfExplanation: "🧠 Según NBF: El pronombre 'I' es el activador del sustantivo funcional 'do'."
-      },
-      wrongOrder: {
-        pattern: /at\s+an?\s+outdoor\s+pool\s+.*\s+times\s+a\s+week/i,
-        message: "⚠️ En inglés, la frecuencia generalmente va ANTES del lugar específico.",
-        example: "✅ Preferible: '...times a week AT an outdoor pool'",
-        nbfExplanation: "🧠 Según NBF: El orden adverbial en inglés es: MODO → FRECUENCIA → LUGAR → TIEMPO."
-      }
+    patterns: [/i\s+do\s+this\s+(two|2)\s+(or|-)?\s+(three|3)\s+times\s+a\s+week\s+at\s+an?\s+outdoor\s+pool/i],
+    rules: { req: ['i','do','this','times','week','at','pool'], struct: 'S + V + O + frequency + prep + place' },
+    errors: {
+      missSubj: { p: /^do\s+this/i, m: "❌ Filtro: Omisión de Sujeto.", ex: "✅ 'I do this...'" },
+      wrongOrder: { p: /at\s+an?\s+outdoor\s+pool\s+.*\s+times\s+a\s+week/i, m: "⚠️ En inglés, frecuencia va ANTES del lugar específico.", ex: "✅ '...times a week AT an outdoor pool'" }
     }
   }
 ];
 
-// VARIABLES DE ESTADO
-let currentQ = 0;
-let answers = [];
-let startTime = Date.now();
+let cur = 0, ans = [], start = Date.now(), rec = null, chunks = [];
+const $ = id => document.getElementById(id);
 
-// FUNCIONES PRINCIPALES
 function startQuiz() {
-  document.getElementById('intro-screen').classList.add('hidden');
-  document.getElementById('quiz-screen').classList.remove('hidden');
-  loadQuestion();
+  $('intro').classList.add('hidden');
+  $('quiz').classList.remove('hidden');
+  load();
 }
 
-function loadQuestion() {
-  const q = questions[currentQ];
-  document.getElementById('q-prompt').textContent = `"${q.prompt}"`;
-  document.getElementById('q-counter').textContent = `${currentQ + 1} / ${questions.length}`;
-  document.getElementById('progress-bar').style.width = `${((currentQ) / questions.length) * 100}%`;
-  document.getElementById('user-input').value = '';
-  document.getElementById('feedback-box').style.display = 'none';
-  document.getElementById('feedback-box').className = 'feedback';
-  document.getElementById('submit-btn').classList.remove('hidden');
-  document.getElementById('next-btn').classList.add('hidden');
-  document.getElementById('user-input').focus();
+function load() {
+  const q = Q[cur];
+  $('prompt').textContent = `"${q.prompt}"`;
+  $('counter').textContent = `${cur + 1} / ${Q.length}`;
+  $('prog').style.width = `${(cur / Q.length) * 100}%`;
+  $('answer').value = '';
+  $('feedback').style.display = 'none';
+  $('feedback').className = 'feedback';
+  $('submitBtn').classList.remove('hidden');
+  $('nextBtn').classList.add('hidden');
+  $('audioPlay').style.display = 'none';
+  $('recStatus').textContent = 'Graba tu respuesta (opcional)';
+  $('recBtn').classList.remove('recording');
+  $('answer').focus();
 }
 
-function validateAnswer(userText, question) {
-  const text = userText.toLowerCase().trim().replace(/[.,!?;:]/g, '');
+function validate() {
+  const txt = $('answer').value.trim();
+  if (!txt) return alert('⚠️ Escribe una respuesta antes de verificar.');
   
-  // 1. Verificar patrón correcto
-  const isCorrect = question.correctPatterns.some(pattern => pattern.test(text));
-  if (isCorrect) {
-    return { correct: true, message: "✅ Estructura NBF Correcta.", example: question.rules.nbfNote };
-  }
-  
-  // 2. Verificar errores comunes específicos
-  for (const [errorType, errorConfig] of Object.entries(question.commonErrors)) {
-    if (errorConfig.pattern.test(text)) {
-      return { 
-        correct: false, 
-        message: errorConfig.message, 
-        example: errorConfig.example,
-        nbfExplanation: errorConfig.nbfExplanation,
-        errorType 
-      };
+  const q = Q[cur];
+  const clean = txt.toLowerCase().replace(/[.,!?;:]/g, '');
+  let valid = q.patterns.some(p => p.test(clean));
+  let err = null;
+
+  if (!valid) {
+    for (const [k, v] of Object.entries(q.errors)) {
+      if (v.p.test(clean)) { err = v; break; }
     }
+    if (!err) err = { m: "❌ Revisa la estructura NBF.", ex: `✅ Patrón: ${q.struct}` };
   }
-  
-  // 3. Error genérico
-  return {
-    correct: false,
-    message: "❌ Revisa la estructura NBF.",
-    example: `✅ Patrón esperado: ${question.rules.structure}`,
-    nbfExplanation: question.rules.nbfNote,
-    errorType: "structure_error"
-  };
-}
 
-function submitAnswer() {
-  const userText = document.getElementById('user-input').value.trim();
-  if (!userText) return alert('⚠️ Escribe una respuesta antes de verificar.');
+  // Aceptación de sinónimos estructurales
+  const verbs = ['like','love','enjoy','prefer','hit','shoot','strike','go','run','play'];
+  const words = clean.split(/\s+/);
+  const hasVerb = words.some(w => verbs.includes(w));
+  const hasSubj = ['i','you','he','she','it','we','they'].includes(words[0]);
+  if (hasSubj && hasVerb && words.length >= 3 && !valid) {
+    valid = true;
+    err = { m: "✅ Estructura SVO Correcta.", ex: `💡 '${words.find(w=>verbs.includes(w))}' es válido estructuralmente. NBF prioriza arquitectura Sujeto+Verbo+Objeto.` };
+  }
+
+  ans.push({ q: cur, valid, txt, err: err ? err.m : '' });
   
-  const q = questions[currentQ];
-  const validation = validateAnswer(userText, q);
-  
-  answers.push({ 
-    q: currentQ, 
-    correct: validation.correct, 
-    text: userText, 
-    filter: q.filter,
-    errorType: validation.errorType 
-  });
-  
-  const fb = document.getElementById('feedback-box');
+  const fb = $('feedback');
   fb.style.display = 'block';
-  
-  if (validation.correct) {
+  if (valid) {
     fb.className = 'feedback correct';
-    fb.innerHTML = `<strong>${validation.message}</strong><div class="nbf-explanation">${validation.example}</div>`;
+    fb.innerHTML = `<strong>${err ? err.m : "✅ Estructura NBF Correcta."}</strong><div class="nbf-note">${err ? err.ex : q.rules.struct}</div>`;
   } else {
     fb.className = 'feedback error';
-    fb.innerHTML = `
-      <strong>${validation.message}</strong>
-      <div class="nbf-explanation">${validation.example}</div>
-      <div class="nbf-explanation" style="margin-top:10px; border-top:1px solid var(--border); padding-top:10px;">
-        ${validation.nbfExplanation}
-      </div>
-    `;
+    fb.innerHTML = `<strong>${err.m}</strong><div class="nbf-note">${err.ex}</div>`;
   }
   
-  document.getElementById('submit-btn').classList.add('hidden');
-  document.getElementById('next-btn').classList.remove('hidden');
+  $('submitBtn').classList.add('hidden');
+  $('nextBtn').classList.remove('hidden');
 }
 
-function nextQuestion() {
-  currentQ++;
-  if (currentQ < questions.length) loadQuestion();
+function next() {
+  cur++;
+  if (cur < Q.length) load();
   else showResults();
 }
 
 function showResults() {
-  document.getElementById('quiz-screen').classList.add('hidden');
-  document.getElementById('results-screen').classList.remove('hidden');
+  $('quiz').classList.add('hidden');
+  $('results').classList.remove('hidden');
   
-  const correctCount = answers.filter(a => a.correct).length;
-  const score = Math.round((correctCount / questions.length) * 100);
-  const time = Math.round((Date.now() - startTime) / 1000);
+  const correct = ans.filter(a => a.valid).length;
+  const score = Math.round((correct / Q.length) * 100);
+  const time = Math.round((Date.now() - start) / 1000);
   
-  // Determinar filtro dominante
-  const filters = answers.filter(a => !a.correct).map(a => a.filter);
-  const filterCounts = {};
-  filters.forEach(f => filterCounts[f] = (filterCounts[f] || 0) + 1);
-  const dominantFilter = Object.keys(filterCounts).reduce((a, b) => filterCounts[a] > filterCounts[b] ? a : b, 'balanced');
+  const filters = ans.filter(a => !a.valid).map(a => {
+    if (a.err.includes('Omisión')) return 'subject_omission';
+    if (a.err.includes('Auxiliar')) return 'auxiliary_missing';
+    if (a.err.includes('3ra') || a.err.includes('Persona')) return 'third_person';
+    if (a.err.includes('Literal') || a.err.includes('Traducción')) return 'literal_translation';
+    if (a.err.includes('Preposición') || a.err.includes('Activación')) return 'preposition_error';
+    return 'structure_error';
+  });
+  const counts = {};
+  filters.forEach(f => counts[f] = (counts[f] || 0) + 1);
+  const dom = Object.keys(counts).reduce((a,b) => counts[a] > counts[b] ? a : b, 'balanced');
   
-  const filterNames = {
+  const names = {
     subject_omission: "Omisión de Sujeto",
     auxiliary_missing: "Auxiliares/Modales",
-    conjunction_error: "Conjunciones",
-    preposition_error: "Preposiciones",
-    sentence_structure: "Estructura de Oración",
-    comparative_structure: "Comparativos",
-    preposition_chain: "Cadena de Preposiciones",
-    adverbial_order: "Orden Adverbial",
+    third_person: "3ra Persona (-s)",
+    literal_translation: "Traducción Literal",
+    preposition_error: "Activación Funcional",
     balanced: "Equilibrado"
   };
   
-  document.getElementById('score-val').textContent = score + '%';
-  document.getElementById('filter-val').textContent = filterNames[dominantFilter];
-  document.getElementById('time-val').textContent = time + 's';
+  $('scoreVal').textContent = score + '%';
+  $('filterVal').textContent = names[dom];
+  $('timeVal').textContent = time + 's';
   
-  // Recomendación NBF
   let rec = "";
-  if (score < 40) rec = "🔴 <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'auto-engaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural (Pronombres + Auxiliares) antes de avanzar.";
-  else if (score < 70) rec = "🟡 <strong>Fase 2: Reensamblaje Cognitivo.</strong> Tienes conocimiento fragmentado. Cometes errores sistemáticos porque tu cerebro busca 'navajas suizas' (verbos compactos) en lugar de 'piezas Lego'. Enfócate en automatizar los 7 Elementos Determinantes.";
-  else rec = "🟢 <strong>Fase 3: Integración Profunda.</strong> Tu estructura es sólida, pero aún traduces mentalmente en tiempo real. El siguiente paso es la <strong>Producción Espontánea</strong>: eliminar el 'traductor interno' mediante repetición espaciada y audio therapy.";
+  if (score < 40) rec = "🔴 <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el auto-engaño de la comprensión pasiva. El Método NBF reconfigurará tu base estructural (Pronombres + Auxiliares) antes de avanzar.";
+  else if (score < 70) rec = "🟡 <strong>Fase 2: Reensamblaje Cognitivo.</strong> Conocimiento fragmentado. Cometes errores sistemáticos porque buscas 'navajas suizas' en lugar de 'piezas Lego'. Enfócate en automatizar los 7 Elementos Determinantes.";
+  else rec = "🟢 <strong>Fase 3: Integración Profunda.</strong> Estructura sólida, pero aún traduces mentalmente. Siguiente paso: Producción Espontánea mediante repetición espaciada y audio therapy.";
   
-  document.getElementById('nbf-recommendation').innerHTML = `<strong>💡 Tu Ruta NBF Deportiva:</strong><br>${rec}`;
+  $('rec').innerHTML = `<strong>💡 Tu Ruta NBF:</strong><br>${rec}`;
 }
 
-// PREVENIR ENVÍO CON ENTER
-document.addEventListener('keypress', e => {
-  if (e.key === 'Enter' && !e.shiftKey && document.getElementById('quiz-screen').classList.contains('hidden') === false) {
-    e.preventDefault();
-    if (!document.getElementById('submit-btn').classList.contains('hidden')) submitAnswer();
-    else if (!document.getElementById('next-btn').classList.contains('hidden')) nextQuestion();
+async function toggleRec() {
+  const btn = $('recBtn'), stat = $('recStatus'), play = $('audioPlay');
+  if (!rec || rec.state === 'inactive') {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      rec = new MediaRecorder(stream);
+      chunks = [];
+      rec.ondataavailable = e => chunks.push(e.data);
+      rec.onstop = () => {
+        play.src = URL.createObjectURL(new Blob(chunks, { type: 'audio/wav' }));
+        play.style.display = 'block';
+        stat.textContent = '✅ Escúchate y verifica tu estructura.';
+      };
+      rec.start();
+      btn.classList.add('recording');
+      stat.textContent = '🔴 Grabando...';
+    } catch (e) { alert('⚠️ Permiso de micrófono denegado.'); }
+  } else {
+    rec.stop();
+    btn.classList.remove('recording');
+    stat.textContent = 'Graba tu respuesta (opcional)';
   }
-});
+}
+
+function toggleMethod() {
+  $('methodOverlay').classList.toggle('hidden');
+}
+
+// Animación visualizador
+setInterval(() => {
+  document.querySelectorAll('.bar').forEach(b => {
+    b.classList.toggle('active', Math.random() > 0.5);
+  });
+}, 800);
 </script>
 </body>
 </html>
