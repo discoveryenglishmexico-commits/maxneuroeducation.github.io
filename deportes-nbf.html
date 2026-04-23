@@ -319,36 +319,40 @@ function validate() {
   
   const q = Q[cur];
   const clean = txt.toLowerCase().replace(/[.,!?;:]/g, '');
-  let valid = q.patterns.some(p => p.test(clean));
-  let err = null;
-
-  if (!valid) {
-    for (const [k, v] of Object.entries(q.errors)) {
-      if (v.p.test(clean)) { err = v; break; }
-    }
-    if (!err) err = { m: "❌ Revisa la estructura NBF.", ex: `✅ Patrón: ${q.rules.struct}` };
-  }
-
-  // Aceptación de sinónimos estructurales
-  const verbs = ['like','love','enjoy','prefer','hit','shoot','strike','go','run','play'];
-  const words = clean.split(/\s+/);
-  const hasVerb = words.some(w => verbs.includes(w));
-  const hasSubj = ['i','you','he','she','it','we','they'].includes(words[0]);
-  if (hasSubj && hasVerb && words.length >= 3 && !valid) {
-    valid = true;
-    err = { m: "✅ Estructura SVO Correcta.", ex: `💡 '${words.find(w=>verbs.includes(w))}' es válido estructuralmente. NBF prioriza arquitectura Sujeto+Verbo+Objeto.` };
-  }
-
-  ans.push({ q: cur, valid, txt, err: err ? err.m : '' });
   
-  const fb = $('feedback');
-  fb.style.display = 'block';
-  if (valid) {
+  // 1. Verificar si coincide con patrón correcto
+  const isCorrect = q.patterns.some(p => p.test(clean));
+  
+  if (isCorrect) {
+    // Respuesta correcta
+    ans.push({ q: cur, valid: true, txt });
+    const fb = $('feedback');
+    fb.style.display = 'block';
     fb.className = 'feedback correct';
-    fb.innerHTML = `<strong>${err ? err.m : "✅ Estructura NBF Correcta."}</strong><div class="nbf-note">${err ? err.ex : q.rules.struct}</div>`;
+    fb.innerHTML = `<strong>✅ Estructura NBF Correcta.</strong><div class="nbf-note">${q.rules.struct}</div>`;
   } else {
+    // Respuesta incorrecta - buscar error específico
+    let err = null;
+    for (const [k, v] of Object.entries(q.errors)) {
+      if (v.p.test(clean)) { 
+        err = v; 
+        break; 
+      }
+    }
+    
+    // Si no encontró error específico, mensaje genérico
+    if (!err) {
+      err = { m: "❌ Revisa la estructura NBF.", ex: `✅ Patrón: ${q.rules.struct}` };
+    }
+    
+    ans.push({ q: cur, valid: false, txt, err: err.m });
+    const fb = $('feedback');
+    fb.style.display = 'block';
     fb.className = 'feedback error';
-    fb.innerHTML = `<strong>${err.m}</strong><div class="nbf-note">${err.ex}</div>`;
+    fb.innerHTML = `
+      <strong>${err.m}</strong>
+      <div class="nbf-note">${err.ex}</div>
+    `;
   }
   
   $('submitBtn').classList.add('hidden');
