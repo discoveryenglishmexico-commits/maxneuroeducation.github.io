@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diagnóstico NBF | Discovery MAX</title>
+<title>Diagnóstico Deportivo NBF | Discovery MAX</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -26,7 +26,7 @@ body {
   min-height: 100vh;
   padding: 20px;
 }
-.container { max-width: 1000px; margin: 0 auto; }
+.container { max-width: 900px; margin: 0 auto; }
 header {
   text-align: center;
   margin-bottom: 40px;
@@ -34,7 +34,6 @@ header {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 20px;
-  position: relative;
 }
 header h1 {
   font-family: 'Playfair Display', serif;
@@ -46,13 +45,6 @@ header h1 {
   -webkit-text-fill-color: transparent;
 }
 header p { color: var(--muted); font-size: 14px; }
-.method-btn {
-  position: absolute; top: 20px; right: 20px;
-  background: transparent; border: 1px solid var(--border);
-  color: var(--text); padding: 8px 16px; border-radius: 20px;
-  cursor: pointer; font-size: 12px; transition: all 0.2s;
-}
-.method-btn:hover { background: rgba(255,255,255,0.1); }
 .card {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -61,43 +53,79 @@ header p { color: var(--muted); font-size: 14px; }
   margin-bottom: 20px;
 }
 .btn {
-  background: var(--orange); color: #000; border: none;
-  padding: 12px 24px; border-radius: 8px; font-weight: 600;
-  cursor: pointer; transition: all 0.2s; width: 100%;
+  background: var(--orange);
+  color: #000;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
 }
 .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(242,125,38,0.3); }
 .btn.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
 .btn.secondary:hover { background: rgba(255,255,255,0.1); }
 .input {
-  width: 100%; padding: 12px; background: rgba(0,0,0,0.3);
-  border: 1px solid var(--border); border-radius: 8px;
-  color: var(--text); font-size: 16px; margin: 10px 0;
+  width: 100%;
+  padding: 12px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 16px;
+  margin: 10px 0;
   font-family: 'JetBrains Mono', monospace;
 }
 .input:focus { outline: none; border-color: var(--orange); }
 .tag {
-  display: inline-block; padding: 4px 8px; border-radius: 4px;
-  font-size: 11px; font-family: 'JetBrains Mono', monospace; margin-right: 8px;
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  margin-right: 8px;
 }
 .tag.spanish { background: rgba(242,125,38,0.2); color: var(--orange); }
 .feedback {
-  margin-top: 15px; padding: 15px; border-radius: 8px;
-  display: none; border-left: 4px solid;
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  display: none;
+  border-left: 4px solid;
 }
 .feedback.correct { background: rgba(39,174,96,0.1); border-left-color: var(--success); color: var(--success); }
 .feedback.error { background: rgba(231,76,60,0.1); border-left-color: var(--error); color: var(--error); }
 .nbf-note {
-  margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.2);
-  border-radius: 6px; font-size: 13px; font-style: italic; color: var(--muted);
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 6px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted);
 }
 .recorder {
-  display: flex; align-items: center; gap: 10px; margin: 15px 0;
-  padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+  padding: 10px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
 }
 .rec-btn {
-  width: 40px; height: 40px; border-radius: 50%; border: none;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  background: var(--orange); color: white; transition: all 0.2s;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--orange);
+  color: white;
+  transition: all 0.2s;
 }
 .rec-btn.recording { background: var(--error); animation: pulse 1s infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
@@ -108,29 +136,24 @@ header p { color: var(--muted); font-size: 14px; }
 .stat .value { font-size: 24px; font-weight: 700; color: var(--orange); }
 .stat .label { font-size: 12px; color: var(--muted); margin-top: 5px; }
 .hidden { display: none; }
-.visualizer { display: flex; align-items: flex-end; justify-content: center; gap: 4px; height: 40px; margin: 20px 0; }
-.bar { width: 4px; background: var(--orange); border-radius: 2px; transition: height 0.2s; }
-.bar.active { animation: bounce 0.8s infinite alternate; }
-@keyframes bounce { 0% { height: 4px; } 100% { height: 28px; } }
 @media (max-width: 600px) {
   header h1 { font-size: 22px; }
   .card { padding: 16px; }
-  .method-btn { position: static; margin-top: 15px; width: 100%; }
 }
 </style>
 </head>
 <body>
 <div class="container">
   <header>
-    <h1>🧠 Diagnóstico de Filtro Cognitivo NBF</h1>
-    <p>"No medimos tu nivel. Medimos cuánto filtra tu cerebro en español."</p>
-    <button class="method-btn" onclick="toggleMethod()">📖 Metodología NBF</button>
+    <h1>🏆 Diagnóstico Deportivo NBF</h1>
+    <p>"Sin sujeto no hay verbo. Sin estructura no hay fluidez."</p>
+    <p style="font-size:12px; margin-top:8px; color:var(--muted);">Experimento Comprobatorio: Teoría NBF | Toño Vicas</p>
   </header>
 
   <div id="intro" class="card">
-    <h3 style="margin-bottom:15px;">📋 Instrucciones del Experimento</h3>
+    <h3 style="margin-bottom:15px;">📋 Instrucciones</h3>
     <ul style="padding-left:20px; color:var(--muted); font-size:14px; line-height:1.8;">
-      <li>Leerás una idea en <strong>español coloquial</strong> (como la piensas internamente).</li>
+      <li>Leerás una idea en <strong>español coloquial</strong> sobre deportes.</li>
       <li>Escribe tu traducción al inglés <strong>sin pensar demasiado</strong> (primera reacción cerebral).</li>
       <li>Opcional: Graba tu voz para autoevaluación fonética.</li>
       <li>El sistema validará <strong>estructura, no vocabulario exacto</strong>.</li>
@@ -160,17 +183,11 @@ header p { color: var(--muted); font-size: 14px; }
       <div id="feedback" class="feedback"></div>
       <button class="btn secondary hidden" id="nextBtn" onclick="next()">Siguiente Pregunta →</button>
     </div>
-    
-    <div class="visualizer" id="viz">
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-    </div>
   </div>
 
   <div id="results" class="hidden">
     <div class="card" style="text-align:center;">
-      <h2 style="color:var(--orange); margin-bottom:10px;">📊 Tu Perfil Estructural</h2>
+      <h2 style="color:var(--orange); margin-bottom:10px;">📊 Tu Perfil Estructural Deportivo</h2>
       <p style="color:var(--muted); margin-bottom:20px;">Basado en tu patrón de respuestas automáticas</p>
       <div class="results-grid">
         <div class="stat"><div class="value" id="scoreVal">0%</div><div class="label">Automatización</div></div>
@@ -179,42 +196,6 @@ header p { color: var(--muted); font-size: 14px; }
       </div>
       <div id="rec" class="card" style="background:rgba(242,125,38,0.1); border-left:3px solid var(--orange); text-align:left; margin:20px 0;"></div>
       <button class="btn secondary" onclick="location.reload()">🔄 Repetir Diagnóstico</button>
-    </div>
-  </div>
-
-  <div id="methodOverlay" class="hidden" style="position:fixed; inset:0; background:rgba(10,10,10,0.95); z-index:100; display:flex; align-items:center; justify-content:center; padding:20px;">
-    <div class="card" style="max-width:800px; max-height:90vh; overflow-y:auto; position:relative;">
-      <button onclick="toggleMethod()" style="position:absolute; top:15px; right:15px; background:none; border:none; color:white; font-size:20px; cursor:pointer;">✕</button>
-      <h2 style="font-family:'Playfair Display',serif; font-style:italic; margin-bottom:5px;">Metodología NBF</h2>
-      <p style="color:var(--orange); font-family:'JetBrains Mono',monospace; font-size:12px; margin-bottom:20px;">NEURO-FUNCTIONAL BLUEPRINT</p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-        <div>
-          <h3 style="color:var(--orange); margin-bottom:10px;">🧠 El Choque de Sistemas</h3>
-          <div style="padding:15px; background:rgba(255,255,255,0.05); border-radius:8px; margin-bottom:10px;">
-            <strong style="color:var(--orange);">Español: Navaja Suiza</strong>
-            <p style="font-size:13px; color:var(--muted);">Verbos compactos que cargan tiempo, persona y acción en una sola palabra.</p>
-          </div>
-          <div style="padding:15px; background:rgba(255,255,255,0.05); border-radius:8px;">
-            <strong style="color:var(--green);">Inglés: Sistema Lego</strong>
-            <p style="font-size:13px; color:var(--muted);">Sustantivos funcionales que se ensamblan pieza por pieza con activadores.</p>
-          </div>
-        </div>
-        <div>
-          <h3 style="color:var(--green); margin-bottom:10px;">📐 7 Elementos Determinantes</h3>
-          <ul style="list-style:none; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted); line-height:1.8;">
-            <li><span style="color:var(--orange);">01</span> Pronombres Personales (Botón de PLAY)</li>
-            <li><span style="color:var(--orange);">02</span> Sustantivos (Núcleo funcional)</li>
-            <li><span style="color:var(--orange);">03</span> Preposiciones (Conectores estructurales)</li>
-            <li><span style="color:var(--orange);">04</span> Adjetivos (Modificadores estáticos)</li>
-            <li><span style="color:var(--orange);">05</span> Adverbios (Modificadores dinámicos)</li>
-            <li><span style="color:var(--orange);">06</span> Palabras Auxiliares (Herramientas de ensamblaje)</li>
-            <li><span style="color:var(--orange);">07</span> Palabras Modales (Matizadores de posibilidad)</li>
-          </ul>
-        </div>
-      </div>
-      <div style="margin-top:20px; padding:15px; background:rgba(242,125,38,0.1); border-radius:8px; font-style:italic; color:var(--muted); font-size:13px;">
-        "En inglés, el pronombre no identifica al sujeto; es el botón de PLAY que activa el sustantivo como acción funcional. Sin él, la estructura colapsa."
-      </div>
     </div>
   </div>
 
@@ -345,7 +326,7 @@ function validate() {
     for (const [k, v] of Object.entries(q.errors)) {
       if (v.p.test(clean)) { err = v; break; }
     }
-    if (!err) err = { m: "❌ Revisa la estructura NBF.", ex: `✅ Patrón: ${q.struct}` };
+    if (!err) err = { m: "❌ Revisa la estructura NBF.", ex: `✅ Patrón: ${q.rules.struct}` };
   }
 
   // Aceptación de sinónimos estructurales
@@ -444,17 +425,6 @@ async function toggleRec() {
     stat.textContent = 'Graba tu respuesta (opcional)';
   }
 }
-
-function toggleMethod() {
-  $('methodOverlay').classList.toggle('hidden');
-}
-
-// Animación visualizador
-setInterval(() => {
-  document.querySelectorAll('.bar').forEach(b => {
-    b.classList.toggle('active', Math.random() > 0.5);
-  });
-}, 800);
 </script>
 </body>
 </html>
