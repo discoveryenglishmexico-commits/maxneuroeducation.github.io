@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discovery MAX | Neuroeducation Series</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #F27D26;
+  --green: #00FF00;
+  --dark: #0A0A0A;
+  --paper: #F5F2ED;
+  --cyan: #00FFFF;
+  --purple: #FF00FF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--dark);
+  color: var(--paper);
+  overflow-x: hidden;
+}
+
+/* Animaciones */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(242, 125, 38, 0.5); }
+  50% { box-shadow: 0 0 60px rgba(242, 125, 38, 0.8), 0 0 100px rgba(0, 255, 0, 0.4); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Hero Section */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0A0A0A 0%, #1a1a2e 50%, #0A0A0A 100%);
+}
+
+/* Fondo Animado */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(242,125,38,0.3) 0%, transparent 70%);
+  top: -200px;
+  right: -200px;
+  animation: rotate-slow 20s linear infinite;
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0,255,0,0.2) 0%, transparent 70%);
+  bottom: -100px;
+  left: -100px;
+  animation: rotate-slow 15s linear infinite reverse;
+}
+
+/* Partículas */
+.particles {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(242,125,38,0.5) 1px, transparent 1px),
+    radial-gradient(circle at 80% 80%, rgba(0,255,0,0.3) 1px, transparent 1px),
+    radial-gradient(circle at 40% 20%, rgba(0,255,255,0.3) 1px, transparent 1px);
+  background-size: 100px 100px, 150px 150px, 80px 80px;
+  animation: float 10s ease-in-out infinite;
+}
+
+/* Contenido Hero */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 40px;
+  max-width: 1200px;
+}
+
+.logo-container {
+  margin-bottom: 40px;
+  animation: float 6s ease-in-out infinite;
+}
+
+.logo {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, var(--orange), var(--green));
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  animation: pulse-glow 3s ease-in-out infinite;
+  box-shadow: 0 20px 60px rgba(242, 125, 38, 0.4);
+}
+
+.logo svg {
+  width: 60px;
+  height: 60px;
+  fill: white;
+}
+
+.brand-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--orange), var(--green), var(--cyan), var(--orange));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 5s ease infinite;
+  margin-bottom: 10px;
+}
+
+.brand-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 40px;
+}
+
+.tagline {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 300;
+  max-width: 800px;
+  margin: 0 auto 50px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.9);
+}
+
+/* Botones */
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 18px 40px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--orange), var(--green));
+  color: var(--dark);
+  box-shadow: 0 10px 40px rgba(242, 125, 38, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 60px rgba(242, 125, 38, 0.6);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--paper);
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--orange);
+  transform: translateY(-5px);
+}
+
+/* Features Section */
+.features {
+  padding: 120px 40px;
+  background: linear-gradient(180deg, var(--dark) 0%, #1a1a2e 100%);
+  position: relative;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.section-title h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: 15px;
+  background: linear-gradient(90deg, var(--paper), var(--orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-title p {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.6);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 30px;
+  padding: 40px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--green));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(242, 125, 38, 0.3);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.feature-card:hover::before {
+  transform: scaleX(1);
+}
+
+.feature-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 25px;
+  background: linear-gradient(135deg, rgba(242,125,38,0.2), rgba(0,255,0,0.2));
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: var(--paper);
+}
+
+.feature-card p {
+  color: rgba(255,255,255,0.6);
+  line-height: 1.6;
+}
+
+/* Video Preview Section */
+.preview {
+  padding: 120px 40px;
+  background: var(--dark);
+  position: relative;
+}
+
+.preview-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.video-frame {
+  position: relative;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.5);
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+.video-placeholder {
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, rgba(242,125,38,0.1), rgba(0,255,0,0.1));
+  animation: gradient-shift 10s ease infinite;
+}
+
+.play-button {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--orange), var(--green));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: pulse-glow 2s ease-in-out infinite;
+  z-index: 10;
+}
+
+.play-button:hover {
+  transform: scale(1.1);
+}
+
+.play-button svg {
+  width: 40px;
+  height: 40px;
+  fill: white;
+  margin-left: 5px;
+}
+
+/* Footer */
+footer {
+  padding: 40px;
+  text-align: center;
+  background: rgba(0,0,0,0.5);
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+footer p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Scroll Animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="particles"></div>
+  
+  <div class="hero-content">
+    <div class="logo-container">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+      </div>
+    </div>
+    
+    <h1 class="brand-title">Discovery MAX</h1>
+    <p class="brand-subtitle">Neuroeducation Series</p>
+    
+    <p class="tagline">
+      "Reconfigura tu cerebro para el inglés. 
+      Deja de traducir. Empieza a pensar en estructuras."
+    </p>
+    
+    <div class="cta-buttons">
+      <a href="deportes-nbf.html" class="btn btn-primary">
+        <span>🧠</span>
+        Iniciar Diagnóstico NBF
+      </a>
+      <a href="#features" class="btn btn-secondary">
+        <span>📚</span>
+        Conoce el Método
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+  <div class="section-title fade-in">
+    <h2>¿Por Qué NBF?</h2>
+    <p>La neurociencia aplicada al aprendizaje del inglés para hispanohablantes</p>
+  </div>
+  
+  <div class="features-grid">
+    <div class="feature-card fade-in">
+      <div class="feature-icon">🧩</div>
+      <h3>Sistema Lego</h3>
+      <p>El inglés no tiene verbos naturales. Aprende a ensamblar acciones pieza por pieza usando los 7 Elementos Determinantes.</p>
+    </div>
+    
+    <div class="feature-card fade-in">
+      <div class="feature-icon">🎯</div>
+      <h3>Diagnóstico Preciso</h3>
+      <p>Descubre qué filtros españoles activas al hablar inglés. Sin exámenes de opción múltiple que no revelan la verdad.</p>
+    </div>
+    
+    <div class="feature-card fade-in">
+      <div class="feature-icon">⚡</div>
+      <h3>Reingeniería Cerebral</h3>
+      <p>Descontamina tu mente del español. Automatiza estructuras, no memorices reglas. Piensa en inglés desde el día 1.</p>
+    </div>
+    
+    <div class="feature-card fade-in">
+      <div class="feature-icon">🎓</div>
+      <h3>Basado en Ciencia</h3>
+      <p>Metodología validada por neurociencia cognitiva. No es otro curso de inglés. Es reconfiguración neural.</p>
+    </div>
+    
+    <div class="feature-card fade-in">
+      <div class="feature-icon">🎙️</div>
+      <h3>Audio Therapy</h3>
+      <p>Entrenamiento auditivo con transcripción sincronizada. Escucha, lee y automatiza patrones naturales.</p>
+    </div>
+    
+    <div class="feature-card fade-in">
+      <div class="feature-icon">📊</div>
+      <h3>Resultados Reales</h3>
+      <p>Deja de "entender pero no hablar". Rompe la parálisis y produce inglés espontáneo sin traducción mental.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Video Preview Section -->
+<section class="preview">
+  <div class="section-title fade-in">
+    <h2>Experimenta el Método</h2>
+    <p>Observa cómo funciona el sistema en tiempo real</p>
+  </div>
+  
+  <div class="preview-container fade-in">
+    <div class="video-frame">
+      <div class="video-placeholder">
+        <div class="play-button" onclick="window.location.href='deportes-nbf.html'">
+          <svg viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© 2026 Discovery MAX Neuroeducation | Método NBF | Toño Vicas</p>
+</footer>
+
+<script>
+// Animación de scroll
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.fade-in').forEach(el => {
+  observer.observe(el);
+});
+
+// Efecto parallax en partículas
+document.addEventListener('mousemove', (e) => {
+  const particles = document.querySelector('.particles');
+  const x = e.clientX / window.innerWidth;
+  const y = e.clientY / window.innerHeight;
+  
+  particles.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+});
+</script>
+
+</body>
+</html>
