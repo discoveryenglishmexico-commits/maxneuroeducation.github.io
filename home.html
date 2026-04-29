@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discovery MAX - Neural English Simulator</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0A1628;
+  --metallic-gray: #C0C5CE;
+  --shiny-white: #F8F9FA;
+  --neon-fuchsia: #FF00FF;
+  --neon-emerald: #00FF9D;
+  --neon-blue: #00D9FF;
+  --sparkle-yellow: #FFE600;
+  --dark-metallic: #1A1F2E;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--dark-metallic) 50%, var(--navy) 100%);
+  color: var(--shiny-white);
+  overflow-x: hidden;
+}
+
+/* Animaciones */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-20px) rotate(2deg); }
+  66% { transform: translateY(-10px) rotate(-2deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 30px rgba(0, 217, 255, 0.4); }
+  50% { box-shadow: 0 0 60px rgba(255, 0, 255, 0.6), 0 0 100px rgba(0, 255, 157, 0.3); }
+}
+
+@keyframes slide-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes slide-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes neural-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+/* Video Background Header */
+.hero-header {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--navy) 0%, var(--dark-metallic) 100%);
+}
+
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.neural-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(0, 255, 157, 0.1) 0%, transparent 50%);
+  z-index: 1;
+}
+
+.neural-lines {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(90deg, rgba(0, 217, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(rgba(255, 0, 255, 0.1) 1px, transparent 1px);
+  background-size: 100px 100px;
+  animation: neural-pulse 4s ease-in-out infinite;
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 40px;
+  max-width: 1200px;
+}
+
+.hero-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--shiny-white) 0%, var(--neon-blue) 50%, var(--neon-emerald) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 30px;
+  animation: float 6s ease-in-out infinite;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-button {
+  padding: 20px 60px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--neon-fuchsia), var(--neon-emerald));
+  border: none;
+  border-radius: 50px;
+  color: var(--navy);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 40px rgba(255, 0, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.hero-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 20px 60px rgba(255, 0, 255, 0.6);
+}
+
+.hero-subtitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 500;
+  margin-top: 30px;
+  color: var(--metallic-gray);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+/* Thumbnail Carousel */
+.thumbnail-carousel {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  z-index: 10;
+  padding: 20px 0;
+}
+
+.thumbnail-track {
+  display: flex;
+  gap: 20px;
+  animation: slide-left 48s linear infinite;
+  width: fit-content;
+}
+
+.thumbnail-track:hover {
+  animation-play-state: paused;
+}
+
+.thumbnail-item {
+  flex-shrink: 0;
+  width: 150px;
+  height: 100px;
+  border-radius: 15px;
+  overflow: hidden;
+  border: 2px solid rgba(0, 217, 255, 0.3);
+  transition: all 0.3s ease;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+}
+
+.thumbnail-item:hover {
+  transform: scale(1.2);
+  border-color: var(--neon-emerald);
+  box-shadow: 0 0 30px rgba(0, 255, 157, 0.5);
+  z-index: 100;
+}
+
+.thumbnail-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Glass Cards */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  padding: 50px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.37),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+
+/* First Block */
+.first-block {
+  padding: 120px 40px;
+  background: linear-gradient(180deg, var(--dark-metallic) 0%, var(--navy) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.neural-antenna-bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    repeating-linear-gradient(45deg, rgba(0, 217, 255, 0.05) 0px, rgba(0, 217, 255, 0.05) 1px, transparent 1px, transparent 20px),
+    repeating-linear-gradient(-45deg, rgba(255, 0, 255, 0.05) 0px, rgba(255, 0, 255, 0.05) 1px, transparent 1px, transparent 20px);
+  opacity: 0.5;
+}
+
+.block-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.block-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  text-align: center;
+  margin-bottom: 80px;
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 40px;
+}
+
+.stat-number {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 6rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--neon-emerald), var(--neon-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  margin-bottom: 20px;
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+.stat-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--metallic-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+/* Second Block */
+.second-block {
+  padding: 150px 40px;
+  background: linear-gradient(180deg, var(--shiny-white) 0%, var(--metallic-gray) 100%);
+  color: var(--navy);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.second-block::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 30% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
+}
+
+.second-block h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, var(--navy), var(--neon-fuchsia));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 10;
+}
+
+.second-block p {
+  font-size: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+  color: var(--dark-metallic);
+  position: relative;
+  z-index: 10;
+}
+
+/* Third Block - Units Slideshow */
+.third-block {
+  padding: 120px 40px;
+  background: linear-gradient(180deg, var(--navy) 0%, var(--dark-metallic) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.slideshow-container {
+  max-width: 1400px;
+  margin: 60px auto 0;
+  position: relative;
+  overflow: hidden;
+  padding: 40px 0;
+}
+
+.slideshow-track {
+  display: flex;
+  gap: 40px;
+  animation: slide-right 90s linear infinite;
+  width: fit-content;
+}
+
+.slideshow-track:hover {
+  animation-play-state: paused;
+}
+
+.unit-card {
+  flex-shrink: 0;
+  width: 400px;
+  height: 500px;
+  border-radius: 30px;
+  overflow: hidden;
+  border: 3px solid rgba(0, 217, 255, 0.3);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.unit-card:hover {
+  transform: translateY(-20px) scale(1.02);
+  border-color: var(--neon-emerald);
+  box-shadow: 
+    0 30px 80px rgba(0, 217, 255, 0.3),
+    0 0 100px rgba(0, 255, 157, 0.2);
+}
+
+.unit-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.unit-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px;
+  background: linear-gradient(transparent, rgba(10, 22, 40, 0.95));
+}
+
+.unit-number {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  color: var(--neon-emerald);
+  margin-bottom: 10px;
+}
+
+.unit-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--shiny-white);
+}
+
+/* Fourth Block - CTA */
+.fourth-block {
+  padding: 150px 40px;
+  background: linear-gradient(180deg, var(--dark-metallic) 0%, var(--navy) 100%);
+  text-align: center;
+  position: relative;
+}
+
+.fourth-block h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  margin-bottom: 50px;
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia), var(--neon-emerald));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cta-button {
+  padding: 25px 70px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--neon-emerald), var(--neon-blue));
+  border: none;
+  border-radius: 50px;
+  color: var(--navy);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 15px 50px rgba(0, 255, 157, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.cta-button:hover {
+  transform: translateY(-8px) scale(1.1);
+  box-shadow: 0 25px 70px rgba(0, 255, 157, 0.6);
+}
+
+/* Footer */
+footer {
+  padding: 40px;
+  text-align: center;
+  background: var(--navy);
+  border-top: 1px solid rgba(0, 217, 255, 0.2);
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--metallic-gray);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .unit-card {
+    width: 300px;
+    height: 400px;
+  }
+  
+  .thumbnail-item {
+    width: 120px;
+    height: 80px;
+  }
+}
+
+/* Scroll Reveal Animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- Hero Header with Video -->
+<header class="hero-header">
+<!-- Video background -->
+<video class="video-background" autoplay muted loop playsinline>
+  <source src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/welcome_dmax.mp4" type="video/mp4">
+</video>
+  
+  <div class="neural-overlay"></div>
+  <div class="neural-lines"></div>
+  
+  <div class="hero-content">
+    <h1 class="hero-title">La Revolución Cognitiva Ha Llegado</h1>
+    <button class="hero-button" onclick="window.location.href='deportes-nbf.html'">START NOW</button>
+    <p class="hero-subtitle">Neural English Simulator</p>
+  </div>
+  
+  <!-- Thumbnail Carousel -->
+  <div class="thumbnail-carousel">
+    <div class="thumbnail-track">
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/1.png" alt="Unit 1"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/2.png" alt="Unit 2"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/3.png" alt="Unit 3"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/4.png" alt="Unit 4"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/5.png" alt="Unit 5"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/6.png" alt="Unit 6"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/7.png" alt="Unit 7"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/8.png" alt="Unit 8"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/9.png" alt="Unit 9"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/10.png" alt="Unit 10"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/11.png" alt="Unit 11"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/12.png" alt="Unit 12"></div>
+      <!-- Duplicate for seamless loop -->
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/1.png" alt="Unit 1"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/2.png" alt="Unit 2"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/3.png" alt="Unit 3"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/4.png" alt="Unit 4"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/5.png" alt="Unit 5"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/6.png" alt="Unit 6"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/7.png" alt="Unit 7"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/8.png" alt="Unit 8"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/9.png" alt="Unit 9"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/10.png" alt="Unit 10"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/11.png" alt="Unit 11"></div>
+      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/12.png" alt="Unit 12"></div>
+    </div>
+  </div>
+</header>
+
+<!-- First Block -->
+<section class="first-block reveal">
+  <div class="neural-antenna-bg"></div>
+  <div class="block-content">
+    <h2 class="block-title">Únete a la comunidad que ya reconfiguró su mente</h2>
+    
+    <div class="stats-grid">
+      <div class="stat-card glass-card">
+        <span class="stat-number">7</span>
+        <p class="stat-label">Elementos Determinantes</p>
+      </div>
+      
+      <div class="stat-card glass-card">
+        <span class="stat-number">3</span>
+        <p class="stat-label">Ecuaciones Brújula</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Second Block -->
+<section class="second-block reveal">
+  <h2>Descubre el poder de tu mente</h2>
+  <p>Aprender inglés con Neurociencias, será tu gran diferenciador.</p>
+</section>
+
+<!-- Third Block - Units Slideshow -->
+<section class="third-block reveal">
+  <h2 class="block-title">Unidades de Entrenamiento Neural</h2>
+  
+  <div class="slideshow-container">
+    <div class="slideshow-track">
+      <!-- 18 Unit Cards -->
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/1.png" alt="Unit 1">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 01</div>
+          <div class="unit-title">The Household</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/2.png" alt="Unit 2">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 02</div>
+          <div class="unit-title">At the High School</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/3.png" alt="Unit 3">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 03</div>
+          <div class="unit-title">Graduation Dialogue</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/4.png" alt="Unit 4">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 04</div>
+          <div class="unit-title">A City in the States</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/5.png" alt="Unit 5">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 05</div>
+          <div class="unit-title">The City and the Country</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/6.png" alt="Unit 6">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 06</div>
+          <div class="unit-title">Sports & Activities</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/7.png" alt="Unit 7">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 07</div>
+          <div class="unit-title">Daily Routines</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/8.png" alt="Unit 8">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 08</div>
+          <div class="unit-title">Food & Nutrition</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/9.png" alt="Unit 9">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 09</div>
+          <div class="unit-title">Travel & Tourism</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/10.png" alt="Unit 10">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 10</div>
+          <div class="unit-title">Business English</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/11.png" alt="Unit 11">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 11</div>
+          <div class="unit-title">Technology</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/12.png" alt="Unit 12">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 12</div>
+          <div class="unit-title">Advanced Grammar</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/13.png" alt="Unit 13">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 13</div>
+          <div class="unit-title">Health & Wellness</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/14.png" alt="Unit 14">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 14</div>
+          <div class="unit-title">Environment</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/15.png" alt="Unit 15">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 15</div>
+          <div class="unit-title">Culture & Arts</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/16.png" alt="Unit 16">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 16</div>
+          <div class="unit-title">Science & Innovation</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/17.png" alt="Unit 17">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 17</div>
+          <div class="unit-title">Social Issues</div>
+        </div>
+      </div>
+      
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/18.png" alt="Unit 18">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 18</div>
+          <div class="unit-title">Future & AI</div>
+        </div>
+      </div>
+      
+      <!-- Duplicate for seamless loop -->
+      <div class="unit-card">
+        <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/1.png" alt="Unit 1">
+        <div class="unit-overlay">
+          <div class="unit-number">UNIT 01</div>
+          <div class="unit-title">The Household</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Fourth Block - CTA -->
+<section class="fourth-block reveal">
+  <h2>Comienza con el primer reto de conocimientos básicos</h2>
+  <a href="deportes-nbf.html" class="cta-button">Iniciar Diagnóstico Deportivo</a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© 2026 Discovery MAX Neuroeducation | Método NBF | Toño Vicas</p>
+</footer>
+
+<script>
+// Scroll Reveal Animation
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.reveal').forEach(el => {
+  observer.observe(el);
+});
+
+// Sound effects
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+function playTone(frequency, duration) {
+  const oscillator = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
+  
+  oscillator.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+  
+  oscillator.frequency.value = frequency;
+  gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+  
+  oscillator.start(audioContext.currentTime);
+  oscillator.stop(audioContext.currentTime + duration);
+}
+
+document.querySelectorAll('.hero-button, .cta-button, .unit-card').forEach(el => {
+  el.addEventListener('click', () => {
+    playTone(800, 0.1);
+    setTimeout(() => playTone(1200, 0.1), 50);
+  });
+});
+</script>
+
+</body>
+</html>
