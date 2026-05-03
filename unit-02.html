@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FASE 02 | At the High School</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#0A0F1A; --glass:rgba(255,255,255,0.06); --border:rgba(255,255,255,0.15); --cyan:#00F3FF; --magenta:#FF00E5; --gold:#FFD700; --text:#F5F2ED; --muted:#8A94A6; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+.back-btn { position:fixed; top:20px; left:20px; background:var(--glass); border:1px solid var(--border); color:var(--text); padding:8px 16px; border-radius:20px; text-decoration:none; backdrop-filter:blur(10px); z-index:100; }
+.container { max-width:900px; margin:0 auto; padding:80px 20px 40px; }
+header { text-align:center; margin-bottom:40px; }
+h1 { font-family:'Orbitron',sans-serif; font-size:clamp(2rem,5vw,3.5rem); background:linear-gradient(90deg,var(--cyan),var(--magenta)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.quiz-card { background:var(--glass); border:1px solid var(--border); border-radius:16px; padding:25px; margin-bottom:20px; }
+.options { display:grid; gap:10px; margin-top:15px; }
+.opt { padding:12px; background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; cursor:pointer; transition:0.3s; }
+.opt:hover { border-color:var(--cyan); }
+.opt.correct { background:rgba(0,255,157,0.2); border-color:#00FF9D; }
+.opt.wrong { background:rgba(255,68,68,0.2); border-color:#FF4444; }
+.fill-blank { margin:20px 0; }
+.fill-blank input { background:rgba(0,0,0,0.4); border:1px solid var(--border); color:white; padding:10px; border-radius:8px; width:120px; text-align:center; }
+.audio-btn { background:linear-gradient(90deg,var(--magenta),var(--cyan)); border:none; color:black; padding:12px 24px; border-radius:30px; font-weight:600; cursor:pointer; margin-top:20px; }
+.download-box { background:rgba(255,255,255,0.03); border:1px dashed var(--border); border-radius:12px; padding:20px; text-align:center; margin-top:30px; }
+.complete-btn { display:block; width:100%; padding:18px; background:linear-gradient(90deg,var(--cyan),var(--gold)); border:none; border-radius:12px; color:#000; font-weight:700; font-size:1.1rem; cursor:pointer; margin-top:30px; }
+</style>
+</head>
+<body>
+<a href="index.html" class="back-btn">← Volver al Mapa</a>
+<div class="container">
+  <header>
+    <div style="font-family:'Orbitron'; color:var(--cyan); letter-spacing:2px; margin-bottom:10px;">FASE 02</div>
+    <h1>At the High School</h1>
+    <p style="color:var(--muted)">Classroom Objects · There is/are · Preposiciones</p>
+  </header>
+
+  <div class="quiz-card">
+    <h3>🎯 Quiz Rápido: There is / There are</h3>
+    <p>"___ a whiteboard on the wall."</p>
+    <div class="options" id="q1">
+      <div class="opt" onclick="checkQ1(this, true)">There is</div>
+      <div class="opt" onclick="checkQ1(this, false)">There are</div>
+    </div>
+  </div>
+
+  <div class="quiz-card">
+    <h3>✍️ Fill in the Blank</h3>
+    <p class="fill-blank">"___ these computers? Yes, they are."</p>
+    <input type="text" id="fb2" placeholder="Are/Is/Do">
+    <button onclick="checkFB2()" style="margin-left:10px; padding:10px 20px; background:var(--gold); border:none; border-radius:8px; cursor:pointer;">Verificar</button>
+    <p id="fb2-res" style="margin-top:10px;"></p>
+  </div>
+
+  <div class="quiz-card">
+    <h3>🎧 Audio Prompt</h3>
+    <p>Escucha y repite la estructura: <em>"Is this a pencil case? Yes, it is."</em></p>
+    <button class="audio-btn" onclick="playAudio()">▶️ Reproducir Estructura</button>
+    <p style="font-size:0.8rem; color:var(--muted); margin-top:10px;">* Simulación de audio therapy</p>
+  </div>
+
+  <div class="download-box">
+    <p>📦 Material completo disponible</p>
+    <button style="background:var(--glass); border:1px solid var(--border); color:white; padding:10px 20px; border-radius:8px; cursor:pointer;">📥 Descargar PDF Completo</button>
+  </div>
+
+  <button class="complete-btn" onclick="completeUnit(2)">✅ COMPLETAR FASE 02 Y DESBLOQUEAR SIGUIENTE</button>
+</div>
+
+<script>
+function checkQ1(el, isCorrect) {
+  document.querySelectorAll('#q1 .opt').forEach(o => o.classList.remove('correct','wrong'));
+  el.classList.add(isCorrect ? 'correct' : 'wrong');
+}
+
+function checkFB2() {
+  const val = document.getElementById('fb2').value.trim().toLowerCase();
+  const res = document.getElementById('fb2-res');
+  if(val === 'are') {
+    res.innerHTML = '✅ ¡Correcto! Plural usa <strong>Are</strong>.';
+    res.style.color = '#00FF9D';
+  } else {
+    res.innerHTML = '❌ Revisa: "these" indica plural → <strong>Are</strong>.';
+    res.style.color = '#FF4444';
+  }
+}
+
+function playAudio() {
+  // Simulación con Web Audio API
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.frequency.value = 440; gain.gain.value = 0.1;
+  osc.start(); osc.stop(ctx.currentTime + 0.5);
+  alert('🔊 [Simulación] Audio Therapy: "Is this a pencil case? Yes, it is."');
+}
+
+function completeUnit(n) {
+  let p = JSON.parse(localStorage.getItem('nbf_progress')) || {unlocked:[1], completed:[]};
+  if(!p.completed.includes(n)) p.completed.push(n);
+  if(n+1 <= 3 && !p.unlocked.includes(n+1)) p.unlocked.push(n+1);
+  localStorage.setItem('nbf_progress', JSON.stringify(p));
+  alert('🎉 Fase completada. Redirigiendo...');
+  window.location.href = 'index.html';
+}
+</script>
+</body>
+</html>
