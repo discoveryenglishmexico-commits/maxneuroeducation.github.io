@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discovery MAX | Mapa de Progreso NBF</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0F1A;
+  --glass: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.15);
+  --neon-cyan: #00F3FF;
+  --neon-magenta: #FF00E5;
+  --neon-gold: #FFD700;
+  --text: #F5F2ED;
+  --muted: #8A94A6;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Inter',sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  background-image: radial-gradient(circle at 10% 20%, rgba(0,243,255,0.08) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(255,0,229,0.08) 0%, transparent 40%);
+}
+header {
+  text-align:center;
+  padding:40px 20px;
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(10px);
+}
+header h1 {
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.8rem,5vw,3rem);
+  background:linear-gradient(90deg,var(--neon-cyan),var(--neon-magenta));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:10px;
+}
+.progress-bar {
+  height:6px;
+  background:rgba(255,255,255,0.1);
+  border-radius:10px;
+  margin:20px auto 0;
+  max-width:600px;
+  overflow:hidden;
+}
+.progress-fill {
+  height:100%;
+  background:linear-gradient(90deg,var(--neon-cyan),var(--neon-gold));
+  width:0%;
+  transition:width 0.6s ease;
+}
+.container { max-width:1200px; margin:0 auto; padding:40px 20px; }
+.stage {
+  margin-bottom:60px;
+  opacity:0;
+  transform:translateY(30px);
+  animation:fadeUp 0.8s forwards;
+}
+@keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+.stage h2 {
+  font-family:'Orbitron',sans-serif;
+  font-size:1.5rem;
+  color:var(--neon-gold);
+  margin-bottom:20px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+}
+.units-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
+}
+.unit-card {
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:25px;
+  text-decoration:none;
+  color:var(--text);
+  transition:all 0.3s ease;
+  position:relative;
+  overflow:hidden;
+  backdrop-filter:blur(15px);
+}
+.unit-card::before {
+  content:'';
+  position:absolute;
+  top:-2px; left:-2px; right:-2px; bottom:-2px;
+  background:linear-gradient(45deg,var(--neon-cyan),var(--neon-magenta),var(--neon-gold));
+  background-size:300% 300%;
+  z-index:-1;
+  opacity:0;
+  transition:opacity 0.4s;
+  border-radius:22px;
+  animation:borderGlow 4s infinite;
+}
+@keyframes borderGlow { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+.unit-card:hover::before { opacity:0.6; }
+.unit-card:hover { transform:translateY(-8px); box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+.unit-card.locked { opacity:0.5; pointer-events:none; filter:grayscale(0.8); }
+.unit-card.locked::after {
+  content:'🔒';
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  font-size:2rem;
+  filter:drop-shadow(0 0 10px rgba(0,0,0,0.8));
+}
+.unit-number {
+  font-family:'Orbitron',sans-serif;
+  font-size:0.8rem;
+  color:var(--neon-cyan);
+  letter-spacing:2px;
+  margin-bottom:8px;
+}
+.unit-title { font-size:1.3rem; font-weight:700; margin-bottom:10px; }
+.unit-desc { font-size:0.9rem; color:var(--muted); line-height:1.5; }
+.reset-btn {
+  position:fixed;
+  bottom:20px; right:20px;
+  background:rgba(255,255,255,0.1);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:10px 20px;
+  border-radius:30px;
+  cursor:pointer;
+  font-size:0.8rem;
+  backdrop-filter:blur(10px);
+  transition:all 0.3s;
+}
+.reset-btn:hover { background:rgba(255,0,0,0.2); border-color:#ff4444; }
+</style>
+</head>
+<body>
+<header>
+  <h1>ENTRENAMIENTO NEUROCOGNITIVO NBF</h1>
+  <p style="color:var(--muted)">Progreso: <span id="progress-text">0%</span></p>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+</header>
+
+<div class="container">
+  <section class="stage" style="animation-delay:0.1s">
+    <h2>🌡️ Fase 1: Warming Up</h2>
+    <div class="units-grid">
+      <a href="unit-01.html" class="unit-card" id="card-1">
+        <div class="unit-number">FASE 01</div>
+        <div class="unit-title">The Household</div>
+        <div class="unit-desc">Conoce a la familia Williams. Verb to be, posesivos y pronombres.</div>
+      </a>
+      <a href="unit-02.html" class="unit-card locked" id="card-2">
+        <div class="unit-number">FASE 02</div>
+        <div class="unit-title">At the High School</div>
+        <div class="unit-desc">Objetos del aula, there is/are y preposiciones de lugar.</div>
+      </a>
+      <a href="unit-03.html" class="unit-card locked" id="card-3">
+        <div class="unit-number">FASE 03</div>
+        <div class="unit-title">Sports</div>
+        <div class="unit-desc">Introducciones, descripciones físicas y have/has.</div>
+      </a>
+    </div>
+  </section>
+</div>
+
+<button class="reset-btn" onclick="resetProgress()">🔄 Reiniciar Progreso</button>
+
+<script>
+const totalUnits = 3;
+let progress = JSON.parse(localStorage.getItem('nbf_progress')) || { unlocked: [1], completed: [] };
+
+function updateUI() {
+  document.getElementById('progress-fill').style.width = `${(progress.completed.length / totalUnits) * 100}%`;
+  document.getElementById('progress-text').textContent = `${Math.round((progress.completed.length / totalUnits) * 100)}%`;
+  
+  progress.unlocked.forEach(u => {
+    const card = document.getElementById(`card-${u}`);
+    if(card) card.classList.remove('locked');
+  });
+}
+
+function unlockNext(current) {
+  if (!progress.completed.includes(current)) {
+    progress.completed.push(current);
+    const next = current + 1;
+    if (next <= totalUnits && !progress.unlocked.includes(next)) {
+      progress.unlocked.push(next);
+    }
+    localStorage.setItem('nbf_progress', JSON.stringify(progress));
+    updateUI();
+  }
+}
+
+function resetProgress() {
+  localStorage.removeItem('nbf_progress');
+  location.reload();
+}
+
+// Expose to child windows
+window.nbfUnlock = unlockNext;
+window.nbfProgress = progress;
+updateUI();
+</script>
+</body>
+</html>
