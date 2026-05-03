@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FASE 01 | The Household</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#0A0F1A; --glass:rgba(255,255,255,0.06); --border:rgba(255,255,255,0.15); --cyan:#00F3FF; --magenta:#FF00E5; --gold:#FFD700; --text:#F5F2ED; --muted:#8A94A6; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+.back-btn { position:fixed; top:20px; left:20px; background:var(--glass); border:1px solid var(--border); color:var(--text); padding:8px 16px; border-radius:20px; text-decoration:none; backdrop-filter:blur(10px); z-index:100; }
+.container { max-width:900px; margin:0 auto; padding:80px 20px 40px; }
+header { text-align:center; margin-bottom:50px; }
+h1 { font-family:'Orbitron',sans-serif; font-size:clamp(2rem,5vw,3.5rem); background:linear-gradient(90deg,var(--cyan),var(--magenta)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.insight { background:linear-gradient(135deg,rgba(0,243,255,0.1),rgba(255,0,229,0.1)); border-left:4px solid var(--cyan); padding:20px; border-radius:12px; margin:30px 0; font-style:italic; }
+details { background:var(--glass); border:1px solid var(--border); border-radius:12px; margin-bottom:15px; overflow:hidden; }
+summary { padding:15px 20px; cursor:pointer; font-weight:600; list-style:none; display:flex; justify-content:space-between; align-items:center; }
+summary::after { content:'▼'; transition:transform 0.3s; }
+details[open] summary::after { transform:rotate(180deg); }
+.content { padding:20px; border-top:1px solid var(--border); }
+.dialogue { background:rgba(0,0,0,0.3); padding:15px; border-radius:8px; font-family:monospace; margin:10px 0; }
+.complete-btn { display:block; width:100%; padding:18px; background:linear-gradient(90deg,var(--cyan),var(--gold)); border:none; border-radius:12px; color:#000; font-weight:700; font-size:1.1rem; cursor:pointer; margin-top:40px; transition:transform 0.3s; }
+.complete-btn:hover { transform:scale(1.02); }
+</style>
+</head>
+<body>
+<a href="index.html" class="back-btn">← Volver al Mapa</a>
+<div class="container">
+  <header>
+    <div style="font-family:'Orbitron'; color:var(--cyan); letter-spacing:2px; margin-bottom:10px;">FASE 01</div>
+    <h1>The Household</h1>
+    <p style="color:var(--muted)">Familia Williams · Verb to Be · Posesivos</p>
+  </header>
+
+  <div class="insight">
+    <strong>💡 Insight Cognitivo:</strong> Las palabras de acción estáticas no existen de la forma en que te enseñaron. Descubre esta extraordinaria noticia y libera tu fluidez desde tu propio entorno.
+  </div>
+
+  <details open>
+    <summary>📖 Diálogo: The Family</summary>
+    <div class="content">
+      <div class="dialogue">
+        James Williams is the father. He’s a businessman.<br>
+        Rose Mary Williams is the mother. She’s a housewife.<br>
+        Edward is the son. He’s a high school student.<br>
+        Kimberly is the daughter. She’s an elementary student.
+      </div>
+      <p>Practica la pronunciación con tu coach en la sesión de Audio Therapy.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>📚 Vocabulario Clave</summary>
+    <div class="content">
+      <ul style="padding-left:20px; line-height:2;">
+        <li><strong>father / mother</strong> - padre / madre</li>
+        <li><strong>son / daughter</strong> - hijo / hija</li>
+        <li><strong>grandfather / grandmother</strong> - abuelo / abuela</li>
+        <li><strong>siblings</strong> - hermanos</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔧 Gramática: Verb to Be</summary>
+    <div class="content">
+      <p>Usamos <strong>am/is/are</strong> para identificar y describir.</p>
+      <ul style="padding-left:20px; margin:10px 0;">
+        <li>I <strong>am</strong> James.</li>
+        <li>She <strong>is</strong> Rose Mary.</li>
+        <li>They <strong>are</strong> siblings.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>✍️ Ejercicio Rápido</summary>
+    <div class="content">
+      <p>Completa: "Kimberly ___ Edward's sister."</p>
+      <input type="text" id="ex1" placeholder="Escribe aquí..." style="width:100%; padding:10px; margin-top:10px; background:rgba(0,0,0,0.3); border:1px solid var(--border); color:white; border-radius:8px;">
+      <button onclick="checkEx1()" style="margin-top:10px; padding:10px 20px; background:var(--magenta); border:none; color:white; border-radius:8px; cursor:pointer;">Verificar</button>
+      <p id="fb1" style="margin-top:10px; display:none;"></p>
+    </div>
+  </details>
+
+  <button class="complete-btn" onclick="completeUnit(1)">✅ COMPLETAR FASE 01 Y DESBLOQUEAR SIGUIENTE</button>
+</div>
+
+<script>
+function checkEx1() {
+  const ans = document.getElementById('ex1').value.trim().toLowerCase();
+  const fb = document.getElementById('fb1');
+  fb.style.display = 'block';
+  if(ans === 'is') {
+    fb.innerHTML = '✅ ¡Correcto! "Kimberly is Edward\'s sister."';
+    fb.style.color = '#00FF9D';
+  } else {
+    fb.innerHTML = '❌ Revisa: tercera persona singular usa <strong>is</strong>.';
+    fb.style.color = '#FF4444';
+  }
+}
+
+function completeUnit(n) {
+  if(window.parent && window.parent.nbfUnlock) {
+    window.parent.nbfUnlock(n);
+  }
+  // Fallback for direct open
+  let p = JSON.parse(localStorage.getItem('nbf_progress')) || {unlocked:[1], completed:[]};
+  if(!p.completed.includes(n)) p.completed.push(n);
+  if(n+1 <= 3 && !p.unlocked.includes(n+1)) p.unlocked.push(n+1);
+  localStorage.setItem('nbf_progress', JSON.stringify(p));
+  alert('🎉 Fase completada. Redirigiendo al mapa de progreso...');
+  window.location.href = 'index.html';
+}
+</script>
+</body>
+</html>
