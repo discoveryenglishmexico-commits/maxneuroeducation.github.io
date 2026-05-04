@@ -44,6 +44,13 @@ h1 {
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   margin-bottom:15px;
 }
+.progress-wrap {
+  height:8px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; margin:20px 0;
+}
+.progress-fill {
+  height:100%; width:0%; background:linear-gradient(90deg,var(--cyan),var(--emerald));
+  transition:width 0.5s ease;
+}
 .section {
   background:var(--glass); backdrop-filter:blur(16px);
   border:1px solid var(--glass-border); border-radius:20px;
@@ -92,19 +99,13 @@ h1 {
   border-left:3px solid #ff3366; border-radius:6px; color:#ff6699;
   font-family:'Orbitron',sans-serif; font-size:0.95rem;
 }
-.progress-bar {
-  height:6px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; margin:20px 0;
-}
-.progress-fill {
-  height:100%; width:0%; background:linear-gradient(90deg,var(--cyan),var(--emerald));
-  transition:width 0.5s ease;
-}
 /* Sports section specific styles */
 .sports-section .exercise-item { border-left-color:var(--orange); }
 .sports-section .exercise-input:focus { border-color:var(--orange); }
 .sports-section .section-title { color:var(--orange); }
 .sports-section .btn-verify { background:rgba(242,125,38,0.2); border-color:var(--orange); }
 .sports-section .btn-verify:hover { background:rgba(242,125,38,0.4); }
+.sports-section .btn-next { background:linear-gradient(135deg, var(--orange), var(--green)); }
 </style>
 </head>
 <body>
@@ -113,7 +114,7 @@ h1 {
   <header>
     <h1>Prueba de Conocimientos Básicos 1</h1>
     <p style="color:var(--muted)">Unidad: At the High School</p>
-    <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+    <div class="progress-wrap"><div class="progress-fill" id="progressBar"></div></div>
   </header>
 
   <!-- SECCIÓN 1: CONVERSIÓN DE AFIRMACIONES A PREGUNTAS -->
@@ -125,7 +126,7 @@ h1 {
       <label class="exercise-label">This is the classroom's globe.</label>
       <input type="text" class="exercise-input" id="ex1a" placeholder="">
       <button class="btn btn-verify" onclick="checkEx1a()">Verificar</button>
-      <div class="hidden-answer" id="ans1a">Is this the classroom's globe? Yes it is.</div>
+      <div class="hidden-answer" id="ans1a">Is this the classroom's globe?</div>
       <div class="feedback" id="fb1a"></div>
     </div>
 
@@ -133,7 +134,7 @@ h1 {
       <label class="exercise-label">¿Esto es un sacapuntas?</label>
       <input type="text" class="exercise-input" id="ex1b" placeholder="">
       <button class="btn btn-verify" onclick="checkEx1b()">Verificar</button>
-      <div class="hidden-answer" id="ans1b">Is this a sharpener? No it isn't. It's the classroom's globe.</div>
+      <div class="hidden-answer" id="ans1b">Is this a sharpener?</div>
       <div class="feedback" id="fb1b"></div>
     </div>
 
@@ -141,7 +142,7 @@ h1 {
       <label class="exercise-label">These are the class mates.</label>
       <input type="text" class="exercise-input" id="ex1c" placeholder="">
       <button class="btn btn-verify" onclick="checkEx1c()">Verificar</button>
-      <div class="hidden-answer" id="ans1c">Are these the classmates? Yes they are.</div>
+      <div class="hidden-answer" id="ans1c">Are these the classmates?</div>
       <div class="feedback" id="fb1c"></div>
     </div>
 
@@ -149,7 +150,7 @@ h1 {
       <label class="exercise-label">¿Estas personas son maestros?</label>
       <input type="text" class="exercise-input" id="ex1d" placeholder="">
       <button class="btn btn-verify" onclick="checkEx1d()">Verificar</button>
-      <div class="hidden-answer" id="ans1d">Are these people teachers? No they aren't. They're the class mates.</div>
+      <div class="hidden-answer" id="ans1d">Are these people teachers?</div>
       <div class="feedback" id="fb1d"></div>
     </div>
 
@@ -165,7 +166,7 @@ h1 {
       <label class="exercise-label">Those are Joshua and Peter.</label>
       <input type="text" class="exercise-input" id="ex2a" placeholder="">
       <button class="btn btn-verify" onclick="checkEx2a()">Verificar</button>
-      <div class="hidden-answer" id="ans2a">Are those Joshua and Peter? Yes they are.</div>
+      <div class="hidden-answer" id="ans2a">Are those Joshua and Peter?</div>
       <div class="feedback" id="fb2a"></div>
     </div>
 
@@ -173,7 +174,7 @@ h1 {
       <label class="exercise-label">¿Aquellos son Jimmy y Natasha?</label>
       <input type="text" class="exercise-input" id="ex2b" placeholder="">
       <button class="btn btn-verify" onclick="checkEx2b()">Verificar</button>
-      <div class="hidden-answer" id="ans2b">Are those Jimmy and Natasha? No they aren't. They're Joshua and Peter.</div>
+      <div class="hidden-answer" id="ans2b">Are those Jimmy and Natasha?</div>
       <div class="feedback" id="fb2b"></div>
     </div>
 
@@ -181,7 +182,7 @@ h1 {
       <label class="exercise-label">That's my friend Claudia.</label>
       <input type="text" class="exercise-input" id="ex2c" placeholder="">
       <button class="btn btn-verify" onclick="checkEx2c()">Verificar</button>
-      <div class="hidden-answer" id="ans2c">Is that my friend Claudia? Yes she is.</div>
+      <div class="hidden-answer" id="ans2c">Is that my friend Claudia?</div>
       <div class="feedback" id="fb2c"></div>
     </div>
 
@@ -189,7 +190,7 @@ h1 {
       <label class="exercise-label">¿Aquella es mi profesora de inglés?</label>
       <input type="text" class="exercise-input" id="ex2d" placeholder="">
       <button class="btn btn-verify" onclick="checkEx2d()">Verificar</button>
-      <div class="hidden-answer" id="ans2d">Is that my English teacher? No she isn't. She's my friend Claudia.</div>
+      <div class="hidden-answer" id="ans2d">Is that my English teacher?</div>
       <div class="feedback" id="fb2d"></div>
     </div>
 
@@ -199,13 +200,13 @@ h1 {
   <!-- SECCIÓN 3: THERE IS / THERE ARE -->
   <section class="section" id="sec3">
     <h2 class="section-title">📦 3. There is / There are</h2>
-    <p class="section-desc">Completa con la forma correcta y agrega respuesta afirmativa/negativa.</p>
+    <p class="section-desc">Convierte las afirmaciones en preguntas usando There is/There are.</p>
     
     <div class="exercise-item">
       <label class="exercise-label">There's a student in the classroom.</label>
       <input type="text" class="exercise-input" id="ex3a" placeholder="">
       <button class="btn btn-verify" onclick="checkEx3a()">Verificar</button>
-      <div class="hidden-answer" id="ans3a">Is there a student in the classroom? Yes there is.</div>
+      <div class="hidden-answer" id="ans3a">Is there a student in the classroom?</div>
       <div class="feedback" id="fb3a"></div>
     </div>
 
@@ -213,7 +214,7 @@ h1 {
       <label class="exercise-label">¿Hay un conserje en el aula?</label>
       <input type="text" class="exercise-input" id="ex3b" placeholder="">
       <button class="btn btn-verify" onclick="checkEx3b()">Verificar</button>
-      <div class="hidden-answer" id="ans3b">Is there a janitor in the classroom? No there isn't. There's a student in the classroom.</div>
+      <div class="hidden-answer" id="ans3b">Is there a janitor in the classroom?</div>
       <div class="feedback" id="fb3b"></div>
     </div>
 
@@ -221,7 +222,7 @@ h1 {
       <label class="exercise-label">There are students in the classroom.</label>
       <input type="text" class="exercise-input" id="ex3c" placeholder="">
       <button class="btn btn-verify" onclick="checkEx3c()">Verificar</button>
-      <div class="hidden-answer" id="ans3c">Are there students in the classroom? Yes there are.</div>
+      <div class="hidden-answer" id="ans3c">Are there students in the classroom?</div>
       <div class="feedback" id="fb3c"></div>
     </div>
 
@@ -229,7 +230,7 @@ h1 {
       <label class="exercise-label">¿Hay conserjes en el aula?</label>
       <input type="text" class="exercise-input" id="ex3d" placeholder="">
       <button class="btn btn-verify" onclick="checkEx3d()">Verificar</button>
-      <div class="hidden-answer" id="ans3d">Are there janitors in the classroom? No there aren't. There are students in the classroom.</div>
+      <div class="hidden-answer" id="ans3d">Are there janitors in the classroom?</div>
       <div class="feedback" id="fb3d"></div>
     </div>
 
@@ -345,45 +346,13 @@ h1 {
       <div class="feedback" id="fb6d"></div>
     </div>
 
-    <div class="exercise-item">
-      <label class="exercise-label">¡Cierra tu libro!</label>
-      <input type="text" class="exercise-input" id="ex6e" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx6e()">Verificar</button>
-      <div class="hidden-answer" id="ans6e">Close your book.</div>
-      <div class="feedback" id="fb6e"></div>
-    </div>
-
-    <div class="exercise-item">
-      <label class="exercise-label">¡Guarda el libro!</label>
-      <input type="text" class="exercise-input" id="ex6f" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx6f()">Verificar</button>
-      <div class="hidden-answer" id="ans6f">Put your book away.</div>
-      <div class="feedback" id="fb6f"></div>
-    </div>
-
-    <div class="exercise-item">
-      <label class="exercise-label">Do your homework</label>
-      <input type="text" class="exercise-input" id="ex6g" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx6g()">Verificar</button>
-      <div class="hidden-answer" id="ans6g">Entreguen su tarea!</div>
-      <div class="feedback" id="fb6g"></div>
-    </div>
-
-    <div class="exercise-item">
-      <label class="exercise-label">Work together</label>
-      <input type="text" class="exercise-input" id="ex6h" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx6h()">Verificar</button>
-      <div class="hidden-answer" id="ans6h">¡Trabajen en grupo!</div>
-      <div class="feedback" id="fb6h"></div>
-    </div>
-
     <button class="btn btn-next" onclick="scrollToSec(7)">Siguiente Sección →</button>
   </section>
 
   <!-- SECCIÓN 7: SPORTS (Diseño diferente - Naranja/Verde) -->
   <section class="section sports-section" id="sec7">
     <h2 class="section-title">🏆 7. Sports - NBF Diagnostic</h2>
-    <p class="section-desc">Identifica bases léxicas y determinantes en contextos deportivos.</p>
+    <p class="section-desc">Identifica el deporte basado en la descripción.</p>
     
     <div class="exercise-item">
       <label class="exercise-label">"I wear comfortable clothes and carry a small mat to every class."</label>
@@ -442,14 +411,14 @@ h1 {
     </div>
 
     <div class="exercise-item">
-      <label class="exercise-label">"I do these two or three times a week at an outdoor pool."</label>
+      <label class="exercise-label">"I do this two or three times a week at an outdoor pool."</label>
       <input type="text" class="exercise-input" id="ex7h" placeholder="">
       <button class="btn btn-verify" onclick="checkSports7h()">Verificar</button>
       <div class="hidden-answer" id="ans7h">Swimming</div>
       <div class="feedback" id="fb7h"></div>
     </div>
 
-    <button class="btn btn-next" onclick="completeTest()" style="background: linear-gradient(135deg, var(--orange), var(--green));">🎉 Finalizar Prueba</button>
+    <button class="btn btn-next" onclick="completeTest()">🎉 Finalizar Prueba</button>
   </section>
 
   <div id="finalMsg" style="display:none; text-align:center; margin-top:30px; padding:30px; background:rgba(0,243,255,0.1); border:1px solid var(--cyan); border-radius:15px;">
@@ -463,7 +432,7 @@ h1 {
 </div>
 
 <script>
-// AUDIO FEEDBACK - Sonidos diferentes para Sports
+// AUDIO FEEDBACK con Web Speech API
 const synth = window.speechSynthesis;
 function speak(text) {
   if(synth.speaking) synth.cancel();
@@ -473,7 +442,7 @@ function speak(text) {
 }
 
 let completedCount = 0;
-const totalEx = 31; // Total de ejercicios
+const totalEx = 27; // Total de ejercicios
 
 function updateProgress() {
   document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
@@ -488,13 +457,13 @@ function scrollToSec(num) {
   document.getElementById(`sec${num-1}`).classList.remove('active');
   document.getElementById(`sec${num}`).classList.add('active');
   document.getElementById(`sec${num}`).scrollIntoView({behavior:'smooth'});
-  playNextSound();
+  speak('Next section unlocked');
 }
 
 // Funciones de verificación Sección 1
 function checkEx1a() {
   const val = normalizeText(document.getElementById('ex1a').value);
-  const correct = normalizeText("Is this the classroom's globe? Yes it is.");
+  const correct = normalizeText("Is this the classroom's globe?");
   const fb = document.getElementById('fb1a');
   const ans = document.getElementById('ans1a');
   
@@ -516,7 +485,7 @@ function checkEx1a() {
 
 function checkEx1b() {
   const val = normalizeText(document.getElementById('ex1b').value);
-  const correct = normalizeText("Is this a sharpener? No it isn't. It's the classroom's globe.");
+  const correct = normalizeText("Is this a sharpener?");
   const fb = document.getElementById('fb1b');
   const ans = document.getElementById('ans1b');
   
@@ -538,7 +507,7 @@ function checkEx1b() {
 
 function checkEx1c() {
   const val = normalizeText(document.getElementById('ex1c').value);
-  const correct = normalizeText("Are these the classmates? Yes they are.");
+  const correct = normalizeText("Are these the classmates?");
   const fb = document.getElementById('fb1c');
   const ans = document.getElementById('ans1c');
   
@@ -560,7 +529,7 @@ function checkEx1c() {
 
 function checkEx1d() {
   const val = normalizeText(document.getElementById('ex1d').value);
-  const correct = normalizeText("Are these people teachers? No they aren't. They're the class mates.");
+  const correct = normalizeText("Are these people teachers?");
   const fb = document.getElementById('fb1d');
   const ans = document.getElementById('ans1d');
   
@@ -583,7 +552,7 @@ function checkEx1d() {
 // Sección 2
 function checkEx2a() {
   const val = normalizeText(document.getElementById('ex2a').value);
-  const correct = normalizeText("Are those Joshua and Peter? Yes they are.");
+  const correct = normalizeText("Are those Joshua and Peter?");
   const fb = document.getElementById('fb2a');
   const ans = document.getElementById('ans2a');
   
@@ -605,7 +574,7 @@ function checkEx2a() {
 
 function checkEx2b() {
   const val = normalizeText(document.getElementById('ex2b').value);
-  const correct = normalizeText("Are those Jimmy and Natasha? No they aren't. They're Joshua and Peter.");
+  const correct = normalizeText("Are those Jimmy and Natasha?");
   const fb = document.getElementById('fb2b');
   const ans = document.getElementById('ans2b');
   
@@ -627,7 +596,7 @@ function checkEx2b() {
 
 function checkEx2c() {
   const val = normalizeText(document.getElementById('ex2c').value);
-  const correct = normalizeText("Is that my friend Claudia? Yes she is.");
+  const correct = normalizeText("Is that my friend Claudia?");
   const fb = document.getElementById('fb2c');
   const ans = document.getElementById('ans2c');
   
@@ -649,7 +618,7 @@ function checkEx2c() {
 
 function checkEx2d() {
   const val = normalizeText(document.getElementById('ex2d').value);
-  const correct = normalizeText("Is that my English teacher? No she isn't. She's my friend Claudia.");
+  const correct = normalizeText("Is that my English teacher?");
   const fb = document.getElementById('fb2d');
   const ans = document.getElementById('ans2d');
   
@@ -672,7 +641,7 @@ function checkEx2d() {
 // Sección 3
 function checkEx3a() {
   const val = normalizeText(document.getElementById('ex3a').value);
-  const correct = normalizeText("Is there a student in the classroom? Yes there is.");
+  const correct = normalizeText("Is there a student in the classroom?");
   const fb = document.getElementById('fb3a');
   const ans = document.getElementById('ans3a');
   
@@ -694,7 +663,7 @@ function checkEx3a() {
 
 function checkEx3b() {
   const val = normalizeText(document.getElementById('ex3b').value);
-  const correct = normalizeText("Is there a janitor in the classroom? No there isn't. There's a student in the classroom.");
+  const correct = normalizeText("Is there a janitor in the classroom?");
   const fb = document.getElementById('fb3b');
   const ans = document.getElementById('ans3b');
   
@@ -716,7 +685,7 @@ function checkEx3b() {
 
 function checkEx3c() {
   const val = normalizeText(document.getElementById('ex3c').value);
-  const correct = normalizeText("Are there students in the classroom? Yes there are.");
+  const correct = normalizeText("Are there students in the classroom?");
   const fb = document.getElementById('fb3c');
   const ans = document.getElementById('ans3c');
   
@@ -738,7 +707,7 @@ function checkEx3c() {
 
 function checkEx3d() {
   const val = normalizeText(document.getElementById('ex3d').value);
-  const correct = normalizeText("Are there janitors in the classroom? No there aren't. There are students in the classroom.");
+  const correct = normalizeText("Are there janitors in the classroom?");
   const fb = document.getElementById('fb3d');
   const ans = document.getElementById('ans3d');
   
@@ -1003,94 +972,6 @@ function checkEx6d() {
   }
 }
 
-function checkEx6e() {
-  const val = normalizeText(document.getElementById('ex6e').value);
-  const correct = normalizeText("Close your book.");
-  const fb = document.getElementById('fb6e');
-  const ans = document.getElementById('ans6e');
-  
-  if(val === correct) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Very Nice!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx6f() {
-  const val = normalizeText(document.getElementById('ex6f').value);
-  const correct = normalizeText("Put your book away.");
-  const fb = document.getElementById('fb6f');
-  const ans = document.getElementById('ans6f');
-  
-  if(val === correct) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Great!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx6g() {
-  const val = normalizeText(document.getElementById('ex6g').value);
-  const correct = normalizeText("Entreguen su tarea!");
-  const fb = document.getElementById('fb6g');
-  const ans = document.getElementById('ans6g');
-  
-  if(val === correct) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Excellent!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx6h() {
-  const val = normalizeText(document.getElementById('ex6h').value);
-  const correct = normalizeText("¡Trabajen en grupo!");
-  const fb = document.getElementById('fb6h');
-  const ans = document.getElementById('ans6h');
-  
-  if(val === correct) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Perfect!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
 // Sección 7: SPORTS (con sonidos diferentes - tonos más agudos)
 function checkSports7a() {
   const val = document.getElementById('ex7a').value.trim().toLowerCase();
@@ -1262,31 +1143,25 @@ function checkSports7h() {
 
 // Sonidos diferentes para Sports (tonos más agudos/deportivos)
 function playSuccessSound2() {
-  const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZURE');
+  const audio = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=');
   audio.volume = 0.3;
   audio.play().catch(e => console.log('Audio play failed'));
 }
 
 function playErrorSound2() {
-  const audio = new Audio('data:audio/wav;base64,UklGRo4VAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YWoVAACA//8iAAD/+f///iQA//n///8iAP/5//8A//j///8hAP/5////IAD/+f////8fAP/5////HwD/+f////8eAP/5////HgD/+f////8dAP/5////HAD/+f////8bAP/5////GgD/+f////8ZAP/5////GAD/+f////8YAP/5////FwD/+f////8WAP/5//8A//j///8VAP/5////FAD/+f////8TAP/5////EgD/+f////8RAP/5////EAD/+f////8PAP/5////DgD/+f////8NAP/5////DAD/+f////8LAP/5////CgD/+f////8JAP/5////CAD/+f////8HAP/5////BgD/+f////8FAP/5////BAD/+f////8DAP/5////AgD/+f////8BAP/5////AAD/+f////8A//j///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8......');
+  const audio = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=');
   audio.volume = 0.3;
   audio.play().catch(e => console.log('Audio play failed'));
 }
 
-function playNextSound() {
-  const audio = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=');
-  audio.volume = 0.2;
-  audio.play().catch(e => console.log('Audio play failed'));
-}
-
 function completeTest() {
-  if(completedCount >= 25) {
+  if(completedCount >= 20) {
     document.getElementById('sec7').classList.remove('active');
     document.getElementById('finalMsg').style.display = 'block';
     document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
     speak('Congratulations! You completed the basic test!');
   } else {
-    alert(`⚠️ Completa al menos 25 de 31 ejercicios.\nCompletados: ${completedCount}/31`);
+    alert(`⚠️ Completa al menos 20 de 27 ejercicios.\nCompletados: ${completedCount}/27`);
   }
 }
 
