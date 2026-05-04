@@ -286,32 +286,50 @@ function updateProgress() {
   }
 }
 
-// VALIDACIÓN ESTRICTA
-function validate(inputId, regexStr, feedbackId) {
+// FUNCIÓN DE NORMALIZACIÓN (Clave para el éxito)
+function normalizeText(text) {
+  if (!text) return "";
+  return text
+    .toLowerCase()
+    .replace(/[?!.,'"]/g, "") // Elimina signos de puntuación
+    .replace(/\s+/g, " ")     // Reemplaza múltiples espacios por uno
+    .trim();                  // Elimina espacios al inicio y final
+}
+
+// VALIDACIÓN CORREGIDA
+function validate(inputId, expectedAnswer, feedbackId) {
   const input = document.getElementById(inputId);
   const fb = document.getElementById(feedbackId);
   const hiddenAns = document.getElementById(inputId.replace('ex', 'ans'));
   
-  // Limpiar input para comparación
-  const userVal = input.value.trim().toLowerCase().replace(/[?!.,]/g, '').replace(/\s+/g, ' ');
-  // Preparar regex
-  const regex = new RegExp(`^${regexStr.toLowerCase().replace(/\s+/g, '\\s*').replace(/[?!.,]/g, '')}$`, 'i');
+  // Normalizamos ambos textos para compararlos limpiamente
+  const userText = normalizeText(input.value);
+  const correctText = normalizeText(expectedAnswer);
   
-  if(regex.test(userVal)) {
+  // Verificamos si coinciden
+  if (userText === correctText) {
+    // CORRECTO
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto.';
+    fb.textContent = '✅ Correcto. ¡Muy bien!';
     fb.style.display = 'block';
+    
+    // Ocultamos la respuesta oculta si acierta para mantener limpieza
     if(hiddenAns) hiddenAns.style.display = 'none';
+    
     speak('Very Nice!');
     input.style.borderColor = 'var(--emerald)';
-    input.disabled = true;
-    input.nextElementSibling.disabled = true;
+    input.disabled = true; // Bloquea el input para que no lo cambien
+    input.nextElementSibling.disabled = true; // Desactiva el botón
   } else {
+    // INCORRECTO
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto. Revisa la estructura.';
     fb.style.display = 'block';
+    
+    // Mostramos la respuesta correcta (la línea roja)
     if(hiddenAns) hiddenAns.style.display = 'block';
-    speak('Sorry, there\'s something wrong.');
+    
+    speak('Sorry, try again');
     input.style.borderColor = 'var(--error)';
   }
 }
