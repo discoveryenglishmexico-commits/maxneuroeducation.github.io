@@ -1,0 +1,271 @@
+<!-- SECCIÓN 7: SPORTS (Diseño modificado - Colores naranja/verde) -->
+<section class="section sports-section" id="sec7" style="display:none; background: linear-gradient(135deg, rgba(242,125,38,0.1), rgba(0,255,0,0.1)); border-color: #F27D26;">
+  <h2 class="section-title" style="color: #F27D26;">🏆 7. Sports - NBF Diagnostic</h2>
+  <p class="section-desc" style="color: var(--muted);">Identifica bases léxicas y determinantes en contextos deportivos.</p>
+  
+  <div class="exercise-item" style="border-left-color: #00FF00;">
+    <label class="exercise-label">"I wear comfortable clothes and carry a small mat to every class."</label>
+    <p style="font-size: 0.9rem; color: var(--muted); margin: 10px 0;">¿Qué deporte es?</p>
+    <input type="text" class="exercise-input" id="ex7a" placeholder="">
+    <button class="btn btn-verify" onclick="checkSports7a()" style="background: #F27D26; color: white;">Verificar</button>
+    <div class="hidden-answer" id="ans7a" style="border-left-color: #00FF00;">Yoga</div>
+    <div class="feedback" id="fb7a"></div>
+  </div>
+
+  <div class="exercise-item" style="border-left-color: #00FF00;">
+    <label class="exercise-label">"It doesn't take me long to go down a hill!"</label>
+    <p style="font-size: 0.9rem; color: var(--muted); margin: 10px 0;">¿Qué deporte es?</p>
+    <input type="text" class="exercise-input" id="ex7b" placeholder="">
+    <button class="btn btn-verify" onclick="checkSports7b()" style="background: #F27D26; color: white;">Verificar</button>
+    <div class="hidden-answer" id="ans7b" style="border-left-color: #00FF00;">Skiing</div>
+    <div class="feedback" id="fb7b"></div>
+  </div>
+
+  <div class="exercise-item" style="border-left-color: #00FF00;">
+    <label class="exercise-label">"We play with sticks and try to hit the hockey puck into a net."</label>
+    <p style="font-size: 0.9rem; color: var(--muted); margin: 10px 0;">¿Qué deporte es?</p>
+    <input type="text" class="exercise-input" id="ex7c" placeholder="">
+    <button class="btn btn-verify" onclick="checkSports7c()" style="background: #F27D26; color: white;">Verificar</button>
+    <div class="hidden-answer" id="ans7c" style="border-left-color: #00FF00;">Hockey</div>
+    <div class="feedback" id="fb7c"></div>
+  </div>
+
+  <div class="exercise-item" style="border-left-color: #00FF00;">
+    <label class="exercise-label">"We play with racquets and try to hit the ball over a net."</label>
+    <p style="font-size: 0.9rem; color: var(--muted); margin: 10px 0;">¿Qué deporte es?</p>
+    <input type="text" class="exercise-input" id="ex7d" placeholder="">
+    <button class="btn btn-verify" onclick="checkSports7d()" style="background: #F27D26; color: white;">Verificar</button>
+    <div class="hidden-answer" id="ans7d" style="border-left-color: #00FF00;">Tennis</div>
+    <div class="feedback" id="fb7d"></div>
+  </div>
+
+  <div class="exercise-item" style="border-left-color: #00FF00;">
+    <label class="exercise-label">"We do this in pairs. We usually wear white clothes and a dark belt."</label>
+    <p style="font-size: 0.9rem; color: var(--muted); margin: 10px 0;">¿Qué deporte es?</p>
+    <input type="text" class="exercise-input" id="ex7e" placeholder="">
+    <button class="btn btn-verify" onclick="checkSports7e()" style="background: #F27D26; color: white;">Verificar</button>
+    <div class="hidden-answer" id="ans7e" style="border-left-color: #00FF00;">Karate</div>
+    <div class="feedback" id="fb7e"></div>
+  </div>
+
+  <div class="exercise-item" style="border-left-color: #00FF00;">
+    <label class="exercise-label">"We go around a track as fast as possible."</label>
+    <p style="font-size: 0.9rem; color: var(--muted); margin: 10px 0;">¿Qué deporte es?</p>
+    <input type="text" class="exercise-input" id="ex7f" placeholder="">
+    <button class="btn btn-verify" onclick="checkSports7f()" style="background: #F27D26; color: white;">Verificar</button>
+    <div class="hidden-answer" id="ans7f" style="border-left-color: #00FF00;">Running</div>
+    <div class="feedback" id="fb7f"></div>
+  </div>
+
+  <div class="exercise-item" style="border-left-color: #00FF00;">
+    <label class="exercise-label">"We play in teams and hit a large ball over a net with our hands."</label>
+    <p style="font-size: 0.9rem; color: var(--muted); margin: 10px 0;">¿Qué deporte es?</p>
+    <input type="text" class="exercise-input" id="ex7g" placeholder="">
+    <button class="btn btn-verify" onclick="checkSports7g()" style="background: #F27D26; color: white;">Verificar</button>
+    <div class="hidden-answer" id="ans7g" style="border-left-color: #00FF00;">Volleyball</div>
+    <div class="feedback" id="fb7g"></div>
+  </div>
+
+  <div class="exercise-item" style="border-left-color: #00FF00;">
+    <label class="exercise-label">"I do this two or three times a week at an outdoor pool."</label>
+    <p style="font-size: 0.9rem; color: var(--muted); margin: 10px 0;">¿Qué deporte es?</p>
+    <input type="text" class="exercise-input" id="ex7h" placeholder="">
+    <button class="btn btn-verify" onclick="checkSports7h()" style="background: #F27D26; color: white;">Verificar</button>
+    <div class="hidden-answer" id="ans7h" style="border-left-color: #00FF00;">Swimming</div>
+    <div class="feedback" id="fb7h"></div>
+  </div>
+
+  <button class="btn btn-next" onclick="completeTest()" style="background: linear-gradient(135deg, #00FF00, #F27D26);"> Finalizar Prueba</button>
+</section>
+
+<script>
+// Funciones de verificación para Sports con sonidos diferentes
+function checkSports7a() {
+  const val = document.getElementById('ex7a').value.trim().toLowerCase();
+  const fb = document.getElementById('fb7a');
+  const ans = document.getElementById('ans7a');
+  
+  if(val === 'yoga') {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto! Yoga';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    playSuccessSound2(); // Sonido diferente
+    completedCount++;
+    updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto. Pista: "mat" = tapete';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    playErrorSound2(); // Sonido diferente
+  }
+}
+
+function checkSports7b() {
+  const val = document.getElementById('ex7b').value.trim().toLowerCase();
+  const fb = document.getElementById('fb7b');
+  const ans = document.getElementById('ans7b');
+  
+  if(val === 'skiing') {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto! Skiing';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    playSuccessSound2();
+    completedCount++;
+    updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto. Pista: "hill" = colina';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    playErrorSound2();
+  }
+}
+
+function checkSports7c() {
+  const val = document.getElementById('ex7c').value.trim().toLowerCase();
+  const fb = document.getElementById('fb7c');
+  const ans = document.getElementById('ans7c');
+  
+  if(val === 'hockey') {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto! Hockey';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    playSuccessSound2();
+    completedCount++;
+    updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto. Pista: "puck" = disco de hockey';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    playErrorSound2();
+  }
+}
+
+function checkSports7d() {
+  const val = document.getElementById('ex7d').value.trim().toLowerCase();
+  const fb = document.getElementById('fb7d');
+  const ans = document.getElementById('ans7d');
+  
+  if(val === 'tennis') {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto! Tennis';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    playSuccessSound2();
+    completedCount++;
+    updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto. Pista: "racquets" = raquetas';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    playErrorSound2();
+  }
+}
+
+function checkSports7e() {
+  const val = document.getElementById('ex7e').value.trim().toLowerCase();
+  const fb = document.getElementById('fb7e');
+  const ans = document.getElementById('ans7e');
+  
+  if(val === 'karate') {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto! Karate';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    playSuccessSound2();
+    completedCount++;
+    updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto. Pista: "belt" = cinturón';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    playErrorSound2();
+  }
+}
+
+function checkSports7f() {
+  const val = document.getElementById('ex7f').value.trim().toLowerCase();
+  const fb = document.getElementById('fb7f');
+  const ans = document.getElementById('ans7f');
+  
+  if(val === 'running') {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto! Running';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    playSuccessSound2();
+    completedCount++;
+    updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto. Pista: "track" = pista';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    playErrorSound2();
+  }
+}
+
+function checkSports7g() {
+  const val = document.getElementById('ex7g').value.trim().toLowerCase();
+  const fb = document.getElementById('fb7g');
+  const ans = document.getElementById('ans7g');
+  
+  if(val === 'volleyball') {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto! Volleyball';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    playSuccessSound2();
+    completedCount++;
+    updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto. Pista: "hands" = manos';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    playErrorSound2();
+  }
+}
+
+function checkSports7h() {
+  const val = document.getElementById('ex7h').value.trim().toLowerCase();
+  const fb = document.getElementById('fb7h');
+  const ans = document.getElementById('ans7h');
+  
+  if(val === 'swimming') {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto! Swimming';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    playSuccessSound2();
+    completedCount++;
+    updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto. Pista: "pool" = alberca';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    playErrorSound2();
+  }
+}
+
+// Sonidos diferentes para Sports (tonos más agudos/deportivos)
+function playSuccessSound2() {
+  const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZURE');
+  audio.volume = 0.3;
+  audio.play().catch(e => console.log('Audio play failed'));
+}
+
+function playErrorSound2() {
+  const audio = new Audio('data:audio/wav;base64,UklGRo4VAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YWoVAACA//8iAAD/+f///iQA//n///8iAP/5//8A//j///8hAP/5////IAD/+f////8fAP/5////HwD/+f////8eAP/5////HgD/+f////8dAP/5////HAD/+f////8bAP/5////GgD/+f////8ZAP/5////GAD/+f////8YAP/5////FwD/+f////8WAP/5//8A//j///8VAP/5////FAD/+f////8TAP/5////EgD/+f////8RAP/5////EAD/+f////8PAP/5////DgD/+f////8NAP/5////DAD/+f////8LAP/5////CgD/+f////8JAP/5////CAD/+f////8HAP/5////BgD/+f////8FAP/5////BAD/+f////8DAP/5////AgD/+f////8BAP/5////AAD/+f////8A//j///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///8A//n///......');
+  audio.volume = 0.3;
+  audio.play().catch(e => console.log('Audio play failed'));
+}
+</script>
