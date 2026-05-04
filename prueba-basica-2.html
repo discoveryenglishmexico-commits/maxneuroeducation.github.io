@@ -17,7 +17,7 @@
   --text: #F5F2ED;
   --muted: #8A94A6;
   --error: #FF4444;
-  --hidden-answer: #ff3366;
+  --hidden-ans: #ff3366;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
@@ -69,13 +69,13 @@ h1 {
   flex-wrap:wrap;
 }
 .exercise-row label { min-width:200px; font-weight:600; }
-.exercise-row input, .exercise-row select {
+.exercise-row input {
   flex:1; min-width:150px; padding:10px; background:rgba(255,255,255,0.05);
   border:1px solid var(--glass-border); border-radius:8px; color:var(--text);
 }
 .hidden-answer {
   display:none; margin-top:10px; padding:10px; background:rgba(255,51,102,0.15);
-  border-left:3px solid var(--hidden-answer); border-radius:6px; color:var(--hidden-answer);
+  border-left:3px solid var(--hidden-ans); border-radius:6px; color:var(--hidden-ans);
   font-family:'Orbitron',sans-serif; font-size:0.95rem;
 }
 .feedback {
@@ -119,33 +119,33 @@ h1 {
     <div class="exercise-row">
       <label>This is the classroom's globe.</label>
       <input type="text" id="ex1a" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx1a()">Verificar</button>
+      <button class="btn btn-secondary" onclick="validate('ex1a', 'Is this the classroom\\s globe\\? Yes it is\\.', 'fb1a')">Verificar</button>
     </div>
     <div class="hidden-answer" id="ans1a">Is this the classroom's globe? Yes it is.</div>
     <div class="feedback" id="fb1a"></div>
 
     <div class="exercise-row">
-      <label>¿Esto es un sacapuntas?</label>
+      <label><em>¿Esto es un sacapuntas?</em></label>
       <input type="text" id="ex1b" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx1b()">Verificar</button>
+      <button class="btn btn-secondary" onclick="validate('ex1b', 'Is this a sharpener\\? No it isn\\\'t\\. It\\\'s the classroom\\\'s globe\\.', 'fb1b')">Verificar</button>
     </div>
     <div class="hidden-answer" id="ans1b">Is this a sharpener? No it isn't. It's the classroom's globe.</div>
     <div class="feedback" id="fb1b"></div>
 
     <div class="exercise-row">
-      <label>These are the classmates.</label>
+      <label>These are the class mates.</label>
       <input type="text" id="ex1c" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx1c()">Verificar</button>
+      <button class="btn btn-secondary" onclick="validate('ex1c', 'Are these the classmates\\? Yes they are\\.', 'fb1c')">Verificar</button>
     </div>
     <div class="hidden-answer" id="ans1c">Are these the classmates? Yes they are.</div>
     <div class="feedback" id="fb1c"></div>
 
     <div class="exercise-row">
-      <label>¿Estas personas son maestros?</label>
+      <label><em>¿Estas personas son maestros?</em></label>
       <input type="text" id="ex1d" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx1d()">Verificar</button>
+      <button class="btn btn-secondary" onclick="validate('ex1d', 'Are these people teachers\\? No they aren\\\'t\\. They\\\'re the class mates\\.', 'fb1d')">Verificar</button>
     </div>
-    <div class="hidden-answer" id="ans1d">Are these people teachers? No they aren't. They're the classmates.</div>
+    <div class="hidden-answer" id="ans1d">Are these people teachers? No they aren't. They're the class mates.</div>
     <div class="feedback" id="fb1d"></div>
     <button class="btn btn-primary" onclick="unlockSec(2)">Siguiente Sección →</button>
   </section>
@@ -155,37 +155,29 @@ h1 {
     <h2 class="section-title">🎯 2. Pronombres Demostrativos</h2>
     <p style="color:var(--muted); margin-bottom:20px;">Aplica correctamente this/that/these/those distinguiendo entre plural y singular.</p>
     
-    <div class="exercise-row">
-      <label>Those are Joshua and Peter.</label>
-      <input type="text" id="ex2a" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx2a()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans2a">Are those Joshua and Peter? Yes they are.</div>
-    <div class="feedback" id="fb2a"></div>
+    <div class="exercise-row"><label>Those are Joshua and Peter.</label><input type="text" id="ex2a" placeholder=""><button class="btn btn-secondary" onclick="validate('ex2a', 'Are those Joshua and Peter\\? Yes they are\\.', 'fb2a')">Verificar</button></div>
+    <div class="hidden-answer" id="ans2a">Are those Joshua and Peter? Yes they are.</div><div class="feedback" id="fb2a"></div>
 
-    <div class="exercise-row">
-      <label>¿Aquellos son Jimmy y Natasha?</label>
-      <input type="text" id="ex2b" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx2b()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans2b">Are those Jimmy and Natasha? No they aren't. They're Joshua and Peter.</div>
-    <div class="feedback" id="fb2b"></div>
+    <div class="exercise-row"><label><em>¿Aquellos son Jimmy y Natasha?</em></label><input type="text" id="ex2b" placeholder=""><button class="btn btn-secondary" onclick="validate('ex2b', 'Are those Jimmy and Natasha\\? No they aren\\\'t\\. They\\\'re Joshua and Peter\\.', 'fb2b')">Verificar</button></div>
+    <div class="hidden-answer" id="ans2b">Are those Jimmy and Natasha? No they aren't. They're Joshua and Peter.</div><div class="feedback" id="fb2b"></div>
 
-    <div class="exercise-row">
-      <label>That's my friend Claudia.</label>
-      <input type="text" id="ex2c" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx2c()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans2c">Is that my friend Claudia? Yes she is.</div>
-    <div class="feedback" id="fb2c"></div>
+    <div class="exercise-row"><label>That's my friend Claudia.</label><input type="text" id="ex2c" placeholder=""><button class="btn btn-secondary" onclick="validate('ex2c', 'Is that my friend Claudia\\? Yes she is\\.', 'fb2c')">Verificar</button></div>
+    <div class="hidden-answer" id="ans2c">Is that my friend Claudia? Yes she is.</div><div class="feedback" id="fb2c"></div>
 
-    <div class="exercise-row">
-      <label>¿Aquella es mi profesora de inglés?</label>
-      <input type="text" id="ex2d" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx2d()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans2d">Is that my English teacher? No she isn't. She's my friend Claudia.</div>
-    <div class="feedback" id="fb2d"></div>
+    <div class="exercise-row"><label><em>¿Aquella es mi profesora de inglés?</em></label><input type="text" id="ex2d" placeholder=""><button class="btn btn-secondary" onclick="validate('ex2d', 'Is that my English teacher\\? No she isn\\\'t\\. She\\\'s my friend Claudia\\.', 'fb2d')">Verificar</button></div>
+    <div class="hidden-answer" id="ans2d">Is that my English teacher? No she isn't. She's my friend Claudia.</div><div class="feedback" id="fb2d"></div>
+
+    <div class="exercise-row"><label>These are computers.</label><input type="text" id="ex2e" placeholder=""><button class="btn btn-secondary" onclick="validate('ex2e', 'Are these computers\\? Yes they are\\.', 'fb2e')">Verificar</button></div>
+    <div class="hidden-answer" id="ans2e">Are these computers? Yes they are.</div><div class="feedback" id="fb2e"></div>
+
+    <div class="exercise-row"><label>¿Estas son tabletas?</label><input type="text" id="ex2f" placeholder=""><button class="btn btn-secondary" onclick="validate('ex2f', 'Are these tablets\\? No they aren\\\'t\\. They\\\'re computers\\.', 'fb2f')">Verificar</button></div>
+    <div class="hidden-answer" id="ans2f">Are these tablets? No they aren't. They're computers.</div><div class="feedback" id="fb2f"></div>
+
+    <div class="exercise-row"><label>Those are tablets.</label><input type="text" id="ex2g" placeholder=""><button class="btn btn-secondary" onclick="validate('ex2g', 'Are those tablets\\? Yes they are\\.', 'fb2g')">Verificar</button></div>
+    <div class="hidden-answer" id="ans2g">Are those tablets? Yes they are.</div><div class="feedback" id="fb2g"></div>
+
+    <div class="exercise-row"><label>¿Esas son computadoras?</label><input type="text" id="ex2h" placeholder=""><button class="btn btn-secondary" onclick="validate('ex2h', 'Are those computers\\? No they aren\\\'t\\. They\\\'re tablets\\.', 'fb2h')">Verificar</button></div>
+    <div class="hidden-answer" id="ans2h">Are those computers? No they aren't. They're tablets.</div><div class="feedback" id="fb2h"></div>
     <button class="btn btn-primary" onclick="unlockSec(3)">Siguiente Sección →</button>
   </section>
 
@@ -194,107 +186,71 @@ h1 {
     <h2 class="section-title">📦 3. There is / There are</h2>
     <p style="color:var(--muted); margin-bottom:20px;">Completa con la forma correcta y agrega respuesta afirmativa/negativa.</p>
     
-    <div class="exercise-row">
-      <label>There's a student in the classroom.</label>
-      <input type="text" id="ex3a" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx3a()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans3a">Is there a student in the classroom? Yes there is.</div>
-    <div class="feedback" id="fb3a"></div>
+    <div class="exercise-row"><label>There's a student in the classroom.</label><input type="text" id="ex3a" placeholder=""><button class="btn btn-secondary" onclick="validate('ex3a', 'Is there a student in the classroom\\? Yes there is\\.', 'fb3a')">Verificar</button></div>
+    <div class="hidden-answer" id="ans3a">Is there a student in the classroom? Yes there is.</div><div class="feedback" id="fb3a"></div>
 
-    <div class="exercise-row">
-      <label>¿Hay un conserje en el aula?</label>
-      <input type="text" id="ex3b" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx3b()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans3b">Is there a janitor in the classroom? No there isn't. There's a student in the classroom.</div>
-    <div class="feedback" id="fb3b"></div>
+    <div class="exercise-row"><label>¿Hay un conserje en el aula?</label><input type="text" id="ex3b" placeholder=""><button class="btn btn-secondary" onclick="validate('ex3b', 'Is there a janitor in the classroom\\? No there isn\\\'t\\. There\\\'s a student in the classroom\\.', 'fb3b')">Verificar</button></div>
+    <div class="hidden-answer" id="ans3b">Is there a janitor in the classroom? No there isn't. There's a student in the classroom.</div><div class="feedback" id="fb3b"></div>
 
-    <div class="exercise-row">
-      <label>There are students in the classroom.</label>
-      <input type="text" id="ex3c" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx3c()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans3c">Are there students in the classroom? Yes there are.</div>
-    <div class="feedback" id="fb3c"></div>
+    <div class="exercise-row"><label>There are students in the classroom.</label><input type="text" id="ex3c" placeholder=""><button class="btn btn-secondary" onclick="validate('ex3c', 'Are there students in the classroom\\? Yes there are\\.', 'fb3c')">Verificar</button></div>
+    <div class="hidden-answer" id="ans3c">Are there students in the classroom? Yes there are.</div><div class="feedback" id="fb3c"></div>
 
-    <div class="exercise-row">
-      <label>¿Hay conserjes en el aula?</label>
-      <input type="text" id="ex3d" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx3d()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans3d">Are there janitors in the classroom? No there aren't. There are students in the classroom.</div>
-    <div class="feedback" id="fb3d"></div>
+    <div class="exercise-row"><label>¿Hay conserjes en el aula?</label><input type="text" id="ex3d" placeholder=""><button class="btn btn-secondary" onclick="validate('ex3d', 'Are there janitors in the classroom\\? No there aren\\\'t\\. There are students in the classroom\\.', 'fb3d')">Verificar</button></div>
+    <div class="hidden-answer" id="ans3d">Are there janitors in the classroom? No there aren't. There are students in the classroom.</div><div class="feedback" id="fb3d"></div>
+
+    <div class="exercise-row"><label>There's a math problem on the whiteboard.</label><input type="text" id="ex3e" placeholder=""><button class="btn btn-secondary" onclick="validate('ex3e', 'Is there a math problem on the board\\? Yes there is\\.', 'fb3e')">Verificar</button></div>
+    <div class="hidden-answer" id="ans3e">Is there a math problem on the board? Yes there is.</div><div class="feedback" id="fb3e"></div>
+
+    <div class="exercise-row"><label>¿Hay una pregunta de historia en la pizarra?</label><input type="text" id="ex3f" placeholder=""><button class="btn btn-secondary" onclick="validate('ex3f', 'Is there a history question on the board\\? No there isn\\\'t\\. There\\\'s a math problem on the board\\.', 'fb3f')">Verificar</button></div>
+    <div class="hidden-answer" id="ans3f">Is there a history question on the board? No there isn't. There's a math problem on the board.</div><div class="feedback" id="fb3f"></div>
+
+    <div class="exercise-row"><label>There are math problems on the whiteboard.</label><input type="text" id="ex3g" placeholder=""><button class="btn btn-secondary" onclick="validate('ex3g', 'Are there math problems on the board\\? Yes there are\\.', 'fb3g')">Verificar</button></div>
+    <div class="hidden-answer" id="ans3g">Are there math problems on the board? Yes there are.</div><div class="feedback" id="fb3g"></div>
+
+    <div class="exercise-row"><label>¿Hay preguntas de historia en la pizarra?</label><input type="text" id="ex3h" placeholder=""><button class="btn btn-secondary" onclick="validate('ex3h', 'Are there history questions on the board\\? No there aren\\\'t\\. There are math problems on the board\\.', 'fb3h')">Verificar</button></div>
+    <div class="hidden-answer" id="ans3h">Are there history questions on the board? No there aren't. There are math problems on the board.</div><div class="feedback" id="fb3h"></div>
     <button class="btn btn-primary" onclick="unlockSec(4)">Siguiente Sección →</button>
   </section>
 
-  <!-- SECCIÓN 4: PREPOSICIONES IN/ON -->
+  <!-- SECCIÓN 4: CRITICAL THINKING / PREPOSICIONES -->
   <section class="section" id="sec4">
-    <h2 class="section-title">📍 4. Preposiciones In/On</h2>
-    <p style="color:var(--muted); margin-bottom:20px;">Convierte las preguntas del español al inglés y responde usando In/On correctamente.</p>
+    <h2 class="section-title">📍 4. Critical Thinking & Preposiciones</h2>
+    <p style="color:var(--muted); margin-bottom:20px;">Responde usando In/On correctamente. Respuestas completas requeridas.</p>
     
-    <div class="exercise-row">
-      <label>¿Dónde están los compañeros de clase de Edward?</label>
-      <input type="text" id="ex4a" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx4a()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans4a">Where are Edward's classmates? They're in the classroom.</div>
-    <div class="feedback" id="fb4a"></div>
+    <div class="exercise-row"><label>¿Dónde están los compañeros de clase de Edward?</label><input type="text" id="ex4a" placeholder=""><button class="btn btn-secondary" onclick="validate('ex4a', 'They\\\'re in the classroom\\.', 'fb4a')">Verificar</button></div>
+    <div class="hidden-answer" id="ans4a">They're in the classroom.</div><div class="feedback" id="fb4a"></div>
 
-    <div class="exercise-row">
-      <label>¿Dónde está el globo terráqueo?</label>
-      <input type="text" id="ex4b" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx4b()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans4b">Where is the globe? It's on the bookcase.</div>
-    <div class="feedback" id="fb4b"></div>
+    <div class="exercise-row"><label>¿Dónde está el globo terráqueo?</label><input type="text" id="ex4b" placeholder=""><button class="btn btn-secondary" onclick="validate('ex4b', 'It\\\'s on the bookcase\\.', 'fb4b')">Verificar</button></div>
+    <div class="hidden-answer" id="ans4b">It's on the bookcase.</div><div class="feedback" id="fb4b"></div>
 
-    <div class="exercise-row">
-      <label>¿En qué clase está Edward?</label>
-      <input type="text" id="ex4c" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx4c()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans4c">What class is Edward in? He's in the English class.</div>
-    <div class="feedback" id="fb4c"></div>
+    <div class="exercise-row"><label>¿En qué clase está Edward?</label><input type="text" id="ex4c" placeholder=""><button class="btn btn-secondary" onclick="validate('ex4c', 'He\\\'s in the English class\\.', 'fb4c')">Verificar</button></div>
+    <div class="hidden-answer" id="ans4c">He's in the English class.</div><div class="feedback" id="fb4c"></div>
 
-    <div class="exercise-row">
-      <label>¿Dónde está el rayo láser?</label>
-      <input type="text" id="ex4d" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx4d()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans4d">Where's the laser beam? It's on the teacher's desk.</div>
-    <div class="feedback" id="fb4d"></div>
+    <div class="exercise-row"><label>¿Dónde está el aula?</label><input type="text" id="ex4d" placeholder=""><button class="btn btn-secondary" onclick="validate('ex4d', 'It\\\'s in the school\\.', 'fb4d')">Verificar</button></div>
+    <div class="hidden-answer" id="ans4d">It's in the school.</div><div class="feedback" id="fb4d"></div>
+
+    <div class="exercise-row"><label>¿Dónde está el rayo láser?</label><input type="text" id="ex4e" placeholder=""><button class="btn btn-secondary" onclick="validate('ex4e', 'It\\\'s on the teacher\\\'s desk\\.', 'fb4e')">Verificar</button></div>
+    <div class="hidden-answer" id="ans4e">It's on the teacher's desk.</div><div class="feedback" id="fb4e"></div>
+
+    <div class="exercise-row"><label>¿Dónde están los botes de basura?</label><input type="text" id="ex4f" placeholder=""><button class="btn btn-secondary" onclick="validate('ex4f', 'They\\\'re in the classroom\\.', 'fb4f')">Verificar</button></div>
+    <div class="hidden-answer" id="ans4f">They're in the classroom.</div><div class="feedback" id="fb4f"></div>
     <button class="btn btn-primary" onclick="unlockSec(5)">Siguiente Sección →</button>
   </section>
 
-  <!-- SECCIÓN 5: CRITICAL THINKING -->
+  <!-- SECCIÓN 5: QUESTION WORDS & GRAMMAR -->
   <section class="section" id="sec5">
-    <h2 class="section-title">🧠 5. Critical Thinking</h2>
-    <p style="color:var(--muted); margin-bottom:20px;">Responde con oraciones completas en inglés.</p>
+    <h2 class="section-title">❓ 5. Question Words & Grammar</h2>
+    <p style="color:var(--muted); margin-bottom:20px;">Completa con la palabra interrogativa correcta.</p>
     
-    <div class="exercise-row">
-      <label>What kind of behavior is mature and responsible?</label>
-      <textarea id="ex5a" rows="2" placeholder="" style="width:100%; padding:10px; background:rgba(0,0,0,0.3); border:1px solid var(--glass-border); border-radius:8px; color:var(--text);"></textarea>
-      <button class="btn btn-secondary" onclick="checkEx5a()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans5a">Mature behavior is being responsible, studying hard, and respecting others.</div>
-    <div class="feedback" id="fb5a"></div>
-
-    <div class="exercise-row">
-      <label>What do immature people do?</label>
-      <textarea id="ex5b" rows="2" placeholder="" style="width:100%; padding:10px; background:rgba(0,0,0,0.3); border:1px solid var(--glass-border); border-radius:8px; color:var(--text);"></textarea>
-      <button class="btn btn-secondary" onclick="checkEx5b()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans5b">Immature people act childish, don't take responsibility, and don't think about consequences.</div>
-    <div class="feedback" id="fb5b"></div>
-
-    <div class="exercise-row">
-      <label>What would you like to do after graduating from university?</label>
-      <textarea id="ex5c" rows="2" placeholder="" style="width:100%; padding:10px; background:rgba(0,0,0,0.3); border:1px solid var(--glass-border); border-radius:8px; color:var(--text);"></textarea>
-      <button class="btn btn-secondary" onclick="checkEx5c()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans5c">After graduating, I would like to work in my field and continue learning new skills.</div>
-    <div class="feedback" id="fb5c"></div>
+    <div class="exercise-row"><label>1. _________ do you live?</label><input type="text" id="ex5a" placeholder=""><button class="btn btn-secondary" onclick="validate('ex5a', 'Where', 'fb5a')">Verificar</button></div><div class="feedback" id="fb5a"></div>
+    <div class="exercise-row"><label>2. At _________ time do you wake up?</label><input type="text" id="ex5b" placeholder=""><button class="btn btn-secondary" onclick="validate('ex5b', 'what', 'fb5b')">Verificar</button></div><div class="feedback" id="fb5b"></div>
+    <div class="exercise-row"><label>3. _________ is your favorite movie?</label><input type="text" id="ex5c" placeholder=""><button class="btn btn-secondary" onclick="validate('ex5c', 'What', 'fb5c')">Verificar</button></div><div class="feedback" id="fb5c"></div>
+    <div class="exercise-row"><label>4. _________ old are you?</label><input type="text" id="ex5d" placeholder=""><button class="btn btn-secondary" onclick="validate('ex5d', 'How', 'fb5d')">Verificar</button></div><div class="feedback" id="fb5d"></div>
+    <div class="exercise-row"><label>5. _________ is your birthday?</label><input type="text" id="ex5e" placeholder=""><button class="btn btn-secondary" onclick="validate('ex5e', 'When', 'fb5e')">Verificar</button></div><div class="feedback" id="fb5e"></div>
+    <div class="exercise-row"><label>6. _________ tall are you?</label><input type="text" id="ex5f" placeholder=""><button class="btn btn-secondary" onclick="validate('ex5f', 'How', 'fb5f')">Verificar</button></div><div class="feedback" id="fb5f"></div>
+    <div class="exercise-row"><label>7. _________ is your email address?</label><input type="text" id="ex5g" placeholder=""><button class="btn btn-secondary" onclick="validate('ex5g', 'What', 'fb5g')">Verificar</button></div><div class="feedback" id="fb5g"></div>
+    <div class="exercise-row"><label>8. _________ do you come to class?</label><input type="text" id="ex5h" placeholder=""><button class="btn btn-secondary" onclick="validate('ex5h', 'How', 'fb5h')">Verificar</button></div><div class="feedback" id="fb5h"></div>
+    
     <button class="btn btn-primary" onclick="completeTest()">🎉 Completar Prueba</button>
   </section>
 
@@ -315,7 +271,7 @@ const synth = window.speechSynthesis;
 function speak(text) {
   if(synth.speaking) synth.cancel();
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-US'; u.rate = 1; u.pitch = 1;
+  u.lang = 'en-US'; u.rate = 1.1; u.pitch = 1;
   synth.speak(u);
 }
 
@@ -326,124 +282,39 @@ function updateProgress() {
   document.getElementById('progressBar').style.width = `${(completedSections.size / totalSections) * 100}%`;
   if(completedSections.size === totalSections) {
     document.getElementById('unlockMsg').style.display = 'block';
-    speak('Great! You completed the basic test.');
+    speak('Congratulations! You completed the basic test!');
   }
 }
 
-// VERIFICACIÓN DE EJERCICIOS
-function showAnswer(id, correct) {
-  const ans = document.getElementById(id);
-  ans.style.display = 'block';
-  if(correct) {
+// VALIDACIÓN ESTRICTA
+function validate(inputId, regexStr, feedbackId) {
+  const input = document.getElementById(inputId);
+  const fb = document.getElementById(feedbackId);
+  const hiddenAns = document.getElementById(inputId.replace('ex', 'ans'));
+  
+  // Limpiar input para comparación
+  const userVal = input.value.trim().toLowerCase().replace(/[?!.,]/g, '').replace(/\s+/g, ' ');
+  // Preparar regex
+  const regex = new RegExp(`^${regexStr.toLowerCase().replace(/\s+/g, '\\s*').replace(/[?!.,]/g, '')}$`, 'i');
+  
+  if(regex.test(userVal)) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto.';
+    fb.style.display = 'block';
+    if(hiddenAns) hiddenAns.style.display = 'none';
     speak('Very Nice!');
-    return 'success';
-  } else {
-    speak('Sorry, try again');
-    return 'error';
-  }
-}
-
-function checkEx1a() {
-  const val = document.getElementById('ex1a').value.trim().toLowerCase();
-  const fb = document.getElementById('fb1a');
-  if(val.includes('is this the classroom') && val.includes('globe')) {
-    showAnswer('ans1a', true);
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto: "Is this the classroom\'s globe? Yes it is."';
-    fb.style.display = 'block';
+    input.style.borderColor = 'var(--emerald)';
+    input.disabled = true;
+    input.nextElementSibling.disabled = true;
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Revisa: La pregunta debe empezar con "Is this..."';
+    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
     fb.style.display = 'block';
-    speak('There\'s something wrong');
+    if(hiddenAns) hiddenAns.style.display = 'block';
+    speak('Sorry, there\'s something wrong.');
+    input.style.borderColor = 'var(--error)';
   }
 }
-
-function checkEx1b() {
-  const val = document.getElementById('ex1b').value.trim().toLowerCase();
-  const fb = document.getElementById('fb1b');
-  if(val.includes('is this a sharpener') || val.includes('is this a pencil sharpener')) {
-    showAnswer('ans1b', true);
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto: "Is this a sharpener? No it isn\'t."';
-    fb.style.display = 'block';
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Revisa: La pregunta debe ser "Is this a sharpener?"';
-    fb.style.display = 'block';
-    speak('There\'s something wrong');
-  }
-}
-
-function checkEx1c() {
-  const val = document.getElementById('ex1c').value.trim().toLowerCase();
-  const fb = document.getElementById('fb1c');
-  if(val.includes('are these the classmates')) {
-    showAnswer('ans1c', true);
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto: "Are these the classmates? Yes they are."';
-    fb.style.display = 'block';
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Revisa: Usa "Are these..." para plural.';
-    fb.style.display = 'block';
-    speak('There\'s something wrong');
-  }
-}
-
-function checkEx1d() {
-  const val = document.getElementById('ex1d').value.trim().toLowerCase();
-  const fb = document.getElementById('fb1d');
-  if(val.includes('are these people teachers') || val.includes('are these teachers')) {
-    showAnswer('ans1d', true);
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto: "Are these people teachers? No they aren\'t."';
-    fb.style.display = 'block';
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Revisa: La pregunta debe ser "Are these people teachers?"';
-    fb.style.display = 'block';
-    speak('There\'s something wrong');
-  }
-}
-
-// Sección 2
-function checkEx2a() { showAnswer('ans2a', true); document.getElementById('fb2a').className='feedback success'; document.getElementById('fb2a').textContent='✅ Correcto'; document.getElementById('fb2a').style.display='block'; speak('Great!'); }
-function checkEx2b() { showAnswer('ans2b', true); document.getElementById('fb2b').className='feedback success'; document.getElementById('fb2b').textContent='✅ Correcto'; document.getElementById('fb2b').style.display='block'; speak('Very Nice!'); }
-function checkEx2c() { showAnswer('ans2c', true); document.getElementById('fb2c').className='feedback success'; document.getElementById('fb2c').textContent='✅ Correcto'; document.getElementById('fb2c').style.display='block'; speak('Excellent!'); }
-function checkEx2d() { showAnswer('ans2d', true); document.getElementById('fb2d').className='feedback success'; document.getElementById('fb2d').textContent='✅ Correcto'; document.getElementById('fb2d').style.display='block'; speak('Perfect!'); }
-
-// Sección 3
-function checkEx3a() { showAnswer('ans3a', true); document.getElementById('fb3a').className='feedback success'; document.getElementById('fb3a').textContent='✅ Correcto'; document.getElementById('fb3a').style.display='block'; speak('Very Nice!'); }
-function checkEx3b() { showAnswer('ans3b', true); document.getElementById('fb3b').className='feedback success'; document.getElementById('fb3b').textContent='✅ Correcto'; document.getElementById('fb3b').style.display='block'; speak('Great!'); }
-function checkEx3c() { showAnswer('ans3c', true); document.getElementById('fb3c').className='feedback success'; document.getElementById('fb3c').textContent='✅ Correcto'; document.getElementById('fb3c').style.display='block'; speak('Excellent!'); }
-function checkEx3d() { showAnswer('ans3d', true); document.getElementById('fb3d').className='feedback success'; document.getElementById('fb3d').textContent='✅ Correcto'; document.getElementById('fb3d').style.display='block'; speak('Perfect!'); }
-
-// Sección 4
-function checkEx4a() { showAnswer('ans4a', true); document.getElementById('fb4a').className='feedback success'; document.getElementById('fb4a').textContent='✅ Correcto: Usa "in" para espacios cerrados.'; document.getElementById('fb4a').style.display='block'; speak('Very Nice!'); }
-function checkEx4b() { showAnswer('ans4b', true); document.getElementById('fb4b').className='feedback success'; document.getElementById('fb4b').textContent='✅ Correcto: Usa "on" para superficies.'; document.getElementById('fb4b').style.display='block'; speak('Great!'); }
-function checkEx4c() { showAnswer('ans4c', true); document.getElementById('fb4c').className='feedback success'; document.getElementById('fb4c').textContent='✅ Correcto'; document.getElementById('fb4c').style.display='block'; speak('Excellent!'); }
-function checkEx4d() { showAnswer('ans4d', true); document.getElementById('fb4d').className='feedback success'; document.getElementById('fb4d').textContent='✅ Correcto: "on the teacher\'s desk"'; document.getElementById('fb4d').style.display='block'; speak('Perfect!'); }
-
-// Sección 5
-function checkEx5a() {
-  const val = document.getElementById('ex5a').value.trim();
-  const fb = document.getElementById('fb5a');
-  if(val.length > 20) {
-    showAnswer('ans5a', true);
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Respuesta válida. ¡Buen trabajo!';
-    fb.style.display = 'block';
-    speak('Great answer!');
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Escribe una respuesta más completa en inglés.';
-    fb.style.display = 'block';
-    speak('Try again');
-  }
-}
-function checkEx5b() { const val = document.getElementById('ex5b').value.trim(); const fb = document.getElementById('fb5b'); if(val.length > 20) { showAnswer('ans5b', true); fb.className='feedback success'; fb.textContent='✅ Respuesta válida'; fb.style.display='block'; speak('Very Nice!'); } else { fb.className='feedback error'; fb.textContent='❌ Escribe más detalles'; fb.style.display='block'; speak('There\'s something wrong'); } }
-function checkEx5c() { const val = document.getElementById('ex5c').value.trim(); const fb = document.getElementById('fb5c'); if(val.length > 20) { showAnswer('ans5c', true); fb.className='feedback success'; fb.textContent='✅ Respuesta válida'; fb.style.display='block'; speak('Excellent!'); } else { fb.className='feedback error'; fb.textContent='❌ Escribe más detalles'; fb.style.display='block'; speak('Try again'); } }
 
 // DESBLOQUEO DE SECCIONES
 function unlockSec(num) {
@@ -458,13 +329,13 @@ function unlockSec(num) {
 function completeTest() {
   completedSections.add(5);
   updateProgress();
-  if(completedSections.size >= 4) {
+  if(completedSections.size >= 5) {
     document.getElementById('unlockMsg').style.display = 'block';
     speak('Congratulations! You completed the basic test!');
     document.getElementById('sec5').scrollIntoView({behavior:'smooth'});
   } else {
-    alert('⚠️ Completa al menos 4 de 5 secciones para finalizar.');
-    speak('Please complete more sections');
+    alert('⚠️ Completa todas las secciones para finalizar.');
+    speak('Please complete all sections');
   }
 }
 
