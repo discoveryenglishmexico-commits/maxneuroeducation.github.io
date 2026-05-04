@@ -42,62 +42,56 @@ h1 {
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   margin-bottom:15px;
 }
-.progress-wrap {
-  height:8px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; margin:20px 0;
-}
-.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--cyan),var(--emerald)); transition:width 0.5s ease; }
 .section {
   background:var(--glass); backdrop-filter:blur(16px);
   border:1px solid var(--glass-border); border-radius:20px;
   padding:30px; margin-bottom:30px; position:relative; overflow:hidden;
-  opacity:0.6; pointer-events:none; filter:grayscale(0.5);
-  transition:all 0.4s ease;
-}
-.section.active { opacity:1; pointer-events:all; filter:none; border-color:var(--cyan); box-shadow:0 0 30px rgba(0,243,255,0.2); }
-.section::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:3px;
-  background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--gold));
-  opacity:0.7;
 }
 .section-title {
-  font-family:'Orbitron',sans-serif; font-size:1.3rem; color:var(--gold); margin-bottom:20px;
+  font-family:'Orbitron',sans-serif;
+  font-size:1.3rem; color:var(--gold); margin-bottom:10px;
+  display:flex; align-items:center; gap:10px;
 }
-.exercise-row {
-  display:flex; align-items:center; gap:15px; margin:15px 0; padding:15px;
-  background:rgba(0,0,0,0.3); border-radius:10px; border-left:4px solid var(--cyan);
-  flex-wrap:wrap;
+.section-desc { color:var(--muted); margin-bottom:25px; font-size:0.9rem; }
+.exercise-item {
+  background:rgba(0,0,0,0.3); border-radius:12px;
+  padding:20px; margin-bottom:20px; border-left:4px solid var(--cyan);
 }
-.exercise-row label { min-width:200px; font-weight:600; }
-.exercise-row input {
-  flex:1; min-width:150px; padding:10px; background:rgba(255,255,255,0.05);
+.exercise-label { font-weight:600; margin-bottom:12px; display:block; }
+.exercise-input {
+  width:100%; padding:12px; background:rgba(255,255,255,0.05);
   border:1px solid var(--glass-border); border-radius:8px; color:var(--text);
+  font-size:1rem; margin-bottom:12px;
 }
-.hidden-answer {
-  display:none; margin-top:10px; padding:10px; background:rgba(255,51,102,0.15);
-  border-left:3px solid #ff3366; border-radius:6px; color:#ff6699;
-  font-family:'Orbitron',sans-serif; font-size:0.95rem;
+.exercise-input:focus { outline:none; border-color:var(--cyan); }
+.btn {
+  padding:10px 20px; border:none; border-radius:10px; font-weight:600; cursor:pointer;
+  transition:0.3s; font-size:0.95rem;
 }
+.btn-verify { background:var(--glass); border:1px solid var(--glass-border); color:var(--text); }
+.btn-verify:hover { background:rgba(255,255,255,0.1); }
+.btn-next {
+  background:var(--emerald); color:#000; padding:15px 30px;
+  font-size:1rem; margin-top:20px;
+}
+.btn-next:hover { transform:translateY(-2px); box-shadow:0 5px 20px rgba(0,255,157,0.4); }
 .feedback {
   margin-top:10px; padding:10px; border-radius:8px; font-size:0.9rem; display:none;
   border-left:4px solid;
 }
 .feedback.success { background:rgba(0,255,157,0.1); border-left-color:var(--emerald); color:var(--emerald); }
 .feedback.error { background:rgba(255,68,68,0.1); border-left-color:var(--error); color:var(--error); }
-.btn {
-  padding:10px 20px; border:none; border-radius:10px; font-weight:600; cursor:pointer;
-  transition:0.3s; font-size:0.95rem; margin:5px;
+.hidden-answer {
+  display:none; margin-top:10px; padding:10px; background:rgba(255,51,102,0.15);
+  border-left:3px solid #ff3366; border-radius:6px; color:#ff6699;
+  font-family:'Orbitron',sans-serif; font-size:0.95rem;
 }
-.btn-primary { background:linear-gradient(135deg,var(--cyan),var(--emerald)); color:#000; }
-.btn-primary:hover { transform:translateY(-2px); box-shadow:0 5px 20px rgba(0,255,157,0.4); }
-.btn-secondary { background:transparent; border:1px solid var(--glass-border); color:var(--text); }
-.btn:disabled { opacity:0.5; cursor:not-allowed; }
-.unlock-msg {
-  text-align:center; margin-top:30px; padding:20px; background:rgba(0,243,255,0.1);
-  border:1px solid var(--cyan); border-radius:15px; display:none;
+.progress-bar {
+  height:6px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; margin:20px 0;
 }
-@media(max-width:768px) {
-  .exercise-row { flex-direction:column; align-items:flex-start; }
-  .exercise-row label { min-width:100%; }
+.progress-fill {
+  height:100%; width:0%; background:linear-gradient(90deg,var(--cyan),var(--emerald));
+  transition:width 0.5s ease;
 }
 </style>
 </head>
@@ -107,200 +101,132 @@ h1 {
   <header>
     <h1>Prueba de Conocimientos Básicos 1</h1>
     <p style="color:var(--muted)">Unidad: At the High School</p>
-    <div class="progress-wrap"><div class="progress-fill" id="progressBar"></div></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
   </header>
 
   <!-- SECCIÓN 1: CONVERSIÓN DE AFIRMACIONES A PREGUNTAS -->
-  <section class="section active" id="sec1">
+  <section class="section" id="sec1">
     <h2 class="section-title">🔄 1. Convierte en Preguntas</h2>
-    <p style="color:var(--muted); margin-bottom:20px;">Convierte las afirmaciones en preguntas. La pregunta en español conviértela en inglés.</p>
+    <p class="section-desc">Convierte las afirmaciones en preguntas. La pregunta en español conviértela en inglés.</p>
     
-    <div class="exercise-row">
-      <label>This is the classroom's globe.</label>
-      <input type="text" id="ex1a" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx1a()">Verificar</button>
+    <div class="exercise-item">
+      <label class="exercise-label">This is the classroom's globe.</label>
+      <input type="text" class="exercise-input" id="ex1a" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx1a()">Verificar</button>
+      <div class="hidden-answer" id="ans1a">Is this the classroom's globe?</div>
+      <div class="feedback" id="fb1a"></div>
     </div>
-    <div class="hidden-answer" id="ans1a">Is this the classroom's globe? Yes it is.</div>
-    <div class="feedback" id="fb1a"></div>
 
-    <div class="exercise-row">
-      <label>¿Esto es un sacapuntas?</label>
-      <input type="text" id="ex1b" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx1b()">Verificar</button>
+    <div class="exercise-item">
+      <label class="exercise-label">¿Esto es un sacapuntas?</label>
+      <input type="text" class="exercise-input" id="ex1b" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx1b()">Verificar</button>
+      <div class="hidden-answer" id="ans1b">Is this a sharpener?</div>
+      <div class="feedback" id="fb1b"></div>
     </div>
-    <div class="hidden-answer" id="ans1b">Is this a sharpener? No it isn't. It's the classroom's globe.</div>
-    <div class="feedback" id="fb1b"></div>
 
-    <div class="exercise-row">
-      <label>These are the class mates.</label>
-      <input type="text" id="ex1c" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx1c()">Verificar</button>
+    <div class="exercise-item">
+      <label class="exercise-label">These are the class mates.</label>
+      <input type="text" class="exercise-input" id="ex1c" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx1c()">Verificar</button>
+      <div class="hidden-answer" id="ans1c">Are these the classmates?</div>
+      <div class="feedback" id="fb1c"></div>
     </div>
-    <div class="hidden-answer" id="ans1c">Are these the classmates? Yes they are.</div>
-    <div class="feedback" id="fb1c"></div>
 
-    <div class="exercise-row">
-      <label>¿Estas personas son maestros?</label>
-      <input type="text" id="ex1d" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx1d()">Verificar</button>
+    <div class="exercise-item">
+      <label class="exercise-label">¿Estas personas son maestros?</label>
+      <input type="text" class="exercise-input" id="ex1d" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx1d()">Verificar</button>
+      <div class="hidden-answer" id="ans1d">Are these people teachers?</div>
+      <div class="feedback" id="fb1d"></div>
     </div>
-    <div class="hidden-answer" id="ans1d">Are these people teachers? No they aren't. They're the class mates.</div>
-    <div class="feedback" id="fb1d"></div>
-    <button class="btn btn-primary" onclick="unlockSec(2)">Siguiente Sección →</button>
+
+    <button class="btn btn-next" onclick="scrollToSec(2)">Siguiente Sección →</button>
   </section>
 
   <!-- SECCIÓN 2: PRONOMBRES DEMOSTRATIVOS -->
-  <section class="section" id="sec2">
+  <section class="section" id="sec2" style="display:none;">
     <h2 class="section-title">🎯 2. Pronombres Demostrativos</h2>
-    <p style="color:var(--muted); margin-bottom:20px;">Aplica correctamente this/that/these/those distinguiendo entre plural y singular.</p>
+    <p class="section-desc">Aplica correctamente this/that/these/those distinguiendo entre plural y singular.</p>
     
-    <div class="exercise-row">
-      <label>Those are Joshua and Peter.</label>
-      <input type="text" id="ex2a" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx2a()">Verificar</button>
+    <div class="exercise-item">
+      <label class="exercise-label">Those are Joshua and Peter.</label>
+      <input type="text" class="exercise-input" id="ex2a" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx2a()">Verificar</button>
+      <div class="hidden-answer" id="ans2a">Are those Joshua and Peter?</div>
+      <div class="feedback" id="fb2a"></div>
     </div>
-    <div class="hidden-answer" id="ans2a">Are those Joshua and Peter? Yes they are.</div>
-    <div class="feedback" id="fb2a"></div>
 
-    <div class="exercise-row">
-      <label>¿Aquellos son Jimmy y Natasha?</label>
-      <input type="text" id="ex2b" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx2b()">Verificar</button>
+    <div class="exercise-item">
+      <label class="exercise-label">¿Aquellos son Jimmy y Natasha?</label>
+      <input type="text" class="exercise-input" id="ex2b" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx2b()">Verificar</button>
+      <div class="hidden-answer" id="ans2b">Are those Jimmy and Natasha?</div>
+      <div class="feedback" id="fb2b"></div>
     </div>
-    <div class="hidden-answer" id="ans2b">Are those Jimmy and Natasha? No they aren't. They're Joshua and Peter.</div>
-    <div class="feedback" id="fb2b"></div>
 
-    <div class="exercise-row">
-      <label>That's my friend Claudia.</label>
-      <input type="text" id="ex2c" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx2c()">Verificar</button>
+    <div class="exercise-item">
+      <label class="exercise-label">That's my friend Claudia.</label>
+      <input type="text" class="exercise-input" id="ex2c" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx2c()">Verificar</button>
+      <div class="hidden-answer" id="ans2c">Is that my friend Claudia?</div>
+      <div class="feedback" id="fb2c"></div>
     </div>
-    <div class="hidden-answer" id="ans2c">Is that my friend Claudia? Yes she is.</div>
-    <div class="feedback" id="fb2c"></div>
 
-    <div class="exercise-row">
-      <label>¿Aquella es mi profesora de inglés?</label>
-      <input type="text" id="ex2d" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx2d()">Verificar</button>
+    <div class="exercise-item">
+      <label class="exercise-label">¿Aquella es mi profesora de inglés?</label>
+      <input type="text" class="exercise-input" id="ex2d" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx2d()">Verificar</button>
+      <div class="hidden-answer" id="ans2d">Is that my English teacher?</div>
+      <div class="feedback" id="fb2d"></div>
     </div>
-    <div class="hidden-answer" id="ans2d">Is that my English teacher? No she isn't. She's my friend Claudia.</div>
-    <div class="feedback" id="fb2d"></div>
-    <button class="btn btn-primary" onclick="unlockSec(3)">Siguiente Sección →</button>
+
+    <button class="btn btn-next" onclick="scrollToSec(3)">Siguiente Sección →</button>
   </section>
 
   <!-- SECCIÓN 3: THERE IS / THERE ARE -->
-  <section class="section" id="sec3">
+  <section class="section" id="sec3" style="display:none;">
     <h2 class="section-title">📦 3. There is / There are</h2>
-    <p style="color:var(--muted); margin-bottom:20px;">Completa con la forma correcta y agrega respuesta afirmativa/negativa.</p>
+    <p class="section-desc">Completa con la forma correcta y agrega respuesta afirmativa/negativa.</p>
     
-    <div class="exercise-row">
-      <label>There's a student in the classroom.</label>
-      <input type="text" id="ex3a" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx3a()">Verificar</button>
+    <div class="exercise-item">
+      <label class="exercise-label">There's a student in the classroom.</label>
+      <input type="text" class="exercise-input" id="ex3a" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx3a()">Verificar</button>
+      <div class="hidden-answer" id="ans3a">Is there a student in the classroom?</div>
+      <div class="feedback" id="fb3a"></div>
     </div>
-    <div class="hidden-answer" id="ans3a">Is there a student in the classroom? Yes there is.</div>
-    <div class="feedback" id="fb3a"></div>
 
-    <div class="exercise-row">
-      <label>¿Hay un conserje en el aula?</label>
-      <input type="text" id="ex3b" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx3b()">Verificar</button>
+    <div class="exercise-item">
+      <label class="exercise-label">¿Hay un conserje en el aula?</label>
+      <input type="text" class="exercise-input" id="ex3b" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx3b()">Verificar</button>
+      <div class="hidden-answer" id="ans3b">Is there a janitor in the classroom?</div>
+      <div class="feedback" id="fb3b"></div>
     </div>
-    <div class="hidden-answer" id="ans3b">Is there a janitor in the classroom? No there isn't. There's a student in the classroom.</div>
-    <div class="feedback" id="fb3b"></div>
 
-    <div class="exercise-row">
-      <label>There are students in the classroom.</label>
-      <input type="text" id="ex3c" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx3c()">Verificar</button>
+    <div class="exercise-item">
+      <label class="exercise-label">There are students in the classroom.</label>
+      <input type="text" class="exercise-input" id="ex3c" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx3c()">Verificar</button>
+      <div class="hidden-answer" id="ans3c">Are there students in the classroom?</div>
+      <div class="feedback" id="fb3c"></div>
     </div>
-    <div class="hidden-answer" id="ans3c">Are there students in the classroom? Yes there are.</div>
-    <div class="feedback" id="fb3c"></div>
 
-    <div class="exercise-row">
-      <label>¿Hay conserjes en el aula?</label>
-      <input type="text" id="ex3d" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx3d()">Verificar</button>
+    <div class="exercise-item">
+      <label class="exercise-label">¿Hay conserjes en el aula?</label>
+      <input type="text" class="exercise-input" id="ex3d" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx3d()">Verificar</button>
+      <div class="hidden-answer" id="ans3d">Are there janitors in the classroom?</div>
+      <div class="feedback" id="fb3d"></div>
     </div>
-    <div class="hidden-answer" id="ans3d">Are there janitors in the classroom? No there aren't. There are students in the classroom.</div>
-    <div class="feedback" id="fb3d"></div>
-    <button class="btn btn-primary" onclick="unlockSec(4)">Siguiente Sección →</button>
+
+    <button class="btn btn-next" onclick="completeTest()">🎉 Completar Prueba</button>
   </section>
 
-  <!-- SECCIÓN 4: PREPOSICIONES IN/ON -->
-  <section class="section" id="sec4">
-    <h2 class="section-title">📍 4. Preposiciones In/On</h2>
-    <p style="color:var(--muted); margin-bottom:20px;">Convierte las preguntas del español al inglés y responde usando In/On correctamente.</p>
-    
-    <div class="exercise-row">
-      <label>¿Dónde están los compañeros de clase de Edward?</label>
-      <input type="text" id="ex4a" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx4a()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans4a">Where are Edward's classmates? They're in the classroom.</div>
-    <div class="feedback" id="fb4a"></div>
-
-    <div class="exercise-row">
-      <label>¿Dónde está el globo terráqueo?</label>
-      <input type="text" id="ex4b" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx4b()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans4b">Where is the globe? It's on the bookcase.</div>
-    <div class="feedback" id="fb4b"></div>
-
-    <div class="exercise-row">
-      <label>¿En qué clase está Edward?</label>
-      <input type="text" id="ex4c" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx4c()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans4c">What class is Edward in? He's in the English class.</div>
-    <div class="feedback" id="fb4c"></div>
-
-    <div class="exercise-row">
-      <label>¿Dónde está el rayo láser?</label>
-      <input type="text" id="ex4d" placeholder="">
-      <button class="btn btn-secondary" onclick="checkEx4d()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans4d">Where's the laser beam? It's on the teacher's desk.</div>
-    <div class="feedback" id="fb4d"></div>
-    <button class="btn btn-primary" onclick="unlockSec(5)">Siguiente Sección →</button>
-  </section>
-
-  <!-- SECCIÓN 5: CRITICAL THINKING -->
-  <section class="section" id="sec5">
-    <h2 class="section-title">🧠 5. Critical Thinking</h2>
-    <p style="color:var(--muted); margin-bottom:20px;">Responde con oraciones completas en inglés.</p>
-    
-    <div class="exercise-row">
-      <label>What kind of behavior is mature and responsible?</label>
-      <textarea id="ex5a" rows="2" placeholder="" style="width:100%; padding:10px; background:rgba(0,0,0,0.3); border:1px solid var(--glass-border); border-radius:8px; color:var(--text);"></textarea>
-      <button class="btn btn-secondary" onclick="checkEx5a()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans5a">Mature behavior is being responsible, studying hard, and respecting others.</div>
-    <div class="feedback" id="fb5a"></div>
-
-    <div class="exercise-row">
-      <label>What do immature people do?</label>
-      <textarea id="ex5b" rows="2" placeholder="" style="width:100%; padding:10px; background:rgba(0,0,0,0.3); border:1px solid var(--glass-border); border-radius:8px; color:var(--text);"></textarea>
-      <button class="btn btn-secondary" onclick="checkEx5b()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans5b">Immature people act childish, don't take responsibility, and don't think about consequences.</div>
-    <div class="feedback" id="fb5b"></div>
-
-    <div class="exercise-row">
-      <label>What would you like to do after graduating from university?</label>
-      <textarea id="ex5c" rows="2" placeholder="" style="width:100%; padding:10px; background:rgba(0,0,0,0.3); border:1px solid var(--glass-border); border-radius:8px; color:var(--text);"></textarea>
-      <button class="btn btn-secondary" onclick="checkEx5c()">Verificar</button>
-    </div>
-    <div class="hidden-answer" id="ans5c">After graduating, I would like to work in my field and continue learning new skills.</div>
-    <div class="feedback" id="fb5c"></div>
-    <button class="btn btn-primary" onclick="completeTest()">🎉 Completar Prueba</button>
-  </section>
-
-  <div class="unlock-msg" id="unlockMsg">
-    <h3 style="color:var(--emerald); margin-bottom:10px;">🎉 ¡Prueba Completada!</h3>
-    <p>Has demostrado tus conocimientos básicos. Ahora estás listo para avanzar a la Unidad 2.</p>
-    <button class="btn btn-primary" onclick="alert('Redirigiendo a Unidad 2...')" style="margin-top:15px;">Continuar →</button>
+  <div id="finalMsg" style="display:none; text-align:center; margin-top:30px; padding:30px; background:rgba(0,243,255,0.1); border:1px solid var(--cyan); border-radius:15px;">
+    <h3 style="color:var(--emerald); margin-bottom:15px; font-family:'Orbitron',sans-serif;">🎉 ¡Prueba Completada!</h3>
+    <p>Has demostrado tus conocimientos básicos.</p>
   </div>
 
   <footer style="text-align:center; margin-top:50px; color:var(--muted); font-size:0.8rem; padding:20px; border-top:1px solid var(--glass-border);">
@@ -309,7 +235,7 @@ h1 {
 </div>
 
 <script>
-// AUDIO FEEDBACK con Web Speech API
+// AUDIO FEEDBACK
 const synth = window.speechSynthesis;
 function speak(text) {
   if(synth.speaking) synth.cancel();
@@ -318,35 +244,35 @@ function speak(text) {
   synth.speak(u);
 }
 
-// PROGRESO
-let completedSections = new Set();
-const totalSections = 5;
+let completedCount = 0;
+const totalEx = 12;
+
 function updateProgress() {
-  document.getElementById('progressBar').style.width = `${(completedSections.size / totalSections) * 100}%`;
-  if(completedSections.size === totalSections) {
-    document.getElementById('unlockMsg').style.display = 'block';
-    speak('Congratulations! You completed the basic test.');
-  }
+  document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
 }
 
-// FUNCIONES DE VALIDACIÓN - Sección 1
+function normalizeText(text) {
+  if (!text) return "";
+  return text.toLowerCase().replace(/[?!.,']/g, "").replace(/\s+/g, " ").trim();
+}
+
+// SECCIÓN 1
 function checkEx1a() {
-  const val = document.getElementById('ex1a').value.trim();
-  const correct = "Is this the classroom's globe? Yes it is.";
+  const val = normalizeText(document.getElementById('ex1a').value);
+  const correct = normalizeText("Is this the classroom's globe?");
   const fb = document.getElementById('fb1a');
   const ans = document.getElementById('ans1a');
   
-  if(val.toLowerCase().includes("is this the classroom's globe") && val.toLowerCase().includes("yes it is")) {
+  if(val === correct) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
     speak('Very Nice!');
-    completedSections.add(1);
-    updateProgress();
+    completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
@@ -354,21 +280,21 @@ function checkEx1a() {
 }
 
 function checkEx1b() {
-  const val = document.getElementById('ex1b').value.trim();
+  const val = normalizeText(document.getElementById('ex1b').value);
+  const correct = normalizeText("Is this a sharpener?");
   const fb = document.getElementById('fb1b');
   const ans = document.getElementById('ans1b');
   
-  if(val.toLowerCase().includes("is this a sharpener") && (val.toLowerCase().includes("no it isn't") || val.toLowerCase().includes("no it is not"))) {
+  if(val === correct) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
     speak('Very Nice!');
-    completedSections.add(1);
-    updateProgress();
+    completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
@@ -376,21 +302,21 @@ function checkEx1b() {
 }
 
 function checkEx1c() {
-  const val = document.getElementById('ex1c').value.trim();
+  const val = normalizeText(document.getElementById('ex1c').value);
+  const correct = normalizeText("Are these the classmates?");
   const fb = document.getElementById('fb1c');
   const ans = document.getElementById('ans1c');
   
-  if(val.toLowerCase().includes("are these the classmates") && val.toLowerCase().includes("yes they are")) {
+  if(val === correct) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
-    speak('Very Nice!');
-    completedSections.add(1);
-    updateProgress();
+    speak('Great!');
+    completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
@@ -398,44 +324,44 @@ function checkEx1c() {
 }
 
 function checkEx1d() {
-  const val = document.getElementById('ex1d').value.trim();
+  const val = normalizeText(document.getElementById('ex1d').value);
+  const correct = normalizeText("Are these people teachers?");
   const fb = document.getElementById('fb1d');
   const ans = document.getElementById('ans1d');
   
-  if(val.toLowerCase().includes("are these people teachers") && val.toLowerCase().includes("no they aren't")) {
+  if(val === correct) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
-    speak('Very Nice!');
-    completedSections.add(1);
-    updateProgress();
+    speak('Great!');
+    completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
   }
 }
 
-// Sección 2
+// SECCIÓN 2
 function checkEx2a() {
-  const val = document.getElementById('ex2a').value.trim();
+  const val = normalizeText(document.getElementById('ex2a').value);
+  const correct = normalizeText("Are those Joshua and Peter?");
   const fb = document.getElementById('fb2a');
   const ans = document.getElementById('ans2a');
   
-  if(val.toLowerCase().includes("are those joshua and peter") && val.toLowerCase().includes("yes they are")) {
+  if(val === correct) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
-    speak('Great!');
-    completedSections.add(2);
-    updateProgress();
+    speak('Excellent!');
+    completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
@@ -443,21 +369,21 @@ function checkEx2a() {
 }
 
 function checkEx2b() {
-  const val = document.getElementById('ex2b').value.trim();
+  const val = normalizeText(document.getElementById('ex2b').value);
+  const correct = normalizeText("Are those Jimmy and Natasha?");
   const fb = document.getElementById('fb2b');
   const ans = document.getElementById('ans2b');
   
-  if(val.toLowerCase().includes("are those jimmy and natasha") && val.toLowerCase().includes("no they aren't")) {
+  if(val === correct) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
-    speak('Great!');
-    completedSections.add(2);
-    updateProgress();
+    speak('Excellent!');
+    completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
@@ -465,21 +391,21 @@ function checkEx2b() {
 }
 
 function checkEx2c() {
-  const val = document.getElementById('ex2c').value.trim();
+  const val = normalizeText(document.getElementById('ex2c').value);
+  const correct = normalizeText("Is that my friend Claudia?");
   const fb = document.getElementById('fb2c');
   const ans = document.getElementById('ans2c');
   
-  if(val.toLowerCase().includes("is that my friend claudia") && val.toLowerCase().includes("yes she is")) {
+  if(val === correct) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
-    speak('Excellent!');
-    completedSections.add(2);
-    updateProgress();
+    speak('Perfect!');
+    completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
@@ -487,44 +413,44 @@ function checkEx2c() {
 }
 
 function checkEx2d() {
-  const val = document.getElementById('ex2d').value.trim();
+  const val = normalizeText(document.getElementById('ex2d').value);
+  const correct = normalizeText("Is that my English teacher?");
   const fb = document.getElementById('fb2d');
   const ans = document.getElementById('ans2d');
   
-  if(val.toLowerCase().includes("is that my english teacher") && val.toLowerCase().includes("no she isn't")) {
+  if(val === correct) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
-    speak('Excellent!');
-    completedSections.add(2);
-    updateProgress();
+    speak('Perfect!');
+    completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
   }
 }
 
-// Sección 3
+// SECCIÓN 3
 function checkEx3a() {
-  const val = document.getElementById('ex3a').value.trim();
+  const val = normalizeText(document.getElementById('ex3a').value);
+  const correct = normalizeText("Is there a student in the classroom?");
   const fb = document.getElementById('fb3a');
   const ans = document.getElementById('ans3a');
   
-  if(val.toLowerCase().includes("is there a student in the classroom") && val.toLowerCase().includes("yes there is")) {
+  if(val === correct) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
     speak('Very Nice!');
-    completedSections.add(3);
-    updateProgress();
+    completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
@@ -532,21 +458,21 @@ function checkEx3a() {
 }
 
 function checkEx3b() {
-  const val = document.getElementById('ex3b').value.trim();
+  const val = normalizeText(document.getElementById('ex3b').value);
+  const correct = normalizeText("Is there a janitor in the classroom?");
   const fb = document.getElementById('fb3b');
   const ans = document.getElementById('ans3b');
   
-  if(val.toLowerCase().includes("is there a janitor in the classroom") && val.toLowerCase().includes("no there isn't")) {
+  if(val === correct) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
     speak('Very Nice!');
-    completedSections.add(3);
-    updateProgress();
+    completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
@@ -554,21 +480,21 @@ function checkEx3b() {
 }
 
 function checkEx3c() {
-  const val = document.getElementById('ex3c').value.trim();
+  const val = normalizeText(document.getElementById('ex3c').value);
+  const correct = normalizeText("Are there students in the classroom?");
   const fb = document.getElementById('fb3c');
   const ans = document.getElementById('ans3c');
   
-  if(val.toLowerCase().includes("are there students in the classroom") && val.toLowerCase().includes("yes there are")) {
+  if(val === correct) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
-    speak('Excellent!');
-    completedSections.add(3);
-    updateProgress();
+    speak('Great!');
+    completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
@@ -576,210 +502,43 @@ function checkEx3c() {
 }
 
 function checkEx3d() {
-  const val = document.getElementById('ex3d').value.trim();
+  const val = normalizeText(document.getElementById('ex3d').value);
+  const correct = normalizeText("Are there janitors in the classroom?");
   const fb = document.getElementById('fb3d');
   const ans = document.getElementById('ans3d');
   
-  if(val.toLowerCase().includes("are there janitors in the classroom") && val.toLowerCase().includes("no there aren't")) {
+  if(val === correct) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Excellent!');
-    completedSections.add(3);
-    updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-// Sección 4
-function checkEx4a() {
-  const val = document.getElementById('ex4a').value.trim();
-  const fb = document.getElementById('fb4a');
-  const ans = document.getElementById('ans4a');
-  
-  if(val.toLowerCase().includes("where are edward's classmates") && val.toLowerCase().includes("they're in the classroom")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Very Nice!');
-    completedSections.add(4);
-    updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx4b() {
-  const val = document.getElementById('ex4b').value.trim();
-  const fb = document.getElementById('fb4b');
-  const ans = document.getElementById('ans4b');
-  
-  if(val.toLowerCase().includes("where is the globe") && val.toLowerCase().includes("it's on the bookcase")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
     speak('Great!');
-    completedSections.add(4);
-    updateProgress();
+    completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
   }
 }
 
-function checkEx4c() {
-  const val = document.getElementById('ex4c').value.trim();
-  const fb = document.getElementById('fb4c');
-  const ans = document.getElementById('ans4c');
-  
-  if(val.toLowerCase().includes("what class is edward in") && val.toLowerCase().includes("he's in the english class")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Excellent!');
-    completedSections.add(4);
-    updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
+function scrollToSec(num) {
+  document.getElementById(`sec${num-1}`).style.display = 'none';
+  document.getElementById(`sec${num}`).style.display = 'block';
+  document.getElementById(`sec${num}`).scrollIntoView({behavior:'smooth'});
 }
 
-function checkEx4d() {
-  const val = document.getElementById('ex4d').value.trim();
-  const fb = document.getElementById('fb4d');
-  const ans = document.getElementById('ans4d');
-  
-  if(val.toLowerCase().includes("where's the laser beam") && val.toLowerCase().includes("it's on the teacher's desk")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto. ¡Muy bien!';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Perfect!');
-    completedSections.add(4);
-    updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto. Verifica la estructura.';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-// Sección 5
-function checkEx5a() {
-  const val = document.getElementById('ex5a').value.trim();
-  const fb = document.getElementById('fb5a');
-  const ans = document.getElementById('ans5a');
-  
-  if(val.length > 20) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Respuesta válida. ¡Buen trabajo!';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Great answer!');
-    completedSections.add(5);
-    updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Escribe una respuesta más completa en inglés.';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Try again');
-  }
-}
-
-function checkEx5b() {
-  const val = document.getElementById('ex5b').value.trim();
-  const fb = document.getElementById('fb5b');
-  const ans = document.getElementById('ans5b');
-  
-  if(val.length > 20) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Respuesta válida. ¡Buen trabajo!';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Very Nice!');
-    completedSections.add(5);
-    updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Escribe una respuesta más completa en inglés.';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Try again');
-  }
-}
-
-function checkEx5c() {
-  const val = document.getElementById('ex5c').value.trim();
-  const fb = document.getElementById('fb5c');
-  const ans = document.getElementById('ans5c');
-  
-  if(val.length > 20) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Respuesta válida. ¡Buen trabajo!';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Excellent!');
-    completedSections.add(5);
-    updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Escribe una respuesta más completa en inglés.';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Try again');
-  }
-}
-
-// DESBLOQUEO DE SECCIONES
-function unlockSec(num) {
-  completedSections.add(num-1);
-  updateProgress();
-  document.getElementById(`sec${num}`).classList.add('active');
-  document.getElementById(`sec${num-1}`).scrollIntoView({behavior:'smooth'});
-  speak('Next section unlocked');
-}
-
-// COMPLETAR PRUEBA
 function completeTest() {
-  completedSections.add(5);
-  updateProgress();
-  if(completedSections.size >= 5) {
-    document.getElementById('unlockMsg').style.display = 'block';
-    speak('Congratulations! You completed the basic test!');
-    document.getElementById('sec5').scrollIntoView({behavior:'smooth'});
+  if(completedCount >= 9) {
+    document.getElementById('sec3').style.display = 'none';
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! You completed the test!');
   } else {
-    alert('⚠️ Completa al menos 4 de 5 secciones para finalizar.');
-    speak('Please complete more sections');
+    alert(`⚠️ Completa al menos 9 de 12 ejercicios.\nCompletados: ${completedCount}/12`);
   }
 }
-
-// INICIALIZAR
-window.addEventListener('DOMContentLoaded', () => {
-  updateProgress();
-});
 </script>
 </body>
 </html>
