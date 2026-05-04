@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prueba de Conocimientos Básicos 1 | Discovery MAX NBF</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #05080f;
+  --glass: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.15);
+  --cyan: #00F3FF;
+  --magenta: #FF00E5;
+  --gold: #FFD700;
+  --emerald: #00FF9D;
+  --text: #F5F2ED;
+  --muted: #8A94A6;
+  --error: #FF4444;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Inter',sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+.bg-effects {
+  position:fixed; inset:0; z-index:-1;
+  background: radial-gradient(circle at 20% 30%, rgba(0,243,255,0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(255,0,229,0.1) 0%, transparent 50%);
+  filter:blur(60px);
+}
+.container { max-width:1000px; margin:0 auto; padding:30px 20px; }
+header { text-align:center; margin-bottom:40px; }
+h1 {
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.5rem,4vw,2.5rem);
+  background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--gold));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  margin-bottom:15px;
+}
+.progress-wrap {
+  height:8px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; margin:20px 0;
+}
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--cyan),var(--emerald)); transition:width 0.5s ease; }
+.exercise-card {
+  background:var(--glass); backdrop-filter:blur(16px);
+  border:1px solid var(--glass-border); border-radius:20px;
+  padding:30px; margin-bottom:30px; position:relative; overflow:hidden;
+  transition:all 0.4s ease; opacity:0.6; pointer-events:none; filter:grayscale(0.5);
+}
+.exercise-card.active { opacity:1; pointer-events:all; filter:none; border-color:var(--cyan); box-shadow:0 0 30px rgba(0,243,255,0.2); }
+.exercise-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--gold));
+  opacity:0.7;
+}
+.card-title {
+  font-family:'Orbitron',sans-serif; font-size:1.3rem; color:var(--gold); margin-bottom:15px; display:flex; align-items:center; gap:10px;
+}
+.card-desc { color:var(--muted); margin-bottom:20px; font-size:0.95rem; }
+.word-bank { display:flex; flex-wrap:wrap; gap:10px; margin:15px 0; }
+.word-tag {
+  padding:10px 15px; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border);
+  border-radius:10px; cursor:pointer; transition:0.3s; user-select:none;
+}
+.word-tag:hover { border-color:var(--cyan); }
+.word-tag.selected { background:rgba(0,243,255,0.2); border-color:var(--cyan); color:var(--cyan); }
+.word-tag.base { border-color:var(--emerald); color:var(--emerald); }
+.word-tag.det { border-color:var(--magenta); color:var(--magenta); }
+.btn {
+  padding:12px 24px; border:none; border-radius:10px; font-weight:600; cursor:pointer;
+  transition:0.3s; font-size:0.95rem; margin:5px;
+}
+.btn-primary { background:linear-gradient(135deg,var(--cyan),var(--emerald)); color:#000; }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 5px 20px rgba(0,255,157,0.4); }
+.btn-secondary { background:transparent; border:1px solid var(--glass-border); color:var(--text); }
+.btn:disabled { opacity:0.5; cursor:not-allowed; }
+.feedback {
+  margin-top:15px; padding:12px; border-radius:8px; font-size:0.9rem; display:none;
+  border-left:4px solid;
+}
+.feedback.success { background:rgba(0,255,157,0.1); border-left-color:var(--emerald); color:var(--emerald); }
+.feedback.error { background:rgba(255,68,68,0.1); border-left-color:var(--error); color:var(--error); }
+.input-field {
+  width:100%; padding:12px; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border);
+  border-radius:10px; color:white; font-size:1rem; margin:10px 0;
+}
+.input-field:focus { outline:none; border-color:var(--cyan); }
+.order-container { display:flex; flex-wrap:wrap; gap:10px; margin:15px 0; min-height:50px; padding:10px; background:rgba(0,0,0,0.3); border-radius:10px; border:1px dashed var(--glass-border); }
+.order-slot { padding:8px 12px; background:var(--cyan); color:#000; border-radius:6px; font-weight:600; }
+.unlock-msg {
+  text-align:center; margin-top:30px; padding:20px; background:rgba(0,243,255,0.1);
+  border:1px solid var(--cyan); border-radius:15px; display:none;
+}
+@media(max-width:768px) {
+  .exercise-card { padding:20px; }
+  .word-tag { padding:8px 10px; font-size:0.9rem; }
+}
+</style>
+</head>
+<body>
+<div class="bg-effects"></div>
+<div class="container">
+  <header>
+    <h1>Prueba de Conocimientos Básicos 1</h1>
+    <p style="color:var(--muted)">Sistema NBF: Bases Léxicas + Determinantes</p>
+    <div class="progress-wrap"><div class="progress-fill" id="progressBar"></div></div>
+  </header>
+
+  <!-- EJERCICIO 1: IDENTIFICACIÓN -->
+  <div class="exercise-card active" id="ex1">
+    <div class="card-title"> 1. Identificación de Bases vs Determinantes</div>
+    <p class="card-desc">Haz clic en cada palabra para clasificarla. Según NBF, las "acciones" son en realidad BASES (sustantivos) activadas por DETERMINANTES.</p>
+    <div class="word-bank" id="bank1">
+      <span class="word-tag" data-type="det">you</span>
+      <span class="word-tag" data-type="det">can</span>
+      <span class="word-tag" data-type="base">visit</span>
+      <span class="word-tag" data-type="base">city</span>
+    </div>
+    <button class="btn btn-primary" onclick="verifyEx1()">Verificar Estructura</button>
+    <div class="feedback" id="fb1"></div>
+  </div>
+
+  <!-- EJERCICIO 2: ACTIVACIÓN -->
+  <div class="exercise-card" id="ex2">
+    <div class="card-title">⚡ 2. Activación de la Realidad</div>
+    <p class="card-desc">¿Hay acción verbal real? Selecciona la opción correcta. Recuerda: sin determinantes, la base permanece inactiva.</p>
+    <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:10px; margin:15px 0; font-family:'Orbitron'; text-align:center; letter-spacing:2px;">
+      <span id="phrase2">visit + city</span>
+    </div>
+    <div style="display:flex; gap:10px; justify-content:center;">
+      <button class="btn btn-secondary" onclick="checkEx2('no')">❌ No hay acción</button>
+      <button class="btn btn-secondary" onclick="checkEx2('yes')">✅ Sí hay acción</button>
+    </div>
+    <div class="feedback" id="fb2"></div>
+  </div>
+
+  <!-- EJERCICIO 3: CONSTRUCCIÓN NEURONAL -->
+  <div class="exercise-card" id="ex3">
+    <div class="card-title">🧩 3. Construcción Neuronal</div>
+    <p class="card-desc">Ordena las bases y determinantes para generar una estructura funcional. Haz clic en las palabras en el orden correcto.</p>
+    <div class="word-bank" id="bank3">
+      <span class="word-tag" onclick="addToOrder(this)">bank</span>
+      <span class="word-tag" onclick="addToOrder(this)">cash</span>
+      <span class="word-tag" onclick="addToOrder(this)">withdraw</span>
+      <span class="word-tag" onclick="addToOrder(this)">you</span>
+      <span class="word-tag" onclick="addToOrder(this)">can</span>
+    </div>
+    <div class="order-container" id="orderSlot"></div>
+    <button class="btn btn-secondary" onclick="resetOrder()">↺ Reiniciar</button>
+    <button class="btn btn-primary" onclick="verifyEx3()">Verificar Ensamblaje</button>
+    <div class="feedback" id="fb3"></div>
+  </div>
+
+  <!-- EJERCICIO 4: DESCOMPOSICIÓN RADICAL -->
+  <div class="exercise-card" id="ex4">
+    <div class="card-title">🔪 4. Descomposición Radical</div>
+    <p class="card-desc">Divide las palabras compuestas en sus bases originales. Escribe las partes separadas por un guion (-).</p>
+    <div style="margin:15px 0;">
+      <p>1. supermarket → <input type="text" class="input-field" id="split1" placeholder="ej: super-market" style="width:auto; display:inline-block;"></p>
+      <p style="margin-top:15px;">2. withdraw → <input type="text" class="input-field" id="split2" placeholder="ej: with-draw" style="width:auto; display:inline-block;"></p>
+    </div>
+    <button class="btn btn-primary" onclick="verifyEx4()">Verificar Descomposición</button>
+    <div class="feedback" id="fb4"></div>
+  </div>
+
+  <!-- EJERCICIO 5: INSIGHT COGNITIVO -->
+  <div class="exercise-card" id="ex5">
+    <div class="card-title">🧠 5. Insight Cognitivo NBF</div>
+    <p class="card-desc">Completa la frase clave del sistema según el postulado NBF.</p>
+    <div style="background:rgba(0,0,0,0.3); padding:20px; border-radius:10px; margin:15px 0; text-align:center; font-size:1.1rem;">
+      "El inglés no se conjuga, se <input type="text" id="insightInput" class="input-field" style="width:auto; display:inline-block; margin:0 10px;" placeholder="???">"
+    </div>
+    <button class="btn btn-primary" onclick="verifyEx5()">Verificar Principio</button>
+    <div class="feedback" id="fb5"></div>
+  </div>
+
+  <div class="unlock-msg" id="unlockMsg">
+    <h3 style="color:var(--emerald); margin-bottom:10px;">🎉 ¡Sistema NBF Activado!</h3>
+    <p>Has completado la prueba básica. El inglés es un sistema de ensamblaje, no de conjugación.</p>
+    <button class="btn btn-primary" onclick="alert('Redirigiendo a Unidad 1...')" style="margin-top:15px;">Continuar a Unidad 1 →</button>
+  </div>
+
+  <footer style="text-align:center; margin-top:50px; color:var(--muted); font-size:0.8rem; padding:20px; border-top:1px solid var(--glass-border);">
+    © 2026 Discovery MAX Neuroeducation | Método NBF | Toño Vicas
+  </footer>
+</div>
+
+<script>
+// AUDIO FEEDBACK
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1; u.pitch = 1;
+  synth.speak(u);
+}
+
+function showFeedback(id, type, msg) {
+  const el = document.getElementById(id);
+  el.className = `feedback ${type}`;
+  el.innerHTML = msg;
+  el.style.display = 'block';
+  speak(type === 'success' ? 'Very Nice!' : 'Sorry, try again');
+}
+
+// PROGRESS TRACKER
+let completed = new Set();
+const totalEx = 5;
+function updateProgress() {
+  document.getElementById('progressBar').style.width = `${(completed.size / totalEx) * 100}%`;
+  if(completed.size === totalEx) {
+    document.getElementById('unlockMsg').style.display = 'block';
+    speak('Great! You completed the basic test.');
+  }
+}
+
+// EX 1: IDENTIFICACIÓN
+let selectedEx1 = [];
+document.querySelectorAll('#bank1 .word-tag').forEach(tag => {
+  tag.addEventListener('click', function() {
+    if(this.classList.contains('selected')) {
+      this.classList.remove('selected');
+      selectedEx1 = selectedEx1.filter(w => w !== this.dataset.type);
+    } else {
+      this.classList.add('selected');
+      selectedEx1.push(this.dataset.type);
+    }
+  });
+});
+
+function verifyEx1() {
+  const correct = ['det','det','base','base'];
+  const tags = document.querySelectorAll('#bank1 .word-tag');
+  let user = Array.from(tags).map(t => t.dataset.type);
+  
+  // Mark visually
+  tags.forEach((t,i) => {
+    t.className = `word-tag ${correct[i] === 'det' ? 'det' : 'base'}`;
+  });
+  
+  if(JSON.stringify(user) === JSON.stringify(correct)) {
+    showFeedback('fb1','success','✅ ¡Correcto! "you/can" son determinantes. "visit/city" son bases. La acción emerge de la interacción.');
+    completed.add(1); updateProgress();
+    document.getElementById('ex2').classList.add('active');
+  } else {
+    showFeedback('fb1','error','❌ Revisa: Los determinantes activan, las bases contienen el significado puro. Selecciona nuevamente.');
+  }
+}
+
+// EX 2: ACTIVACIÓN
+let ex2Step = 0;
+function checkEx2(ans) {
+  if(ex2Step === 0) {
+    if(ans === 'no') {
+      showFeedback('fb2','success','✅ Exacto. Sin determinantes, "visit+city" es solo concepto estático.');
+      setTimeout(() => {
+        document.getElementById('phrase2').innerHTML = 'you + can + visit + city';
+        ex2Step = 1;
+        showFeedback('fb2','success','🔄 Ahora con determinantes activadores: ¿Hay acción?');
+      }, 1500);
+    } else {
+      showFeedback('fb2','error','❌ Incorrecto. Aún no hay sujeto ni modal activador.');
+    }
+  } else {
+    if(ans === 'yes') {
+      showFeedback('fb2','success','🎉 ¡Activación completa! Los determinantes generaron la ilusión verbal.');
+      completed.add(2); updateProgress();
+      document.getElementById('ex3').classList.add('active');
+    } else {
+      showFeedback('fb2','error','❌ Ahora sí hay acción. "you+can" activan la base "visit".');
+    }
+  }
+}
+
+// EX 3: CONSTRUCCIÓN
+let order = [];
+function addToOrder(el) {
+  if(order.includes(el.innerText)) return;
+  order.push(el.innerText);
+  renderOrder();
+}
+function renderOrder() {
+  const slot = document.getElementById('orderSlot');
+  slot.innerHTML = order.map(w => `<span class="order-slot">${w}</span>`).join(' + ');
+}
+function resetOrder() {
+  order = []; renderOrder();
+}
+function verifyEx3() {
+  const target = ['you','can','withdraw','cash','bank'];
+  if(JSON.stringify(order) === JSON.stringify(target)) {
+    showFeedback('fb3','success','✅ Ensamblaje perfecto. No conjugaste, construiste una estructura funcional.');
+    completed.add(3); updateProgress();
+    document.getElementById('ex4').classList.add('active');
+  } else {
+    showFeedback('fb3','error','❌ Orden incorrecto. La estructura NBF es: Sujeto + Modal + Base + Objeto + Lugar.');
+  }
+}
+
+// EX 4: DESCOMPOSICIÓN
+function verifyEx4() {
+  const v1 = document.getElementById('split1').value.toLowerCase().replace(/\s/g,'');
+  const v2 = document.getElementById('split2').value.toLowerCase().replace(/\s/g,'');
+  if(v1.includes('super') && v1.includes('market') && v2.includes('with') && v2.includes('draw')) {
+    showFeedback('fb4','success','✅ Descomposición correcta. El idioma se construye, no se memoriza.');
+    completed.add(4); updateProgress();
+    document.getElementById('ex5').classList.add('active');
+  } else {
+    showFeedback('fb4','error','❌ Separa las raíces originales. Pista: super+market, with+draw.');
+  }
+}
+
+// EX 5: INSIGHT
+function verifyEx5() {
+  const val = document.getElementById('insightInput').value.trim().toLowerCase();
+  if(val === 'activa' || val === 'activar') {
+    showFeedback('fb5','success','🧠 Principio NBF confirmado: "El inglés no se conjuga, se ACTIVA".');
+    completed.add(5); updateProgress();
+  } else {
+    showFeedback('fb5','error','❌ La palabra clave es ACTIVA. El sistema genera acción por ensamblaje.');
+  }
+}
+</script>
+</body>
+</html>
