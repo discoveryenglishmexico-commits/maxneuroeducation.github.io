@@ -13,6 +13,7 @@
   --neon-cyan: #00F3FF;
   --neon-magenta: #FF00E5;
   --neon-gold: #FFD700;
+  --neon-emerald: #00FF9D;
   --text: #F5F2ED;
   --muted: #8A94A6;
   --success: #00FF9D;
@@ -78,7 +79,6 @@ header h1 {
   text-transform:uppercase;
   letter-spacing:1px;
 }
-/* UI Noun-Only Labels */
 .ui-label {
   font-family:'Rajdhani',sans-serif;
   font-size:0.85rem;
@@ -99,82 +99,12 @@ header h1 {
   transition:0.3s;
   text-transform:uppercase;
   letter-spacing:1px;
+  margin:5px;
 }
 .btn:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,243,255,0.3); }
 .btn-secondary { background:transparent; border:1px solid var(--border); color:var(--text); }
-/* Slider Memorization */
-.slider-container {
-  display:flex;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  gap:20px;
-  padding:20px 0;
-  scrollbar-width:none;
-}
-.slider-container::-webkit-scrollbar { display:none; }
-.slide-card {
-  flex:0 0 280px;
-  scroll-snap-align:center;
-  background:rgba(0,0,0,0.4);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:20px;
-  text-align:center;
-}
-.slide-card h3 { color:var(--neon-cyan); margin-bottom:10px; }
-.slide-card p { font-size:0.95rem; color:var(--muted); }
-/* Determinants Assembly */
-.determinants-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-  gap:15px;
-  margin:20px 0;
-}
-.det-item {
-  background:rgba(255,255,255,0.05);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:15px;
-  text-align:center;
-  cursor:pointer;
-  transition:0.3s;
-}
-.det-item:hover, .det-item.active {
-  border-color:var(--neon-gold);
-  background:rgba(255,215,0,0.1);
-}
-.det-item .label { font-size:0.8rem; color:var(--muted); text-transform:uppercase; }
-.det-item .value { font-size:1.1rem; font-weight:600; margin-top:5px; }
-/* Converter Exercise */
-.converter-row {
-  display:flex;
-  align-items:center;
-  gap:15px;
-  margin:15px 0;
-  padding:15px;
-  background:rgba(0,0,0,0.3);
-  border-radius:10px;
-  border-left:4px solid var(--neon-cyan);
-}
-.converter-row input {
-  flex:1;
-  padding:10px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid var(--border);
-  border-radius:8px;
-  color:var(--text);
-  font-family:'Inter',sans-serif;
-}
-.feedback {
-  margin-top:10px;
-  padding:10px;
-  border-radius:8px;
-  font-size:0.9rem;
-  display:none;
-}
-.feedback.correct { background:rgba(0,255,157,0.1); border-left:3px solid var(--success); color:var(--success); }
-.feedback.error { background:rgba(255,68,68,0.1); border-left:3px solid var(--error); color:var(--error); }
-/* Collapsible Exercises */
+.btn-nbf { background:linear-gradient(135deg,var(--neon-gold),var(--neon-emerald)); color:#000; }
+/* Collapsible */
 details {
   background:rgba(255,255,255,0.03);
   border:1px solid var(--border);
@@ -194,6 +124,76 @@ summary {
 summary::after { content:'▼'; transition:0.3s; }
 details[open] summary::after { transform:rotate(180deg); }
 .details-content { padding:20px; border-top:1px solid var(--border); }
+/* Exercises */
+.exercise-row {
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin:15px 0;
+  padding:15px;
+  background:rgba(0,0,0,0.3);
+  border-radius:10px;
+  border-left:4px solid var(--neon-cyan);
+  flex-wrap:wrap;
+}
+.exercise-row input, .exercise-row select {
+  flex:1;
+  min-width:150px;
+  padding:10px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+}
+.feedback {
+  margin-top:10px;
+  padding:10px;
+  border-radius:8px;
+  font-size:0.9rem;
+  display:none;
+}
+.feedback.correct { background:rgba(0,255,157,0.1); border-left:3px solid var(--success); color:var(--success); }
+.feedback.error { background:rgba(255,68,68,0.1); border-left:3px solid var(--error); color:var(--error); }
+.feedback.nbf { background:rgba(255,215,0,0.1); border-left:3px solid var(--neon-gold); color:var(--neon-gold); }
+/* NBF Converter */
+.nbf-converter {
+  background:rgba(255,215,0,0.05);
+  border:2px solid var(--neon-gold);
+  border-radius:15px;
+  padding:25px;
+  margin:20px 0;
+}
+.nbf-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:15px;
+  margin:20px 0;
+}
+.nbf-item {
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:15px;
+  text-align:center;
+  cursor:pointer;
+  transition:0.3s;
+}
+.nbf-item:hover, .nbf-item.active {
+  border-color:var(--neon-gold);
+  background:rgba(255,215,0,0.1);
+}
+.nbf-item .label { font-size:0.8rem; color:var(--muted); text-transform:uppercase; }
+.nbf-item .value { font-size:1.1rem; font-weight:600; margin-top:5px; }
+.nbf-preview {
+  margin:20px 0;
+  padding:15px;
+  background:rgba(0,0,0,0.4);
+  border-radius:10px;
+  font-family:'Orbitron',sans-serif;
+  letter-spacing:1px;
+  min-height:50px;
+}
 /* Recorder */
 .recorder-ui {
   display:flex;
@@ -217,183 +217,66 @@ details[open] summary::after { transform:rotate(180deg); }
 .rec-btn.recording { background:var(--error); animation:pulse 1s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
 audio { flex:1; height:36px; }
-/* Multimedia Placeholders */
-.media-placeholder {
-  width:100%;
-  height:200px;
-  background:rgba(255,255,255,0.03);
-  border:2px dashed var(--border);
-  border-radius:15px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--muted);
-  font-family:'Rajdhani',sans-serif;
-  text-transform:uppercase;
-  letter-spacing:2px;
-  margin:30px 0;
+/* Progress */
+.progress-bar {
+  height:6px;
+  background:rgba(255,255,255,0.1);
+  border-radius:10px;
+  margin:20px 0;
+  overflow:hidden;
 }
-/* Navigation */
-.nav-controls {
-  display:flex;
-  justify-content:space-between;
-  margin-top:40px;
+.progress-fill {
+  height:100%;
+  background:linear-gradient(90deg,var(--neon-cyan),var(--neon-gold));
+  width:0%;
+  transition:width 0.6s ease;
+}
+/* Responsive */
+@media (max-width:768px) {
+  .exercise-row { flex-direction:column; align-items:flex-start; }
+  .nbf-grid { grid-template-columns:1fr 1fr; }
+  .container { padding:20px 15px; }
+  .section { padding:20px 15px; }
+}
+.back-btn {
+  position:fixed;
+  top:20px; left:20px;
+  background:var(--glass);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:8px 16px;
+  border-radius:20px;
+  text-decoration:none;
+  backdrop-filter:blur(10px);
+  z-index:100;
+  font-size:0.9rem;
 }
 </style>
 </head>
 <body>
 
+<a href="indexnbf.html" class="back-btn">← Mapa de Progreso</a>
+
 <div class="container">
   <header>
     <span class="tag">Unidad 02</span>
     <h1>At the High School</h1>
-    <p style="color:var(--muted); margin-top:10px;">Reconocimiento de Entorno · There is/are · Preposiciones de Lugar</p>
+    <p style="color:var(--muted); margin-top:10px;">Classroom Objects · There is/are · Preposiciones de Lugar</p>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
   </header>
 
-  <!-- SECTION 1: SUSTANTIVOS FUNCIONALES -->
+  <!-- SECCIÓN 1: DIÁLOGO GRADUATION DAY -->
   <section class="section">
-    <h2 class="section-title">Activación de Sustantivos Funcionales</h2>
-    <span class="ui-label">Selección de elemento · Conversión a acción</span>
-    <div class="determinants-grid" id="nounGrid">
-      <div class="det-item" data-noun="book" data-verb="book"><span class="label">Sustantivo</span><span class="value">book</span></div>
-      <div class="det-item" data-noun="call" data-verb="call"><span class="label">Sustantivo</span><span class="value">call</span></div>
-      <div class="det-item" data-noun="email" data-verb="email"><span class="label">Sustantivo</span><span class="value">email</span></div>
-      <div class="det-item" data-noun="drive" data-verb="drive"><span class="label">Sustantivo</span><span class="value">drive</span></div>
-      <div class="det-item" data-noun="water" data-verb="water"><span class="label">Sustantivo</span><span class="value">water</span></div>
-      <div class="det-item" data-noun="face" data-verb="face"><span class="label">Sustantivo</span><span class="value">face</span></div>
-    </div>
-    <div id="nounFeedback" class="feedback"></div>
-    <button class="btn" id="activateBtn">Activación</button>
-  </section>
-
-  <!-- SECTION 2: DESPLAZAMIENTO MEMORÍSTICO -->
-  <section class="section">
-    <h2 class="section-title">Desplazamiento de Patrones</h2>
-    <span class="ui-label">Deslizamiento horizontal · Reconocimiento estructural</span>
-    <div class="slider-container" id="memorySlider">
-      <div class="slide-card">
-        <h3>There is + singular</h3>
-        <p>There is a whiteboard on the wall.</p>
-      </div>
-      <div class="slide-card">
-        <h3>There are + plural</h3>
-        <p>There are computers in the lab.</p>
-      </div>
-      <div class="slide-card">
-        <h3>Preposición: On</h3>
-        <p>The books are on the desk.</p>
-      </div>
-      <div class="slide-card">
-        <h3>Preposición: In</h3>
-        <p>The pens are in the case.</p>
-      </div>
-      <div class="slide-card">
-        <h3>Preposición: Under</h3>
-        <p>The bag is under the chair.</p>
-      </div>
-    </div>
-    <div style="display:flex; gap:10px; margin-top:15px;">
-      <button class="btn btn-secondary" id="slideLeft">◀ Desplazamiento</button>
-      <button class="btn btn-secondary" id="slideRight">Desplazamiento ▶</button>
-    </div>
-  </section>
-
-  <!-- SECTION 3: ELEMENTOS DETERMINANTES -->
-  <section class="section">
-    <h2 class="section-title">Ensamblaje de Elementos Determinantes</h2>
-    <span class="ui-label">Selección secuencial · Construcción de estructura</span>
-    <div class="determinants-grid" id="detGrid">
-      <div class="det-item" data-type="pronoun" data-value="There"><span class="label">Pronombre</span><span class="value">There</span></div>
-      <div class="det-item" data-type="aux" data-value="is/are"><span class="label">Auxiliar</span><span class="value">is / are</span></div>
-      <div class="det-item" data-type="noun" data-value="student(s)"><span class="label">Sustantivo</span><span class="value">student(s)</span></div>
-      <div class="det-item" data-type="prep" data-value="in"><span class="label">Preposición</span><span class="value">in</span></div>
-      <div class="det-item" data-type="noun2" data-value="the classroom"><span class="label">Sustantivo 2</span><span class="value">the classroom</span></div>
-    </div>
-    <div id="assemblyPreview" style="margin:20px 0; padding:15px; background:rgba(0,0,0,0.4); border-radius:10px; min-height:50px; font-family:'Orbitron',sans-serif; letter-spacing:1px;">
-      Patrón en construcción: <span id="currentPattern" style="color:var(--neon-cyan);">...</span>
-    </div>
-    <div id="detFeedback" class="feedback"></div>
-    <button class="btn" id="checkAssembly">Comprobación</button>
-  </section>
-
-  <!-- SECTION 4: CONVIERTE LAS PALABRAS -->
-  <section class="section">
-    <h2 class="section-title">Convierte las Palabras</h2>
-    <span class="ui-label">Identificación de sustantivo · Ingreso de activación verbal</span>
-    <div class="converter-row">
-      <span style="min-width:80px; font-weight:600;">1. picture</span>
-      <input type="text" id="conv1" placeholder="Ingreso de activación">
-      <button class="btn btn-secondary" onclick="checkConvert('conv1','picture')">Comprobación</button>
-    </div>
-    <div class="converter-row">
-      <span style="min-width:80px; font-weight:600;">2. text</span>
-      <input type="text" id="conv2" placeholder="Ingreso de activación">
-      <button class="btn btn-secondary" onclick="checkConvert('conv2','text')">Comprobación</button>
-    </div>
-    <div class="converter-row">
-      <span style="min-width:80px; font-weight:600;">3. call</span>
-      <input type="text" id="conv3" placeholder="Ingreso de activación">
-      <button class="btn btn-secondary" onclick="checkConvert('conv3','call')">Comprobación</button>
-    </div>
-    <div class="converter-row">
-      <span style="min-width:80px; font-weight:600;">4. drive</span>
-      <input type="text" id="conv4" placeholder="Ingreso de activación">
-      <button class="btn btn-secondary" onclick="checkConvert('conv4','drive')">Comprobación</button>
-    </div>
-    <div id="convertGlobalFeedback" class="feedback"></div>
-  </section>
-
-  <!-- SECTION 5: PRÁCTICA COMPLEMENTARIA (COLLAPSIBLE) -->
-  <section class="section">
-    <h2 class="section-title">Práctica Complementaria</h2>
-    <span class="ui-label">Despliegue de contenido · Ejercicios integrados</span>
+    <h2 class="section-title">🎓 Diálogo: Graduation Day</h2>
+    <span class="ui-label">Escucha · Repite · Memoriza</span>
     
-    <details>
-      <summary>Diálogo: Graduation Day</summary>
-      <div class="details-content">
-        <p style="margin-bottom:10px;"><strong>Teacher:</strong> Congratulations David, I heard that you'll graduate from middle school education this week.</p>
-        <p style="margin-bottom:10px;"><strong>David:</strong> Thank you, I'm really happy of finishing my middle school education. Now I'll begin my high school education.</p>
-        <p style="margin-bottom:10px;"><strong>Teacher:</strong> You're not a little child anymore; you're a young adult now. You're new teachers will expect you to be responsible and mature.</p>
-        <p><strong>David:</strong> I know. It's time for me to stop being childish. I should be serious about studying.</p>
-        <div style="margin-top:15px; padding:10px; background:rgba(0,0,0,0.3); border-radius:8px;">
-          <span class="ui-label">Reflexión NBF</span>
-          <p style="font-size:0.9rem; color:var(--muted);">Identificación de marcadores temporales y transición de estado. No conjugación, sino activación secuencial.</p>
-        </div>
-      </div>
-    </details>
-
-    <details>
-      <summary>Preposiciones de Lugar: In / On / At</summary>
-      <div class="details-content">
-        <p style="margin-bottom:15px;">Selección de preposición según contexto espacial:</p>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px;">
-          <button class="btn btn-secondary" onclick="showPrepFeedback('in')">in (espacio cerrado)</button>
-          <button class="btn btn-secondary" onclick="showPrepFeedback('on')">on (superficie)</button>
-          <button class="btn btn-secondary" onclick="showPrepFeedback('at')">at (punto específico)</button>
-        </div>
-        <div id="prepFeedback" class="feedback"></div>
-      </div>
-    </details>
-
-    <details>
-      <summary>Ejercicio: Classroom Objects</summary>
-      <div class="details-content">
-        <p style="margin-bottom:10px;">Relación objeto-ubicación:</p>
-        <ul style="padding-left:20px; line-height:2; color:var(--muted);">
-          <li>There is a whiteboard <strong>on</strong> the wall.</li>
-          <li>There are computers <strong>in</strong> the lab.</li>
-          <li>The bag is <strong>under</strong> the chair.</li>
-          <li>The pens are <strong>in</strong> the case.</li>
-        </ul>
-        <p style="margin-top:15px; font-size:0.9rem; color:var(--neon-cyan);">Patrón NBF: There + is/are + sustantivo + preposición + ubicación.</p>
-      </div>
-    </details>
-  </section>
-
-  <!-- SECTION 6: GRABADORA & MULTIMEDIA -->
-  <section class="section">
-    <h2 class="section-title">Auto-Escucha & Espacios Multimedia</h2>
-    <span class="ui-label">Registro de audio · Preparación para integración futura</span>
+    <div class="details-content" style="background:rgba(0,0,0,0.3); border-radius:10px; padding:20px; margin:15px 0;">
+      <p><strong>Teacher:</strong> Congratulations David, I heard that you'll graduate from middle school education this week.</p>
+      <p><strong>David:</strong> Thank you, I'm really happy of finishing my middle school education. Now I'll begin my high school education.</p>
+      <p><strong>Teacher:</strong> You're not a little child anymore; you're a young adult now. Your new teachers will expect you to be responsible and mature.</p>
+      <p><strong>David:</strong> I know. It's time for me to stop being childish. I should be serious about studying.</p>
+      <p><strong>Teacher:</strong> If you study and get good grades in high school, your parents will be very proud of you.</p>
+    </div>
     
     <div class="recorder-ui">
       <button class="rec-btn" id="recBtn">🎤</button>
@@ -402,129 +285,206 @@ audio { flex:1; height:36px; }
         <audio id="recPlayback" controls style="display:none; width:100%; margin-top:10px;"></audio>
       </div>
     </div>
+    
+    <button class="btn" onclick="checkDialogue()">✅ Verificar Comprensión</button>
+    <div id="dialogueFeedback" class="feedback"></div>
+  </section>
 
-    <!-- VIDEO PLACEHOLDER - Línea ~420 -->
-    <div class="media-placeholder" id="videoPlaceholder">
-      [ ESPACIO RESERVADO PARA VIDEO ]<br>
-      Instrucción futura: Reemplazar contenido de #videoPlaceholder con <iframe> o <video>
+  <!-- SECCIÓN 2: VOCABULARIO CLASSROOM -->
+  <section class="section">
+    <h2 class="section-title">📚 Vocabulario: Classroom Objects</h2>
+    <span class="ui-label">Reconocimiento visual · Asociación</span>
+    
+    <div class="nbf-grid">
+      <div class="nbf-item" data-word="whiteboard"><span class="label">Objeto</span><span class="value">whiteboard</span></div>
+      <div class="nbf-item" data-word="desk"><span class="label">Objeto</span><span class="value">desk</span></div>
+      <div class="nbf-item" data-word="chair"><span class="label">Objeto</span><span class="value">chair</span></div>
+      <div class="nbf-item" data-word="book"><span class="label">Objeto</span><span class="value">book</span></div>
+      <div class="nbf-item" data-word="pencil"><span class="label">Objeto</span><span class="value">pencil</span></div>
+      <div class="nbf-item" data-word="computer"><span class="label">Objeto</span><span class="value">computer</span></div>
+      <div class="nbf-item" data-word="globe"><span class="label">Objeto</span><span class="value">globe</span></div>
+      <div class="nbf-item" data-word="lockers"><span class="label">Objeto</span><span class="value">lockers</span></div>
     </div>
+    
+    <div class="exercise-row">
+      <span style="min-width:120px; font-weight:600;">There ___ a whiteboard.</span>
+      <select id="ex1">
+        <option value="">Seleccionar...</option>
+        <option value="is">is</option>
+        <option value="are">are</option>
+      </select>
+      <button class="btn btn-secondary" onclick="checkEx1()">Verificar</button>
+    </div>
+    
+    <div class="exercise-row">
+      <span style="min-width:120px; font-weight:600;">There ___ computers.</span>
+      <select id="ex2">
+        <option value="">Seleccionar...</option>
+        <option value="is">is</option>
+        <option value="are">are</option>
+      </select>
+      <button class="btn btn-secondary" onclick="checkEx2()">Verificar</button>
+    </div>
+    
+    <div id="vocabFeedback" class="feedback"></div>
+  </section>
 
-    <!-- AUDIO PLACEHOLDER - Línea ~430 -->
-    <div class="media-placeholder" id="audioPlaceholder">
-      [ ESPACIO RESERVADO PARA AUDIO THERAPY ]<br>
-      Instrucción futura: Reemplazar contenido de #audioPlaceholder con <audio> o reproductor custom
+  <!-- SECCIÓN 3: DEMOSTRATIVOS + PREPOSICIONES -->
+  <section class="section">
+    <h2 class="section-title">🎯 Demostrativos + Preposiciones</h2>
+    <span class="ui-label">This/That/These/Those + In/On/At</span>
+    
+    <div class="exercise-row">
+      <span style="min-width:150px; font-weight:600;">___ is a pencil case.</span>
+      <select id="ex3">
+        <option value="">Seleccionar...</option>
+        <option value="This">This</option>
+        <option value="That">That</option>
+        <option value="These">These</option>
+        <option value="Those">Those</option>
+      </select>
+      <button class="btn btn-secondary" onclick="checkEx3()">Verificar</button>
+    </div>
+    
+    <div class="exercise-row">
+      <span style="min-width:150px; font-weight:600;">The books are ___ the desk.</span>
+      <select id="ex4">
+        <option value="">Seleccionar...</option>
+        <option value="in">in</option>
+        <option value="on">on</option>
+        <option value="at">at</option>
+      </select>
+      <button class="btn btn-secondary" onclick="checkEx4()">Verificar</button>
+    </div>
+    
+    <div class="exercise-row">
+      <span style="min-width:150px; font-weight:600;">She is ___ the classroom.</span>
+      <select id="ex5">
+        <option value="">Seleccionar...</option>
+        <option value="in">in</option>
+        <option value="on">on</option>
+        <option value="at">at</option>
+      </select>
+      <button class="btn btn-secondary" onclick="checkEx5()">Verificar</button>
+    </div>
+    
+    <div id="demoFeedback" class="feedback"></div>
+  </section>
+
+  <!-- SECCIÓN 4: NBF - SÚPER NOUNS -->
+  <section class="section">
+    <h2 class="section-title">🧠 NBF: Súper Nouns System</h2>
+    <span class="ui-label">Descomposición estructural · Activación de bases</span>
+    
+    <div class="nbf-converter">
+      <p style="margin-bottom:15px; font-style:italic; color:var(--muted);">
+        💡 Según NBF: "visit", "buy", "find" NO son verbos. Son BASES LÉXICAS (sustantivos) que se activan con determinantes.
+      </p>
+      
+      <div class="nbf-grid" id="nbfGrid">
+        <div class="nbf-item" data-type="pronoun" data-value="you"><span class="label">Pronombre</span><span class="value">you</span></div>
+        <div class="nbf-item" data-type="modal" data-value="can"><span class="label">Modal</span><span class="value">can</span></div>
+        <div class="nbf-item" data-type="base" data-value="visit"><span class="label">Base</span><span class="value">visit</span></div>
+        <div class="nbf-item" data-type="base" data-value="city"><span class="label">Base</span><span class="value">city</span></div>
+        <div class="nbf-item" data-type="prep" data-value="in"><span class="label">Preposición</span><span class="value">in</span></div>
+        <div class="nbf-item" data-type="base" data-value="school"><span class="label">Base</span><span class="value">school</span></div>
+      </div>
+      
+      <div class="nbf-preview">
+        Estructura en construcción: <span id="nbfStructure" style="color:var(--neon-cyan);">...</span>
+      </div>
+      
+      <button class="btn btn-nbf" id="checkNBF">🔍 Activar Estructura NBF</button>
+      <div id="nbfFeedback" class="feedback nbf"></div>
     </div>
   </section>
 
-  <!-- NAVIGATION -->
-  <div class="nav-controls">
-    <button class="btn btn-secondary" onclick="history.back()">◀ Retroceso</button>
-    <button class="btn" onclick="alert('Avance a Unidad 03')">Avance ▶</button>
-  </div>
+  <!-- SECCIÓN 5: GRAMMAR REVIEW + CRITICAL THINKING -->
+  <section class="section">
+    <h2 class="section-title">📖 Grammar Review + Critical Thinking</h2>
+    <span class="ui-label">Consolidación · Reflexión</span>
+    
+    <details>
+      <summary>🔹 Wh-Questions Review</summary>
+      <div class="details-content">
+        <p><strong>WHAT</strong> = información general sobre personas, objetos o lugares.</p>
+        <p><strong>WHERE</strong> = ubicación de personas, objetos o lugares.</p>
+        <p><strong>WHEN</strong> = tiempo o momento.</p>
+        <p><strong>HOW</strong> = manera o método.</p>
+        <p><strong>WHICH</strong> = opción preferida de un grupo similar.</p>
+        <div style="margin-top:15px; padding:10px; background:rgba(0,0,0,0.3); border-radius:8px;">
+          <strong>Ejercicio:</strong> Completa: "___ is your favorite subject?" → <input type="text" id="wh1" placeholder="What/Where/When" style="width:100px; margin-left:10px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; padding:5px; border-radius:5px;">
+          <button class="btn btn-secondary" onclick="checkWH1()" style="margin-left:10px; padding:5px 15px;">OK</button>
+          <span id="wh1fb" style="margin-left:10px;"></span>
+        </div>
+      </div>
+    </details>
+    
+    <details>
+      <summary>🔹 Subject Pronouns + Verb to Be</summary>
+      <div class="details-content">
+        <table style="width:100%; border-collapse:collapse; margin:10px 0;">
+          <tr style="border-bottom:1px solid var(--border);"><th style="padding:8px; text-align:left;">Pronombre</th><th style="padding:8px; text-align:left;">Verb to Be</th><th style="padding:8px; text-align:left;">Ejemplo</th></tr>
+          <tr><td style="padding:8px;">I</td><td style="padding:8px;">am</td><td style="padding:8px;">I am a student.</td></tr>
+          <tr><td style="padding:8px;">He/She/It</td><td style="padding:8px;">is</td><td style="padding:8px;">She is a teacher.</td></tr>
+          <tr><td style="padding:8px;">We/You/They</td><td style="padding:8px;">are</td><td style="padding:8px;">They are classmates.</td></tr>
+        </table>
+        <div style="margin-top:15px;">
+          <strong>Ejercicio:</strong> "Edward and Kimberly ___ siblings." → 
+          <select id="be1" style="margin-left:10px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; padding:5px; border-radius:5px;">
+            <option value="">...</option>
+            <option value="am">am</option>
+            <option value="is">is</option>
+            <option value="are">are</option>
+          </select>
+          <button class="btn btn-secondary" onclick="checkBE1()" style="margin-left:10px; padding:5px 15px;">OK</button>
+          <span id="be1fb" style="margin-left:10px;"></span>
+        </div>
+      </div>
+    </details>
+    
+    <details>
+      <summary>🔹 Critical Thinking Questions</summary>
+      <div class="details-content">
+        <p style="margin-bottom:15px;">Reflexiona y responde con tu coach en Audio Therapy:</p>
+        <ol style="padding-left:20px; line-height:2; color:var(--muted);">
+          <li>What kind of behavior is mature and responsible?</li>
+          <li>What do immature people do?</li>
+          <li>What do you want to do after you graduate from school?</li>
+          <li>How does the NBF system change how you see "verbs" in English?</li>
+        </ol>
+        <textarea id="criticalAnswer" placeholder="Escribe tu reflexión aquí..." style="width:100%; min-height:100px; margin-top:15px; padding:10px; background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; color:white; font-family:'Inter',sans-serif;"></textarea>
+        <button class="btn" onclick="saveCritical()" style="margin-top:10px;">💾 Guardar Reflexión</button>
+        <span id="criticalSaved" style="margin-left:10px; color:var(--success); display:none;">✅ Guardado</span>
+      </div>
+    </details>
+  </section>
 
-  <footer style="text-align:center; padding:40px 0; color:var(--muted); font-size:0.8rem; border-top:1px solid var(--border); margin-top:40px;">
-    © 2026 Discovery MAX Neuroeducation | Método NBF | Toño Vicas
-  </footer>
+  <!-- SECCIÓN 6: COMPLETAR UNIDAD -->
+  <section class="section" style="text-align:center;">
+    <h2 class="section-title">✅ Completar Unidad 02</h2>
+    <p style="margin-bottom:20px; color:var(--muted);">Al completar, desbloquearás la Unidad 03: Sports</p>
+    <button class="btn btn-nbf" id="completeBtn" onclick="completeUnit()">🔓 Desbloquear Unidad 03</button>
+    <div id="completeFeedback" class="feedback" style="margin-top:15px;"></div>
+  </section>
 </div>
 
 <script>
 // ==========================================
-// 1. SUSTANTIVOS FUNCIONALES (Noun -> Verb Activation)
+// ESTADO Y PROGRESO
 // ==========================================
-let selectedNoun = null;
-document.querySelectorAll('#nounGrid .det-item').forEach(item => {
-  item.addEventListener('click', () => {
-    document.querySelectorAll('#nounGrid .det-item').forEach(i => i.classList.remove('active'));
-    item.classList.add('active');
-    selectedNoun = { noun: item.dataset.noun, verb: item.dataset.verb };
-  });
-});
+let progress = JSON.parse(localStorage.getItem('nbf_progress')) || { unlocked:[1,2], completed:[] };
+let nbfSelected = [];
 
-document.getElementById('activateBtn').addEventListener('click', () => {
-  const fb = document.getElementById('nounFeedback');
-  if(!selectedNoun) {
-    fb.className = 'feedback error';
-    fb.innerHTML = '❌ Selección requerida. Identificación de sustantivo pendiente.';
-    fb.style.display = 'block';
-    return;
-  }
-  fb.className = 'feedback correct';
-  fb.innerHTML = `✅ Activación NBF: <strong>${selectedNoun.noun}</strong> (sustantivo) → <strong>${selectedNoun.verb}</strong> (acción funcional). El sujeto activa la estructura.`;
-  fb.style.display = 'block';
-});
-
-// ==========================================
-// 2. DESPLAZAMIENTO MEMORÍSTICO
-// ==========================================
-const slider = document.getElementById('memorySlider');
-document.getElementById('slideLeft').addEventListener('click', () => slider.scrollBy({left:-300, behavior:'smooth'}));
-document.getElementById('slideRight').addEventListener('click', () => slider.scrollBy({left:300, behavior:'smooth'}));
-
-// ==========================================
-// 3. ELEMENTOS DETERMINANTES (Assembly)
-// ==========================================
-let assembly = [];
-document.querySelectorAll('#detGrid .det-item').forEach(item => {
-  item.addEventListener('click', () => {
-    if(assembly.length >= 5) return;
-    assembly.push(item.dataset.value);
-    item.classList.add('active');
-    document.getElementById('currentPattern').textContent = assembly.join(' + ');
-  });
-});
-
-document.getElementById('checkAssembly').addEventListener('click', () => {
-  const fb = document.getElementById('detFeedback');
-  const target = ['There','is/are','student(s)','in','the classroom'];
-  const match = assembly.length === target.length && assembly.every((v,i) => v === target[i]);
-  
-  if(match) {
-    fb.className = 'feedback correct';
-    fb.innerHTML = '✅ Estructura NBF validada. There + is/are + sustantivo + preposición + ubicación.';
-  } else {
-    fb.className = 'feedback error';
-    fb.innerHTML = '❌ Secuencia incompleta. Revisión de orden determinante requerida.';
-  }
-  fb.style.display = 'block';
-});
-
-// ==========================================
-// 4. CONVIERTE LAS PALABRAS
-// ==========================================
-function checkConvert(inputId, baseWord) {
-  const input = document.getElementById(inputId);
-  const val = input.value.trim().toLowerCase();
-  const globalFb = document.getElementById('convertGlobalFeedback');
-  
-  if(val === baseWord) {
-    input.style.borderColor = 'var(--success)';
-    globalFb.className = 'feedback correct';
-    globalFb.innerHTML = `✅ Activación correcta: ${baseWord} mantiene forma base. El auxiliar (do/does/is/are) gestiona la persona/tiempo.`;
-  } else {
-    input.style.borderColor = 'var(--error)';
-    globalFb.className = 'feedback error';
-    globalFb.innerHTML = `❌ Forma base requerida. NBF: El sustantivo funcional no se altera. El auxiliar absorbe la modificación.`;
-  }
-  globalFb.style.display = 'block';
-}
-
-function showPrepFeedback(type) {
-  const fb = document.getElementById('prepFeedback');
-  const texts = {
-    in: '✅ in: Espacio cerrado / Volumen (in the classroom, in the box)',
-    on: '✅ on: Superficie / Contacto (on the desk, on the wall)',
-    at: '✅ at: Punto específico / Ubicación general (at school, at the desk)'
-  };
-  fb.className = 'feedback correct';
-  fb.innerHTML = texts[type];
-  fb.style.display = 'block';
+function updateProgress() {
+  const completed = progress.completed.includes(2) ? 100 : (progress.unlocked.includes(2) ? 50 : 0);
+  document.getElementById('progress').style.width = `${completed}%`;
 }
 
 // ==========================================
-// 5. GRABADORA DE AUDIO
+// GRABADORA DE AUDIO
 // ==========================================
-let mediaRecorder;
-let audioChunks = [];
+let mediaRecorder, audioChunks = [];
 const recBtn = document.getElementById('recBtn');
 const recStatus = document.getElementById('recStatus');
 const recPlayback = document.getElementById('recPlayback');
@@ -540,35 +500,250 @@ recBtn.addEventListener('click', async () => {
         const blob = new Blob(audioChunks, {type:'audio/webm'});
         recPlayback.src = URL.createObjectURL(blob);
         recPlayback.style.display = 'block';
-        recStatus.textContent = 'Estado: Reproducción disponible';
+        recStatus.textContent = '✅ Listo para reproducir';
       };
       mediaRecorder.start();
       recBtn.classList.add('recording');
-      recStatus.textContent = 'Estado: Registro activo';
+      recStatus.textContent = '🔴 Grabando...';
     } catch(e) {
-      recStatus.textContent = 'Estado: Permiso denegado';
+      recStatus.textContent = '❌ Permiso denegado';
     }
   } else {
     mediaRecorder.stop();
     recBtn.classList.remove('recording');
-    recStatus.textContent = 'Estado: Inactivo';
+    recStatus.textContent = 'Inactivo';
   }
 });
 
 // ==========================================
-// 6. FLUJO DE TRABAJO PARA FUTURAS INTEGRACIONES
+// EJERCICIOS DE VOCABULARIO (There is/are)
 // ==========================================
-/*
-  INSTRUCCIONES DE EDICIÓN (Workflow):
-  1. VIDEO: Buscar línea ~420. Reemplazar contenido de <div id="videoPlaceholder"> con:
-     <iframe src="URL_DEL_VIDEO" frameborder="0" allowfullscreen style="width:100%;height:100%;border-radius:15px;"></iframe>
-     
-  2. AUDIO: Buscar línea ~430. Reemplazar contenido de <div id="audioPlaceholder"> con:
-     <audio controls src="URL_DEL_AUDIO.mp3" style="width:100%;"></audio>
-     
-  3. MANTENIMIENTO: No modificar estructura CSS/JS principal. Solo sustitución de contenido en placeholders.
-  4. VALIDACIÓN: Verificar responsividad tras inserción multimedia.
-*/
+function checkEx1() {
+  const val = document.getElementById('ex1').value;
+  const fb = document.getElementById('vocabFeedback');
+  if(val === 'is') {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '✅ Correcto: "whiteboard" es singular → <strong>There is</strong>.';
+    fb.style.display = 'block';
+    updateUnitProgress('vocab1');
+  } else {
+    fb.className = 'feedback error';
+    fb.innerHTML = '❌ Incorrecto: "whiteboard" es singular. Usa <strong>There is</strong> para singular, <strong>There are</strong> para plural.';
+    fb.style.display = 'block';
+  }
+}
+
+function checkEx2() {
+  const val = document.getElementById('ex2').value;
+  const fb = document.getElementById('vocabFeedback');
+  if(val === 'are') {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '✅ Correcto: "computers" es plural → <strong>There are</strong>.';
+    fb.style.display = 'block';
+    updateUnitProgress('vocab2');
+  } else {
+    fb.className = 'feedback error';
+    fb.innerHTML = '❌ Incorrecto: "computers" es plural. Usa <strong>There are</strong> para plural.';
+    fb.style.display = 'block';
+  }
+}
+
+// ==========================================
+// EJERCICIOS DE DEMOSTRATIVOS + PREPOSICIONES
+// ==========================================
+function checkEx3() {
+  const val = document.getElementById('ex3').value;
+  const fb = document.getElementById('demoFeedback');
+  if(val === 'This') {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '✅ Correcto: "This" para singular cercano. "This is a pencil case."';
+    fb.style.display = 'block';
+    updateUnitProgress('demo1');
+  } else {
+    fb.className = 'feedback error';
+    fb.innerHTML = `❌ "${val}" no es la mejor opción. Para singular cercano usa <strong>This</strong>.`;
+    fb.style.display = 'block';
+  }
+}
+
+function checkEx4() {
+  const val = document.getElementById('ex4').value;
+  const fb = document.getElementById('demoFeedback');
+  if(val === 'on') {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '✅ Correcto: "on" para superficies. "The books are ON the desk."';
+    fb.style.display = 'block';
+    updateUnitProgress('demo2');
+  } else {
+    fb.className = 'feedback error';
+    fb.innerHTML = `❌ "${val}" no es preciso aquí. Usa <strong>on</strong> para superficies (desk, table, wall).`;
+    fb.style.display = 'block';
+  }
+}
+
+function checkEx5() {
+  const val = document.getElementById('ex5').value;
+  const fb = document.getElementById('demoFeedback');
+  if(val === 'in') {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '✅ Correcto: "in" para espacios cerrados. "She is IN the classroom."';
+    fb.style.display = 'block';
+    updateUnitProgress('demo3');
+  } else {
+    fb.className = 'feedback error';
+    fb.innerHTML = `❌ "${val}" no es preciso. Usa <strong>in</strong> para espacios cerrados (classroom, room, building).`;
+    fb.style.display = 'block';
+  }
+}
+
+// ==========================================
+// NBF: SÚPER NOUNS CONVERTER
+// ==========================================
+document.querySelectorAll('#nbfGrid .nbf-item').forEach(item => {
+  item.addEventListener('click', () => {
+    if(nbfSelected.includes(item.dataset.value)) {
+      nbfSelected = nbfSelected.filter(v => v !== item.dataset.value);
+      item.classList.remove('active');
+    } else {
+      nbfSelected.push(item.dataset.value);
+      item.classList.add('active');
+    }
+    document.getElementById('nbfStructure').textContent = nbfSelected.join(' + ');
+  });
+});
+
+document.getElementById('checkNBF').addEventListener('click', () => {
+  const fb = document.getElementById('nbfFeedback');
+  const target = ['you','can','visit','city'];
+  const hasAll = target.every(w => nbfSelected.includes(w));
+  
+  if(hasAll && nbfSelected.length === 4) {
+    fb.className = 'feedback nbf';
+    fb.innerHTML = `
+      ✅ <strong>Estructura NBF Activada:</strong><br>
+      <strong>you</strong> (pronombre sujeto) + <strong>can</strong> (modal/activador) + <strong>visit</strong> (base léxica) + <strong>city</strong> (base léxica)<br><br>
+      💡 Según NBF: "visit" NO es verbo. Es una BASE que se activa como acción cuando los determinantes (you+can) la "encienden". 
+      El cerebro hispano busca "verbos naturales"; el inglés ensambla estructuras.
+    `;
+    fb.style.display = 'block';
+    updateUnitProgress('nbf1');
+  } else {
+    fb.className = 'feedback error';
+    fb.innerHTML = `❌ Estructura incompleta. Para activar la acción necesitas:<br>
+    <strong>you + can + visit + city</strong><br>
+    💡 Recuerda: Sin sujeto ("you") no hay verbo. Sin activador ("can") no hay posibilidad. La base ("visit") permanece intacta.`;
+    fb.style.display = 'block';
+  }
+});
+
+// ==========================================
+// GRAMMAR REVIEW EJERCICIOS
+// ==========================================
+function checkWH1() {
+  const val = document.getElementById('wh1').value.trim().toLowerCase();
+  const fb = document.getElementById('wh1fb');
+  if(val === 'what') {
+    fb.textContent = '✅ Correcto: "What" para información general.';
+    fb.style.color = 'var(--success)';
+    updateUnitProgress('grammar1');
+  } else {
+    fb.textContent = '❌ "What" es la opción correcta para preguntar por información general.';
+    fb.style.color = 'var(--error)';
+  }
+}
+
+function checkBE1() {
+  const val = document.getElementById('be1').value;
+  const fb = document.getElementById('be1fb');
+  if(val === 'are') {
+    fb.textContent = '✅ Correcto: "Edward and Kimberly" = plural → "are".';
+    fb.style.color = 'var(--success)';
+    updateUnitProgress('grammar2');
+  } else {
+    fb.textContent = '❌ "Edward and Kimberly" son dos personas (plural) → usa "are".';
+    fb.style.color = 'var(--error)';
+  }
+}
+
+// ==========================================
+// CRITICAL THINKING + GUARDADO
+// ==========================================
+function saveCritical() {
+  const answer = document.getElementById('criticalAnswer').value.trim();
+  if(answer) {
+    localStorage.setItem('nbf_critical_unit2', answer);
+    document.getElementById('criticalSaved').style.display = 'inline';
+    setTimeout(() => document.getElementById('criticalSaved').style.display = 'none', 2000);
+    updateUnitProgress('critical');
+  }
+}
+
+// ==========================================
+// DIÁLOGO COMPRENSIÓN
+// ==========================================
+function checkDialogue() {
+  const fb = document.getElementById('dialogueFeedback');
+  fb.className = 'feedback correct';
+  fb.innerHTML = `✅ <strong>Comprensión verificada.</strong><br>
+  💡 Insight NBF: En "you'll graduate", "graduate" es base léxica. "Will" (contracción 'll) es el activador de futuro. 
+  Sin "will", no hay acción futura. Sin "you", no hay sujeto que active.`;
+  fb.style.display = 'block';
+  updateUnitProgress('dialogue');
+}
+
+// ==========================================
+// PROGRESO POR EJERCICIO
+// ==========================================
+function updateUnitProgress(exercise) {
+  const key = `unit2_${exercise}`;
+  if(!localStorage.getItem(key)) {
+    localStorage.setItem(key, 'completed');
+    // Actualizar barra de progreso visual (simulado)
+    const completed = Object.keys(localStorage).filter(k => k.startsWith('unit2_')).length;
+    const total = 10; // número estimado de ejercicios
+    const percent = Math.min(100, Math.round((completed/total)*100));
+    document.getElementById('progress').style.width = `${percent}%`;
+  }
+}
+
+// ==========================================
+// COMPLETAR UNIDAD
+// ==========================================
+function completeUnit() {
+  const fb = document.getElementById('completeFeedback');
+  const exercises = ['vocab1','vocab2','demo1','demo2','demo3','nbf1','grammar1','grammar2','critical','dialogue'];
+  const completed = exercises.filter(ex => localStorage.getItem(`unit2_${ex}`)).length;
+  
+  if(completed >= 7) { // 70% mínimo para completar
+    if(!progress.completed.includes(2)) {
+      progress.completed.push(2);
+      if(!progress.unlocked.includes(3)) progress.unlocked.push(3);
+      localStorage.setItem('nbf_progress', JSON.stringify(progress));
+    }
+    fb.className = 'feedback correct';
+    fb.innerHTML = `🎉 <strong>¡Unidad 02 Completada!</strong><br>
+    Has desbloqueado la <strong>Unidad 03: Sports</strong>.<br><br>
+    💡 Próximo paso: Aplica el sistema NBF para descomponer estructuras deportivas.`;
+    fb.style.display = 'block';
+    document.getElementById('completeBtn').disabled = true;
+    document.getElementById('completeBtn').style.opacity = '0.6';
+  } else {
+    fb.className = 'feedback error';
+    fb.innerHTML = `⚠️ Completa al menos 7 de 10 ejercicios para desbloquear la siguiente unidad.<br>
+    Progreso actual: ${completed}/10 ejercicios.`;
+    fb.style.display = 'block';
+  }
+}
+
+// ==========================================
+// INICIALIZAR
+// ==========================================
+window.addEventListener('DOMContentLoaded', () => {
+  updateProgress();
+  // Cargar reflexión guardada si existe
+  const saved = localStorage.getItem('nbf_critical_unit2');
+  if(saved) document.getElementById('criticalAnswer').value = saved;
+});
 </script>
 
 </body>
