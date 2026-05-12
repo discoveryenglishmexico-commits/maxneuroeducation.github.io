@@ -16,8 +16,8 @@
   --neon-blue: #00D9FF;
   --text: #F8F9FA;
   --muted: #C0C5CE;
-  --error: #FF00FF; /* Usamos fucsia para los errores */
-  --success: #00FF9D; /* Esmeralda para el éxito */
+  --error: #FF00FF;
+  --success: #00FF9D;
   --warning: #FFE600;
 }
 
@@ -34,17 +34,14 @@ body {
   overflow-x: hidden;
 }
 
-/* Fondo Avatar / Red Neuronal */
 .neural-overlay { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%); }
 .neural-lines { position: fixed; inset: 0; background-image: linear-gradient(90deg, rgba(0, 217, 255, 0.05) 1px, transparent 1px), linear-gradient(rgba(255, 0, 255, 0.05) 1px, transparent 1px); background-size: 100px 100px; animation: neural-pulse 4s ease-in-out infinite; z-index: -1; }
 
 @keyframes neural-pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); } 50% { box-shadow: 0 0 40px rgba(255, 0, 255, 0.6), 0 0 60px rgba(0, 255, 157, 0.3); } }
-@keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
 
 .container { max-width: 900px; margin: 0 auto; position: relative; z-index: 10; }
 
-/* Estilo Pantallas de Cristal */
 .card, header {
   background: var(--panel);
   backdrop-filter: blur(20px);
@@ -58,55 +55,18 @@ body {
   overflow: hidden;
 }
 
-.card:hover {
-  border-color: var(--neon-blue);
-  box-shadow: 0 0 30px rgba(0, 217, 255, 0.15);
-}
+.card:hover { border-color: var(--neon-blue); box-shadow: 0 0 30px rgba(0, 217, 255, 0.15); }
 
 header { text-align: center; margin-bottom: 40px; }
-header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 28px;
-  margin-bottom: 10px;
-  background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia), var(--neon-emerald));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-header p { color: var(--muted); font-size: 14px; font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; letter-spacing: 1px; }
+header h1 { font-family: 'Orbitron', sans-serif; font-size: 28px; margin-bottom: 10px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia), var(--neon-emerald)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 2px; }
+header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; letter-spacing: 1px; }
 
-/* Botones Neón */
-.btn {
-  background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia));
-  color: var(--text);
-  font-family: 'Orbitron', sans-serif;
-  border: none;
-  padding: 15px 30px;
-  border-radius: 50px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  animation: pulse-glow 3s infinite;
-}
+.btn { background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia)); color: var(--text); font-family: 'Orbitron', sans-serif; border: none; padding: 15px 30px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; animation: pulse-glow 3s infinite; }
 .btn:hover { transform: translateY(-3px) scale(1.02); color: #fff; }
 .btn.secondary { background: transparent; border: 2px solid var(--neon-blue); color: var(--neon-blue); animation: none; box-shadow: none; }
 .btn.secondary:hover { background: rgba(0, 217, 255, 0.1); box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); }
 
-.input {
-  width: 100%;
-  padding: 15px;
-  background: rgba(10, 22, 40, 0.6);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  font-size: 16px;
-  margin: 15px 0;
-  font-family: 'JetBrains Mono', monospace;
-  transition: all 0.3s ease;
-}
+.input { width: 100%; padding: 15px; background: rgba(10, 22, 40, 0.6); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 16px; margin: 15px 0; font-family: 'JetBrains Mono', monospace; transition: all 0.3s ease; }
 .input:focus { outline: none; border-color: var(--neon-emerald); box-shadow: 0 0 15px rgba(0, 255, 157, 0.3); }
 
 .tag { display: inline-block; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-family: 'Orbitron', sans-serif; margin-right: 8px; letter-spacing: 1px;}
@@ -155,7 +115,7 @@ header p { color: var(--muted); font-size: 14px; font-family: 'Rajdhani', sans-s
       <li>Escribe tu versión pensando como nativo del inglés <strong style="color:var(--neon-fuchsia);">sin pensar demasiado</strong>.</li>
       <li>Opcional: Graba tu voz para autoevaluación fonética.</li>
       <li>El sistema validará <strong style="color:var(--neon-emerald);">estructura, no vocabulario exacto</strong>.</li>
-      <li>Recibirás feedback neurocognitivo sobre <strong style="color:var(--text);">qué filtro español activaste</strong>.</li>
+      <li>Recibirás feedback visual y auditivo sobre <strong style="color:var(--text);">qué filtro español activaste</strong>.</li>
     </ul>
     <button class="btn" onclick="startQuiz()" style="width:100%; margin-top:30px;">🚀 Iniciar Diagnóstico</button>
   </div>
@@ -208,7 +168,67 @@ header p { color: var(--muted); font-size: 14px; font-family: 'Rajdhani', sans-s
 </div>
 
 <script>
-// BASE DE DATOS NBF - DEPORTES (Mantenida intacta)
+// ---------- SISTEMA DE AUDIO Y VOZ NEURAL ----------
+let audioCtx;
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+}
+
+function playNeuralSound(isCorrect) {
+  initAudio();
+  const osc = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+  
+  osc.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+  
+  if (isCorrect) {
+    // Sonido de Acierto: Campana ascendente brillante
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(440, audioCtx.currentTime); // A4
+    osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); // A5
+    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.3);
+  } else {
+    // Sonido de Error: Alerta grave
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.2);
+  }
+}
+
+function speakNeuralVoice(isCorrect) {
+  if (!('speechSynthesis' in window)) return;
+  
+  // Cancela cualquier voz que esté hablando en este momento
+  window.speechSynthesis.cancel();
+  
+  // Frases futuristas
+  const text = isCorrect ? "Estructura neural validada." : "Atención. Filtro hispano detectado.";
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  utterance.lang = 'es-ES'; // Español
+  utterance.rate = 1.1; // Ligeramente rápido
+  utterance.pitch = isCorrect ? 1.2 : 0.9; // Más agudo si es correcto, más grave si es error
+  
+  window.speechSynthesis.speak(utterance);
+}
+// ---------------------------------------------------
+
+
+// BASE DE DATOS NBF - DEPORTES
 const questions = [
   {
     prompt: "Llevo ropa cómoda y cargo un pequeño tapete a cada clase.",
@@ -532,9 +552,21 @@ function submitAnswer() {
   fb.style.display = 'block';
   
   if (validation.correct) {
+    // ------------------------------------
+    // ACTIVACIÓN DE AUDIO NEURAL (CORRECTO)
+    // ------------------------------------
+    playNeuralSound(true);
+    speakNeuralVoice(true);
+    
     fb.className = 'feedback correct';
     fb.innerHTML = `<strong style="font-family:'Orbitron', sans-serif;">${validation.message}</strong><div class="nbf-note">${validation.example}</div>`;
   } else {
+    // ------------------------------------
+    // ACTIVACIÓN DE AUDIO NEURAL (ERROR)
+    // ------------------------------------
+    playNeuralSound(false);
+    speakNeuralVoice(false);
+    
     fb.className = 'feedback error';
     fb.innerHTML = `
       <strong style="font-family:'Orbitron', sans-serif;">${validation.message}</strong>
