@@ -4,213 +4,211 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Diagnóstico Básico NBF - Discovery MAX</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0A0A0A;
-  --panel: rgba(255,255,255,0.05);
-  --border: rgba(255,255,255,0.1);
-  --orange: #F27D26;
-  --green: #00FF00;
-  --text: #F5F2ED;
-  --muted: #888;
-  --error: #E74C3C;
-  --success: #27AE60;
-  --warning: #F39C12;
+  --navy: #0A1628;
+  --dark-metallic: #1A1F2E;
+  --panel: rgba(255, 255, 255, 0.05);
+  --border: rgba(0, 217, 255, 0.3);
+  --neon-fuchsia: #FF00FF;
+  --neon-emerald: #00FF9D;
+  --neon-blue: #00D9FF;
+  --text: #F8F9FA;
+  --muted: #C0C5CE;
+  --error: #FF00FF; /* Usamos fucsia para los errores */
+  --success: #00FF9D; /* Esmeralda para el éxito */
+  --warning: #FFE600;
 }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--bg);
+  background: linear-gradient(135deg, var(--navy) 0%, var(--dark-metallic) 50%, var(--navy) 100%);
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
   padding: 20px;
+  position: relative;
+  overflow-x: hidden;
 }
-.container { max-width: 900px; margin: 0 auto; }
-header {
-  text-align: center;
-  margin-bottom: 40px;
-  padding: 30px;
+
+/* Fondo Avatar / Red Neuronal */
+.neural-overlay { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%); }
+.neural-lines { position: fixed; inset: 0; background-image: linear-gradient(90deg, rgba(0, 217, 255, 0.05) 1px, transparent 1px), linear-gradient(rgba(255, 0, 255, 0.05) 1px, transparent 1px); background-size: 100px 100px; animation: neural-pulse 4s ease-in-out infinite; z-index: -1; }
+
+@keyframes neural-pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+@keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); } 50% { box-shadow: 0 0 40px rgba(255, 0, 255, 0.6), 0 0 60px rgba(0, 255, 157, 0.3); } }
+@keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+
+.container { max-width: 900px; margin: 0 auto; position: relative; z-index: 10; }
+
+/* Estilo Pantallas de Cristal */
+.card, header {
   background: var(--panel);
+  backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 0 20px rgba(255, 255, 255, 0.02);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
+
+.card:hover {
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.15);
+}
+
+header { text-align: center; margin-bottom: 40px; }
 header h1 {
+  font-family: 'Orbitron', sans-serif;
   font-size: 28px;
   margin-bottom: 10px;
-  background: linear-gradient(90deg, var(--orange), var(--green));
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia), var(--neon-emerald));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
-header p { color: var(--muted); font-size: 14px; }
-.card {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 20px;
-}
+header p { color: var(--muted); font-size: 14px; font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; letter-spacing: 1px; }
+
+/* Botones Neón */
 .btn {
-  background: var(--orange);
-  color: #000;
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia));
+  color: var(--text);
+  font-family: 'Orbitron', sans-serif;
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: pulse-glow 3s infinite;
 }
-.btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(242,125,38,0.3); }
-.btn.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
-.btn.secondary:hover { background: rgba(255,255,255,0.1); }
+.btn:hover { transform: translateY(-3px) scale(1.02); color: #fff; }
+.btn.secondary { background: transparent; border: 2px solid var(--neon-blue); color: var(--neon-blue); animation: none; box-shadow: none; }
+.btn.secondary:hover { background: rgba(0, 217, 255, 0.1); box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); }
+
 .input {
   width: 100%;
-  padding: 12px;
-  background: rgba(0,0,0,0.3);
+  padding: 15px;
+  background: rgba(10, 22, 40, 0.6);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 12px;
   color: var(--text);
   font-size: 16px;
-  margin: 10px 0;
-  font-family: 'JetBrains Mono', monospace;
-}
-.input:focus { outline: none; border-color: var(--orange); }
-.tag {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-family: 'JetBrains Mono', monospace;
-  margin-right: 8px;
-}
-.tag.spanish { background: rgba(242,125,38,0.2); color: var(--orange); }
-.feedback {
-  margin-top: 15px;
-  padding: 15px;
-  border-radius: 8px;
-  display: none;
-  border-left: 4px solid;
-}
-.feedback.correct { background: rgba(39,174,96,0.1); border-left-color: var(--success); color: var(--success); }
-.feedback.error { background: rgba(231,76,60,0.1); border-left-color: var(--error); color: var(--error); }
-.feedback.warning { background: rgba(243,156,18,0.1); border-left-color: var(--warning); color: var(--warning); }
-.nbf-note {
-  margin-top: 10px;
-  padding: 10px;
-  background: rgba(0,0,0,0.2);
-  border-radius: 6px;
-  font-size: 13px;
-  font-style: italic;
-  color: var(--muted);
-}
-.recorder {
-  display: flex;
-  align-items: center;
-  gap: 10px;
   margin: 15px 0;
-  padding: 10px;
-  background: rgba(0,0,0,0.2);
-  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  transition: all 0.3s ease;
 }
-.rec-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--orange);
-  color: white;
-  transition: all 0.2s;
-}
-.rec-btn.recording { background: var(--error); animation: pulse 1s infinite; }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-.progress { height: 4px; background: #222; border-radius: 2px; margin: 20px 0; overflow: hidden; }
-.progress-bar { height: 100%; background: var(--orange); width: 0%; transition: width 0.3s; }
-.results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
-.stat { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; text-align: center; }
-.stat .value { font-size: 24px; font-weight: 700; color: var(--orange); }
-.stat .label { font-size: 12px; color: var(--muted); margin-top: 5px; }
-.hidden { display: none; }
-@media (max-width: 600px) {
-  header h1 { font-size: 22px; }
-  .card { padding: 16px; }
-}
+.input:focus { outline: none; border-color: var(--neon-emerald); box-shadow: 0 0 15px rgba(0, 255, 157, 0.3); }
+
+.tag { display: inline-block; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-family: 'Orbitron', sans-serif; margin-right: 8px; letter-spacing: 1px;}
+.tag.spanish { background: rgba(0, 217, 255, 0.1); color: var(--neon-blue); border: 1px solid var(--neon-blue); }
+
+.feedback { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; border-left: 5px solid; font-family: 'Inter', sans-serif; }
+.feedback.correct { background: rgba(0, 255, 157, 0.1); border-left-color: var(--success); color: var(--success); box-shadow: 0 0 20px rgba(0, 255, 157, 0.1); }
+.feedback.error { background: rgba(255, 0, 255, 0.1); border-left-color: var(--error); color: var(--error); box-shadow: 0 0 20px rgba(255, 0, 255, 0.1); }
+
+.nbf-note { margin-top: 15px; padding: 12px; background: rgba(10, 22, 40, 0.5); border-radius: 8px; font-size: 14px; font-style: italic; color: var(--muted); border: 1px solid rgba(255, 255, 255, 0.1); }
+
+.recorder { display: flex; align-items: center; gap: 15px; margin: 20px 0; padding: 15px; background: rgba(10, 22, 40, 0.5); border-radius: 12px; border: 1px dashed var(--neon-blue); }
+.rec-btn { width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; background: var(--neon-blue); color: var(--navy); font-size: 20px; transition: all 0.3s; box-shadow: 0 0 15px rgba(0, 217, 255, 0.4); }
+.rec-btn.recording { background: var(--error); color: #fff; animation: pulse-rec 1s infinite; box-shadow: 0 0 20px rgba(255, 0, 255, 0.6); border: none; }
+@keyframes pulse-rec { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+.progress { height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 25px 0; overflow: hidden; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, var(--neon-blue), var(--neon-emerald)); width: 0%; transition: width 0.4s ease-out; box-shadow: 0 0 10px var(--neon-emerald); }
+
+.results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0; }
+.stat { background: rgba(10, 22, 40, 0.6); padding: 25px; border-radius: 16px; text-align: center; border: 1px solid rgba(0, 217, 255, 0.2); transition: transform 0.3s; }
+.stat:hover { transform: translateY(-5px); border-color: var(--neon-fuchsia); }
+.stat .value { font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 700; background: linear-gradient(135deg, var(--neon-blue), var(--neon-emerald)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat .label { font-family: 'Rajdhani', sans-serif; font-size: 14px; color: var(--muted); margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+.hidden { display: none !important; }
+@media (max-width: 600px) { header h1 { font-size: 22px; } .card { padding: 20px; } }
 </style>
 </head>
 <body>
+
+<div class="neural-overlay"></div>
+<div class="neural-lines"></div>
+
 <div class="container">
   <header>
-    <h1>🏆 Diagnóstico Neurocognitivo NBF</h1>
+    <h1>Diagnóstico Neurocognitivo NBF</h1>
     <p>"Sin sujeto no hay verbo. Sin estructura no hay fluidez."</p>
-    <p style="font-size:12px; margin-top:8px; color:var(--muted);">Test Real Comprobatorio: Teoría NBF | EvLab Fedorenko MIT | ISK-Toño Vicas</p>
+    <p style="font-size:12px; margin-top:8px; color:var(--neon-emerald); font-family: 'Inter', sans-serif;">Test Real Comprobatorio: Teoría NBF | EvLab Fedorenko MIT | ISK-Toño Vicas</p>
   </header>
 
   <div id="intro-screen" class="card">
-    <h3 style="margin-bottom:15px;">📋 Instrucciones</h3>
-    <ul style="padding-left:20px; color:var(--muted); font-size:14px; line-height:1.8;">
-      <li>Leerás una idea en <strong>español coloquial</strong> sobre actividades físicas comunes por segmento.</li>
-      <li>Escribe tu versión pensando como nativo del inglés <strong>sin pensar demasiado</strong> (primera reacción cerebral).</li>
+    <h3 style="margin-bottom:20px; font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 1.5rem;">📋 Instrucciones</h3>
+    <ul style="padding-left:20px; color:var(--muted); font-size:16px; line-height:2;">
+      <li>Leerás una idea en <strong style="color:var(--text);">español coloquial</strong> sobre actividades físicas.</li>
+      <li>Escribe tu versión pensando como nativo del inglés <strong style="color:var(--neon-fuchsia);">sin pensar demasiado</strong>.</li>
       <li>Opcional: Graba tu voz para autoevaluación fonética.</li>
-      <li>El sistema validará <strong>estructura, no vocabulario exacto</strong>.</li>
-      <li>Recibirás feedback neurocognitivo sobre <strong>qué filtro español activaste</strong>.</li>
+      <li>El sistema validará <strong style="color:var(--neon-emerald);">estructura, no vocabulario exacto</strong>.</li>
+      <li>Recibirás feedback neurocognitivo sobre <strong style="color:var(--text);">qué filtro español activaste</strong>.</li>
     </ul>
-    <button class="btn" onclick="startQuiz()" style="width:100%; margin-top:20px;">🚀 Iniciar Diagnóstico</button>
+    <button class="btn" onclick="startQuiz()" style="width:100%; margin-top:30px;">🚀 Iniciar Diagnóstico</button>
   </div>
 
   <div id="quiz-screen" class="hidden">
     <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
     <div class="card" id="question-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
         <span class="tag spanish">🇪🇸 Pensamiento Hispano</span>
-        <span id="q-counter" style="font-size:12px; color:var(--muted);">1 / 8</span>
+        <span id="q-counter" style="font-size:14px; color:var(--neon-blue); font-family: 'Orbitron', sans-serif;">1 / 8</span>
       </div>
-      <h2 id="q-prompt" style="font-size:20px; margin-bottom:15px;"></h2>
+      <h2 id="q-prompt" style="font-size:22px; margin-bottom:20px; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px;"></h2>
       
-      <textarea id="user-input" class="input" rows="2" placeholder="Escribe tu respuesta en inglés..."></textarea>
+      <textarea id="user-input" class="input" rows="3" placeholder="Escribe tu respuesta en inglés..."></textarea>
       
-      <!-- GRABADORA DE AUDIO (OPCIONAL) -->
       <div class="recorder">
         <button class="rec-btn" id="rec-btn" onclick="toggleRecord()">🎤</button>
-        <span id="rec-status" style="font-size:12px; color:var(--muted);">Graba tu respuesta (opcional)</span>
-        <audio id="rec-playback" controls style="display:none; height:32px; width:200px;"></audio>
+        <span id="rec-status" style="font-size:14px; color:var(--muted);">Graba tu respuesta (opcional)</span>
+        <audio id="rec-playback" controls style="display:none; height:40px; width:100%; margin-top: 10px;"></audio>
       </div>
 
-      <button class="btn" id="submit-btn" onclick="submitAnswer()">✅ Verificar Estructura NBF</button>
+      <button class="btn" id="submit-btn" onclick="submitAnswer()" style="width: 100%;">✅ Verificar Estructura NBF</button>
       
       <div id="feedback-box" class="feedback"></div>
       
-      <button class="btn secondary hidden" id="next-btn" onclick="nextQuestion()" style="width:100%; margin-top:15px;">Siguiente Pregunta →</button>
+      <button class="btn secondary hidden" id="next-btn" onclick="nextQuestion()" style="width:100%; margin-top:20px;">Siguiente Pregunta →</button>
     </div>
   </div>
 
   <div id="results-screen" class="hidden">
     <div class="card" style="text-align:center;">
-      <h2 style="color:var(--orange); margin-bottom:10px;">📊 Tu Perfil Estructural Deportivo</h2>
-      <p style="color:var(--muted); margin-bottom:20px;">Basado en tu patrón de respuestas automáticas</p>
+      <h2 style="font-family: 'Orbitron', sans-serif; color:var(--neon-blue); margin-bottom:15px; font-size: 2rem;">📊 Tu Perfil Estructural Deportivo</h2>
+      <p style="color:var(--muted); margin-bottom:30px; font-family: 'Rajdhani', sans-serif; font-size: 1.2rem;">Basado en tu patrón de respuestas automáticas</p>
       
       <div class="results-grid">
         <div class="stat"><div class="value" id="score-val">0%</div><div class="label">Automatización</div></div>
-        <div class="stat"><div class="value" id="filter-val">-</div><div class="label">Filtro Dominante</div></div>
+        <div class="stat"><div class="value" id="filter-val" style="font-size: 1.5rem; color: var(--neon-fuchsia); background: none; -webkit-text-fill-color: var(--neon-fuchsia);">-</div><div class="label">Filtro Dominante</div></div>
         <div class="stat"><div class="value" id="time-val">0s</div><div class="label">Tiempo Promedio</div></div>
       </div>
 
-      <div id="nbf-recommendation" class="card" style="background:rgba(242,125,38,0.1); border-left:3px solid var(--orange); text-align:left; margin:20px 0;"></div>
+      <div id="nbf-recommendation" class="card" style="background:rgba(0, 217, 255, 0.05); border-left:4px solid var(--neon-blue); text-align:left; margin:30px 0; padding: 25px;"></div>
 
       <button class="btn secondary" onclick="location.reload()" style="width:100%; margin-top:15px;">🔄 Repetir Diagnóstico</button>
     </div>
   </div>
 
-  <footer style="text-align:center; margin-top:40px; color:var(--muted); font-size:12px;">
+  <footer style="text-align:center; margin-top:40px; color:rgba(255,255,255,0.3); font-size:12px; font-family: 'Orbitron', sans-serif;">
     © 2026 Discovery MAX Neuroeducation | Método NBF | EvLab Fedorenko MIT | ISK-Toño Vicas
   </footer>
 </div>
 
 <script>
-// BASE DE DATOS NBF - DEPORTES (8 preguntas con validación inteligente)
+// BASE DE DATOS NBF - DEPORTES (Mantenida intacta)
 const questions = [
   {
     prompt: "Llevo ropa cómoda y cargo un pequeño tapete a cada clase.",
@@ -467,14 +465,12 @@ const questions = [
   }
 ];
 
-// VARIABLES DE ESTADO
 let currentQ = 0;
 let answers = [];
 let startTime = Date.now();
 let mediaRecorder;
 let audioChunks = [];
 
-// FUNCIONES PRINCIPALES
 function startQuiz() {
   document.getElementById('intro-screen').classList.add('hidden');
   document.getElementById('quiz-screen').classList.remove('hidden');
@@ -499,67 +495,28 @@ function loadQuestion() {
 
 function validateAnswer(userText, question) {
   const text = userText.toLowerCase().trim().replace(/[.,!?;:]/g, '');
-  
-  // 1. Verificar patrón correcto (validación estricta)
   const isCorrect = question.correctPatterns.some(pattern => pattern.test(text));
+  if (isCorrect) return { correct: true, message: "✅ Estructura NBF Correcta.", example: question.rules.nbfNote };
   
-  if (isCorrect) {
-    return { 
-      correct: true, 
-      message: "✅ Estructura NBF Correcta.", 
-      example: question.rules.nbfNote 
-    };
-  }
-  
-  // 2. Verificar errores comunes específicos
   for (const [errorType, errorConfig] of Object.entries(question.commonErrors)) {
     if (errorConfig.pattern.test(text)) {
-      return { 
-        correct: false, 
-        message: errorConfig.message, 
-        example: errorConfig.example,
-        nbfExplanation: errorConfig.nbfExplanation,
-        errorType 
-      };
+      return { correct: false, message: errorConfig.message, example: errorConfig.example, nbfExplanation: errorConfig.nbfExplanation, errorType };
     }
   }
   
-  // 3. Verificar palabras prohibidas
   if (question.forbiddenWords && question.forbiddenWords.length > 0) {
-    const foundForbidden = question.forbiddenWords.filter(word => 
-      new RegExp(`\\b${word}\\b`, 'i').test(text)
-    );
+    const foundForbidden = question.forbiddenWords.filter(word => new RegExp(`\\b${word}\\b`, 'i').test(text));
     if (foundForbidden.length > 0) {
-      return {
-        correct: false,
-        message: `❌ Palabra(s) incorrecta(s): ${foundForbidden.join(', ')}`,
-        example: `✅ Evita: ${foundForbidden.join(', ')}. Usa los sinónimos permitidos.`,
-        errorType: "forbidden_word"
-      };
+      return { correct: false, message: `❌ Palabra(s) incorrecta(s): ${foundForbidden.join(', ')}`, example: `✅ Evita: ${foundForbidden.join(', ')}. Usa los sinónimos permitidos.`, errorType: "forbidden_word" };
     }
   }
   
-  // 4. Verificar elementos requeridos
-  const missingElements = question.rules.required.filter(element => 
-    !text.includes(element.toLowerCase())
-  );
+  const missingElements = question.rules.required.filter(element => !text.includes(element.toLowerCase()));
   if (missingElements.length > 0) {
-    return {
-      correct: false,
-      message: `❌ Faltan elementos estructurales: ${missingElements.join(', ')}`,
-      example: `✅ Debe incluir: ${question.rules.structure}`,
-      errorType: "missing_element"
-    };
+    return { correct: false, message: `❌ Faltan elementos estructurales: ${missingElements.join(', ')}`, example: `✅ Debe incluir: ${question.rules.structure}`, errorType: "missing_element" };
   }
   
-  // 5. Error genérico
-  return {
-    correct: false,
-    message: "❌ Revisa la estructura NBF.",
-    example: `✅ Patrón esperado: ${question.rules.structure}`,
-    nbfExplanation: question.rules.nbfNote,
-    errorType: "structure_error"
-  };
+  return { correct: false, message: "❌ Revisa la estructura NBF.", example: `✅ Patrón esperado: ${question.rules.structure}`, nbfExplanation: question.rules.nbfNote, errorType: "structure_error" };
 }
 
 function submitAnswer() {
@@ -569,26 +526,20 @@ function submitAnswer() {
   const q = questions[currentQ];
   const validation = validateAnswer(userText, q);
   
-  answers.push({ 
-    q: currentQ, 
-    correct: validation.correct, 
-    text: userText, 
-    filter: q.filter,
-    errorType: validation.errorType 
-  });
+  answers.push({ q: currentQ, correct: validation.correct, text: userText, filter: q.filter, errorType: validation.errorType });
   
   const fb = document.getElementById('feedback-box');
   fb.style.display = 'block';
   
   if (validation.correct) {
     fb.className = 'feedback correct';
-    fb.innerHTML = `<strong>${validation.message}</strong><div class="nbf-note">${validation.example}</div>`;
+    fb.innerHTML = `<strong style="font-family:'Orbitron', sans-serif;">${validation.message}</strong><div class="nbf-note">${validation.example}</div>`;
   } else {
     fb.className = 'feedback error';
     fb.innerHTML = `
-      <strong>${validation.message}</strong>
+      <strong style="font-family:'Orbitron', sans-serif;">${validation.message}</strong>
       <div class="nbf-note">${validation.example}</div>
-      <div class="nbf-note" style="margin-top:10px; border-top:1px solid var(--border); padding-top:10px;">
+      <div class="nbf-note" style="margin-top:10px; border-top:1px solid rgba(255, 0, 255, 0.3); padding-top:10px; color: var(--text);">
         ${validation.nbfExplanation}
       </div>
     `;
@@ -612,38 +563,25 @@ function showResults() {
   const score = Math.round((correctCount / questions.length) * 100);
   const time = Math.round((Date.now() - startTime) / 1000);
   
-  // Determinar filtro dominante
   const filters = answers.filter(a => !a.correct).map(a => a.filter);
   const filterCounts = {};
   filters.forEach(f => filterCounts[f] = (filterCounts[f] || 0) + 1);
-  const dominantFilter = Object.keys(filterCounts).reduce((a, b) => filterCounts[a] > filterCounts[b] ? a : b, 'balanced');
+  const dominantFilter = Object.keys(filterCounts).length > 0 ? Object.keys(filterCounts).reduce((a, b) => filterCounts[a] > filterCounts[b] ? a : b) : 'balanced';
   
-  const filterNames = {
-    subject_omission: "Omisión de Sujeto",
-    auxiliary_missing: "Auxiliares/Modales",
-    conjunction_error: "Conjunciones",
-    preposition_error: "Preposiciones",
-    sentence_structure: "Estructura de Oración",
-    comparative_structure: "Comparativos",
-    preposition_chain: "Cadena de Preposiciones",
-    adverbial_order: "Orden Adverbial",
-    balanced: "Equilibrado"
-  };
+  const filterNames = { subject_omission: "Omisión de Sujeto", auxiliary_missing: "Auxiliares/Modales", conjunction_error: "Conjunciones", preposition_error: "Preposiciones", sentence_structure: "Estructura de Oración", comparative_structure: "Comparativos", preposition_chain: "Cadena de Preposiciones", adverbial_order: "Orden Adverbial", balanced: "Equilibrado" };
   
   document.getElementById('score-val').textContent = score + '%';
   document.getElementById('filter-val').textContent = filterNames[dominantFilter];
   document.getElementById('time-val').textContent = time + 's';
   
-  // Recomendación NBF
   let rec = "";
-  if (score < 40) rec = "🔴 <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'autoengaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural (Pronombres + Auxiliares) antes de avanzar.";
-  else if (score < 70) rec = "🟡 <strong>Fase 2: Reensamblaje Cognitivo.</strong> Tienes conocimiento fragmentado. Cometes errores sistemáticos porque tu cerebro busca 'navajas suizas' (verbos compactos) en lugar de 'piezas Lego'. Enfócate en automatizar los 7 Elementos Determinantes.";
-  else rec = "🟢 <strong>Fase 3: Integración Profunda.</strong> Tu estructura es sólida, pero aún traduces mentalmente en tiempo real. El siguiente paso es la <strong>Producción Espontánea</strong>: eliminar el 'traductor interno' mediante repetición espaciada y audio therapy.";
+  if (score < 40) rec = "<span style='color:var(--neon-fuchsia); font-size:1.5rem;'>🔴</span> <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'autoengaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural (Pronombres + Auxiliares) antes de avanzar.";
+  else if (score < 70) rec = "<span style='color:var(--warning); font-size:1.5rem;'>🟡</span> <strong>Fase 2: Reensamblaje Cognitivo.</strong> Tienes conocimiento fragmentado. Cometes errores sistemáticos porque tu cerebro busca 'navajas suizas' (verbos compactos) en lugar de 'piezas Lego'. Enfócate en automatizar los 7 Elementos Determinantes.";
+  else rec = "<span style='color:var(--neon-emerald); font-size:1.5rem;'>🟢</span> <strong>Fase 3: Integración Profunda.</strong> Tu estructura es sólida, pero aún traduces mentalmente en tiempo real. El siguiente paso es la <strong>Producción Espontánea</strong>: eliminar el 'traductor interno' mediante repetición espaciada y audio therapy.";
   
-  document.getElementById('nbf-recommendation').innerHTML = `<strong>💡 Tu Ruta NBF Deportiva:</strong><br>${rec}`;
+  document.getElementById('nbf-recommendation').innerHTML = `<strong style="font-family:'Orbitron', sans-serif; font-size:1.2rem; color: var(--neon-blue);">💡 Tu Ruta NBF Deportiva:</strong><br><br><span style="font-size:1rem; line-height: 1.6;">${rec}</span>`;
 }
 
-// GRABADORA DE AUDIO (Web API nativa)
 async function toggleRecord() {
   const btn = document.getElementById('rec-btn');
   const status = document.getElementById('rec-status');
@@ -654,32 +592,28 @@ async function toggleRecord() {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorder = new MediaRecorder(stream);
       audioChunks = [];
-      
       mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
       mediaRecorder.onstop = () => {
         const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        playback.src = audioUrl;
+        playback.src = URL.createObjectURL(audioBlob);
         playback.style.display = 'block';
-        status.textContent = '✅ Grabación lista. Escúchate y verifica tu estructura.';
+        status.textContent = '✅ Grabación lista.';
+        status.style.color = "var(--neon-emerald)";
       };
-      
       mediaRecorder.start();
       btn.classList.add('recording');
-      status.textContent = '🔴 Grabando... Habla claro.';
-    } catch (err) {
-      alert('⚠️ Permiso de micrófono denegado o no soportado.');
-    }
+      status.textContent = '🔴 Grabando...';
+      status.style.color = "var(--neon-fuchsia)";
+    } catch (err) { alert('⚠️ Permiso de micrófono denegado o no soportado.'); }
   } else {
     mediaRecorder.stop();
     btn.classList.remove('recording');
-    status.textContent = 'Graba tu respuesta (opcional)';
+    status.textContent = 'Generando audio...';
   }
 }
 
-// PREVENIR ENVÍO CON ENTER
 document.addEventListener('keypress', e => {
-  if (e.key === 'Enter' && !e.shiftKey && document.getElementById('quiz-screen').classList.contains('hidden') === false) {
+  if (e.key === 'Enter' && !e.shiftKey && !document.getElementById('quiz-screen').classList.contains('hidden')) {
     e.preventDefault();
     if (!document.getElementById('submit-btn').classList.contains('hidden')) submitAnswer();
     else if (!document.getElementById('next-btn').classList.contains('hidden')) nextQuestion();
