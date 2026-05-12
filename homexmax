@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discovery MAX - Neural English Simulator</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0A1628;
+  --metallic-gray: #C0C5CE;
+  --shiny-white: #F8F9FA;
+  --neon-fuchsia: #FF00FF;
+  --neon-emerald: #00FF9D;
+  --neon-blue: #00D9FF;
+  --sparkle-yellow: #FFE600;
+  --dark-metallic: #1A1F2E;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--dark-metallic) 50%, var(--navy) 100%);
+  color: var(--shiny-white);
+  overflow-x: hidden;
+}
+
+/* Animaciones */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 30px rgba(0, 217, 255, 0.4); }
+  50% { box-shadow: 0 0 60px rgba(255, 0, 255, 0.6), 0 0 100px rgba(0, 255, 157, 0.3); }
+}
+
+@keyframes neural-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Efecto de partículas para el título */
+.particle-text span {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(-50px) scale(0.5);
+  animation: formParticles 1.5s forwards ease-out;
+}
+
+@keyframes formParticles {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Video Background Header */
+.hero-header {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--navy) 0%, var(--dark-metallic) 100%);
+}
+
+.video-background {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0.4; z-index: 0;
+}
+
+.neural-overlay, .neural-lines {
+  position: absolute; inset: 0; z-index: 1;
+}
+
+.neural-overlay {
+  background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
+}
+
+.neural-lines {
+  background-image: linear-gradient(90deg, rgba(0, 217, 255, 0.1) 1px, transparent 1px),
+                    linear-gradient(rgba(255, 0, 255, 0.1) 1px, transparent 1px);
+  background-size: 100px 100px;
+  animation: neural-pulse 4s ease-in-out infinite; z-index: 2;
+}
+
+.hero-content {
+  position: relative; z-index: 10; text-align: center; padding: 40px; max-width: 1200px;
+}
+
+.hero-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--shiny-white) 0%, var(--neon-blue) 50%, var(--neon-emerald) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.hero-subtitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: var(--metallic-gray);
+  margin-top: 30px; margin-bottom: 100px; letter-spacing: 0.3em; text-transform: uppercase;
+}
+
+.hero-button {
+  padding: 20px 60px; font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700;
+  background: linear-gradient(135deg, var(--neon-fuchsia), var(--neon-emerald));
+  border: none; border-radius: 50px; color: var(--navy); cursor: pointer;
+  transition: all 0.3s ease; box-shadow: 0 10px 40px rgba(255, 0, 255, 0.4);
+  text-transform: uppercase; animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.hero-button:hover {
+  transform: translateY(-5px) scale(1.05); box-shadow: 0 20px 60px rgba(255, 0, 255, 0.6);
+}
+
+/* Thumbnail Carousel (NUEVO: Deslizable manualmente) */
+.thumbnail-carousel {
+  position: absolute; bottom: 40px; left: 0; right: 0;
+  overflow-x: auto; /* Permite scroll manual */
+  scroll-snap-type: x mandatory; /* Movimiento fluido por tarjetas */
+  z-index: 10; padding: 20px 40px;
+  scrollbar-width: none; /* Oculta barra en Firefox */
+}
+.thumbnail-carousel::-webkit-scrollbar { display: none; /* Oculta barra en Chrome/Safari */ }
+
+.thumbnail-track {
+  display: flex; gap: 20px; width: max-content;
+}
+
+.thumbnail-item {
+  flex-shrink: 0; width: 180px; height: 120px; border-radius: 15px; overflow: hidden;
+  border: 2px solid rgba(0, 217, 255, 0.3); transition: all 0.3s ease;
+  background: var(--glass-bg); backdrop-filter: blur(10px); cursor: pointer;
+  scroll-snap-align: center;
+}
+
+.thumbnail-item:hover {
+  transform: scale(1.1); border-color: var(--neon-emerald); box-shadow: 0 0 30px rgba(0, 255, 157, 0.5);
+}
+
+.thumbnail-item img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Modal (Ventana Emergente para los Thumbnails) */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(10, 22, 40, 0.9); backdrop-filter: blur(5px);
+  display: none; justify-content: center; align-items: center; z-index: 9999;
+  opacity: 0; transition: opacity 0.3s ease;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, var(--dark-metallic), var(--navy));
+  border: 2px solid var(--neon-blue); border-radius: 20px; padding: 40px;
+  max-width: 600px; text-align: center; position: relative;
+  transform: scale(0.8); transition: transform 0.3s ease;
+}
+
+.modal-close {
+  position: absolute; top: 15px; right: 20px; font-size: 2rem; color: var(--shiny-white);
+  cursor: pointer; font-family: sans-serif; transition: color 0.3s;
+}
+
+.modal-close:hover { color: var(--neon-fuchsia); }
+.modal-image { width: 100%; border-radius: 10px; margin-bottom: 20px; }
+.modal-title { font-family: 'Orbitron', sans-serif; color: var(--neon-emerald); margin-bottom: 10px; }
+.modal-desc { font-family: 'Inter', sans-serif; color: var(--metallic-gray); line-height: 1.6; }
+
+/* Blocks */
+.glass-card {
+  background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
+  border-radius: 30px; padding: 50px; text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer; /* Agregado para que parezcan clickeables */
+}
+.glass-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 40px rgba(0, 217, 255, 0.3);
+  border-color: var(--neon-blue);
+}
+
+.first-block { padding: 120px 40px; position: relative; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1200px; margin: auto;}
+.stat-number { font-family: 'Orbitron', sans-serif; font-size: 6rem; background: linear-gradient(135deg, var(--neon-emerald), var(--neon-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block;}
+.stat-label { font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; color: var(--metallic-gray); }
+
+.second-block { padding: 150px 40px; text-align: center; background: linear-gradient(180deg, var(--shiny-white) 0%, var(--metallic-gray) 100%); color: var(--navy); }
+.second-block h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; color: var(--navy); margin-bottom: 20px;}
+
+/* Reveal animation */
+.reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="modal-overlay" id="thumbModal">
+  <div class="modal-content" id="modalBox">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <img id="modalImg" class="modal-image" src="" alt="Vista previa">
+    <h2 id="modalTitle" class="modal-title">Capítulo</h2>
+    <p id="modalDesc" class="modal-desc">Aquí se desplegará el resumen de lo que vería el alumno en este capítulo especial de Discovery Max Neuroeducation.</p>
+  </div>
+</div>
+
+<header class="hero-header">
+  <video class="video-background" autoplay muted loop playsinline>
+    <source src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/welcome_dmax.mp4" type="video/mp4">
+  </video>
+  <div class="neural-overlay"></div>
+  <div class="neural-lines"></div>
+  
+  <div class="hero-content">
+    <h1 class="hero-title particle-text" id="mainTitle">La Revolución Cognitiva Ha Llegado</h1>
+    
+    <p style="font-family: 'Orbitron'; font-size: clamp(1.3rem, 3vw, 2rem); color: var(--neon-fuchsia); margin-bottom: 20px; text-transform: uppercase; animation: pulse-glow 3s ease-in-out infinite;">
+      Los verbos en inglés no existen
+    </p>
+    
+    <button class="hero-button" onclick="document.getElementById('method-section').scrollIntoView({behavior: 'smooth'})">START NOW</button>
+    <p class="hero-subtitle">Neural English Simulator</p>
+  </div>
+  
+  <div class="thumbnail-carousel">
+    <div class="thumbnail-track">
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 1', 'Introducción al método NBF y cómo tu cerebro asimila el idioma.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/20.png" alt="Unit 1"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 2', 'Técnicas avanzadas de reprogramación mental para vocabulario.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/21.png" alt="Unit 2"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 3', 'Construyendo confianza: Eliminando el miedo a hablar.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/22.png" alt="Unit 3"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 4', 'Estructuras sin verbos: El secreto revelado.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/23.png" alt="Unit 4"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 5', 'Inmersión neuro-auditiva profunda.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/24.png" alt="Unit 5"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 6', 'Consolidación de memoria a largo plazo.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/25.png" alt="Unit 6"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 7', 'Fluidez acelerada.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/26.png" alt="Unit 7"></div>
+    </div>
+  </div>
+</header>
+
+<section class="first-block reveal">
+  <h2 style="text-align: center; font-family:'Orbitron'; color:var(--neon-blue); font-size: 2.5rem; margin-bottom: 50px;">Únete a la comunidad que ya reconfiguró su mente</h2>
+  <div class="stats-grid">
+    <div class="stat-card glass-card" onclick="alert('Pronto conectaremos esta sección de Elementos Determinantes')">
+      <span class="stat-number">7</span>
+      <p class="stat-label">Elementos Determinantes</p>
+    </div>
+    <div class="stat-card glass-card" onclick="alert('Pronto conectaremos esta sección de Ecuaciones Brújula')">
+      <span class="stat-number">3</span>
+      <p class="stat-label">Ecuaciones Brújula</p>
+    </div>
+  </div>
+</section>
+
+<section id="method-section" class="second-block reveal">
+  <h2>Descubre el poder de tu mente</h2>
+  <p>Aprender inglés con Neurociencias, será tu gran diferenciador.</p>
+</section>
+
+<script>
+// Efecto de Partículas en el título al cargar
+const title = document.getElementById('mainTitle');
+const text = title.innerText;
+title.innerHTML = '';
+text.split('').forEach((char, i) => {
+  const span = document.createElement('span');
+  span.innerText = char === ' ' ? '\u00A0' : char; // Respeta espacios
+  span.style.animationDelay = `${i * 0.05}s`; // Retraso en cadena
+  title.appendChild(span);
+});
+
+// Funciones del Modal (Ventana Emergente)
+const modal = document.getElementById('thumbModal');
+const modalBox = document.getElementById('modalBox');
+const modalImg = document.getElementById('modalImg');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+
+function openModal(element, titleText, descText) {
+  const imgSrc = element.querySelector('img').src;
+  modalImg.src = imgSrc;
+  modalTitle.innerText = titleText;
+  modalDesc.innerText = descText;
+  
+  modal.style.display = 'flex';
+  setTimeout(() => {
+    modal.style.opacity = '1';
+    modalBox.style.transform = 'scale(1)';
+  }, 10);
+}
+
+function closeModal() {
+  modal.style.opacity = '0';
+  modalBox.style.transform = 'scale(0.8)';
+  setTimeout(() => {
+    modal.style.display = 'none';
+  }, 300);
+}
+
+// Animación al bajar el scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
