@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación General NBF - Discovery MAX</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0A1628;
+  --dark-metallic: #1A1F2E;
+  --panel: rgba(255, 255, 255, 0.05);
+  --border: rgba(0, 217, 255, 0.3);
+  --neon-fuchsia: #FF00FF;
+  --neon-emerald: #00FF9D;
+  --neon-blue: #00D9FF;
+  --text: #F8F9FA;
+  --muted: #C0C5CE;
+  --error: #FF00FF;
+  --success: #00FF9D;
+  --warning: #FFE600;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, var(--navy) 0%, var(--dark-metallic) 50%, var(--navy) 100%); color: var(--text); line-height: 1.6; min-height: 100vh; padding: 20px; position: relative; overflow-x: hidden; }
+
+.neural-overlay { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%); }
+.neural-lines { position: fixed; inset: 0; background-image: linear-gradient(90deg, rgba(0, 217, 255, 0.05) 1px, transparent 1px), linear-gradient(rgba(255, 0, 255, 0.05) 1px, transparent 1px); background-size: 100px 100px; animation: neural-pulse 4s ease-in-out infinite; z-index: -1; }
+
+@keyframes neural-pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+@keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); } 50% { box-shadow: 0 0 40px rgba(255, 0, 255, 0.6), 0 0 60px rgba(0, 255, 157, 0.3); } }
+
+.container { max-width: 900px; margin: 0 auto; position: relative; z-index: 10; }
+
+.card, header { background: var(--panel); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 20px; padding: 30px; margin-bottom: 20px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 0 20px rgba(255, 255, 255, 0.02); transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+.card:hover { border-color: var(--neon-blue); box-shadow: 0 0 30px rgba(0, 217, 255, 0.15); }
+
+header { text-align: center; margin-bottom: 40px; }
+header h1 { font-family: 'Orbitron', sans-serif; font-size: 28px; margin-bottom: 10px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia), var(--neon-emerald)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 2px; }
+header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; letter-spacing: 1px; }
+
+.btn { background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia)); color: var(--text); font-family: 'Orbitron', sans-serif; border: none; padding: 15px 30px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; animation: pulse-glow 3s infinite; }
+.btn:hover { transform: translateY(-3px) scale(1.02); color: #fff; }
+.btn.secondary { background: transparent; border: 2px solid var(--neon-blue); color: var(--neon-blue); animation: none; box-shadow: none; }
+.btn.secondary:hover { background: rgba(0, 217, 255, 0.1); box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); }
+
+.input { width: 100%; padding: 15px; background: rgba(10, 22, 40, 0.6); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 16px; margin: 15px 0; font-family: 'JetBrains Mono', monospace; transition: all 0.3s ease; }
+.input:focus { outline: none; border-color: var(--neon-emerald); box-shadow: 0 0 15px rgba(0, 255, 157, 0.3); }
+
+.tag { display: inline-block; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-family: 'Orbitron', sans-serif; margin-right: 8px; letter-spacing: 1px;}
+.tag.spanish { background: rgba(0, 217, 255, 0.1); color: var(--neon-blue); border: 1px solid var(--neon-blue); }
+
+.feedback { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; border-left: 5px solid; font-family: 'Inter', sans-serif; }
+.feedback.correct { background: rgba(0, 255, 157, 0.1); border-left-color: var(--success); color: var(--success); box-shadow: 0 0 20px rgba(0, 255, 157, 0.1); }
+.feedback.error { background: rgba(255, 0, 255, 0.1); border-left-color: var(--error); color: var(--error); box-shadow: 0 0 20px rgba(255, 0, 255, 0.1); }
+
+.nbf-note { margin-top: 15px; padding: 12px; background: rgba(10, 22, 40, 0.5); border-radius: 8px; font-size: 14px; font-style: italic; color: var(--muted); border: 1px solid rgba(255, 255, 255, 0.1); }
+
+.progress { height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 25px 0; overflow: hidden; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, var(--neon-blue), var(--neon-emerald)); width: 0%; transition: width 0.4s ease-out; box-shadow: 0 0 10px var(--neon-emerald); }
+
+.results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0; }
+.stat { background: rgba(10, 22, 40, 0.6); padding: 25px; border-radius: 16px; text-align: center; border: 1px solid rgba(0, 217, 255, 0.2); }
+.stat .value { font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 700; background: linear-gradient(135deg, var(--neon-blue), var(--neon-emerald)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat .label { font-family: 'Rajdhani', sans-serif; font-size: 14px; color: var(--muted); margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+.hidden { display: none !important; }
+@media (max-width: 600px) { header h1 { font-size: 22px; } .card { padding: 20px; } }
+</style>
+</head>
+<body>
+
+<div class="neural-overlay"></div>
+<div class="neural-lines"></div>
+
+<div class="container">
+  <header>
+    <h1>Evaluación Estructural NBF</h1>
+    <p>"Dominio total de Auxiliares, Modales y Tiempos Verbales"</p>
+    <p style="font-size:12px; margin-top:8px; color:var(--neon-emerald); font-family: 'Inter', sans-serif;">Fase 2: Precisión de Estructura y Contexto | Discovery MAX</p>
+  </header>
+
+  <div id="intro-screen" class="card">
+    <h3 style="margin-bottom:20px; font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 1.5rem;">📋 Parámetros de la Evaluación</h3>
+    <ul style="padding-left:20px; color:var(--muted); font-size:16px; line-height:2;">
+      <li>Se evaluará el uso <strong style="color:var(--text);">estricto</strong> de tiempos verbales (Presente Simple vs Continuo).</li>
+      <li>El orden de <strong style="color:var(--neon-emerald);">Sujeto + Auxiliar/Modal + Verbo</strong> es imperativo.</li>
+      <li>Cuidado con las modificaciones de la <strong style="color:var(--neon-fuchsia);">3ra persona del singular ('s' o 'es')</strong>.</li>
+      <li>Asegúrate de interpretar si la acción sucede <em>en este momento</em> o es una <em>rutina</em>.</li>
+    </ul>
+    <button class="btn" onclick="startQuiz()" style="width:100%; margin-top:30px;">🚀 Iniciar Test General</button>
+  </div>
+
+  <div id="quiz-screen" class="hidden">
+    <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+    <div class="card" id="question-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <span class="tag spanish">🇪🇸 Contexto a Traducir</span>
+        <span id="q-counter" style="font-size:14px; color:var(--neon-blue); font-family: 'Orbitron', sans-serif;">1 / 10</span>
+      </div>
+      <h2 id="q-prompt" style="font-size:22px; margin-bottom:20px; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px;"></h2>
+      
+      <textarea id="user-input" class="input" rows="3" placeholder="Escribe tu respuesta estructurada en inglés..."></textarea>
+      
+      <button class="btn" id="submit-btn" onclick="submitAnswer()" style="width: 100%;">✅ Validar Estructura NBF</button>
+      
+      <div id="feedback-box" class="feedback"></div>
+      
+      <button class="btn secondary hidden" id="next-btn" onclick="nextQuestion()" style="width:100%; margin-top:20px;">Siguiente Reto →</button>
+    </div>
+  </div>
+
+  <div id="results-screen" class="hidden">
+    <div class="card" style="text-align:center;">
+      <h2 style="font-family: 'Orbitron', sans-serif; color:var(--neon-blue); margin-bottom:15px; font-size: 2rem;">📊 Tu Precisión Estructural</h2>
+      <p style="color:var(--muted); margin-bottom:30px; font-family: 'Rajdhani', sans-serif; font-size: 1.2rem;">Análisis de tu lógica gramatical en tiempo real</p>
+      
+      <div class="results-grid">
+        <div class="stat"><div class="value" id="score-val">0%</div><div class="label">Precisión</div></div>
+        <div class="stat"><div class="value" id="time-val">0s</div><div class="label">Tiempo Total</div></div>
+      </div>
+
+      <div id="nbf-recommendation" class="card" style="background:rgba(0, 217, 255, 0.05); border-left:4px solid var(--neon-blue); text-align:left; margin:30px 0; padding: 25px;"></div>
+
+      <button class="btn secondary" onclick="location.reload()" style="width:100%; margin-top:15px;">🔄 Reintentar Evaluación</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------- SISTEMA DE AUDIO Y VOZ NEURAL POTENCIADO ----------
+let audioCtx;
+
+function initAudio() {
+  if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+  if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+}
+
+function playNeuralSound(isCorrect) {
+  initAudio();
+  const osc = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+  osc.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+  
+  if (isCorrect) {
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+    osc.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.15); // C6
+    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.4);
+  } else {
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.3);
+  }
+}
+
+function speakNeuralVoice(isCorrect) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  
+  // Frases aleatorias para mayor dinamismo
+  const correctPhrases = [
+    "Great! Keep it up.",
+    "Excellent structure.",
+    "Perfect match.",
+    "Good job. Neural link established.",
+    "Spot on!"
+  ];
+  const incorrectPhrases = [
+    "Check your auxiliary verb.",
+    "Watch out for the tense.",
+    "Structure error detected.",
+    "Careful with the subject."
+  ];
+
+  const list = isCorrect ? correctPhrases : incorrectPhrases;
+  const text = list[Math.floor(Math.random() * list.length)];
+  
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US'; // Pronunciación en inglés para las felicitaciones
+  utterance.rate = 1.1; 
+  utterance.pitch = isCorrect ? 1.2 : 0.9; 
+  window.speechSynthesis.speak(utterance);
+}
+// ---------------------------------------------------
+
+// BASE DE DATOS: EVALUACIÓN GENERAL
+const questions = [
+  {
+    prompt: "¿Qué comes? Se ve delicioso.",
+    correctPatterns: [
+      /(what\s+are\s+you\s+eating)[^a-z]*(it\s+(looks|seems)\s+(delicious|great|tasty|good))/i
+    ],
+    rules: { structure: 'What + are + you + verb(ing)? + It + verb(s) + adjective.', nbfNote: "Acción en el momento = Presente Continuo (Are you eating). 3ra persona singular requiere 's' (It looks)." },
+    commonErrors: {
+      usedDo: { pattern: /what\s+do\s+you\s+eat/i, message: "❌ Error de Tiempo Verbal. Usaste 'do' (rutina) para algo que sucede en este momento.", example: "Usa: What ARE you EATING?" },
+      missingSubjectIt: { pattern: /(eating)[^a-z]*(looks|seems)/i, message: "❌ Omisión de Sujeto en la segunda frase. 'Looks delicious' necesita el sujeto 'It'.", example: "Usa: IT looks delicious." },
+      missingS: { pattern: /it\s+(look|seem)\s+/i, message: "❌ Regla de 3ra Persona ignorada. 'It' requiere que el verbo lleve 's'.", example: "Usa: It lookS delicious." }
+    }
+  },
+  {
+    prompt: "¿En qué piensas? Te veo preocupado.",
+    correctPatterns: [
+      /(what\s+are\s+you\s+thinking\s+about)[^a-z]*(you\s+(seem|look|appear)\s+worried)/i
+    ],
+    rules: { structure: 'What + are + you + thinking about? + You + seem/look + adjective.', nbfNote: "Acción momentánea = Presente Continuo. La preposición 'about' es obligatoria al final de la pregunta." },
+    commonErrors: {
+      usedDo: { pattern: /what\s+do\s+you\s+think/i, message: "❌ Error de Tiempo. Es una acción en progreso, no una rutina.", example: "Usa: What ARE you THINKING about?" },
+      missingAbout: { pattern: /what\s+are\s+you\s+thinking(\?|\s+you)/i, message: "❌ Falta preposición. En inglés piensas 'acerca de' algo.", example: "Usa: What are you thinking ABOUT?" }
+    }
+  },
+  {
+    prompt: "¿Qué comes cuando vas al cine?",
+    correctPatterns: [
+      /(what\s+do\s+you\s+eat\s+when\s+you\s+go\s+to\s+the\s+(movies|cinema))/i
+    ],
+    rules: { structure: 'What + do + you + eat + when + you + go + to the movies?', nbfNote: "Es un hábito o rutina, por lo que el auxiliar obligatorio es DO." },
+    commonErrors: {
+      usedAre: { pattern: /what\s+are\s+you\s+eating/i, message: "❌ Contexto incorrecto. Esto es una rutina ('cuando vas al cine'), se requiere Presente Simple (do).", example: "Usa: What DO you eat..." },
+      missingAuxiliary: { pattern: /what\s+you\s+eat/i, message: "❌ Falta Auxiliar. Las preguntas de rutina requieren 'do' o 'does'.", example: "Usa: What DO you eat..." }
+    }
+  },
+  {
+    prompt: "¿Te gustó la película que te recomendé?",
+    correctPatterns: [
+      /(did\s+you\s+like\s+the\s+movie\s+(that\s+)?i\s+recommended)/i
+    ],
+    rules: { structure: 'Did + you + like + the movie + (that) + I + recommended?', nbfNote: "Acción terminada. Auxiliar DID al inicio; el verbo 'like' vuelve a su forma base." },
+    commonErrors: {
+      doublePast: { pattern: /did\s+you\s+liked/i, message: "❌ Doble pasado. Si ya usaste el auxiliar 'Did', el verbo va en presente (like).", example: "Usa: DID you LIKE..." },
+      missingDid: { pattern: /you\s+liked\s+the\s+movie/i, message: "❌ Pregunta sin auxiliar. Las preguntas en pasado requieren 'Did' al inicio.", example: "Usa: DID you like..." }
+    }
+  },
+  {
+    prompt: "¿Me oyes o quieres que hable más alto?",
+    correctPatterns: [
+      /((can|do)\s+you\s+hear\s+me)[^a-z]*((or\s+)?do\s+you\s+want\s+me\s+to\s+speak\s+(louder|up))/i
+    ],
+    rules: { structure: 'Can/Do + you + hear + me + or + do + you + want + me + to + speak + louder?', nbfNote: "Se admiten ambos, Can o Do. La estructura compleja es 'want ME TO speak'." },
+    commonErrors: {
+      wantThatI: { pattern: /want\s+that\s+i\s+speak/i, message: "❌ Traducción literal del español. No se usa 'want that I'.", example: "Usa la estructura objeto-infinitivo: want ME TO speak." },
+      missingTo: { pattern: /want\s+me\s+speak/i, message: "❌ Falta partícula 'to'. El verbo secundario debe ir en infinitivo.", example: "Usa: want me TO speak." }
+    }
+  },
+  {
+    prompt: "¿Sabes diferenciar entre verbos y sustantivos?",
+    correctPatterns: [
+      /(do\s+you\s+know\s+the\s+difference\s+between\s+verbs\s+and\s+nouns)|(do\s+you\s+know\s+how\s+to\s+(differentiate|tell\s+the\s+difference)\s+between\s+verbs\s+and\s+nouns)/i
+    ],
+    rules: { structure: 'Do + you + know + the difference + between + A + and + B?', nbfNote: "Se usa 'know the difference' o 'know how to differentiate'. Requiere auxiliar DO." },
+    commonErrors: {
+      knowDifferentiate: { pattern: /do\s+you\s+know\s+(to\s+)?differentiate/i, message: "⚠️ Estructura poco natural. En inglés se dice 'know HOW TO differentiate' o 'know the difference'.", example: "Usa: Do you know THE DIFFERENCE between..." }
+    }
+  },
+  {
+    prompt: "Quiero que sepas algo importante.",
+    correctPatterns: [
+      /(i\s+want\s+you\s+to\s+know\s+something\s+important)/i
+    ],
+    rules: { structure: 'I + want + you + to + know + something + important.', nbfNote: "Estructura NBF estricta: Verbo (want) + Objeto (you) + Infinitivo (to know)." },
+    commonErrors: {
+      wantThatYou: { pattern: /i\s+want\s+that\s+you\s+know/i, message: "❌ Filtro Hispano Crítico. El inglés NO usa 'want that'.", example: "Usa: I want YOU TO know." }
+    }
+  },
+  {
+    prompt: "¿A Laura le gustan las películas de terror?",
+    correctPatterns: [
+      /(does\s+laura\s+like\s+(horror|scary)\s+movies)/i
+    ],
+    rules: { structure: 'Does + Laura + like + horror movies?', nbfNote: "Laura es 3ra persona singular. Auxiliar obligatorio = DOES. El verbo 'like' pierde la 's'." },
+    commonErrors: {
+      usedDo: { pattern: /^do\s+laura/i, message: "❌ Auxiliar incorrecto. 'Laura' es She, requiere 'Does'.", example: "Usa: DOES Laura like..." },
+      doubleS: { pattern: /does\s+laura\s+likes/i, message: "❌ Doble 'S'. Si usas 'Does', el verbo 'like' NO lleva 's'.", example: "Usa: Does Laura LIKE..." },
+      missingAux: { pattern: /^laura\s+likes/i, message: "❌ Formato de afirmación. Las preguntas necesitan auxiliar al inicio.", example: "Usa: DOES Laura like..." }
+    }
+  },
+  {
+    prompt: "¿Sabías que a Carlos le encantan las hamburguesas dobles con queso?",
+    correctPatterns: [
+      /(did\s+you\s+know\s+(that\s+)?carlos\s+loves\s+double\s+cheeseburgers?)/i
+    ],
+    rules: { structure: 'Did + you + know + (that) + Carlos + loves + double cheeseburgers?', nbfNote: "Pregunta en pasado (Did you know). Segunda cláusula en presente afirmación (Carlos loves - con 's')." },
+    commonErrors: {
+      missingS: { pattern: /carlos\s+love\s+double/i, message: "❌ Regla de 3ra Persona. Carlos (He) requiere que el verbo termine en 's'.", example: "Usa: Carlos loveS..." },
+      wrongPast: { pattern: /did\s+you\s+knew/i, message: "❌ Doble pasado. Con 'Did', el verbo vuelve a su forma original (know).", example: "Usa: DID you KNOW..." }
+    }
+  },
+  {
+    prompt: "¿Dónde vamos a ver el Mundial, en tu casa o en la mía?",
+    correctPatterns: [
+      /(where\s+are\s+we\s+going\s+to\s+watch\s+the\s+world\s+cup)[^a-z]*(at\s+your\s+house\s+or\s+(mine|my\s+house))/i
+    ],
+    rules: { structure: 'Where + are + we + going to + watch + the World Cup, + at your house or mine?', nbfNote: "Estructura de futuro con Going To para planes. Orden: Auxiliar(are) + Sujeto(we)." },
+    commonErrors: {
+      wrongOrder: { pattern: /where\s+we\s+are\s+going/i, message: "❌ Orden incorrecto en pregunta. El auxiliar va antes del sujeto.", example: "Usa: Where ARE WE going to..." },
+      usedWill: { pattern: /where\s+will\s+we\s+watch/i, message: "⚠️ Se entiende, pero 'going to' es lo correcto para planes ya establecidos.", example: "Usa: Where are we GOING TO watch..." }
+    }
+  }
+];
+
+let currentQ = 0;
+let answers = [];
+let startTime = Date.now();
+
+function startQuiz() {
+  document.getElementById('intro-screen').classList.add('hidden');
+  document.getElementById('quiz-screen').classList.remove('hidden');
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const q = questions[currentQ];
+  document.getElementById('q-prompt').textContent = `"${q.prompt}"`;
+  document.getElementById('q-counter').textContent = `${currentQ + 1} / ${questions.length}`;
+  document.getElementById('progress-bar').style.width = `${((currentQ) / questions.length) * 100}%`;
+  document.getElementById('user-input').value = '';
+  document.getElementById('feedback-box').style.display = 'none';
+  document.getElementById('submit-btn').classList.remove('hidden');
+  document.getElementById('next-btn').classList.add('hidden');
+  document.getElementById('user-input').focus();
+}
+
+function validateAnswer(userText, question) {
+  const text = userText.toLowerCase().trim().replace(/[.,!?;:]/g, '');
+  const isCorrect = question.correctPatterns.some(pattern => pattern.test(text));
+  
+  if (isCorrect) return { correct: true, message: "✅ Precisión Estructural Lograda.", example: question.rules.nbfNote };
+  
+  if (question.commonErrors) {
+    for (const [_, errorConfig] of Object.entries(question.commonErrors)) {
+      if (errorConfig.pattern.test(text)) {
+        return { correct: false, message: errorConfig.message, example: errorConfig.example };
+      }
+    }
+  }
+  
+  return { correct: false, message: "❌ Estructura, Tiempo o Sujeto Incorrecto.", example: `✅ Regla NBF: ${question.rules.structure}` };
+}
+
+function submitAnswer() {
+  const userText = document.getElementById('user-input').value.trim();
+  if (!userText) return alert('⚠️ Escribe una respuesta antes de validar.');
+  
+  const q = questions[currentQ];
+  const validation = validateAnswer(userText, q);
+  answers.push({ correct: validation.correct });
+  
+  const fb = document.getElementById('feedback-box');
+  fb.style.display = 'block';
+  
+  if (validation.correct) {
+    playNeuralSound(true);
+    speakNeuralVoice(true);
+    fb.className = 'feedback correct';
+    fb.innerHTML = `<strong style="font-family:'Orbitron', sans-serif;">${validation.message}</strong><div class="nbf-note">${validation.example}</div>`;
+  } else {
+    playNeuralSound(false);
+    speakNeuralVoice(false);
+    fb.className = 'feedback error';
+    fb.innerHTML = `<strong style="font-family:'Orbitron', sans-serif;">${validation.message}</strong><div class="nbf-note">${validation.example}</div>`;
+  }
+  
+  document.getElementById('submit-btn').classList.add('hidden');
+  document.getElementById('next-btn').classList.remove('hidden');
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ < questions.length) loadQuestion();
+  else showResults();
+}
+
+function showResults() {
+  document.getElementById('quiz-screen').classList.add('hidden');
+  document.getElementById('results-screen').classList.remove('hidden');
+  
+  const correctCount = answers.filter(a => a.correct).length;
+  const score = Math.round((correctCount / questions.length) * 100);
+  const time = Math.round((Date.now() - startTime) / 1000);
+  
+  document.getElementById('score-val').textContent = score + '%';
+  document.getElementById('time-val').textContent = time + 's';
+  
+  let rec = "";
+  if (score < 50) rec = "<span style='color:var(--neon-fuchsia); font-size:1.5rem;'>🔴</span> <strong>Alerta Estructural:</strong> Tienes fallos críticos en el uso de auxiliares y tiempos verbales básicos. Sigues pensando en español y traduciendo palabra por palabra. Necesitas volver a las bases de la Neuro-Sintaxis NBF.";
+  else if (score < 80) rec = "<span style='color:var(--warning); font-size:1.5rem;'>🟡</span> <strong>Proceso en Transición:</strong> Tienes la idea, pero descuidas reglas imperativas como la 's' de la tercera persona o el orden en las preguntas. Necesitas afinar tu automatización.";
+  else rec = "<span style='color:var(--neon-emerald); font-size:1.5rem;'>🟢</span> <strong>Dominio Excelente:</strong> Tu cerebro ya procesa las estructuras inglesas (Do/Does/To be) de forma nativa sin pasar por el filtro hispano. ¡Sigue así!";
+  
+  document.getElementById('nbf-recommendation').innerHTML = `<strong style="font-family:'Orbitron', sans-serif; font-size:1.2rem; color: var(--neon-blue);">💡 Análisis Final:</strong><br><br><span style="font-size:1rem; line-height: 1.6;">${rec}</span>`;
+}
+
+document.addEventListener('keypress', e => {
+  if (e.key === 'Enter' && !e.shiftKey && !document.getElementById('quiz-screen').classList.contains('hidden')) {
+    e.preventDefault();
+    if (!document.getElementById('submit-btn').classList.contains('hidden')) submitAnswer();
+    else if (!document.getElementById('next-btn').classList.contains('hidden')) nextQuestion();
+  }
+});
+</script>
+</body>
+</html>
