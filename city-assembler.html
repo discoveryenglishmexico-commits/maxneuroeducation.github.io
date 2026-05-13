@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NBF Assembler - A City in the States</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0A1628;
+  --dark-metallic: #1A1F2E;
+  --panel: rgba(255, 255, 255, 0.05);
+  --border: rgba(0, 217, 255, 0.3);
+  --neon-fuchsia: #FF00FF;
+  --neon-emerald: #00FF9D;
+  --neon-blue: #00D9FF;
+  --text: #F8F9FA;
+  --warning: #FFE600;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, var(--navy) 0%, var(--dark-metallic) 50%, var(--navy) 100%); color: var(--text); min-height: 100vh; padding: 20px; overflow-x: hidden; display: flex; flex-direction: column; align-items: center; }
+
+.neural-overlay { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%); }
+.neural-lines { position: fixed; inset: 0; background-image: linear-gradient(90deg, rgba(0, 217, 255, 0.05) 1px, transparent 1px), linear-gradient(rgba(255, 0, 255, 0.05) 1px, transparent 1px); background-size: 100px 100px; animation: neural-pulse 4s infinite; z-index: -1; }
+
+@keyframes neural-pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+@keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 15px rgba(0, 217, 255, 0.4); } 50% { box-shadow: 0 0 30px rgba(0, 217, 255, 0.8); } }
+@keyframes error-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+@keyframes error-flash { 0%, 100% { background: var(--panel); } 50% { background: rgba(255, 0, 255, 0.2); } }
+
+.container { max-width: 800px; width: 100%; position: relative; z-index: 10; margin-top: 20px; }
+
+header { text-align: center; margin-bottom: 30px; }
+header h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem, 4vw, 2.5rem); background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
+header p { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; color: var(--neon-emerald); letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
+
+.audio-card { background: rgba(10, 22, 40, 0.8); border: 1px solid var(--neon-blue); border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 30px; box-shadow: 0 0 20px rgba(0, 217, 255, 0.1); }
+.play-btn { background: var(--neon-blue); border: none; width: 60px; height: 60px; border-radius: 50%; color: var(--navy); font-size: 24px; cursor: pointer; animation: pulse-glow 2s infinite; transition: transform 0.3s; }
+.play-btn:hover { transform: scale(1.1); }
+
+.assembler-board { background: var(--panel); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 30px; min-height: 200px; margin-bottom: 30px; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; align-items: center; }
+.assembler-board.error-state { animation: error-flash 0.5s ease; border-color: var(--neon-fuchsia); }
+
+.word-bank { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+
+.word-block { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; padding: 15px 25px; background: rgba(0, 0, 0, 0.5); border: 2px solid var(--muted); border-radius: 10px; color: var(--text); cursor: pointer; transition: all 0.3s; user-select: none; }
+.word-block:hover { transform: translateY(-3px); border-color: var(--neon-emerald); box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3); }
+.word-block.selected { opacity: 0; pointer-events: none; transform: scale(0.5); }
+
+.assembled-word { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; padding: 15px 25px; background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(0, 255, 157, 0.2)); border: 2px solid var(--neon-blue); border-radius: 10px; color: #fff; box-shadow: 0 0 15px rgba(0, 217, 255, 0.3); animation: popIn 0.3s ease-out; }
+@keyframes popIn { 0% { transform: scale(0); } 80% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+.feedback-alert { margin-top: 20px; padding: 15px; border-radius: 10px; background: rgba(255, 0, 255, 0.1); border-left: 4px solid var(--neon-fuchsia); color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; display: none; }
+.feedback-alert.active { display: block; animation: error-shake 0.4s; }
+
+.success-overlay { position: fixed; inset: 0; background: rgba(10, 22, 40, 0.95); z-index: 100; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+.success-overlay h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; color: var(--neon-emerald); margin-bottom: 20px; text-shadow: 0 0 30px var(--neon-emerald); }
+.success-overlay p { font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; color: var(--text); max-width: 600px; margin-bottom: 30px; }
+
+.next-btn { background: var(--neon-blue); border: none; padding: 15px 40px; border-radius: 50px; font-family: 'Orbitron'; font-size: 1.2rem; font-weight: bold; color: var(--navy); cursor: pointer; transition: transform 0.3s; }
+.next-btn:hover { transform: scale(1.1); box-shadow: 0 0 30px var(--neon-blue); }
+
+@media (max-width: 600px) { .word-block, .assembled-word { font-size: 1rem; padding: 12px 18px; } }
+</style>
+</head>
+<body>
+
+<div class="neural-overlay"></div>
+<div class="neural-lines"></div>
+
+<div class="container">
+  <header>
+    <h1>Ensamblador de Guiones</h1>
+    <p>A City in the States - NBF Method</p>
+  </header>
+
+  <div class="audio-card">
+    <p style="font-family: 'Rajdhani'; font-size: 1.2rem; margin-bottom: 15px; color: var(--muted);">Paso 1: Escucha la estructura neuro-sintáctica</p>
+    <button class="play-btn" onclick="playSentence()">▶</button>
+  </div>
+
+  <div style="text-align: center; margin-bottom: 10px; font-family: 'Inter'; font-size: 0.9rem; color: var(--neon-emerald);">Paso 2: Ensambla en orden estricto (Pronombre + Modal + Sustantivo)</div>
+  
+  <div class="assembler-board" id="assembler-board">
+    </div>
+
+  <div id="feedback-msg" class="feedback-alert">
+    <strong>⚠️ ALERTA ESTRUCTURAL NBF:</strong><br>
+    <span id="feedback-text"></span>
+  </div>
+
+  <div class="word-bank" id="word-bank">
+    </div>
+</div>
+
+<div class="success-overlay" id="success-screen">
+  <h2>¡Conexión Neural Exitosa!</h2>
+  <p>Has ensamblado la frase respetando la estructura NBF. El sustantivo ha sido activado correctamente mediante su Pronombre Personal y su Modal.</p>
+  <button class="next-btn" onclick="location.reload()">Siguiente Frase</button>
+</div>
+
+<script>
+// ---------- SISTEMA DE AUDIO ----------
+let audioCtx;
+function initAudio() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === 'suspended') audioCtx.resume(); }
+
+function playSound(type) {
+  initAudio();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  
+  if (type === 'click') {
+    osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1); gain.gain.setValueAtTime(0.1, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1); osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.1);
+  } else if (type === 'error') {
+    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.3); gain.gain.setValueAtTime(0.1, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3); osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.3);
+  } else if (type === 'success') {
+    osc.type = 'sine'; osc.frequency.setValueAtTime(440, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3); gain.gain.setValueAtTime(0.1, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5); osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.5);
+  }
+}
+
+function playSentence() {
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance("You can visit many sites.");
+  utterance.lang = 'en-US';
+  utterance.rate = 0.9;
+  window.speechSynthesis.speak(utterance);
+}
+
+function speakError(msg) {
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(msg);
+  utterance.lang = 'es-ES';
+  utterance.rate = 1.1;
+  utterance.pitch = 0.9;
+  window.speechSynthesis.speak(utterance);
+}
+
+// ---------- LÓGICA DEL ENSAMBLADOR NBF ----------
+const sentence = [
+  { text: "You", type: "pronoun", req: [] },
+  { text: "can", type: "modal", req: ["You"] },
+  { text: "visit", type: "noun-action", req: ["You", "can"] },
+  { text: "many", type: "adjective", req: ["You", "can", "visit"] },
+  { text: "sites", type: "noun", req: ["You", "can", "visit", "many"] }
+];
+
+let assembledWords = [];
+
+// Desordenar palabras para el banco visual
+const shuffledWords = [...sentence].sort(() => Math.random() - 0.5);
+
+const wordBankEl = document.getElementById('word-bank');
+const assemblerBoardEl = document.getElementById('assembler-board');
+const feedbackAlert = document.getElementById('feedback-msg');
+const feedbackText = document.getElementById('feedback-text');
+
+// Generar botones
+shuffledWords.forEach(wordObj => {
+  const btn = document.createElement('div');
+  btn.className = 'word-block';
+  btn.textContent = wordObj.text;
+  btn.onclick = () => handleWordClick(wordObj, btn);
+  wordBankEl.appendChild(btn);
+});
+
+function handleWordClick(wordObj, btnElement) {
+  // Verificar si se cumplen los requisitos estructurales NBF
+  const missingReqs = wordObj.req.filter(r => !assembledWords.includes(r));
+  
+  if (missingReqs.length > 0) {
+    // ERROR ESTRUCTURAL NBF
+    playSound('error');
+    assemblerBoardEl.classList.add('error-state');
+    setTimeout(() => assemblerBoardEl.classList.remove('error-state'), 500);
+    
+    let errorMsg = "";
+    if (wordObj.type === "noun-action") {
+      errorMsg = `Atención: "${wordObj.text}" actúa como sustantivo. Sin el Pronombre Personal y el Modal previos, no genera acción.`;
+    } else if (wordObj.type === "modal") {
+      errorMsg = `Atención: Un Modal necesita un Pronombre Personal Directo que lo preceda.`;
+    } else {
+      errorMsg = `Orden incorrecto. Te estás saltando elementos vitales de la estructura.`;
+    }
+    
+    feedbackText.textContent = errorMsg;
+    feedbackAlert.classList.add('active');
+    speakError(errorMsg);
+    
+  } else {
+    // ENSAMBLAJE CORRECTO
+    playSound('click');
+    feedbackAlert.classList.remove('active');
+    btnElement.classList.add('selected');
+    
+    assembledWords.push(wordObj.text);
+    
+    const assembledEl = document.createElement('div');
+    assembledEl.className = 'assembled-word';
+    assembledEl.textContent = wordObj.text;
+    assemblerBoardEl.appendChild(assembledEl);
+    
+    // Si terminó la frase
+    if (assembledWords.length === sentence.length) {
+      setTimeout(() => {
+        playSound('success');
+        document.getElementById('success-screen').style.display = 'flex';
+        const winSpeech = new SpeechSynthesisUtterance("Neural link established. Structure is perfect.");
+        winSpeech.lang = 'en-US';
+        window.speechSynthesis.speak(winSpeech);
+      }, 500);
+    }
+  }
+}
+</script>
+</body>
+</html>
