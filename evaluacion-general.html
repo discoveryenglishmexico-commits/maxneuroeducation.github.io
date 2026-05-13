@@ -77,17 +77,17 @@ header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 
 <div class="container">
   <header>
     <h1>Evaluación Estructural NBF</h1>
-    <p>"Dominio total de Auxiliares, Modales y Tiempos Verbales"</p>
+    <p>"Sustantivos, Palabras Auxiliares y Modales en Acción"</p>
     <p style="font-size:12px; margin-top:8px; color:var(--neon-emerald); font-family: 'Inter', sans-serif;">Fase 2: Precisión de Estructura y Contexto | Discovery MAX</p>
   </header>
 
   <div id="intro-screen" class="card">
     <h3 style="margin-bottom:20px; font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 1.5rem;">📋 Parámetros de la Evaluación</h3>
     <ul style="padding-left:20px; color:var(--muted); font-size:16px; line-height:2;">
-      <li>Se evaluará el uso <strong style="color:var(--text);">estricto</strong> de tiempos verbales (Presente Simple vs Continuo).</li>
-      <li>El orden de <strong style="color:var(--neon-emerald);">Sujeto + Auxiliar/Modal + Verbo</strong> es imperativo.</li>
+      <li>Se evaluará el uso <strong style="color:var(--text);">estricto</strong> de estructuras de tiempo.</li>
+      <li>El orden de <strong style="color:var(--neon-emerald);">Pronombre Personal Directo + Palabra Auxiliar/Modal + Sustantivo</strong> es imperativo.</li>
       <li>Cuidado con las modificaciones de la <strong style="color:var(--neon-fuchsia);">3ra persona del singular ('s' o 'es')</strong>.</li>
-      <li>Asegúrate de interpretar si la acción sucede <em>en este momento</em> o es una <em>rutina</em>.</li>
+      <li>Recuerda: Los verbos en inglés no existen. Evalúa el contexto (en el momento vs. rutina) para activar los sustantivos correctamente.</li>
     </ul>
     <button class="btn" onclick="startQuiz()" style="width:100%; margin-top:30px;">🚀 Iniciar Test General</button>
   </div>
@@ -96,7 +96,7 @@ header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 
     <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
     <div class="card" id="question-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <span class="tag spanish">🇪🇸 Contexto a Traducir</span>
+        <span class="tag spanish">🇪🇸 Contexto a Decodificar</span>
         <span id="q-counter" style="font-size:14px; color:var(--neon-blue); font-family: 'Orbitron', sans-serif;">1 / 10</span>
       </div>
       <h2 id="q-prompt" style="font-size:22px; margin-bottom:20px; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px;"></h2>
@@ -129,7 +129,7 @@ header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 
 </div>
 
 <script>
-// ---------- SISTEMA DE AUDIO Y VOZ NEURAL POTENCIADO ----------
+// ---------- SISTEMA DE AUDIO Y VOZ NEURAL (Ajustado a terminología NBF) ----------
 let audioCtx;
 
 function initAudio() {
@@ -167,7 +167,7 @@ function speakNeuralVoice(isCorrect) {
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
   
-  // Frases aleatorias para mayor dinamismo
+  // Frases aleatorias adaptadas al Método NBF en Inglés
   const correctPhrases = [
     "Great! Keep it up.",
     "Excellent structure.",
@@ -176,35 +176,35 @@ function speakNeuralVoice(isCorrect) {
     "Spot on!"
   ];
   const incorrectPhrases = [
-    "Check your auxiliary verb.",
-    "Watch out for the tense.",
+    "Check your auxiliary word.",
+    "Watch out for the structural tense.",
     "Structure error detected.",
-    "Careful with the subject."
+    "Careful with the direct personal pronoun."
   ];
 
   const list = isCorrect ? correctPhrases : incorrectPhrases;
   const text = list[Math.floor(Math.random() * list.length)];
   
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'en-US'; // Pronunciación en inglés para las felicitaciones
+  utterance.lang = 'en-US'; 
   utterance.rate = 1.1; 
   utterance.pitch = isCorrect ? 1.2 : 0.9; 
   window.speechSynthesis.speak(utterance);
 }
-// ---------------------------------------------------
+// ---------------------------------------------------------------------------------
 
-// BASE DE DATOS: EVALUACIÓN GENERAL
+// BASE DE DATOS: EVALUACIÓN GENERAL NBF
 const questions = [
   {
     prompt: "¿Qué comes? Se ve delicioso.",
     correctPatterns: [
       /(what\s+are\s+you\s+eating)[^a-z]*(it\s+(looks|seems)\s+(delicious|great|tasty|good))/i
     ],
-    rules: { structure: 'What + are + you + verb(ing)? + It + verb(s) + adjective.', nbfNote: "Acción en el momento = Presente Continuo (Are you eating). 3ra persona singular requiere 's' (It looks)." },
+    rules: { structure: 'What + are + you + eating? + It + looks + adjective.', nbfNote: "Acción en el momento = Sustantivo con '-ing' activado por 'are'. La 3ra persona singular requiere 's' en el sustantivo activado (It looks)." },
     commonErrors: {
-      usedDo: { pattern: /what\s+do\s+you\s+eat/i, message: "❌ Error de Tiempo Verbal. Usaste 'do' (rutina) para algo que sucede en este momento.", example: "Usa: What ARE you EATING?" },
-      missingSubjectIt: { pattern: /(eating)[^a-z]*(looks|seems)/i, message: "❌ Omisión de Sujeto en la segunda frase. 'Looks delicious' necesita el sujeto 'It'.", example: "Usa: IT looks delicious." },
-      missingS: { pattern: /it\s+(look|seem)\s+/i, message: "❌ Regla de 3ra Persona ignorada. 'It' requiere que el verbo lleve 's'.", example: "Usa: It lookS delicious." }
+      usedDo: { pattern: /what\s+do\s+you\s+eat/i, message: "❌ Error de Estructura de Tiempo. Usaste la Palabra Auxiliar 'do' (rutina) para algo que sucede en este momento.", example: "Usa: What ARE you EATING?" },
+      missingSubjectIt: { pattern: /(eating)[^a-z]*(looks|seems)/i, message: "❌ Omisión de Pronombre Personal Directo. La palabra 'looks' necesita ser activada por el sujeto 'It'.", example: "Usa: IT looks delicious." },
+      missingS: { pattern: /it\s+(look|seem)\s+/i, message: "❌ Regla de 3ra Persona ignorada. 'It' requiere que el sustantivo activado lleve 's'.", example: "Usa: It lookS delicious." }
     }
   },
   {
@@ -212,10 +212,10 @@ const questions = [
     correctPatterns: [
       /(what\s+are\s+you\s+thinking\s+about)[^a-z]*(you\s+(seem|look|appear)\s+worried)/i
     ],
-    rules: { structure: 'What + are + you + thinking about? + You + seem/look + adjective.', nbfNote: "Acción momentánea = Presente Continuo. La preposición 'about' es obligatoria al final de la pregunta." },
+    rules: { structure: 'What + are + you + thinking about? + You + seem/look + adjective.', nbfNote: "Acción momentánea = requiere Palabra Auxiliar 'are' y terminación '-ing'. La preposición 'about' es obligatoria." },
     commonErrors: {
       usedDo: { pattern: /what\s+do\s+you\s+think/i, message: "❌ Error de Tiempo. Es una acción en progreso, no una rutina.", example: "Usa: What ARE you THINKING about?" },
-      missingAbout: { pattern: /what\s+are\s+you\s+thinking(\?|\s+you)/i, message: "❌ Falta preposición. En inglés piensas 'acerca de' algo.", example: "Usa: What are you thinking ABOUT?" }
+      missingAbout: { pattern: /what\s+are\s+you\s+thinking(\?|\s+you)/i, message: "❌ Falta preposición. En inglés piensas 'acerca de' algo (about).", example: "Usa: What are you thinking ABOUT?" }
     }
   },
   {
@@ -223,10 +223,10 @@ const questions = [
     correctPatterns: [
       /(what\s+do\s+you\s+eat\s+when\s+you\s+go\s+to\s+the\s+(movies|cinema))/i
     ],
-    rules: { structure: 'What + do + you + eat + when + you + go + to the movies?', nbfNote: "Es un hábito o rutina, por lo que el auxiliar obligatorio es DO." },
+    rules: { structure: 'What + do + you + eat + when + you + go + to the movies?', nbfNote: "Es un hábito o rutina, por lo que la Palabra Auxiliar (P.A.) obligatoria es DO." },
     commonErrors: {
-      usedAre: { pattern: /what\s+are\s+you\s+eating/i, message: "❌ Contexto incorrecto. Esto es una rutina ('cuando vas al cine'), se requiere Presente Simple (do).", example: "Usa: What DO you eat..." },
-      missingAuxiliary: { pattern: /what\s+you\s+eat/i, message: "❌ Falta Auxiliar. Las preguntas de rutina requieren 'do' o 'does'.", example: "Usa: What DO you eat..." }
+      usedAre: { pattern: /what\s+are\s+you\s+eating/i, message: "❌ Contexto incorrecto. Esto es una rutina ('cuando vas al cine'), se requiere la P.A. de presente simple.", example: "Usa: What DO you eat..." },
+      missingAuxiliary: { pattern: /what\s+you\s+eat/i, message: "❌ Falta Palabra Auxiliar (P.A.). Las preguntas de rutina requieren 'do' o 'does'.", example: "Usa: What DO you eat..." }
     }
   },
   {
@@ -234,10 +234,10 @@ const questions = [
     correctPatterns: [
       /(did\s+you\s+like\s+the\s+movie\s+(that\s+)?i\s+recommended)/i
     ],
-    rules: { structure: 'Did + you + like + the movie + (that) + I + recommended?', nbfNote: "Acción terminada. Auxiliar DID al inicio; el verbo 'like' vuelve a su forma base." },
+    rules: { structure: 'Did + you + like + the movie + (that) + I + recommended?', nbfNote: "Acción terminada. Palabra Auxiliar DID al inicio; la palabra 'like' vuelve a su forma base." },
     commonErrors: {
-      doublePast: { pattern: /did\s+you\s+liked/i, message: "❌ Doble pasado. Si ya usaste el auxiliar 'Did', el verbo va en presente (like).", example: "Usa: DID you LIKE..." },
-      missingDid: { pattern: /you\s+liked\s+the\s+movie/i, message: "❌ Pregunta sin auxiliar. Las preguntas en pasado requieren 'Did' al inicio.", example: "Usa: DID you like..." }
+      doublePast: { pattern: /did\s+you\s+liked/i, message: "❌ Doble pasado. Si ya usaste la P.A. 'Did', la palabra de acción va en forma base (like).", example: "Usa: DID you LIKE..." },
+      missingDid: { pattern: /you\s+liked\s+the\s+movie/i, message: "❌ Pregunta sin Palabra Auxiliar. Las preguntas en pasado requieren 'Did' al inicio.", example: "Usa: DID you like..." }
     }
   },
   {
@@ -245,10 +245,10 @@ const questions = [
     correctPatterns: [
       /((can|do)\s+you\s+hear\s+me)[^a-z]*((or\s+)?do\s+you\s+want\s+me\s+to\s+speak\s+(louder|up))/i
     ],
-    rules: { structure: 'Can/Do + you + hear + me + or + do + you + want + me + to + speak + louder?', nbfNote: "Se admiten ambos, Can o Do. La estructura compleja es 'want ME TO speak'." },
+    rules: { structure: 'Can/Do + you + hear + me + or + do + you + want + me + to + speak + louder?', nbfNote: "Se admiten ambos, Can o Do. La estructura secundaria es 'want ME TO speak'." },
     commonErrors: {
-      wantThatI: { pattern: /want\s+that\s+i\s+speak/i, message: "❌ Traducción literal del español. No se usa 'want that I'.", example: "Usa la estructura objeto-infinitivo: want ME TO speak." },
-      missingTo: { pattern: /want\s+me\s+speak/i, message: "❌ Falta partícula 'to'. El verbo secundario debe ir en infinitivo.", example: "Usa: want me TO speak." }
+      wantThatI: { pattern: /want\s+that\s+i\s+speak/i, message: "❌ Traducción literal del español. No se usa 'want that I'.", example: "Usa la estructura objeto + preposición 'to': want ME TO speak." },
+      missingTo: { pattern: /want\s+me\s+speak/i, message: "❌ Falta preposición 'to'. El sustantivo secundario debe ir precedido por 'to' para funcionar.", example: "Usa: want me TO speak." }
     }
   },
   {
@@ -256,9 +256,9 @@ const questions = [
     correctPatterns: [
       /(do\s+you\s+know\s+the\s+difference\s+between\s+verbs\s+and\s+nouns)|(do\s+you\s+know\s+how\s+to\s+(differentiate|tell\s+the\s+difference)\s+between\s+verbs\s+and\s+nouns)/i
     ],
-    rules: { structure: 'Do + you + know + the difference + between + A + and + B?', nbfNote: "Se usa 'know the difference' o 'know how to differentiate'. Requiere auxiliar DO." },
+    rules: { structure: 'Do + you + know + the difference + between + A + and + B?', nbfNote: "Se usa 'know the difference' o 'know how to differentiate'. Requiere Palabra Auxiliar DO." },
     commonErrors: {
-      knowDifferentiate: { pattern: /do\s+you\s+know\s+(to\s+)?differentiate/i, message: "⚠️ Estructura poco natural. En inglés se dice 'know HOW TO differentiate' o 'know the difference'.", example: "Usa: Do you know THE DIFFERENCE between..." }
+      knowDifferentiate: { pattern: /do\s+you\s+know\s+(to\s+)?differentiate/i, message: "⚠️ Estructura poco natural en inglés. Es mejor usar 'know HOW TO differentiate' o usar sustantivos 'know the difference'.", example: "Usa: Do you know THE DIFFERENCE between..." }
     }
   },
   {
@@ -266,7 +266,7 @@ const questions = [
     correctPatterns: [
       /(i\s+want\s+you\s+to\s+know\s+something\s+important)/i
     ],
-    rules: { structure: 'I + want + you + to + know + something + important.', nbfNote: "Estructura NBF estricta: Verbo (want) + Objeto (you) + Infinitivo (to know)." },
+    rules: { structure: 'I + want + you + to + know + something + important.', nbfNote: "Estructura NBF estricta: Palabra base (want) + Objeto (you) + Sustantivo con preposición (to know)." },
     commonErrors: {
       wantThatYou: { pattern: /i\s+want\s+that\s+you\s+know/i, message: "❌ Filtro Hispano Crítico. El inglés NO usa 'want that'.", example: "Usa: I want YOU TO know." }
     }
@@ -276,11 +276,11 @@ const questions = [
     correctPatterns: [
       /(does\s+laura\s+like\s+(horror|scary)\s+movies)/i
     ],
-    rules: { structure: 'Does + Laura + like + horror movies?', nbfNote: "Laura es 3ra persona singular. Auxiliar obligatorio = DOES. El verbo 'like' pierde la 's'." },
+    rules: { structure: 'Does + Laura + like + horror movies?', nbfNote: "Laura es 3ra persona singular. P.A. obligatoria = DOES. La palabra 'like' pierde la 's'." },
     commonErrors: {
-      usedDo: { pattern: /^do\s+laura/i, message: "❌ Auxiliar incorrecto. 'Laura' es She, requiere 'Does'.", example: "Usa: DOES Laura like..." },
-      doubleS: { pattern: /does\s+laura\s+likes/i, message: "❌ Doble 'S'. Si usas 'Does', el verbo 'like' NO lleva 's'.", example: "Usa: Does Laura LIKE..." },
-      missingAux: { pattern: /^laura\s+likes/i, message: "❌ Formato de afirmación. Las preguntas necesitan auxiliar al inicio.", example: "Usa: DOES Laura like..." }
+      usedDo: { pattern: /^do\s+laura/i, message: "❌ Palabra Auxiliar incorrecta. 'Laura' es She, requiere 'Does'.", example: "Usa: DOES Laura like..." },
+      doubleS: { pattern: /does\s+laura\s+likes/i, message: "❌ Doble 'S'. Si usas 'Does', la palabra de acción 'like' NO lleva 's'.", example: "Usa: Does Laura LIKE..." },
+      missingAux: { pattern: /^laura\s+likes/i, message: "❌ Formato de afirmación. Las preguntas necesitan la Palabra Auxiliar al inicio.", example: "Usa: DOES Laura like..." }
     }
   },
   {
@@ -288,10 +288,10 @@ const questions = [
     correctPatterns: [
       /(did\s+you\s+know\s+(that\s+)?carlos\s+loves\s+double\s+cheeseburgers?)/i
     ],
-    rules: { structure: 'Did + you + know + (that) + Carlos + loves + double cheeseburgers?', nbfNote: "Pregunta en pasado (Did you know). Segunda cláusula en presente afirmación (Carlos loves - con 's')." },
+    rules: { structure: 'Did + you + know + (that) + Carlos + loves + double cheeseburgers?', nbfNote: "Pregunta en pasado requiere P.A. (Did). La segunda cláusula es presente de rutina (Carlos loves - requiere 's')." },
     commonErrors: {
-      missingS: { pattern: /carlos\s+love\s+double/i, message: "❌ Regla de 3ra Persona. Carlos (He) requiere que el verbo termine en 's'.", example: "Usa: Carlos loveS..." },
-      wrongPast: { pattern: /did\s+you\s+knew/i, message: "❌ Doble pasado. Con 'Did', el verbo vuelve a su forma original (know).", example: "Usa: DID you KNOW..." }
+      missingS: { pattern: /carlos\s+love\s+double/i, message: "❌ Regla de 3ra Persona. El Pronombre Personal Directo Carlos (He) requiere que la palabra de acción termine en 's'.", example: "Usa: Carlos loveS..." },
+      wrongPast: { pattern: /did\s+you\s+knew/i, message: "❌ Doble pasado. Al activar la oración con la P.A. 'Did', la palabra vuelve a su forma base (know).", example: "Usa: DID you KNOW..." }
     }
   },
   {
@@ -299,10 +299,10 @@ const questions = [
     correctPatterns: [
       /(where\s+are\s+we\s+going\s+to\s+watch\s+the\s+world\s+cup)[^a-z]*(at\s+your\s+house\s+or\s+(mine|my\s+house))/i
     ],
-    rules: { structure: 'Where + are + we + going to + watch + the World Cup, + at your house or mine?', nbfNote: "Estructura de futuro con Going To para planes. Orden: Auxiliar(are) + Sujeto(we)." },
+    rules: { structure: 'Where + are + we + going to + watch + the World Cup, + at your house or mine?', nbfNote: "Estructura de futuro para planes. Orden estricto: Palabra Auxiliar (are) + Pronombre Personal (we)." },
     commonErrors: {
-      wrongOrder: { pattern: /where\s+we\s+are\s+going/i, message: "❌ Orden incorrecto en pregunta. El auxiliar va antes del sujeto.", example: "Usa: Where ARE WE going to..." },
-      usedWill: { pattern: /where\s+will\s+we\s+watch/i, message: "⚠️ Se entiende, pero 'going to' es lo correcto para planes ya establecidos.", example: "Usa: Where are we GOING TO watch..." }
+      wrongOrder: { pattern: /where\s+we\s+are\s+going/i, message: "❌ Orden incorrecto en pregunta. La Palabra Auxiliar va ANTES del Pronombre Personal Directo.", example: "Usa: Where ARE WE going to..." },
+      usedWill: { pattern: /where\s+will\s+we\s+watch/i, message: "⚠️ Se entiende, pero 'going to' es la estructura correcta en inglés para planes ya establecidos.", example: "Usa: Where are we GOING TO watch..." }
     }
   }
 ];
@@ -343,7 +343,7 @@ function validateAnswer(userText, question) {
     }
   }
   
-  return { correct: false, message: "❌ Estructura, Tiempo o Sujeto Incorrecto.", example: `✅ Regla NBF: ${question.rules.structure}` };
+  return { correct: false, message: "❌ Estructura, Tiempo o Pronombre Personal Incorrecto.", example: `✅ Regla NBF: ${question.rules.structure}` };
 }
 
 function submitAnswer() {
@@ -391,9 +391,9 @@ function showResults() {
   document.getElementById('time-val').textContent = time + 's';
   
   let rec = "";
-  if (score < 50) rec = "<span style='color:var(--neon-fuchsia); font-size:1.5rem;'>🔴</span> <strong>Alerta Estructural:</strong> Tienes fallos críticos en el uso de auxiliares y tiempos verbales básicos. Sigues pensando en español y traduciendo palabra por palabra. Necesitas volver a las bases de la Neuro-Sintaxis NBF.";
-  else if (score < 80) rec = "<span style='color:var(--warning); font-size:1.5rem;'>🟡</span> <strong>Proceso en Transición:</strong> Tienes la idea, pero descuidas reglas imperativas como la 's' de la tercera persona o el orden en las preguntas. Necesitas afinar tu automatización.";
-  else rec = "<span style='color:var(--neon-emerald); font-size:1.5rem;'>🟢</span> <strong>Dominio Excelente:</strong> Tu cerebro ya procesa las estructuras inglesas (Do/Does/To be) de forma nativa sin pasar por el filtro hispano. ¡Sigue así!";
+  if (score < 50) rec = "<span style='color:var(--neon-fuchsia); font-size:1.5rem;'>🔴</span> <strong>Alerta Estructural:</strong> Tienes fallos críticos en el uso de Palabras Auxiliares y estructuras de tiempo. Sigues pensando en español, buscando 'verbos' donde deberías ensamblar componentes. Necesitas volver a las bases de la Neuro-Sintaxis NBF.";
+  else if (score < 80) rec = "<span style='color:var(--warning); font-size:1.5rem;'>🟡</span> <strong>Proceso en Transición:</strong> Tienes la idea, pero descuidas reglas imperativas como la 's' al usar Pronombres Directos en tercera persona o el orden de la Palabra Auxiliar. Necesitas afinar tu automatización.";
+  else rec = "<span style='color:var(--neon-emerald); font-size:1.5rem;'>🟢</span> <strong>Dominio Excelente:</strong> Tu cerebro ya procesa las Palabras Auxiliares, Modales y Sustantivos de forma nativa sin pasar por el filtro hispano. ¡Sigue así!";
   
   document.getElementById('nbf-recommendation').innerHTML = `<strong style="font-family:'Orbitron', sans-serif; font-size:1.2rem; color: var(--neon-blue);">💡 Análisis Final:</strong><br><br><span style="font-size:1rem; line-height: 1.6;">${rec}</span>`;
 }
