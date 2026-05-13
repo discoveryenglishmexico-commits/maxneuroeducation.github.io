@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unidad Semanal: A City in the States - Discovery MAX</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0A1628; --dark-metallic: #1A1F2E; --panel: rgba(255, 255, 255, 0.05);
+  --border: rgba(0, 217, 255, 0.3); --neon-fuchsia: #FF00FF; --neon-emerald: #00FF9D;
+  --neon-blue: #00D9FF; --text: #F8F9FA; --muted: #8892B0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, var(--navy) 0%, var(--dark-metallic) 50%, var(--navy) 100%); color: var(--text); min-height: 100vh; padding: 20px; overflow-x: hidden; }
+
+.neural-overlay { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%); }
+
+.container { max-width: 1000px; margin: 0 auto; position: relative; z-index: 10; }
+
+header { text-align: center; margin-bottom: 30px; }
+header h1 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
+header p { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; color: var(--neon-emerald); letter-spacing: 1px; }
+
+/* Tabs de Navegación */
+.tabs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 30px; }
+.tab-btn { background: rgba(0,0,0,0.5); border: 1px solid var(--border); color: var(--muted); padding: 12px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif; cursor: pointer; transition: all 0.3s; }
+.tab-btn:hover { border-color: var(--neon-blue); color: var(--text); }
+.tab-btn.active { background: var(--neon-blue); color: var(--navy); border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 217, 255, 0.4); }
+
+.tab-content { display: none; animation: fadeIn 0.5s; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Estilos de Tarjetas Generales */
+.card { background: var(--panel); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 30px; margin-bottom: 20px; }
+.card-title { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+
+/* FASE 1: Revelador */
+.workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.word-btn { background: rgba(0,0,0,0.5); border: 1px solid var(--muted); color: var(--text); padding: 10px 15px; border-radius: 8px; cursor: pointer; margin: 5px; font-family: 'Orbitron'; transition: all 0.3s; display: inline-block; }
+.word-btn:hover { border-color: var(--neon-emerald); }
+.word-btn.sel-ppd { background: rgba(0, 217, 255, 0.2); border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0,217,255,0.3); }
+.word-btn.sel-noun { background: rgba(255, 0, 255, 0.2); border-color: var(--neon-fuchsia); box-shadow: 0 0 10px rgba(255,0,255,0.3); }
+.result-screen { margin-top: 20px; padding: 20px; text-align: center; border: 2px solid var(--muted); border-radius: 15px; transition: all 0.3s; min-height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.result-screen.active { border-color: var(--neon-emerald); box-shadow: 0 0 30px rgba(0,255,157,0.2); }
+
+/* FASE 2: Ensamblador */
+.assembler-board { background: rgba(0,0,0,0.3); border: 1px solid var(--border); min-height: 100px; border-radius: 10px; padding: 20px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; margin-bottom: 20px; }
+.word-bank { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.a-word { background: rgba(0,0,0,0.6); border: 1px solid var(--muted); padding: 10px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron'; }
+.a-word:hover { border-color: var(--neon-fuchsia); }
+.a-word.hidden { visibility: hidden; pointer-events: none; }
+.a-assembled { background: linear-gradient(135deg, rgba(0,217,255,0.2), rgba(255,0,255,0.2)); border: 1px solid var(--neon-blue); padding: 10px 15px; border-radius: 5px; font-family: 'Orbitron'; color: white; }
+.feedback-error { color: var(--neon-fuchsia); font-family: 'Rajdhani'; margin-top: 10px; font-size: 1.2rem; display: none; text-align: center; }
+
+/* FASE 3: Producción Neuro-Fonética */
+.controls-prod { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
+.btn-action { background: transparent; border: 1px solid var(--neon-emerald); color: var(--neon-emerald); padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron'; transition: 0.3s; }
+.btn-action.active, .btn-action:hover { background: var(--neon-emerald); color: var(--navy); }
+.script-box { font-size: 1.2rem; line-height: 2; padding: 20px; background: rgba(0,0,0,0.4); border-radius: 10px; transition: 0.5s; }
+.struct-ppd { color: var(--neon-blue); font-weight: bold; }
+.struct-noun { color: var(--text); }
+.mode-2 .struct-noun { color: transparent; text-shadow: 0 0 5px rgba(255,255,255,0.4); }
+.mode-3 .struct-noun { opacity: 0; }
+
+/* FASE 4: Misiones */
+.mission { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.mission-es { font-size: 1.2rem; color: var(--neon-fuchsia); margin-bottom: 10px; font-family: 'Rajdhani'; }
+.mission-input { width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid var(--muted); border-radius: 8px; color: white; font-family: 'Inter'; font-size: 1rem; }
+.mission-input:focus { outline: none; border-color: var(--neon-emerald); }
+.mission-feedback { font-family: 'Rajdhani'; font-size: 1.1rem; margin-top: 5px; }
+
+@media (max-width: 768px) { .workspace { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="neural-overlay"></div>
+
+<div class="container">
+  <header>
+    <h1>A City in the States</h1>
+    <p>Centro de Entrenamiento Semanal NBF</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="openTab('fase1')">1. Revelador</button>
+    <button class="tab-btn" onclick="openTab('fase2')">2. Ensamblador</button>
+    <button class="tab-btn" onclick="openTab('fase3')">3. Prod. Neuro-Fonética</button>
+    <button class="tab-btn" onclick="openTab('fase4')">4. Misiones</button>
+  </div>
+
+  <div id="fase1" class="tab-content active card">
+    <h2 class="card-title">Fase 1: Revelador Cognitivo</h2>
+    <p style="margin-bottom:20px; color:var(--muted);">Selecciona un Sustantivo puro y actívalo combinándolo con un Pronombre (PPD) y/o Modal de la caja izquierda.</p>
+    
+    <div class="workspace">
+      <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px;">
+        <h3 style="color:var(--neon-blue); font-family:'Orbitron'; margin-bottom:10px; font-size:1rem;">PPDs y Modales (Activadores)</h3>
+        <button class="word-btn btn-ppd" onclick="selPPD('You')">You</button>
+        <button class="word-btn btn-ppd" onclick="selPPD('There')">There</button>
+        <button class="word-btn btn-ppd" onclick="selPPD('can')">can</button>
+        <button class="word-btn btn-ppd" onclick="selPPD('are')">are</button>
+      </div>
+      <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px;">
+        <h3 style="color:var(--neon-fuchsia); font-family:'Orbitron'; margin-bottom:10px; font-size:1rem;">Sustantivos (Palabras Base)</h3>
+        <button class="word-btn btn-noun" onclick="selNoun('visit')">visit</button>
+        <button class="word-btn btn-noun" onclick="selNoun('stand')">stands</button>
+        <button class="word-btn btn-noun" onclick="selNoun('buy')">buy</button>
+        <button class="word-btn btn-noun" onclick="selNoun('find')">find</button>
+      </div>
+    </div>
+
+    <div id="rev-screen" class="result-screen">
+      <h3 id="rev-title" style="font-family:'Orbitron'; font-size:2rem; margin-bottom:10px;">...</h3>
+      <p id="rev-desc" style="font-size:1.1rem; color:var(--muted);">Esperando selección...</p>
+    </div>
+  </div>
+
+  <div id="fase2" class="tab-content card">
+    <h2 class="card-title">Fase 2: Ensamblador Estructural</h2>
+    <p style="margin-bottom:20px; color:var(--muted);">Reconstruye el guion. Recuerda la regla de oro: El PPD y el Modal/Auxiliar siempre preceden a la palabra base.</p>
+    
+    <div style="text-align:center; margin-bottom:15px;">
+      <button class="btn-action" onclick="playSentence()">🔊 Escuchar Frase Actual</button>
+    </div>
+
+    <div class="assembler-board" id="a-board"></div>
+    <div id="a-feedback" class="feedback-error">⚠️ Orden incorrecto. ¡Respeta la estructura!</div>
+    <div class="word-bank" id="a-bank"></div>
+    
+    <div style="text-align:right; margin-top:20px;">
+      <button class="btn-action" id="next-sen-btn" style="display:none;" onclick="nextSentence()">Siguiente Frase ➔</button>
+    </div>
+  </div>
+
+  <div id="fase3" class="tab-content card">
+    <h2 class="card-title">Fase 3: Producción Neuro-Fonética</h2>
+    <p style="margin-bottom:20px; color:var(--muted);">Fuerza tu memoria estructural reduciendo la opacidad visual del guion.</p>
+    
+    <div class="controls-prod">
+      <button class="btn-action" onclick="playFullScript()">🔊 Escuchar Guion</button>
+      <button class="btn-action active" id="btn-m1" onclick="setMode(1)">Nivel 1</button>
+      <button class="btn-action" id="btn-m2" onclick="setMode(2)">Nivel 2</button>
+      <button class="btn-action" id="btn-m3" onclick="setMode(3)">Nivel 3</button>
+    </div>
+
+    <div class="script-box" id="script-container">
+      <p><span class="struct-noun">In the city</span> <span class="struct-ppd">there are</span> <span class="struct-noun">many sites that</span> <span class="struct-ppd">you can</span> <span class="struct-noun">visit,</span> <span class="struct-ppd">there are</span> <span class="struct-noun">many skyscrapers.</span></p>
+      <p><span class="struct-ppd">There are</span> <span class="struct-noun">good museums, galleries and exhibitions.</span> <span class="struct-ppd">There are</span> <span class="struct-noun">from high culinary restaurants to hot-dog or pretzel stands.</span></p>
+      <p><span class="struct-ppd">There are</span> <span class="struct-noun">all type of schools.</span> <span class="struct-ppd">There are</span> <span class="struct-noun">many malls and supermarkets, where</span> <span class="struct-ppd">you can</span> <span class="struct-noun">buy whatever</span> <span class="struct-ppd">you</span> <span class="struct-noun">want.</span></p>
+      <p><span class="struct-ppd">You can</span> <span class="struct-noun">find many hospitals with the latest crafts</span> <span class="struct-ppd">there are</span><span class="struct-noun">.</span> <span class="struct-ppd">There are</span> <span class="struct-noun">high-class hotels with the best sceneries.</span></p>
+      <p><span class="struct-noun">The parks</span> <span class="struct-ppd">are</span> <span class="struct-noun">ecologically intelligent. The movie theaters</span> <span class="struct-ppd">are</span> <span class="struct-noun">nice,</span> <span class="struct-ppd">you can</span> <span class="struct-noun">find 3-D or even 4-D cinemas in the city nowadays.</span></p>
+    </div>
+  </div>
+
+  <div id="fase4" class="tab-content card">
+    <h2 class="card-title">Fase 4: Misiones de Transferencia</h2>
+    <p style="margin-bottom:20px; color:var(--muted);">Traduce las siguientes ideas usando exclusivamente las estructuras NBF que aprendiste en esta unidad.</p>
+    
+    <div class="mission">
+      <div class="mission-es">1. "Puedes visitar buenos museos."</div>
+      <input type="text" class="mission-input" id="m1" placeholder="Type here..." onkeyup="checkMission(1, event)">
+      <div class="mission-feedback" id="f1"></div>
+    </div>
+    
+    <div class="mission">
+      <div class="mission-es">2. "Hay muchos rascacielos en la ciudad."</div>
+      <input type="text" class="mission-input" id="m2" placeholder="Type here..." onkeyup="checkMission(2, event)">
+      <div class="mission-feedback" id="f2"></div>
+    </div>
+    
+    <div class="mission">
+      <div class="mission-es">3. "Puedes encontrar puestos de hot-dogs."</div>
+      <input type="text" class="mission-input" id="m3" placeholder="Type here..." onkeyup="checkMission(3, event)">
+      <div class="mission-feedback" id="f3"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// === NAVEGACIÓN DE TABS ===
+function openTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// === FASE 1: REVELADOR COGNITIVO ===
+const dict = {
+  visit: { raw: "Sustantivo: Una visita (Ej. A doctor's visit). Es inerte.", act: "Acción: Visitar. Activado por el PPD y el Modal." },
+  stands: { raw: "Sustantivo: Puestos / Soportes (Ej. Hot-dog stands). Es inerte.", act: "Acción: Ponerse de pie / Soportar. Activado por el PPD." },
+  buy: { raw: "Sustantivo: Una compra (Ej. A good buy). Es inerte.", act: "Acción: Comprar. Adquiere vida gracias al PPD." },
+  find: { raw: "Sustantivo: Un hallazgo (Ej. A great find). Es inerte.", act: "Acción: Encontrar. Modificado estructuralmente por el PPD." }
+};
+let cPPD = "", cNoun = "";
+
+function selPPD(w) { 
+  cPPD = w; 
+  document.querySelectorAll('.btn-ppd').forEach(b => b.classList.remove('sel-ppd'));
+  event.target.classList.add('sel-ppd');
+  updateRev();
+}
+function selNoun(w) { 
+  cNoun = w; 
+  document.querySelectorAll('.btn-noun').forEach(b => b.classList.remove('sel-noun'));
+  event.target.classList.add('sel-noun');
+  updateRev();
+}
+function updateRev() {
+  const scr = document.getElementById('rev-screen');
+  const tit = document.getElementById('rev-title');
+  const des = document.getElementById('rev-desc');
+  if(cNoun && !cPPD) {
+    scr.className = 'result-screen';
+    tit.style.color = 'var(--muted)';
+    tit.innerText = cNoun.toUpperCase();
+    des.innerHTML = `<span style="color:var(--neon-fuchsia)">${dict[cNoun].raw}</span>`;
+  } else if (cNoun && cPPD) {
+    scr.className = 'result-screen active';
+    tit.style.color = 'var(--neon-emerald)';
+    tit.innerText = `${cPPD} ${cNoun}`.toUpperCase();
+    des.innerHTML = `<span style="color:var(--neon-emerald)">${dict[cNoun].act}</span>`;
+  }
+}
+
+// === FASE 2: ENSAMBLADOR DE GUION ===
+// Estructuramos las primeras frases clave para no saturar el código
+const scriptSentences = [
+  { text: "In the city there are many sites that you can visit", words: ["In","the","city","there","are","many","sites","that","you","can","visit"], req: {"visit": ["you","can"], "are": ["there"]} },
+  { text: "There are good museums, galleries and exhibitions", words: ["There","are","good","museums,","galleries","and","exhibitions"], req: {"are": ["There"]} },
+  { text: "There are many malls where you can buy whatever you want", words: ["There","are","many","malls","where","you","can","buy","whatever","you","want"], req: {"buy":["you","can"], "want":["you"]} }
+];
+let currentSen = 0;
+let assembledArr = [];
+let shuffledArr = [];
+
+function loadSentence() {
+  assembledArr = [];
+  const sen = scriptSentences[currentSen];
+  shuffledArr = [...sen.words].sort(() => Math.random() - 0.5);
+  
+  const bank = document.getElementById('a-bank');
+  const board = document.getElementById('a-board');
+  bank.innerHTML = ''; board.innerHTML = '';
+  document.getElementById('next-sen-btn').style.display = 'none';
+  document.getElementById('a-feedback').style.display = 'none';
+
+  shuffledArr.forEach((w, i) => {
+    let btn = document.createElement('div');
+    btn.className = 'a-word';
+    btn.innerText = w;
+    btn.onclick = () => clickWord(w, btn, sen);
+    bank.appendChild(btn);
+  });
+}
+
+function clickWord(word, btn, senConfig) {
+  // Regla estricta NBF
+  let reqs = senConfig.req[word] || [];
+  let reqMet = reqs.every(r => assembledArr.includes(r));
+  
+  if(!reqMet) {
+    document.getElementById('a-feedback').style.display = 'block';
+    setTimeout(() => document.getElementById('a-feedback').style.display = 'none', 2000);
+    return;
+  }
+  
+  btn.classList.add('hidden');
+  assembledArr.push(word);
+  
+  let aw = document.createElement('div');
+  aw.className = 'a-assembled';
+  aw.innerText = word;
+  document.getElementById('a-board').appendChild(aw);
+  
+  if(assembledArr.length === senConfig.words.length) {
+    document.getElementById('next-sen-btn').style.display = 'inline-block';
+  }
+}
+
+function nextSentence() {
+  currentSen++;
+  if(currentSen < scriptSentences.length) {
+    loadSentence();
+  } else {
+    document.getElementById('a-board').innerHTML = '<h3 style="color:var(--neon-emerald); font-family:Orbitron;">¡Guion Ensamblado Correctamente!</h3>';
+    document.getElementById('next-sen-btn').style.display = 'none';
+  }
+}
+function playSentence() {
+  window.speechSynthesis.cancel();
+  let utt = new SpeechSynthesisUtterance(scriptSentences[currentSen].text);
+  utt.lang = 'en-US'; window.speechSynthesis.speak(utt);
+}
+// Iniciar ensamblador
+loadSentence();
+
+// === FASE 3: PRODUCCIÓN NEURO-FONÉTICA ===
+function setMode(lvl) {
+  document.querySelectorAll('.controls-prod .btn-action').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const box = document.getElementById('script-container');
+  box.className = 'script-box';
+  if(lvl===2) box.classList.add('mode-2');
+  if(lvl===3) box.classList.add('mode-3');
+}
+function playFullScript() {
+  window.speechSynthesis.cancel();
+  let text = "In the city there are many sites that you can visit, there are many skyscrapers. There are good museums, galleries and exhibitions. There are from high culinary restaurants to hot-dog or pretzel stands.";
+  let utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'en-US'; utt.rate = 0.85; window.speechSynthesis.speak(utt);
+}
+
+// === FASE 4: MISIONES ===
+const mAnswers = [
+  /you\s+can\s+visit\s+good\s+museums/i,
+  /there\s+are\s+many\s+skyscrapers\s+in\s+the\s+city/i,
+  /you\s+can\s+find\s+hot-?dog\s+stands/i
+];
+function checkMission(n, e) {
+  if(e.key === 'Enter') {
+    let val = document.getElementById('m'+n).value;
+    let fb = document.getElementById('f'+n);
+    if(mAnswers[n-1].test(val.trim())) {
+      fb.innerHTML = '✅ <span style="color:var(--neon-emerald)">¡Estructura validada!</span>';
+    } else {
+      fb.innerHTML = '❌ <span style="color:var(--neon-fuchsia)">Revisa tus PPD y tu orden.</span>';
+    }
+  }
+}
+</script>
+</body>
+</html>
