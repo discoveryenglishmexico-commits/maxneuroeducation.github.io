@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador de Retención - Discovery MAX</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0A1628;
+  --dark-metallic: #1A1F2E;
+  --panel: rgba(255, 255, 255, 0.05);
+  --border: rgba(0, 217, 255, 0.3);
+  --neon-fuchsia: #FF00FF;
+  --neon-emerald: #00FF9D;
+  --neon-blue: #00D9FF;
+  --text: #F8F9FA;
+  --muted: #8892B0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, var(--navy) 0%, var(--dark-metallic) 50%, var(--navy) 100%); color: var(--text); min-height: 100vh; padding: 20px; }
+
+.neural-overlay { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%); }
+
+.container { max-width: 900px; margin: 0 auto; position: relative; z-index: 10; }
+
+header { text-align: center; margin-bottom: 30px; }
+header h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--neon-emerald); text-transform: uppercase; letter-spacing: 2px; }
+header p { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; color: var(--muted); }
+
+.control-panel { background: rgba(10, 22, 40, 0.8); border: 1px solid var(--border); border-radius: 15px; padding: 20px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between; align-items: center; }
+
+.btn { background: transparent; border: 2px solid var(--neon-blue); color: var(--neon-blue); font-family: 'Orbitron', sans-serif; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-weight: bold; }
+.btn:hover, .btn.active { background: var(--neon-blue); color: var(--navy); box-shadow: 0 0 15px rgba(0, 217, 255, 0.4); }
+.btn-fuchsia { border-color: var(--neon-fuchsia); color: var(--neon-fuchsia); }
+.btn-fuchsia:hover, .btn-fuchsia.active { background: var(--neon-fuchsia); color: var(--navy); box-shadow: 0 0 15px rgba(255, 0, 255, 0.4); }
+
+.script-container { background: var(--panel); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 40px; font-size: 1.3rem; line-height: 2; letter-spacing: 0.5px; margin-bottom: 30px; min-height: 400px; transition: all 0.5s ease; }
+
+/* Clases estructurales para el texto */
+.struct-pronoun { color: var(--neon-blue); font-weight: bold; } /* Pronombres */
+.struct-modal { color: var(--neon-fuchsia); font-weight: bold; } /* Modales/Auxiliares */
+.struct-noun { color: var(--text); } /* Sustantivos y resto */
+
+/* Modos de Desvanecimiento (Cognitive Fading) */
+.mode-2 .struct-noun { color: transparent; text-shadow: 0 0 5px rgba(255,255,255,0.3); } /* Letras borrosas */
+.mode-3 .struct-noun { opacity: 0; } /* Desaparecen por completo */
+.mode-3 .struct-modal, .mode-3 .struct-pronoun { filter: drop-shadow(0 0 8px rgba(0, 217, 255, 0.8)); }
+
+.recorder-section { text-align: center; padding: 20px; background: rgba(0, 0, 0, 0.4); border-radius: 15px; border: 1px dashed var(--neon-emerald); }
+.rec-btn { background: var(--neon-emerald); border: none; width: 60px; height: 60px; border-radius: 50%; color: var(--navy); font-size: 24px; cursor: pointer; transition: all 0.3s; margin-bottom: 10px; }
+.rec-btn.recording { background: var(--error); animation: pulse 1s infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 20px var(--error); } }
+
+</style>
+</head>
+<body>
+
+<div class="neural-overlay"></div>
+
+<div class="container">
+  <header>
+    <h1>A City in the States</h1>
+    <p>Simulador de Shadowing y Retención Estructural NBF</p>
+  </header>
+
+  <div class="control-panel">
+    <div>
+      <button class="btn" onclick="playAudio()">🔊 Escuchar Guion</button>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <button class="btn btn-fuchsia active" id="btn-lvl1" onclick="setLevel(1)">Nivel 1: Lectura</button>
+      <button class="btn btn-fuchsia" id="btn-lvl2" onclick="setLevel(2)">Nivel 2: Esqueleto</button>
+      <button class="btn btn-fuchsia" id="btn-lvl3" onclick="setLevel(3)">Nivel 3: Memoria Ciega</button>
+    </div>
+  </div>
+
+  <div class="script-container" id="script-box">
+    <p>
+      <span class="struct-noun">In the city</span> 
+      <span class="struct-pronoun">there</span> <span class="struct-modal">are</span> 
+      <span class="struct-noun">many sites that</span> 
+      <span class="struct-pronoun">you</span> <span class="struct-modal">can</span> 
+      <span class="struct-noun">visit,</span> 
+      <span class="struct-pronoun">there</span> <span class="struct-modal">are</span> 
+      <span class="struct-noun">many skyscrapers.</span>
+    </p>
+    <br>
+    <p>
+      <span class="struct-pronoun">There</span> <span class="struct-modal">are</span> 
+      <span class="struct-noun">good museums, galleries and exhibitions.</span> 
+      <span class="struct-pronoun">There</span> <span class="struct-modal">are</span> 
+      <span class="struct-noun">from high culinary restaurants to hot-dog or pretzel stands.</span>
+    </p>
+    <br>
+    <p>
+      <span class="struct-pronoun">There</span> <span class="struct-modal">are</span> 
+      <span class="struct-noun">all type of schools.</span> 
+      <span class="struct-pronoun">There</span> <span class="struct-modal">are</span> 
+      <span class="struct-noun">many malls and supermarkets, where</span> 
+      <span class="struct-pronoun">you</span> <span class="struct-modal">can</span> 
+      <span class="struct-noun">buy whatever</span> 
+      <span class="struct-pronoun">you</span> <span class="struct-noun">want.</span>
+    </p>
+  </div>
+
+  <div class="recorder-section">
+    <p style="margin-bottom: 15px; color: var(--neon-emerald); font-family: 'Rajdhani';">Practica tu fluidez. Apóyate en las anclas estructurales.</p>
+    <button class="rec-btn" id="rec-btn" onclick="toggleRecord()">🎤</button>
+    <div id="rec-status" style="font-size: 14px; color: var(--muted); margin-top: 10px;">Presiona para iniciar tu Shadowing</div>
+    <audio id="rec-playback" controls style="display:none; width: 100%; margin-top: 15px;"></audio>
+  </div>
+
+</div>
+
+<script>
+// Sistema de Audio Nativo
+function playAudio() {
+  window.speechSynthesis.cancel();
+  const text = "In the city there are many sites that you can visit, there are many skyscrapers. There are good museums, galleries and exhibitions. There are from high culinary restaurants to hot-dog or pretzel stands. There are all type of schools. There are many malls and supermarkets, where you can buy whatever you want.";
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US';
+  utterance.rate = 0.85; // Velocidad de dictado
+  window.speechSynthesis.speak(utterance);
+}
+
+// Control de Niveles de Memoria
+function setLevel(level) {
+  const box = document.getElementById('script-box');
+  
+  // Limpiar estilos de botones
+  document.getElementById('btn-lvl1').classList.remove('active');
+  document.getElementById('btn-lvl2').classList.remove('active');
+  document.getElementById('btn-lvl3').classList.remove('active');
+  
+  document.getElementById('btn-lvl' + level).classList.add('active');
+  
+  // Aplicar clases de desvanecimiento
+  box.className = 'script-container'; // reset
+  if (level === 2) box.classList.add('mode-2');
+  if (level === 3) box.classList.add('mode-3');
+}
+
+// Sistema de Grabación de Voz (Shadowing)
+let mediaRecorder;
+let audioChunks = [];
+
+async function toggleRecord() {
+  const btn = document.getElementById('rec-btn');
+  const status = document.getElementById('rec-status');
+  const playback = document.getElementById('rec-playback');
+  
+  if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      audioChunks = [];
+      mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        playback.src = URL.createObjectURL(audioBlob);
+        playback.style.display = 'block';
+        status.textContent = '✅ Grabación lista para tu autoevaluación.';
+      };
+      mediaRecorder.start();
+      btn.classList.add('recording');
+      status.textContent = '🔴 Grabando... Habla con seguridad.';
+    } catch (err) {
+      alert('⚠️ Permiso de micrófono denegado.');
+    }
+  } else {
+    mediaRecorder.stop();
+    btn.classList.remove('recording');
+    status.textContent = 'Procesando...';
+  }
+}
+</script>
+</body>
+</html>
