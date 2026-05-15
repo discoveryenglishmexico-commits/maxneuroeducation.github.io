@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FASE 2 - Ensamblador Estructural</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&swap" rel="stylesheet">
 <style>
 :root {
   --navy: #050b14; --dark-blue: #0A1628; --cyan: #00D9FF; 
@@ -37,15 +37,71 @@ body {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(0, 217, 255, 0.2);
   border-radius: 15px;
-  padding: 40px 30px;
+  padding: 30px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   text-align: center;
 }
 
 h1 { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;}
-h2 { font-size: 1.2rem; color: var(--emerald); font-weight: 300; margin-bottom: 40px; }
+h2 { font-size: 1.2rem; color: var(--emerald); font-weight: 300; margin-bottom: 25px; }
 
-/* ZONAS DE ENSAMBLAJE Y PALABRAS */
+/* PANEL DE INSTRUCCIONES DESPLEGABLE */
+.instructions-wrapper {
+  max-width: 900px; width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid rgba(0, 217, 255, 0.15);
+  border-radius: 10px;
+  background: rgba(5, 11, 20, 0.6);
+  overflow: hidden;
+}
+
+.instructions-header {
+  padding: 15px 20px;
+  background: rgba(0, 217, 255, 0.05);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  color: var(--cyan);
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+.instructions-header:hover { background: rgba(0, 217, 255, 0.12); }
+
+.instructions-content {
+  max-height: 0;
+  padding: 0 20px;
+  transition: max-height 0.4s ease-out, padding 0.4s ease;
+  text-align: left;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #A0AABF;
+  border-top: 0 solid transparent;
+}
+
+.instructions-wrapper.open .instructions-content {
+  max-height: 200px;
+  padding: 20px;
+  border-top: 1px solid rgba(0, 217, 255, 0.1);
+}
+
+.btn-audio-instruction {
+  margin-top: 10px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem; font-weight: bold;
+  padding: 6px 15px;
+  background: transparent;
+  border: 1px solid var(--emerald);
+  color: var(--emerald);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-audio-instruction:hover { background: rgba(0, 255, 157, 0.1); box-shadow: 0 0 10px rgba(0,255,157,0.2); }
+
+/* SECCIONES DEL ENSAMBLADOR */
 .zone-title { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--muted); text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;}
 
 .assembly-zone {
@@ -62,7 +118,7 @@ h2 { font-size: 1.2rem; color: var(--emerald); font-weight: 300; margin-bottom: 
   min-height: 100px; margin-bottom: 30px;
 }
 
-/* LAS PALABRAS (BLOQUES) */
+/* BLOQUES DE TEXTO */
 .word-block {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.2rem; font-weight: bold;
@@ -74,42 +130,35 @@ h2 { font-size: 1.2rem; color: var(--emerald); font-weight: 300; margin-bottom: 
   cursor: pointer;
   transition: all 0.3s ease;
   user-select: none;
-  box-shadow: 0 0 10px rgba(0,217,255,0.1);
 }
 
 .word-block:hover {
-  background: rgba(0, 217, 255, 0.2);
-  box-shadow: 0 0 20px rgba(0,217,255,0.4);
-  transform: translateY(-3px);
+  background: rgba(0, 217, 255, 0.15);
+  box-shadow: 0 0 15px rgba(0,217,255,0.3);
+  transform: translateY(-2px);
 }
 
-/* HUECOS VACÍOS EN EL ENSAMBLADOR */
 .empty-slot {
   width: 120px; height: 55px;
   border: 2px dashed var(--muted);
   border-radius: 8px;
-  transition: all 0.3s;
 }
 
-/* ESTADOS DE VALIDACIÓN */
+/* RESPUESTAS */
 .correct-glow { border-color: var(--emerald) !important; background: rgba(0, 255, 157, 0.1) !important; color: var(--emerald) !important; box-shadow: 0 0 20px rgba(0, 255, 157, 0.4) !important;}
 .wrong-glow { border-color: var(--magenta) !important; background: rgba(255, 0, 255, 0.1) !important; color: var(--magenta) !important; box-shadow: 0 0 20px rgba(255, 0, 255, 0.4) !important;}
 
-/* BOTÓN DE ACCIÓN */
 .btn-validate {
   font-family: 'Orbitron', sans-serif; padding: 15px 40px; 
   background: var(--cyan); color: var(--navy); 
   border: none; border-radius: 50px; 
   font-size: 1.2rem; font-weight: 900;
   cursor: pointer; transition: 0.3s;
-  box-shadow: 0 0 20px rgba(0,217,255,0.4);
-  margin-top: 20px;
+  box-shadow: 0 0 20px rgba(0,217,255,0.3);
 }
-.btn-validate:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(0,217,255,0.6); }
+.btn-validate:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(0,217,255,0.5); }
 
-#feedback-msg {
-  margin-top: 20px; font-size: 1.3rem; font-weight: bold; min-height: 30px;
-}
+#feedback-msg { margin-top: 25px; font-size: 1.3rem; font-weight: bold; min-height: 30px; letter-spacing: 1px; }
 
 @media (max-width: 600px) {
   .word-block { font-size: 1rem; padding: 12px 18px; }
@@ -121,17 +170,27 @@ h2 { font-size: 1.2rem; color: var(--emerald); font-weight: 300; margin-bottom: 
 
 <div id="canvas-container"></div>
 
+<div class="instructions-wrapper open" id="inst-panel">
+  <div class="instructions-header" onclick="toggleInstructions()">
+    <span>[?] MANUAL DE OPERACIÓN INTERACTIVO</span>
+    <span id="arrow-icon">▼</span>
+  </div>
+  <div class="instructions-content">
+    <p><strong>Misión:</strong> Reconstruye el bloque lógico en el orden sintáctico correcto del cerebro bilingüe.</p>
+    <p><strong>Acción:</strong> Toca los bloques flotantes inferiores para proyectarlos magnéticamente en el ensamble. Vuelve a tocarlos si deseas removerlos.</p>
+    <button class="btn-audio-instruction" onclick="readInstructions(event)">🔊 ESCUCHAR AUDIO-GUÍA</button>
+  </div>
+</div>
+
 <div class="hud-panel">
   <h1>ENSAMBLADOR ESTRUCTURAL</h1>
   <h2>Fase 2: Lógica Cognitiva</h2>
 
   <div class="zone-title">NÚCLEO DE ENSAMBLAJE</div>
-  <div class="assembly-zone" id="assembly-zone">
-    </div>
+  <div class="assembly-zone" id="assembly-zone"></div>
 
   <div class="zone-title">BLOQUES DE MEMORIA (DESORDENADOS)</div>
-  <div class="words-zone" id="words-zone">
-    </div>
+  <div class="words-zone" id="words-zone"></div>
 
   <button class="btn-validate" onclick="validateAssembly()">VERIFICAR ESTRUCTURA</button>
   <div id="feedback-msg"></div>
@@ -139,34 +198,107 @@ h2 { font-size: 1.2rem; color: var(--emerald); font-weight: 300; margin-bottom: 
 
 <script>
 // ==========================================
-// LÓGICA DEL PROTOTIPO ENSAMBLADOR
+// CONFIGURACIÓN LÓGICA Y AUDIO SINTETIZADO
 // ==========================================
-
-// La frase correcta en orden
 const correctSentence = ["you", "can", "visit", "many", "sites"];
-
-// Variables para el juego
 let availableWords = [];
 let assembledWords = [];
 
-// Elementos del DOM
 const wordsZone = document.getElementById('words-zone');
 const assemblyZone = document.getElementById('assembly-zone');
 const feedbackMsg = document.getElementById('feedback-msg');
 
-// 1. Iniciar el simulador
-function initAssembler() {
-  // Desordenar la frase para la zona de palabras
-  availableWords = [...correctSentence].sort(() => Math.random() - 0.5);
-  // Limpiar la zona de ensamblaje
-  assembledWords = [];
+// Motor de audio sintetizado nativo (Genera frecuencias de sonido por código)
+function triggerSynthSound(type) {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    
+    if (type === 'click') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, ctx.currentTime);
+      gain.gain.setValueAtTime(0.05, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.05);
+    } 
+    else if (type === 'success') {
+      // Nota 1 (Brillante)
+      let osc1 = ctx.createOscillator();
+      let gain1 = ctx.createGain();
+      osc1.type = 'triangle';
+      osc1.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+      gain1.gain.setValueAtTime(0.1, ctx.currentTime);
+      gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      osc1.connect(gain1); gain1.connect(ctx.destination);
+      osc1.start(); osc1.stop(ctx.currentTime + 0.15);
+      
+      // Nota 2 (Ascendente)
+      setTimeout(() => {
+        let osc2 = ctx.createOscillator();
+        let gain2 = ctx.createGain();
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(659.25, ctx.currentTime); // E5
+        gain2.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+        osc2.connect(gain2); gain2.connect(ctx.destination);
+        osc2.start(); osc2.stop(ctx.currentTime + 0.3);
+      }, 100);
+    } 
+    else if (type === 'error') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(120, ctx.currentTime); // Tono bajo vibrante
+      osc.frequency.linearRampToValueAtTime(80, ctx.currentTime + 0.25);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.3);
+    }
+  } catch (e) { console.log("AudioContext bloqueado hasta interacción usuario."); }
+}
+
+// Control del menú desplegable
+function toggleInstructions() {
+  triggerSynthSound('click');
+  const panel = document.getElementById('inst-panel');
+  const arrow = document.getElementById('arrow-icon');
+  panel.classList.toggle('open');
+  arrow.innerText = panel.classList.contains('open') ? "▼" : "▲";
+}
+
+// Lector de voz nativo (Text-to-Speech)
+function readInstructions(event) {
+  event.stopPropagation(); // Evita que el menú se cierre al pulsar el botón de voz
+  triggerSynthSound('click');
   
+  // Cancelar lecturas previas en cola
+  window.speechSynthesis.cancel();
+  
+  const text = "Misión de entrenamiento. Reconstruye el bloque lógico en el orden sintáctico correcto del cerebro bilingüe. Toca los bloques flotantes inferiores para proyectarlos magnéticamente en el ensamble.";
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'es-MX'; // Voz en español latino
+  utterance.rate = 0.95;    // Velocidad óptima de comprensión
+  
+  window.speechSynthesis.speak(utterance);
+}
+
+// Inicializador del juego
+function initAssembler() {
+  availableWords = [...correctSentence].sort(() => Math.random() - 0.5);
+  assembledWords = [];
   render();
 }
 
-// 2. Dibujar las zonas en pantalla
 function render() {
-  // Dibujar zona de palabras disponibles
   wordsZone.innerHTML = '';
   availableWords.forEach((word, index) => {
     const btn = document.createElement('div');
@@ -176,19 +308,15 @@ function render() {
     wordsZone.appendChild(btn);
   });
 
-  // Dibujar zona de ensamblaje
   assemblyZone.innerHTML = '';
-  
-  // Primero dibujamos las palabras que ya ensamblamos
   assembledWords.forEach((word, index) => {
     const btn = document.createElement('div');
     btn.className = 'word-block';
     btn.innerText = word;
-    btn.onclick = () => moveToWords(index); // Si hace clic, la regresa
+    btn.onclick = () => moveToWords(index);
     assemblyZone.appendChild(btn);
   });
 
-  // Luego rellenamos el resto con huecos vacíos para guiar al usuario
   const emptySlotsNeeded = correctSentence.length - assembledWords.length;
   for (let i = 0; i < emptySlotsNeeded; i++) {
     const slot = document.createElement('div');
@@ -197,40 +325,32 @@ function render() {
   }
 }
 
-// 3. Mover palabra al Ensamblador
 function moveToAssembly(index) {
-  feedbackMsg.innerText = ""; // Limpiar mensajes
+  triggerSynthSound('click');
+  feedbackMsg.innerText = "";
   const word = availableWords.splice(index, 1)[0];
   assembledWords.push(word);
-  
-  // Sonido/Vibración táctil sutil
   if ("vibrate" in navigator) window.navigator.vibrate(15);
-  
   render();
 }
 
-// 4. Regresar palabra a las opciones
 function moveToWords(index) {
-  feedbackMsg.innerText = ""; // Limpiar mensajes
+  triggerSynthSound('click');
+  feedbackMsg.innerText = "";
   const word = assembledWords.splice(index, 1)[0];
   availableWords.push(word);
-  
-  // Sonido/Vibración táctil sutil
   if ("vibrate" in navigator) window.navigator.vibrate(10);
-  
   render();
 }
 
-// 5. Validar la respuesta
 function validateAssembly() {
-  // Comprobar si faltan piezas
   if (assembledWords.length < correctSentence.length) {
+    triggerSynthSound('error');
     feedbackMsg.style.color = "var(--cyan)";
-    feedbackMsg.innerText = "ESTRUCTURA INCOMPLETA. FALTAN BLOQUES.";
+    feedbackMsg.innerText = "SISTEMA INCOMPLETO: FALTAN COMPONENTES ESTRUCTURALES.";
     return;
   }
 
-  // Comprobar orden exacto
   let isCorrect = true;
   for (let i = 0; i < correctSentence.length; i++) {
     if (assembledWords[i] !== correctSentence[i]) {
@@ -239,24 +359,19 @@ function validateAssembly() {
     }
   }
 
-  // Animaciones y Feedback
   const assembledBlocks = assemblyZone.querySelectorAll('.word-block');
   
   if (isCorrect) {
+    triggerSynthSound('success');
     feedbackMsg.style.color = "var(--emerald)";
-    feedbackMsg.innerText = "¡CONEXIÓN NEURONAL ESTABLECIDA!";
+    feedbackMsg.innerText = "¡CONEXIÓN NEURONAL ESTABLECIDA CON ÉXITO!";
     if ("vibrate" in navigator) window.navigator.vibrate([30, 50, 30]);
-    
-    // Iluminar todo de verde
-    assembledBlocks.forEach(block => {
-      block.classList.add('correct-glow');
-    });
+    assembledBlocks.forEach(block => block.classList.add('correct-glow'));
   } else {
+    triggerSynthSound('error');
     feedbackMsg.style.color = "var(--magenta)";
-    feedbackMsg.innerText = "ERROR DE ENSAMBLAJE. RECONFIGURA LA LÓGICA.";
-    if ("vibrate" in navigator) window.navigator.vibrate(200); // Vibración larga de error
-    
-    // Iluminar todo de rojo/magenta
+    feedbackMsg.innerText = "ERROR DE ENSAMBLAJE. RECONFIGURA LA LÓGICA COGNITIVA.";
+    if ("vibrate" in navigator) window.navigator.vibrate(200);
     assembledBlocks.forEach(block => {
       block.classList.add('wrong-glow');
       setTimeout(() => block.classList.remove('wrong-glow'), 1000);
@@ -264,9 +379,7 @@ function validateAssembly() {
   }
 }
 
-// ==========================================
-// PARTÍCULAS DE FONDO (Diseño Cyber Neural)
-// ==========================================
+// PARTÍCULAS NEURALES
 const canvasContainer = document.getElementById('canvas-container');
 const canvas = document.createElement('canvas'); canvasContainer.appendChild(canvas);
 const ctx = canvas.getContext('2d'); let particles = [];
@@ -282,7 +395,6 @@ for(let i=0; i<80; i++) particles.push(new Particle());
 function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
 animate();
 
-// Arrancar el simulador al cargar la página
 initAssembler();
 </script>
 </body>
