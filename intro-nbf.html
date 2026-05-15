@@ -199,8 +199,8 @@ h1 {
   <a href="unidad-city.html" class="start-mission" id="startBtn">INICIAR NEURO-MISIÓN</a>
 </div>
 
-<audio id="audio_es" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_spanish_version.mp4"></audio>
-<audio id="audio_en" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"></audio>
+<audio id="audio_es" preload="metadata" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_spanish_version.mp4"></audio>
+<audio id="audio_en" preload="metadata" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"></audio>
 
 <script>
 const scripts = {
@@ -229,19 +229,25 @@ let timer = null;
 let currentLineIndex = -1;
 let isGlobalMuted = false;
 
+// Función segura para pausar y reiniciar audio (El parche crítico)
+function safeResetAudio(audioElement) {
+    if (!audioElement) return;
+    audioElement.pause();
+    // SOLO regresar a cero si el navegador ya cargó los metadatos del audio
+    if (audioElement.readyState >= 1) {
+        audioElement.currentTime = 0;
+    }
+}
+
 function startSimulation(lang) {
   // 1. Limpiar el cronómetro
   if (timer) clearInterval(timer);
   
-  // 2. Lógica sencilla de la V1: Pausar y regresar a 0 AMBOS audios
+  // 2. Pausar y reiniciar de forma SEGURA
   const audioEs = document.getElementById('audio_es');
   const audioEn = document.getElementById('audio_en');
-  
-  audioEs.pause(); 
-  audioEs.currentTime = 0;
-  
-  audioEn.pause(); 
-  audioEn.currentTime = 0;
+  safeResetAudio(audioEs);
+  safeResetAudio(audioEn);
 
   // 3. Limpiar interfaz
   document.getElementById('init-msg').style.display = 'none';
@@ -251,10 +257,21 @@ function startSimulation(lang) {
   document.getElementById('btn-en').classList.remove('active');
   document.getElementById('btn-' + lang).classList.add('active');
   
-  // 4. Seleccionar y reproducir
+  // 4. Seleccionar y reproducir con protección de Promesa
   currentAudio = document.getElementById('audio_' + lang);
   currentAudio.muted = isGlobalMuted; 
-  currentAudio.play();
+  
+  // Aseguramos que si no tiene data, regrese a 0 al cargarse
+  if (currentAudio.readyState >= 1) {
+      currentAudio.currentTime = 0;
+  }
+  
+  let playPromise = currentAudio.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(error => {
+      console.warn("Reproducción bloqueada o retrasada por el navegador:", error);
+    });
+  }
   
   // 5. Cargar subtítulos
   const viewer = document.getElementById('viewer');
