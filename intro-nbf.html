@@ -3,121 +3,309 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intro Cinemática NBF - Discovery MAX</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<title>INTRO NEURAL - Discovery MAX</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy: #0A1628; --dark-metallic: #1A1F2E; --panel: rgba(255, 255, 255, 0.05);
-  --border: rgba(0, 217, 255, 0.3); --neon-fuchsia: #FF00FF; --neon-emerald: #00FF9D;
-  --neon-blue: #00D9FF; --text: #F8F9FA; --muted: #8892B0;
+  --navy: #050b14; --dark-blue: #0A1628; --cyan: #00D9FF; 
+  --magenta: #FF00FF; --emerald: #00FF9D; --text: #F8F9FA;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, var(--navy) 0%, var(--dark-metallic) 50%, var(--navy) 100%); color: var(--text); height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-.neural-overlay { position: absolute; inset: 0; z-index: -2; background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.15) 0%, transparent 50%); }
-.neural-lines { position: absolute; inset: 0; background-image: linear-gradient(90deg, rgba(0, 217, 255, 0.05) 1px, transparent 1px), linear-gradient(rgba(255, 0, 255, 0.05) 1px, transparent 1px); background-size: 100px 100px; animation: neural-pulse 4s ease-in-out infinite; z-index: -1; }
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background-color: var(--navy);
+  color: var(--text);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  perspective: 1000px;
+}
 
-@keyframes neural-pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-@keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 15px rgba(0, 217, 255, 0.4); } 50% { box-shadow: 0 0 30px rgba(0, 217, 255, 0.8); } }
-@keyframes fadeInText { from { opacity: 0; transform: translateY(20px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+/* FONDO DE PARTÍCULAS NEURALES */
+#canvas-container {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+  background: radial-gradient(circle at center, var(--dark-blue) 0%, var(--navy) 100%);
+}
 
-.container { max-width: 900px; text-align: center; position: relative; z-index: 10; padding: 40px; background: var(--panel); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+/* INTERFAZ HUD SCI-FI */
+.hud-container {
+  width: 90%; max-width: 900px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 217, 255, 0.05);
+  position: relative;
+}
 
-h1 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; margin-bottom: 20px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 2px; }
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  margin-bottom: 30px;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(0, 217, 255, 0.3));
+}
 
-.btn-container { display: flex; gap: 20px; justify-content: center; margin-bottom: 30px; }
-.btn-lang { background: rgba(0,0,0,0.6); border: 2px solid var(--neon-blue); color: var(--text); padding: 15px 30px; border-radius: 50px; font-family: 'Orbitron', sans-serif; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; }
-.btn-lang:hover, .btn-lang.active { background: var(--neon-blue); color: var(--navy); box-shadow: 0 0 20px rgba(0, 217, 255, 0.6); }
+/* BOTONES DE IDIOMA */
+.lang-selector {
+  display: flex; gap: 20px; justify-content: center; margin-bottom: 40px;
+}
 
-.subtitle-box { min-height: 250px; display: flex; align-items: center; justify-content: center; font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; line-height: 1.8; color: var(--neon-emerald); text-shadow: 0 0 10px rgba(0, 255, 157, 0.3); }
-.subtitle-text { display: none; animation: fadeInText 1s forwards; }
-.subtitle-text.active { display: block; }
+.btn-neural {
+  font-family: 'Orbitron', sans-serif;
+  padding: 15px 30px;
+  background: transparent;
+  border: 2px solid var(--cyan);
+  color: var(--cyan);
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+}
 
-.mute-btn { margin-top: 30px; background: transparent; border: 1px solid var(--muted); color: var(--muted); padding: 8px 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; font-family: 'Inter'; }
-.mute-btn:hover { color: white; border-color: white; }
+.btn-neural:hover, .btn-neural.active {
+  background: var(--cyan);
+  color: var(--navy);
+  box-shadow: 0 0 30px var(--cyan);
+  transform: scale(1.05);
+}
 
-.start-btn { display: inline-block; margin-top: 30px; background: var(--neon-emerald); color: var(--navy); padding: 15px 40px; border-radius: 50px; font-family: 'Orbitron'; font-size: 1.3rem; font-weight: bold; text-decoration: none; text-transform: uppercase; animation: pulse-glow 2s infinite; transition: 0.3s; border: none; cursor: pointer; visibility: hidden; opacity: 0; transition: visibility 0s, opacity 0.5s linear; }
-.start-btn.show { visibility: visible; opacity: 1; }
-.start-btn:hover { transform: scale(1.05); }
+/* SUBTÍTULOS SINCRONIZADOS */
+.subtitle-viewer {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.phrase {
+  font-size: 1.6rem;
+  line-height: 1.4;
+  opacity: 0.2;
+  filter: blur(2px);
+  transition: all 0.5s ease;
+  position: absolute;
+  width: 100%;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+.phrase.highlight {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+  color: var(--emerald);
+  text-shadow: 0 0 15px var(--emerald);
+}
+
+/* CONTROL DE AUDIO */
+.audio-controls {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.mute-toggle {
+  background: none; border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.5); padding: 5px 10px; cursor: pointer;
+}
+
+.start-mission {
+  margin-top: 40px;
+  padding: 15px 40px;
+  background: var(--emerald);
+  color: var(--navy);
+  border: none;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  border-radius: 50px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 1s;
+  box-shadow: 0 0 20px var(--emerald);
+}
+
+.start-mission.show { opacity: 1; }
+
 </style>
 </head>
 <body>
 
-<div class="neural-overlay"></div>
-<div class="neural-lines"></div>
+<div id="canvas-container"></div>
 
-<audio id="audio-es" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_spanish_version.mp4"></audio>
-<audio id="audio-en" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"></audio>
-
-<div class="container">
+<div class="hud-container">
   <h1>Discovery Max NBF Solution</h1>
   
-  <div class="btn-container">
-    <button class="btn-lang" id="btn-es" onclick="playAudio('es')">Versión Español</button>
-    <button class="btn-lang" id="btn-en" onclick="playAudio('en')">English Version</button>
+  <div class="lang-selector">
+    <button class="btn-neural" onclick="startSimulation('es')">Versión Español</button>
+    <button class="btn-neural" onclick="startSimulation('en')">English Version</button>
   </div>
 
-  <div class="subtitle-box">
-    <div id="text-waiting" class="subtitle-text active" style="color: var(--muted);">Selecciona un idioma para iniciar la transmisión neuronal...</div>
-    
-    <div id="text-es" class="subtitle-text">
-      ¡Hey, neurosapien! Bienvenido a la fascinante experiencia de Discovery Max NBF Solution.<br><br>
-      Estás a punto de romper con el paradigma de la memorización tradicional de verbos y descubrir el poder del sustantivo funcional como puente cognitivo. Tu misión en esta fase es memorizar el guion titulado «UNA CIUDAD EN LOS ESTADOS UNIDOS». Para lograr una reconfiguración cerebral efectiva, debemos desglosar los componentes lógicos precisos del inglés.<br><br>
-      ¿Tienes todo listo? ¡Arranquemos!
-    </div>
-    
-    <div id="text-en" class="subtitle-text">
-      Hey, neurosapien! Welcome to the fascinating Discovery Max NBF Solution experience.<br><br>
-      You're about to break free from the traditional verb memorization paradigm and discover the power of the functional noun as a cognitive bridge. Your mission in this phase is to memorize the script titled "A CITY IN THE UNITED STATES." To achieve effective brain rewiring, we must break down the precise logical components of English.<br><br>
-      Are you ready? Let's begin!
-    </div>
+  <div class="subtitle-viewer" id="viewer">
+    <p class="phrase highlight" id="init-msg">ESPERANDO INICIALIZACIÓN NEURONAL...</p>
   </div>
 
-  <button class="mute-btn" onclick="stopAudio()">⏹ Silenciar Transmisión</button>
-  <br>
-  <button class="start-btn" id="start-btn" onclick="window.location.href='unidad-city.html'">INICIAR NEURO-MISIÓN</button>
+  <div class="audio-controls">
+    <button class="mute-toggle" id="muteBtn" onclick="toggleMute()">MUTE AUDIO</button>
+  </div>
+
+  <button class="start-mission" id="startBtn">INICIAR NEURO-MISIÓN</button>
 </div>
 
+<audio id="audio_es" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_spanish_version.mp4"></audio>
+<audio id="audio_en" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"></audio>
+
 <script>
-function playAudio(lang) {
-  const audioEs = document.getElementById('audio-es');
-  const audioEn = document.getElementById('audio-en');
-  audioEs.pause(); audioEs.currentTime = 0;
-  audioEn.pause(); audioEn.currentTime = 0;
+// --- CONFIGURACIÓN DE LOS TEXTOS Y TIEMPOS (Segundos) ---
+// Aquí puedes ajustar los números (0.5, 3.2, etc) para que coincidan con tu voz
+const scripts = {
+  es: [
+    { start: 0, text: "¡Hey, neurosapien!" },
+    { start: 1.5, text: "Bienvenido a la fascinante experiencia de Discovery Max NBF Solution." },
+    { start: 6, text: "Estás a punto de romper con el paradigma de la memorización tradicional de verbos..." },
+    { start: 11, text: "...y descubrir el poder del sustantivo funcional como puente cognitivo." },
+    { start: 16, text: "Tu misión en esta fase es memorizar el guion: «UNA CIUDAD EN LOS ESTADOS UNIDOS»." },
+    { start: 22, text: "Para lograr una reconfiguración cerebral efectiva, debemos desglosar los componentes lógicos." },
+    { start: 28, text: "¿Tienes todo listo? ¡Arranquemos!" }
+  ],
+  en: [
+    { start: 0, text: "Hey, neurosapien!" },
+    { start: 1.5, text: "Welcome to the fascinating Discovery Max NBF Solution experience." },
+    { start: 6, text: "You're about to break free from the traditional verb memorization paradigm..." },
+    { start: 11, text: "...and discover the power of the functional noun as a cognitive bridge." },
+    { start: 16, text: "Your mission in this phase is to memorize the script titled: 'A CITY IN THE UNITED STATES'." },
+    { start: 22, text: "To achieve effective brain rewiring, we must break down the precise logical components." },
+    { start: 28, text: "Are you ready? Let's begin!" }
+  ]
+};
 
-  document.getElementById('text-waiting').classList.remove('active');
-  document.getElementById('text-es').classList.remove('active');
-  document.getElementById('text-en').classList.remove('active');
+let currentAudio = null;
 
-  document.getElementById('btn-es').classList.remove('active');
-  document.getElementById('btn-en').classList.remove('active');
-
-  document.getElementById('btn-' + lang).classList.add('active');
-  document.getElementById('text-' + lang).classList.add('active');
+function startSimulation(lang) {
+  // Reset
+  if(currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+  document.getElementById('init-msg').style.display = 'none';
+  document.getElementById('startBtn').classList.remove('show');
   
-  const currentAudio = document.getElementById('audio-' + lang);
+  // UI
+  document.querySelectorAll('.btn-neural').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  // Audio
+  currentAudio = document.getElementById('audio_' + lang);
   currentAudio.play();
-
-  // Mostrar el botón de INICIAR cuando termine el audio
-  currentAudio.onended = function() {
-    document.getElementById('start-btn').classList.add('show');
-  };
   
-  // Como alternativa por si el usuario silencia, mostramos el botón después de unos segundos
-  setTimeout(() => {
-    document.getElementById('start-btn').classList.add('show');
-  }, 10000);
+  // Sincronización
+  const viewer = document.getElementById('viewer');
+  const activeScript = scripts[lang];
+  
+  // Limpiar visor y crear frases
+  viewer.innerHTML = '';
+  activeScript.forEach((line, index) => {
+    const p = document.createElement('p');
+    p.className = 'phrase';
+    p.id = 'line-' + index;
+    p.innerText = line.text;
+    viewer.appendChild(p);
+  });
+
+  // Monitor de tiempo
+  const timer = setInterval(() => {
+    if(!currentAudio || currentAudio.paused) { clearInterval(timer); return; }
+    
+    const time = currentAudio.currentTime;
+    
+    activeScript.forEach((line, index) => {
+      const el = document.getElementById('line-' + index);
+      if(time >= line.start) {
+        // Desactivar anteriores
+        document.querySelectorAll('.phrase').forEach(p => p.classList.remove('highlight'));
+        // Activar actual
+        el.classList.add('highlight');
+        
+        // Vibración ligera en móvil (si es soportado)
+        if ("vibrate" in navigator) window.navigator.vibrate(20);
+      }
+    });
+
+    // Al finalizar
+    if(currentAudio.ended) {
+      document.getElementById('startBtn').classList.add('show');
+      clearInterval(timer);
+    }
+  }, 100);
 }
 
-function stopAudio() {
-  document.getElementById('audio-es').pause();
-  document.getElementById('audio-en').pause();
-  document.getElementById('btn-es').classList.remove('active');
-  document.getElementById('btn-en').classList.remove('active');
-  // Si silencia, le mostramos el botón de avanzar para que no se quede atorado
-  document.getElementById('start-btn').classList.add('show');
+function toggleMute() {
+  if(currentAudio) {
+    currentAudio.muted = !currentAudio.muted;
+    document.getElementById('muteBtn').innerText = currentAudio.muted ? "UNMUTE AUDIO" : "MUTE AUDIO";
+  }
 }
+
+// EFECTO DE PARTÍCULAS SIMPLE EN FONDO (Canvas)
+const canvasContainer = document.getElementById('canvas-container');
+const canvas = document.createElement('canvas');
+canvasContainer.appendChild(canvas);
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.onresize = resize;
+resize();
+
+class Particle {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2;
+    this.speedX = (Math.random() - 0.5) * 0.5;
+    this.speedY = (Math.random() - 0.5) * 0.5;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if(this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+  }
+  draw() {
+    ctx.fillStyle = 'rgba(0, 217, 255, 0.3)';
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+for(let i=0; i<100; i++) particles.push(new Particle());
+
+function animate() {
+  ctx.clearRect(0,0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animate);
+}
+animate();
 </script>
 </body>
 </html>
