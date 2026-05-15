@@ -199,8 +199,8 @@ h1 {
   <a href="unidad-city.html" class="start-mission" id="startBtn">INICIAR NEURO-MISIÓN</a>
 </div>
 
-<audio id="audio_es" preload="auto" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_spanish_version.mp4"></audio>
-<audio id="audio_en" preload="auto" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"></audio>
+<audio id="audio_es" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_spanish_version.mp4"></audio>
+<audio id="audio_en" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"></audio>
 
 <script>
 const scripts = {
@@ -229,50 +229,33 @@ let timer = null;
 let currentLineIndex = -1;
 let isGlobalMuted = false;
 
-// Función para reiniciar el audio de forma segura en dispositivos móviles
-function resetSafeAudio(audioEl) {
-    if(!audioEl) return;
-    audioEl.pause();
-    if (audioEl.readyState > 0) {
-        try { audioEl.currentTime = 0; } catch(e) { audioEl.load(); }
-    } else {
-        audioEl.load();
-    }
-}
-
 function startSimulation(lang) {
-  // Limpiar Timer
   if (timer) clearInterval(timer);
   
-  // Detener de forma segura ambos reproductores
-  resetSafeAudio(document.getElementById('audio_es'));
-  resetSafeAudio(document.getElementById('audio_en'));
-
-  // Ocultar mensaje inicial y botón
-  document.getElementById('init-msg').style.display = 'none';
-  document.getElementById('startBtn').classList.remove('show');
+  // Pausar y resetear los audios usando un try catch suave para no bloquear el móvil
+  const audioEs = document.getElementById('audio_es');
+  const audioEn = document.getElementById('audio_en');
   
-  // UI Botones (Actualizado usando IDs para evitar errores táctiles en móvil)
+  if(audioEs) { audioEs.pause(); try { audioEs.currentTime = 0; } catch(e){} }
+  if(audioEn) { audioEn.pause(); try { audioEn.currentTime = 0; } catch(e){} }
+
+  document.getElementById('init-msg').style.display = 'none';
+  
+  // UI Botones
   document.getElementById('btn-es').classList.remove('active');
   document.getElementById('btn-en').classList.remove('active');
   document.getElementById('btn-' + lang).classList.add('active');
   
   // Activar Nuevo Audio
   currentAudio = document.getElementById('audio_' + lang);
-  currentAudio.muted = isGlobalMuted; // Respeta si el usuario ya lo había silenciado
-  
-  // Promesa de reproducción (Para que Safari/Chrome móvil no choquen si hay retraso)
-  let playPromise = currentAudio.play();
-  if (playPromise !== undefined) {
-      playPromise.catch(error => console.log("Cargando audio en red móvil...", error));
-  }
+  currentAudio.muted = isGlobalMuted; 
+  currentAudio.play().catch(e => console.log("Esperando interacción del usuario..."));
   
   // Sincronización
   const viewer = document.getElementById('viewer');
   const activeScript = scripts[lang];
   currentLineIndex = -1;
   
-  // Construir frases
   viewer.innerHTML = '';
   activeScript.forEach((line, index) => {
     const p = document.createElement('p');
