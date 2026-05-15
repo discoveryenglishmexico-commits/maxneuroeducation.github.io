@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FASE 2 - Ensamblador Estructural</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --navy: #050b14; --dark-blue: #0A1628; --cyan: #00D9FF; 
@@ -82,7 +82,7 @@ h2 { font-size: 1.2rem; color: var(--emerald); font-weight: 300; margin-bottom: 
 }
 
 .instructions-wrapper.open .instructions-content {
-  max-height: 200px;
+  max-height: 500px; /* Aumentado para que no se corte en móviles */
   padding: 20px;
   border-top: 1px solid rgba(0, 217, 255, 0.1);
 }
@@ -283,7 +283,8 @@ function readInstructions(event) {
   // Cancelar lecturas previas en cola
   window.speechSynthesis.cancel();
   
-  const text = "Misión de entrenamiento. Reconstruye el bloque lógico en el orden sintáctico correcto del cerebro bilingüe. Toca los bloques flotantes inferiores para proyectarlos magnéticamente en el ensamble.";
+  // Texto completo agregado
+  const text = "Misión de entrenamiento. Reconstruye el bloque lógico en el orden sintáctico correcto del cerebro bilingüe. Toca los bloques flotantes inferiores para proyectarlos magnéticamente en el ensamble. Vuelve a tocarlos si deseas removerlos.";
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'es-MX'; // Voz en español latino
   utterance.rate = 0.95;    // Velocidad óptima de comprensión
