@@ -199,15 +199,10 @@ h1 {
   <a href="unidad-city.html" class="start-mission" id="startBtn">INICIAR NEURO-MISIÓN</a>
 </div>
 
-<audio id="main_player" preload="auto"></audio>
+<audio id="audio_es" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_spanish_version.mp4"></audio>
+<audio id="audio_en" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"></audio>
 
 <script>
-// --- CONFIGURACIÓN DE RUTAS Y TEXTOS ---
-const audioSources = {
-  es: "https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_spanish_version.mp4",
-  en: "https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"
-};
-
 const scripts = {
   es: [
     { start: 0, text: "¡Hey, neurosapien!" },
@@ -229,40 +224,44 @@ const scripts = {
   ]
 };
 
-const player = document.getElementById('main_player');
+let currentAudio = null;
 let timer = null;
 let currentLineIndex = -1;
+let isGlobalMuted = false;
 
 function startSimulation(lang) {
-  // Limpiar temporizador anterior
+  // 1. Limpiar el cronómetro
   if (timer) clearInterval(timer);
   
-  // Limpiar vista
+  // 2. Lógica sencilla de la V1: Pausar y regresar a 0 AMBOS audios
+  const audioEs = document.getElementById('audio_es');
+  const audioEn = document.getElementById('audio_en');
+  
+  audioEs.pause(); 
+  audioEs.currentTime = 0;
+  
+  audioEn.pause(); 
+  audioEn.currentTime = 0;
+
+  // 3. Limpiar interfaz
   document.getElementById('init-msg').style.display = 'none';
   document.getElementById('startBtn').classList.remove('show');
   
-  // Actualizar Botones
   document.getElementById('btn-es').classList.remove('active');
   document.getElementById('btn-en').classList.remove('active');
   document.getElementById('btn-' + lang).classList.add('active');
   
-  // INYECCIÓN DINÁMICA DE AUDIO (Esto evita el bloqueo del celular)
-  player.pause();
-  player.src = audioSources[lang]; 
-  player.load();
+  // 4. Seleccionar y reproducir
+  currentAudio = document.getElementById('audio_' + lang);
+  currentAudio.muted = isGlobalMuted; 
+  currentAudio.play();
   
-  // Reproducción segura
-  let playPromise = player.play();
-  if (playPromise !== undefined) {
-      playPromise.catch(error => console.log("Cargando...", error));
-  }
-  
-  // Cargar Textos
+  // 5. Cargar subtítulos
   const viewer = document.getElementById('viewer');
   const activeScript = scripts[lang];
   currentLineIndex = -1;
-  viewer.innerHTML = '';
   
+  viewer.innerHTML = '';
   activeScript.forEach((line, index) => {
     const p = document.createElement('p');
     p.className = 'phrase';
@@ -271,11 +270,11 @@ function startSimulation(lang) {
     viewer.appendChild(p);
   });
 
-  // Motor de sincronización
+  // 6. Motor de sincronización
   timer = setInterval(() => {
-    if(player.paused) return;
+    if(!currentAudio || currentAudio.paused) return;
     
-    const time = player.currentTime;
+    const time = currentAudio.currentTime;
     let activeIndex = -1;
     for(let i = 0; i < activeScript.length; i++) {
         if(time >= activeScript[i].start) {
@@ -290,13 +289,12 @@ function startSimulation(lang) {
         const el = document.getElementById('line-' + activeIndex);
         if(el) el.classList.add('highlight');
 
-        // Vibración celular (Patrón de pulso de latido)
         if ("vibrate" in navigator) {
             window.navigator.vibrate([50, 30, 50]);
         }
     }
 
-    if(player.ended) {
+    if(currentAudio.ended) {
       document.getElementById('startBtn').classList.add('show');
       clearInterval(timer);
     }
@@ -304,8 +302,10 @@ function startSimulation(lang) {
 }
 
 function toggleMute() {
-  player.muted = !player.muted;
-  document.getElementById('muteBtn').innerText = player.muted ? "UNMUTE AUDIO" : "MUTE AUDIO";
+  isGlobalMuted = !isGlobalMuted;
+  document.getElementById('audio_es').muted = isGlobalMuted;
+  document.getElementById('audio_en').muted = isGlobalMuted;
+  document.getElementById('muteBtn').innerText = isGlobalMuted ? "UNMUTE AUDIO" : "MUTE AUDIO";
 }
 
 // EFECTO DE PARTÍCULAS
