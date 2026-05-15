@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NBF Master Unit: A City in the States</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0A1628; --dark-m: #1A1F2E; --panel: rgba(255, 255, 255, 0.05);
+  --border: rgba(0, 217, 255, 0.3); --cyan: #00D9FF; --magenta: #FF00FF;
+  --emerald: #00FF9D; --text: #F8F9FA; --muted: #8892B0; --error: #FF3B30;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; padding: 20px; overflow-x: hidden; }
+.neural-bg { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 50%, rgba(0,217,255,0.1), transparent); }
+
+.container { max-width: 1100px; margin: 0 auto; position: relative; }
+header { text-align: center; margin-bottom: 30px; }
+header h1 { font-family: 'Orbitron'; font-size: 2.5rem; background: linear-gradient(135deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* Navegación */
+.tabs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 25px; }
+.tab-btn { background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--muted); padding: 12px 18px; border-radius: 8px; font-family: 'Orbitron'; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
+.tab-btn.active { background: var(--cyan); color: var(--navy); box-shadow: 0 0 15px var(--cyan); }
+
+.card { background: var(--panel); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 35px; min-height: 500px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.6s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Estilos de Texto NBF */
+.hl-cyan { color: var(--cyan); font-weight: bold; } /* PPD */
+.hl-magenta { color: var(--magenta); font-weight: bold; } /* Modales */
+.hl-green { color: var(--emerald); font-weight: bold; } /* Preposiciones */
+.hl-white { color: #fff; text-shadow: 0 0 8px rgba(255,255,255,0.4); } /* Sustantivos base */
+
+/* Fase 1: Producción */
+.script-viewer { line-height: 2.2; font-size: 1.25rem; background: rgba(0,0,0,0.3); padding: 25px; border-radius: 12px; }
+.mode-2 .hl-white { color: transparent; text-shadow: 0 0 8px rgba(255,255,255,0.2); }
+.mode-3 .hl-white { display: none; }
+
+/* Fase 3: BYE */
+.bye-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+.bye-box { background: rgba(0,0,0,0.5); padding: 20px; border-radius: 12px; border: 1px solid var(--border); max-height: 400px; overflow-y: auto; }
+.bye-btn { background: transparent; border: 1px solid var(--muted); color: var(--text); padding: 8px 12px; border-radius: 6px; cursor: pointer; margin: 4px; font-family: 'Orbitron'; transition: 0.2s; font-size: 0.85rem; }
+.bye-btn.sel { border-color: var(--emerald); background: rgba(0,255,157,0.1); }
+.bye-display { margin-top: 20px; height: 160px; border: 2px dashed var(--border); border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+
+/* Misiones */
+.mission-row { margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; }
+.m-input { width: 100%; padding: 12px; background: rgba(0,0,0,0.6); border: 1px solid var(--border); border-radius: 8px; color: white; margin: 10px 0; font-size: 1rem; }
+.m-input:focus { border-color: var(--emerald); outline: none; }
+.m-feedback { font-size: 0.95rem; font-family: 'Rajdhani'; font-weight: bold; }
+
+.btn-main { background: var(--emerald); color: var(--navy); border: none; padding: 10px 20px; border-radius: 5px; font-family: 'Orbitron'; cursor: pointer; margin-top: 10px; }
+
+</style>
+</head>
+<body>
+
+<div class="neural-bg"></div>
+<div class="container">
+  <header>
+    <h1>A City in the States</h1>
+    <p>Simulador Neurocognitivo Semanal</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="openTab('f1')">1. Prod. Neuro-Fonética</button>
+    <button class="tab-btn" onclick="openTab('f2')">2. Ensamblador Estructural</button>
+    <button class="tab-btn" onclick="openTab('f3')">3. BYE (Build Your English)</button>
+    <button class="tab-btn" onclick="openTab('f4')">4. Misiones</button>
+  </div>
+
+  <div id="f1" class="tab-content active card">
+    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom:20px;">
+      <h2 style="font-family:'Orbitron'; color:var(--cyan);">Inmersión y Memorización</h2>
+      <div>
+        <button class="tab-btn" onclick="setMemLevel(1)">Nivel 1</button>
+        <button class="tab-btn" onclick="setMemLevel(2)">Nivel 2</button>
+        <button class="tab-btn" onclick="setMemLevel(3)">Nivel 3</button>
+      </div>
+    </div>
+    <div class="script-viewer" id="full-script">
+      <p>In the city <span class="hl-cyan">there</span> <span class="hl-magenta">are</span> many <span class="hl-white">sites</span> that <span class="hl-cyan">you</span> <span class="hl-magenta">can</span> <span class="hl-white">visit</span>, <span class="hl-cyan">there</span> <span class="hl-magenta">are</span> many <span class="hl-white">skyscrapers</span>.</p><br>
+      <p><span class="hl-cyan">There</span> <span class="hl-magenta">are</span> good <span class="hl-white">museums</span>, <span class="hl-white">galleries</span> and <span class="hl-white">exhibitions</span>. <span class="hl-cyan">There</span> <span class="hl-magenta">are</span> from high culinary <span class="hl-white">restaurants</span> <span class="hl-green">to</span> hot-dog or pretzel <span class="hl-white">stands</span>. <span class="hl-cyan">There</span> <span class="hl-magenta">are</span> all type of <span class="hl-white">schools</span>. <span class="hl-cyan">There</span> <span class="hl-magenta">are</span> many <span class="hl-white">malls</span> and <span class="hl-white">supermarkets</span>, where <span class="hl-cyan">you</span> <span class="hl-magenta">can</span> <span class="hl-white">buy</span> whatever <span class="hl-cyan">you</span> <span class="hl-white">want</span>.</p><br>
+      <p><span class="hl-cyan">You</span> <span class="hl-magenta">can</span> <span class="hl-white">find</span> many <span class="hl-white">hospitals</span> <span class="hl-green">with</span> the latest <span class="hl-white">crafts</span> <span class="hl-cyan">there</span> <span class="hl-magenta">are</span>. <span class="hl-cyan">There</span> <span class="hl-magenta">are</span> high-class <span class="hl-white">hotels</span> <span class="hl-green">with</span> the best <span class="hl-white">sceneries</span>. The <span class="hl-white">parks</span> <span class="hl-magenta">are</span> ecologically intelligent. The movie <span class="hl-white">theaters</span> <span class="hl-magenta">are</span> nice <span class="hl-cyan">you</span> <span class="hl-magenta">can</span> <span class="hl-white">find</span> 3-D or even 4-D <span class="hl-white">cinemas</span> in the city nowadays.</p>
+    </div>
+  </div>
+
+  <div id="f3" class="tab-content card">
+    <h2 style="font-family:'Orbitron'; color:var(--magenta); margin-bottom:15px;">BYE - Build Your English</h2>
+    <p style="color:var(--muted); font-size:0.9rem;">Selecciona un sujeto y un sustantivo para observar la transformación estructural.</p>
+    
+    <div class="bye-grid">
+      <div class="bye-box" id="ppd-box">
+        <h4 style="color:var(--cyan); margin-bottom:10px;">Pronombres Activadores</h4>
+        </div>
+      <div class="bye-box" id="noun-box">
+        <h4 style="color:var(--magenta); margin-bottom:10px;">Sustantivos Base</h4>
+        </div>
+    </div>
+
+    <div class="bye-display" id="bye-display">
+      <div id="bye-result-text" style="font-family:'Orbitron'; font-size:2rem; color:var(--emerald);">SELECCIONA ELEMENTOS</div>
+      <div id="bye-explanation" style="color:var(--muted); margin-top:10px;">Un sustantivo inerte no denota acción hasta que un sujeto interviene.</div>
+    </div>
+  </div>
+
+  <div id="f4" class="tab-content card">
+    <h2 style="font-family:'Orbitron'; color:var(--emerald); margin-bottom:20px;">Misiones de Transferencia</h2>
+    <div id="mission-container">
+      </div>
+  </div>
+
+</div>
+
+<script>
+// --- CONFIGURACIÓN DE AUDIO E INSTRUCCIONES ---
+const synth = window.speechSynthesis;
+function speak(text, lang = 'es-ES') {
+  synth.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = lang; utter.rate = 1; synth.speak(utter);
+}
+
+// --- NAVEGACIÓN Y VOCES ---
+function openTab(id) {
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+
+  if(id === 'f1') speak("Fase 1: Producción Neuro-Fonética. Escucha, repite y memoriza el sistema completo.");
+  if(id === 'f3') speak("Fase BYE: Construye tu inglés. Observa cómo el pronombre activa al sustantivo inerte.");
+  if(id === 'f4') speak("Fase 4: Misiones. Transfiere tu conocimiento a nuevas ideas.");
+}
+
+// --- FASE 1: NIVELES ---
+function setMemLevel(lvl) {
+  const box = document.getElementById('full-script');
+  box.className = 'script-viewer mode-' + lvl;
+}
+
+// --- FASE 3: LÓGICA BYE COMPLETA ---
+const ppds = ["I", "You", "We", "They", "He", "She", "It", "Laura", "Carlos"];
+const nouns = [
+  {base: "visit", desc: "visitar"}, {base: "buy", desc: "comprar"}, 
+  {base: "find", desc: "encontrar"}, {base: "watch", desc: "mirar/observar"},
+  {base: "rent", desc: "rentar"}, {base: "look", desc: "mirar/buscar"},
+  {base: "want", desc: "querer/carecer"}, {base: "stand", desc: "puesto/soportar"}
+];
+
+let selPPD = "", selNoun = null;
+
+function initBYE() {
+  const pBox = document.getElementById('ppd-box');
+  const nBox = document.getElementById('noun-box');
+
+  ppds.forEach(p => {
+    const btn = document.createElement('button'); btn.className = 'bye-btn'; btn.innerText = p;
+    btn.onclick = () => { selPPD = p; updateBYE(); }; pBox.appendChild(btn);
+  });
+
+  nouns.forEach(n => {
+    const btn = document.createElement('button'); btn.className = 'bye-btn'; btn.innerText = n.base;
+    btn.onclick = () => { selNoun = n; updateBYE(); }; nBox.appendChild(btn);
+  });
+}
+
+function updateBYE() {
+  if(!selPPD || !selNoun) return;
+  
+  let activeWord = selNoun.base;
+  const isThirdPerson = ["He", "She", "It", "Laura", "Carlos"].includes(selPPD);
+  
+  // Regla estricta de 3ra persona
+  if(isThirdPerson) {
+    if(activeWord.endsWith('ch') || activeWord.endsWith('sh')) activeWord += 'es';
+    else activeWord += 's';
+  }
+
+  document.getElementById('bye-result-text').innerText = `${selPPD} ${activeWord}`.toUpperCase();
+  document.getElementById('bye-explanation').innerHTML = `
+    <span style="color:var(--cyan)">${selPPD}</span> activa la función de <span style="color:var(--magenta)">${selNoun.desc}</span> en el sustantivo base.
+    ${isThirdPerson ? `<br><small style="color:var(--magenta)">* Alerta de 3ra persona: Se ha agregado la terminación correspondiente.</small>` : ''}
+  `;
+  speak(`${selPPD} ${activeWord}`, 'en-US');
+}
+
+// --- FASE 4: MISIONES ---
+const missions = [
+  {es: "Ella visita el museo.", en: "she visits the museum"},
+  {es: "Carlos compra un hot-dog.", en: "carlos buys a hot-dog"},
+  {es: "Nosotros buscamos un lugar.", en: "we look for a place"},
+  {es: "Laura quiere vivir en la ciudad.", en: "laura wants to live in the city"}
+];
+
+function initMissions() {
+  const container = document.getElementById('mission-container');
+  missions.forEach((m, i) => {
+    const div = document.createElement('div'); div.className = 'mission-row';
+    div.innerHTML = `
+      <p class="hl-white">${i+1}. ${m.es}</p>
+      <input type="text" class="m-input" id="mi-${i}" placeholder="Escribe aquí...">
+      <div class="m-feedback" id="mf-${i}"></div>
+      <button class="btn-main" onclick="checkM(${i})">Validar</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function checkM(i) {
+  const input = document.getElementById(`mi-${i}`).value.toLowerCase().trim();
+  const feedback = document.getElementById(`mf-${i}`);
+  const target = missions[i].en;
+
+  if(input === target) {
+    feedback.innerText = "✅ Estructura validada. El cerebro bilingüe se ha activado.";
+    feedback.style.color = "var(--emerald)";
+    speak("Excellent connection", 'en-US');
+  } else {
+    feedback.innerHTML = `❌ Error estructural detectado. Revisa tu PPD y la terminación del sustantivo activado. <br>Sugerencia: "${target}"`;
+    feedback.style.color = "var(--error)";
+    speak("Check your structure", 'en-US');
+  }
+}
+
+window.onload = () => { initBYE(); initMissions(); };
+</script>
+</body>
+</html>
