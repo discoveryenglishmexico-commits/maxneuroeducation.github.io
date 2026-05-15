@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FASE 1 - Producción Neuro-Fonética</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #050b14; --dark-blue: #0A1628; --cyan: #00D9FF; 
+  --magenta: #FF00FF; --emerald: #00FF9D; --text: #F8F9FA;
+  --muted: #4a5568;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background-color: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  padding: 30px 15px; 
+  overflow-x: hidden;
+}
+
+#canvas-container {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+  background: radial-gradient(circle at center, var(--dark-blue) 0%, var(--navy) 100%);
+}
+
+.hud-panel {
+  width: 100%; max-width: 900px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.header { text-align: center; margin-bottom: 25px; border-bottom: 1px solid rgba(0,217,255,0.2); padding-bottom: 15px; }
+h1 { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; }
+h2 { font-size: 1.2rem; color: var(--emerald); font-weight: 300; }
+
+/* CONTROLES NBF */
+.controls { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px; }
+.btn {
+  font-family: 'Orbitron', sans-serif; padding: 12px 20px; background: rgba(0,0,0,0.5);
+  border: 1px solid var(--muted); color: var(--text); border-radius: 8px; cursor: pointer; transition: 0.3s;
+}
+.btn:hover { border-color: var(--cyan); box-shadow: 0 0 15px rgba(0,217,255,0.3); }
+.btn.active { background: var(--cyan); color: var(--navy); border-color: var(--cyan); font-weight: bold; }
+.btn-play { background: rgba(0, 255, 157, 0.1); border-color: var(--emerald); color: var(--emerald); }
+.btn-play.playing { background: var(--emerald); color: var(--navy); box-shadow: 0 0 20px var(--emerald); }
+
+/* VISOR DE GUION (TELEPROMPTER) */
+.script-viewer {
+  height: 50vh; min-height: 350px;
+  overflow-y: auto; overflow-x: hidden;
+  padding: 20px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 10px;
+  border-left: 2px solid var(--cyan);
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+/* Ocultar barra de scroll para look más limpio */
+.script-viewer::-webkit-scrollbar { width: 5px; }
+.script-viewer::-webkit-scrollbar-track { background: transparent; }
+.script-viewer::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
+
+/* ESTILOS DE FRASES */
+.phrase {
+  font-size: 1.5rem; line-height: 1.8; margin-bottom: 15px;
+  opacity: 0.3; transition: all 0.4s ease;
+  transform: translateX(-10px);
+}
+.phrase.highlight {
+  opacity: 1; transform: translateX(0);
+}
+
+/* CÓDIGO DE COLORES NBF */
+.ppd { color: var(--cyan); font-weight: bold; text-shadow: 0 0 8px rgba(0,217,255,0.4); }
+.mod { color: var(--magenta); font-weight: bold; text-shadow: 0 0 8px rgba(255,0,255,0.4); }
+.prep { color: var(--emerald); font-weight: bold; text-shadow: 0 0 8px rgba(0,255,157,0.4); }
+.bas { color: #FFF; font-weight: bold; text-shadow: 0 0 10px rgba(255,255,255,0.5); transition: 0.5s; }
+.dim { color: #A0AABF; transition: 0.5s; } /* Palabras de relleno */
+
+/* LÓGICA DE NIVELES (COGNITIVE FADING) */
+/* Nivel 1: Por defecto, todo se ve como arriba */
+
+/* Nivel 2: Esqueleto Estructural (Se apaga el ruido) */
+.script-container.level-2 .dim { opacity: 0.1; filter: blur(1px); }
+
+/* Nivel 3: Memoria Ciega (Desaparecen las bases) */
+.script-container.level-3 .dim { opacity: 0.05; filter: blur(2px); }
+.script-container.level-3 .bas { opacity: 0; filter: blur(5px); }
+
+@media (max-width: 600px) {
+  .phrase { font-size: 1.2rem; }
+  .script-viewer { height: 60vh; }
+}
+</style>
+</head>
+<body>
+
+<div id="canvas-container"></div>
+
+<div class="hud-panel">
+  <div class="header">
+    <h1>A CITY IN THE STATES</h1>
+    <h2>Fase 1: Inmersión y Memorización Estructural</h2>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-play" id="btn-play" onclick="toggleAudio()">▶ ESCUCHAR Y SINCRONIZAR</button>
+    <button class="btn active" id="btn-lvl-1" onclick="setLevel(1)">NIVEL 1: Lectura Guiada</button>
+    <button class="btn" id="btn-lvl-2" onclick="setLevel(2)">NIVEL 2: Esqueleto</button>
+    <button class="btn" id="btn-lvl-3" onclick="setLevel(3)">NIVEL 3: Memoria Ciega</button>
+  </div>
+
+  <div class="script-viewer script-container level-1" id="viewer">
+    </div>
+</div>
+
+<audio id="audio_main" preload="auto" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/a_city_in_the_states.mp4"></audio>
+
+<script>
+// ==========================================
+// GUION Y TIMESTAMPS (TIEMPOS EN SEGUNDOS)
+// Ajusta el valor de 'start' de cada bloque para que encaje perfecto con tu voz
+// ==========================================
+const scriptData = [
+  // PÁRRAFO 1
+  { start: 0.5, html: "<span class='dim'>In the city</span> <span class='ppd'>there</span> <span class='mod'>are</span> <span class='dim'>many</span> <span class='bas'>sites</span> <span class='dim'>that</span> <span class='ppd'>you</span> <span class='mod'>can</span> <span class='bas'>visit</span>," },
+  { start: 4.0, html: "<span class='ppd'>there</span> <span class='mod'>are</span> <span class='dim'>many</span> <span class='bas'>skyscrapers</span>." },
+  
+  // PÁRRAFO 2
+  { start: 6.5, html: "<span class='ppd'>There</span> <span class='mod'>are</span> <span class='dim'>good</span> <span class='bas'>museums</span>, <span class='bas'>galleries</span> <span class='dim'>and</span> <span class='bas'>exhibitions</span>." },
+  { start: 10.0, html: "<span class='ppd'>There</span> <span class='mod'>are</span> <span class='dim'>from high culinary</span> <span class='bas'>restaurants</span> <span class='prep'>to</span> <span class='dim'>hot-dog or pretzel</span> <span class='bas'>stands</span>." },
+  { start: 15.0, html: "<span class='ppd'>There</span> <span class='mod'>are</span> <span class='dim'>all</span> <span class='bas'>type</span> <span class='dim'>of</span> <span class='bas'>schools</span>." },
+  { start: 18.0, html: "<span class='ppd'>There</span> <span class='mod'>are</span> <span class='dim'>many</span> <span class='bas'>malls</span> <span class='dim'>and</span> <span class='bas'>supermarkets</span>," },
+  { start: 21.0, html: "<span class='dim'>where</span> <span class='ppd'>you</span> <span class='mod'>can</span> <span class='bas'>buy</span> <span class='dim'>whatever</span> <span class='ppd'>you</span> <span class='bas'>want</span>." },
+
+  // PÁRRAFO 3
+  { start: 24.5, html: "<span class='ppd'>You</span> <span class='mod'>can</span> <span class='bas'>find</span> <span class='dim'>many</span> <span class='bas'>hospitals</span> <span class='prep'>with</span> <span class='dim'>the latest</span> <span class='bas'>crafts</span> <span class='ppd'>there</span> <span class='mod'>are</span>." },
+  { start: 29.0, html: "<span class='ppd'>There</span> <span class='mod'>are</span> <span class='dim'>high-class</span> <span class='bas'>hotels</span> <span class='prep'>with</span> <span class='dim'>the best</span> <span class='bas'>sceneries</span>." },
+  { start: 33.0, html: "<span class='dim'>The</span> <span class='bas'>parks</span> <span class='mod'>are</span> <span class='dim'>ecologically intelligent.</span>" },
+  { start: 36.0, html: "<span class='dim'>The movie</span> <span class='bas'>theaters</span> <span class='mod'>are</span> <span class='dim'>nice,</span>" },
+  { start: 38.5, html: "<span class='ppd'>you</span> <span class='mod'>can</span> <span class='bas'>find</span> <span class='dim'>3-D or even 4-D</span> <span class='bas'>cinemas</span> <span class='dim'>in the city nowadays.</span>" },
+
+  // PÁRRAFO 4
+  { start: 43.0, html: "<span class='dim'>If</span> <span class='ppd'>you</span><span class='mod'>'re</span> <span class='dim'>looking</span> <span class='prep'>for</span> <span class='dim'>a</span> <span class='bas'>place</span> <span class='prep'>to</span> <span class='bas'>live</span>," },
+  { start: 46.0, html: "<span class='ppd'>you</span> <span class='mod'>could</span> <span class='bas'>rent</span> <span class='dim'>a small</span> <span class='bas'>studio</span>, <span class='dim'>an</span> <span class='bas'>apartment</span>, <span class='dim'>a</span> <span class='bas'>loft</span> <span class='dim'>or a</span> <span class='bas'>house</span>." },
+
+  // PÁRRAFO 5
+  { start: 51.0, html: "<span class='ppd'>You</span> <span class='mod'>can</span> <span class='bas'>look</span> <span class='prep'>up</span> <span class='dim'>a</span> <span class='bas'>place</span> <span class='dim'>whether in the city or in the</span> <span class='bas'>suburbs</span>." },
+  { start: 55.5, html: "<span class='ppd'>There</span> <span class='mod'>are</span> <span class='bas'>banks</span> <span class='dim'>and bank</span> <span class='bas'>tellers</span> <span class='dim'>everywhere</span> <span class='ppd'>you</span> <span class='bas'>look</span>," },
+  { start: 59.0, html: "<span class='dim'>but</span> <span class='ppd'>there</span><span class='mod'>'s</span> <span class='dim'>no</span> <span class='bas'>need</span> <span class='prep'>to</span> <span class='bas'>go</span> <span class='dim'>straight</span> <span class='prep'>to</span> <span class='dim'>a bank</span>" },
+  { start: 62.5, html: "<span class='dim'>because</span> <span class='ppd'>you</span> <span class='mod'>can</span> <span class='bas'>withdraw</span> <span class='bas'>cash</span> <span class='dim'>from almost anywhere.</span>" },
+
+  // PÁRRAFO 6
+  { start: 67.0, html: "<span class='ppd'>One</span> <span class='dim'>of the major</span> <span class='bas'>setbacks</span> <span class='mod'>is</span> <span class='dim'>the traffic;</span>" },
+  { start: 70.0, html: "<span class='ppd'>there</span> <span class='mod'>are</span> <span class='dim'>traffic</span> <span class='bas'>jams</span> <span class='dim'>all over the city,</span>" },
+  { start: 73.0, html: "<span class='dim'>the good thing is that</span> <span class='ppd'>you</span> <span class='mod'>can</span> <span class='bas'>grab</span> <span class='dim'>a</span> <span class='bas'>cab</span> <span class='dim'>very easy at any time.</span>" },
+  { start: 77.5, html: "<span class='bas'>Nightlife</span> <span class='mod'>is</span> <span class='dim'>great,</span> <span class='ppd'>there</span> <span class='mod'>are</span> <span class='dim'>many</span> <span class='bas'>places</span> <span class='prep'>to</span> <span class='bas'>go</span>," },
+  { start: 81.0, html: "<span class='dim'>for example:</span> <span class='bas'>nightclubs</span>, <span class='bas'>theaters</span>, <span class='bas'>bars</span>, <span class='dim'>just</span> <span class='prep'>to</span> <span class='bas'>mention</span> <span class='dim'>some.</span>" }
+];
+
+const player = document.getElementById('audio_main');
+const viewer = document.getElementById('viewer');
+const btnPlay = document.getElementById('btn-play');
+let timer = null;
+let currentLineIndex = -1;
+
+// 1. Inyectar el guion en la pantalla
+scriptData.forEach((line, index) => {
+  const p = document.createElement('p');
+  p.className = 'phrase';
+  p.id = 'line-' + index;
+  p.innerHTML = line.html;
+  
+  // Añadir separaciones de párrafo visuales
+  if(index === 1 || index === 6 || index === 11 || index === 13 || index === 17) {
+    p.style.marginBottom = "40px";
+  }
+  
+  viewer.appendChild(p);
+});
+
+// 2. Control de Reproducción
+function toggleAudio() {
+  if (player.paused) {
+    player.play().catch(e => console.log("Espera interacción", e));
+    btnPlay.innerText = "⏸ PAUSAR SIMULACIÓN";
+    btnPlay.classList.add('playing');
+    startSync();
+  } else {
+    player.pause();
+    btnPlay.innerText = "▶ ESCUCHAR Y SINCRONIZAR";
+    btnPlay.classList.remove('playing');
+    if(timer) clearInterval(timer);
+  }
+}
+
+// 3. Motor de Sincronización y Auto-Scroll
+function startSync() {
+  if (timer) clearInterval(timer);
+  
+  timer = setInterval(() => {
+    if(player.paused) return;
+    
+    const time = player.currentTime;
+    let activeIndex = -1;
+    
+    for(let i = 0; i < scriptData.length; i++) {
+        if(time >= scriptData[i].start) activeIndex = i;
+    }
+
+    if(activeIndex !== currentLineIndex && activeIndex !== -1) {
+        currentLineIndex = activeIndex;
+        
+        // Quitar highlight anterior
+        document.querySelectorAll('.phrase').forEach(p => p.classList.remove('highlight'));
+        
+        // Iluminar la línea actual
+        const el = document.getElementById('line-' + activeIndex);
+        if(el) {
+            el.classList.add('highlight');
+            // MAGIA: Auto-scroll para centrar el texto que se está leyendo
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Feedback táctil
+        if ("vibrate" in navigator) window.navigator.vibrate(30);
+    }
+
+    if(player.ended) {
+      clearInterval(timer);
+      btnPlay.innerText = "↻ REPETIR MISIÓN";
+      btnPlay.classList.remove('playing');
+    }
+  }, 100);
+}
+
+// 4. Control de Niveles (Cognitive Fading)
+function setLevel(lvl) {
+  // Limpiar botones
+  document.getElementById('btn-lvl-1').classList.remove('active');
+  document.getElementById('btn-lvl-2').classList.remove('active');
+  document.getElementById('btn-lvl-3').classList.remove('active');
+  
+  // Activar botón pulsado
+  document.getElementById('btn-lvl-' + lvl).classList.add('active');
+  
+  // Aplicar nivel a la caja de texto (El CSS hace el resto)
+  viewer.className = 'script-viewer script-container level-' + lvl;
+}
+
+// PARTÍCULAS DE FONDO
+const canvasContainer = document.getElementById('canvas-container');
+const canvas = document.createElement('canvas'); canvasContainer.appendChild(canvas);
+const ctx = canvas.getContext('2d'); let particles = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.onresize = resize; resize();
+class Particle {
+  constructor() { this.reset(); }
+  reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.size = Math.random()*1.5; this.speedX = (Math.random()-0.5)*0.3; this.speedY = (Math.random()-0.5)*0.3; }
+  update() { this.x+=this.speedX; this.y+=this.speedY; if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height) this.reset(); }
+  draw() { ctx.fillStyle='rgba(0,255,255,0.6)'; ctx.shadowBlur=10; ctx.shadowColor='rgba(0,217,255,0.8)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); ctx.shadowBlur=0; }
+}
+for(let i=0; i<80; i++) particles.push(new Particle());
+function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+animate();
+</script>
+</body>
+</html>
