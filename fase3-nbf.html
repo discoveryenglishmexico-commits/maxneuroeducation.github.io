@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FASE 3 - Los 7 Elementos Determinantes</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #050b14; --dark-blue: #0A1628; --cyan: #00D9FF; 
+  --magenta: #FF00FF; --emerald: #00FF9D; --text: #F8F9FA;
+  --muted: #4a5568; --panel-bg: rgba(5, 11, 20, 0.85);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background-color: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  padding: 30px 15px; 
+  overflow-x: hidden;
+}
+
+#canvas-container {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+  background: radial-gradient(circle at center, var(--dark-blue) 0%, var(--navy) 100%);
+}
+
+.hud-panel {
+  width: 100%; max-width: 1100px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+}
+
+.header { text-align: center; border-bottom: 1px solid rgba(0,217,255,0.2); padding-bottom: 20px; margin-bottom: 25px; }
+h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--cyan); text-transform: uppercase; letter-spacing: 3px; }
+h2 { font-size: 1.2rem; color: var(--emerald); font-weight: 300; margin-top: 10px; }
+.core-concept { margin-top: 15px; padding: 15px; background: rgba(255, 0, 255, 0.05); border-left: 4px solid var(--magenta); font-size: 1.1rem; text-align: left; }
+
+.lab-container {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* COLUMNA IZQUIERDA: MENÚ DE LOS 7 ELEMENTOS */
+.elements-menu {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  padding: 15px;
+  background: rgba(0, 217, 255, 0.05);
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  color: var(--text);
+  text-align: left;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 1px;
+}
+.menu-btn:hover { background: rgba(0, 217, 255, 0.15); border-color: var(--cyan); transform: translateX(5px); }
+.menu-btn.active { background: var(--cyan); color: var(--navy); font-weight: bold; box-shadow: 0 0 15px rgba(0,217,255,0.4); }
+
+/* COLUMNA DERECHA: VISOR DE TARJETAS TÁCTILES */
+.cards-viewer {
+  flex: 3;
+  background: var(--panel-bg);
+  border: 1px solid rgba(0, 255, 157, 0.2);
+  border-radius: 10px;
+  padding: 25px;
+  min-height: 500px;
+}
+
+.category-title {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--emerald);
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 255, 157, 0.2);
+  padding-bottom: 10px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* TARJETAS NEURO-COGNITIVAS */
+.neural-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--muted);
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.neural-card:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.15);
+  transform: translateY(-5px);
+}
+
+.neural-card.expanded {
+  border-color: var(--emerald);
+  box-shadow: 0 0 30px rgba(0, 255, 157, 0.2);
+  background: rgba(0, 255, 157, 0.05);
+}
+
+.card-word {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  color: var(--text);
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-word .icon { font-size: 1rem; color: var(--cyan); opacity: 0.5; }
+
+.card-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+}
+
+.neural-card.expanded .card-details {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 15px;
+  border-top: 1px solid rgba(0, 255, 157, 0.3);
+  padding-top: 15px;
+}
+
+.detail-row {
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.tag-noun { color: var(--cyan); font-weight: bold; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; text-transform: uppercase; border: 1px solid var(--cyan); padding: 2px 6px; border-radius: 4px; margin-right: 8px;}
+.tag-verb { color: var(--magenta); font-weight: bold; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; text-transform: uppercase; border: 1px solid var(--magenta); padding: 2px 6px; border-radius: 4px; margin-right: 8px;}
+
+@media (max-width: 800px) {
+  .lab-container { flex-direction: column; }
+  .elements-menu { width: 100%; flex-direction: row; flex-wrap: wrap; }
+  .menu-btn { flex: 1; min-width: 140px; text-align: center; padding: 10px; font-size: 0.8rem;}
+  .cards-viewer { width: 100%; min-height: auto; }
+}
+</style>
+</head>
+<body>
+
+<div id="canvas-container"></div>
+
+<div class="hud-panel">
+  <div class="header">
+    <h1>LABORATORIO DE DESGLOSE</h1>
+    <h2>Fase 3: Los 7 Elementos Determinantes</h2>
+    <div class="core-concept">
+      <strong>Deep Learning NBF:</strong> En el cerebro bilingüe no existen los verbos como entidad natural aislada. Existen Bases Léxicas (sustantivos) que son transformadas en acciones mediante Elementos Determinantes. Toca las tarjetas para reconfigurar tu percepción.
+    </div>
+  </div>
+
+  <div class="lab-container">
+    <div class="elements-menu">
+      <button class="menu-btn active" onclick="loadCategory('dual')">1. Sustantivos de Anclaje Dual</button>
+      <button class="menu-btn" onclick="loadCategory('logic')">2. Bloques Lógicos</button>
+      <button class="menu-btn" onclick="loadCategory('static')">3. Sustantivos Inalterables</button>
+      <button class="menu-btn" onclick="loadCategory('focus')">4. Reconfiguración de Foco</button>
+      <button class="menu-btn" onclick="loadCategory('activators')">5. Determinantes Funcionales (PPD)</button>
+    </div>
+
+    <div class="cards-viewer">
+      <h3 class="category-title" id="cat-title">1. Sustantivos de Anclaje Dual</h3>
+      <p style="color: var(--muted); margin-bottom: 20px;" id="cat-desc">Piezas que tu cerebro debe identificar como sustantivos y luego flexibilizar para activarlas como acciones.</p>
+      
+      <div class="cards-grid" id="cards-grid">
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==========================================
+// BASE DE DATOS NEURO-COGNITIVA NBF
+// ==========================================
+const db = {
+  dual: {
+    title: "Sustantivos de Anclaje Dual",
+    desc: "Identifica la 'pieza' (sustantivo) original. Al combinarla con un PPD (You, There, One), tu cerebro debe aprender a transformarla en acción sin usar reglas gramaticales.",
+    cards: [
+      { word: "PARK", noun: "El parque, área recreativa.", verb: "Estacionar un vehículo.", audio: "Park. Como sustantivo es El parque. Activado por un determinante, significa Estacionar." },
+      { word: "SITE", noun: "El sitio, lugar específico.", verb: "Situar o colocar en un lugar concreto.", audio: "Site. Como sustantivo es El sitio. Activado significa Situar en un lugar." },
+      { word: "TYPE", noun: "El tipo o clasificación.", verb: "Escribir a través de un teclado.", audio: "Type. Como sustantivo es El tipo. Activado significa Escribir en teclado." },
+      { word: "STAND", noun: "El puesto (ej. de hot-dogs).", verb: "Estar de pie o soportar.", audio: "Stand. Como sustantivo es El puesto. Activado significa Estar de pie o Soportar." },
+      { word: "BANK", noun: "El banco (institución).", verb: "Depositar dinero en una cuenta.", audio: "Bank. Como sustantivo es El banco. Activado significa Depositar en el banco." },
+      { word: "CASH", noun: "El dinero en efectivo.", verb: "Pagar de contado en efectivo.", audio: "Cash. Como sustantivo es El dinero en efectivo. Activado significa Pagar de contado." }
+    ]
+  },
+  activators: {
+    title: "Determinantes de Función",
+    desc: "Estas no son simples palabras, son los Activadores Funcionales. Al carecer el inglés de un verbo infinitivo natural, estas piezas 'encienden' la acción del sustantivo que les sigue.",
+    cards: [
+      { word: "YOU", noun: "Activador Directo (PPD)", verb: "En 'you can visit', activa al modulador 'can' para transformar 'visit' en acción.", audio: "You. Funciona como el activador ineludible de la acción. Sin esta pieza, la estructura colapsa o se interpreta como una orden." },
+      { word: "CAN", noun: "Contenedor / La lata", verb: "Filtro Modulador. Determina la capacidad o posibilidad de la base léxica siguiente.", audio: "Can. En su base es una lata o contenedor. Activado por un sujeto, funciona como filtro modulador que otorga capacidad." }
+    ]
+  },
+  // Categorías de relleno para la demo visual de la estructura
+  logic: { title: "Bloques Lógicos (Sustantivo + Sustantivo)", desc: "Sustantivos que modifican a otros sustantivos para crear conceptos completos. Ej: Sky + scraper.", cards: [{ word: "SKYSCRAPER", noun: "Sky (Cielo) + Scraper (Rascador)", verb: "Complementa la idea visual de la ciudad.", audio: "Skyscraper. Rascacielos." }] },
+  static: { title: "Sustantivos Inalterables", desc: "Palabras transparentes o raíces puras que no se convierten en verbos. Ej: Museum, Gallery.", cards: [{ word: "MUSEUM", noun: "Raíz grecolatina", verb: "Entidad inalterable", audio: "Museum. Museo." }] },
+  focus: { title: "Reconfiguración de Foco", desc: "Sustantivos que usualmente te enseñan como verbos, pero debes asimilarlos como cosas tangibles.", cards: [{ word: "VISIT", noun: "Una visita (A visit)", verb: "Visitar (You can visit)", audio: "Visit. Como sustantivo es una visita. Activado es visitar." }] }
+};
+
+const grid = document.getElementById('cards-grid');
+const catTitle = document.getElementById('cat-title');
+const catDesc = document.getElementById('cat-desc');
+
+// Motor de audio sintetizado
+function triggerSynthSound(type) {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    if (type === 'click') {
+      const osc = ctx.createOscillator(); const gain = ctx.createGain();
+      osc.type = 'sine'; osc.frequency.setValueAtTime(600, ctx.currentTime);
+      gain.gain.setValueAtTime(0.05, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+      osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime + 0.1);
+    }
+  } catch(e){}
+}
+
+function speak(text) {
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'es-MX'; utterance.rate = 0.95;
+  window.speechSynthesis.speak(utterance);
+}
+
+function loadCategory(catId) {
+  triggerSynthSound('click');
+  
+  // Update Menu Active State
+  document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const data = db[catId];
+  catTitle.innerText = data.title;
+  catDesc.innerText = data.desc;
+  
+  grid.innerHTML = '';
+  
+  data.cards.forEach((card, index) => {
+    const cardEl = document.createElement('div');
+    cardEl.className = 'neural-card';
+    cardEl.innerHTML = `
+      <div class="card-word">${card.word} <span class="icon">▼</span></div>
+      <div class="card-details">
+        <div class="detail-row"><span class="tag-noun">ESTADO BASE</span> ${card.noun}</div>
+        <div class="detail-row"><span class="tag-verb">ACTIVADO</span> ${card.verb}</div>
+      </div>
+    `;
+    
+    cardEl.onclick = () => {
+      // Toggle accordion
+      const isExpanded = cardEl.classList.contains('expanded');
+      document.querySelectorAll('.neural-card').forEach(c => {
+        c.classList.remove('expanded');
+        c.querySelector('.icon').innerText = "▼";
+      });
+      
+      if (!isExpanded) {
+        cardEl.classList.add('expanded');
+        cardEl.querySelector('.icon').innerText = "▲";
+        triggerSynthSound('click');
+        speak(card.audio); // Reproduce la explicación neurocognitiva
+      } else {
+        window.speechSynthesis.cancel();
+      }
+    };
+    grid.appendChild(cardEl);
+  });
+}
+
+// Inicializar animación de fondo
+const canvasContainer = document.getElementById('canvas-container');
+const canvas = document.createElement('canvas'); canvasContainer.appendChild(canvas);
+const ctx = canvas.getContext('2d'); let particles = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.onresize = resize; resize();
+class Particle {
+  constructor() { this.reset(); }
+  reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.size = Math.random()*1.5; this.speedX = (Math.random()-0.5)*0.2; this.speedY = (Math.random()-0.5)*0.2; }
+  update() { this.x+=this.speedX; this.y+=this.speedY; if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height) this.reset(); }
+  draw() { ctx.fillStyle='rgba(0,217,255,0.4)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); }
+}
+for(let i=0; i<60; i++) particles.push(new Particle());
+function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+animate();
+
+// Cargar primera categoría al iniciar
+setTimeout(() => loadCategory('dual'), 100);
+</script>
+</body>
+</html>
