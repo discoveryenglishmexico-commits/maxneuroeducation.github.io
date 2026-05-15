@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FASE 2 - Ensamblador Estructural</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #050b14; --dark-blue: #0A1628; --cyan: #00D9FF; 
+  --magenta: #FF00FF; --emerald: #00FF9D; --text: #F8F9FA;
+  --muted: #4a5568;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background-color: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  padding: 30px 15px; 
+  overflow-x: hidden;
+}
+
+#canvas-container {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+  background: radial-gradient(circle at center, var(--dark-blue) 0%, var(--navy) 100%);
+}
+
+.hud-panel {
+  width: 100%; max-width: 900px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  border-radius: 15px;
+  padding: 40px 30px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+h1 { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;}
+h2 { font-size: 1.2rem; color: var(--emerald); font-weight: 300; margin-bottom: 40px; }
+
+/* ZONAS DE ENSAMBLAJE Y PALABRAS */
+.zone-title { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--muted); text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;}
+
+.assembly-zone {
+  display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;
+  min-height: 80px; margin-bottom: 40px;
+  padding: 20px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 10px;
+  border-bottom: 2px solid var(--cyan);
+}
+
+.words-zone {
+  display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;
+  min-height: 100px; margin-bottom: 30px;
+}
+
+/* LAS PALABRAS (BLOQUES) */
+.word-block {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem; font-weight: bold;
+  padding: 15px 25px;
+  background: rgba(0, 217, 255, 0.05);
+  border: 1px solid var(--cyan);
+  color: var(--text);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+  box-shadow: 0 0 10px rgba(0,217,255,0.1);
+}
+
+.word-block:hover {
+  background: rgba(0, 217, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0,217,255,0.4);
+  transform: translateY(-3px);
+}
+
+/* HUECOS VACÍOS EN EL ENSAMBLADOR */
+.empty-slot {
+  width: 120px; height: 55px;
+  border: 2px dashed var(--muted);
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+/* ESTADOS DE VALIDACIÓN */
+.correct-glow { border-color: var(--emerald) !important; background: rgba(0, 255, 157, 0.1) !important; color: var(--emerald) !important; box-shadow: 0 0 20px rgba(0, 255, 157, 0.4) !important;}
+.wrong-glow { border-color: var(--magenta) !important; background: rgba(255, 0, 255, 0.1) !important; color: var(--magenta) !important; box-shadow: 0 0 20px rgba(255, 0, 255, 0.4) !important;}
+
+/* BOTÓN DE ACCIÓN */
+.btn-validate {
+  font-family: 'Orbitron', sans-serif; padding: 15px 40px; 
+  background: var(--cyan); color: var(--navy); 
+  border: none; border-radius: 50px; 
+  font-size: 1.2rem; font-weight: 900;
+  cursor: pointer; transition: 0.3s;
+  box-shadow: 0 0 20px rgba(0,217,255,0.4);
+  margin-top: 20px;
+}
+.btn-validate:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(0,217,255,0.6); }
+
+#feedback-msg {
+  margin-top: 20px; font-size: 1.3rem; font-weight: bold; min-height: 30px;
+}
+
+@media (max-width: 600px) {
+  .word-block { font-size: 1rem; padding: 12px 18px; }
+  .empty-slot { width: 90px; height: 45px; }
+}
+</style>
+</head>
+<body>
+
+<div id="canvas-container"></div>
+
+<div class="hud-panel">
+  <h1>ENSAMBLADOR ESTRUCTURAL</h1>
+  <h2>Fase 2: Lógica Cognitiva</h2>
+
+  <div class="zone-title">NÚCLEO DE ENSAMBLAJE</div>
+  <div class="assembly-zone" id="assembly-zone">
+    </div>
+
+  <div class="zone-title">BLOQUES DE MEMORIA (DESORDENADOS)</div>
+  <div class="words-zone" id="words-zone">
+    </div>
+
+  <button class="btn-validate" onclick="validateAssembly()">VERIFICAR ESTRUCTURA</button>
+  <div id="feedback-msg"></div>
+</div>
+
+<script>
+// ==========================================
+// LÓGICA DEL PROTOTIPO ENSAMBLADOR
+// ==========================================
+
+// La frase correcta en orden
+const correctSentence = ["you", "can", "visit", "many", "sites"];
+
+// Variables para el juego
+let availableWords = [];
+let assembledWords = [];
+
+// Elementos del DOM
+const wordsZone = document.getElementById('words-zone');
+const assemblyZone = document.getElementById('assembly-zone');
+const feedbackMsg = document.getElementById('feedback-msg');
+
+// 1. Iniciar el simulador
+function initAssembler() {
+  // Desordenar la frase para la zona de palabras
+  availableWords = [...correctSentence].sort(() => Math.random() - 0.5);
+  // Limpiar la zona de ensamblaje
+  assembledWords = [];
+  
+  render();
+}
+
+// 2. Dibujar las zonas en pantalla
+function render() {
+  // Dibujar zona de palabras disponibles
+  wordsZone.innerHTML = '';
+  availableWords.forEach((word, index) => {
+    const btn = document.createElement('div');
+    btn.className = 'word-block';
+    btn.innerText = word;
+    btn.onclick = () => moveToAssembly(index);
+    wordsZone.appendChild(btn);
+  });
+
+  // Dibujar zona de ensamblaje
+  assemblyZone.innerHTML = '';
+  
+  // Primero dibujamos las palabras que ya ensamblamos
+  assembledWords.forEach((word, index) => {
+    const btn = document.createElement('div');
+    btn.className = 'word-block';
+    btn.innerText = word;
+    btn.onclick = () => moveToWords(index); // Si hace clic, la regresa
+    assemblyZone.appendChild(btn);
+  });
+
+  // Luego rellenamos el resto con huecos vacíos para guiar al usuario
+  const emptySlotsNeeded = correctSentence.length - assembledWords.length;
+  for (let i = 0; i < emptySlotsNeeded; i++) {
+    const slot = document.createElement('div');
+    slot.className = 'empty-slot';
+    assemblyZone.appendChild(slot);
+  }
+}
+
+// 3. Mover palabra al Ensamblador
+function moveToAssembly(index) {
+  feedbackMsg.innerText = ""; // Limpiar mensajes
+  const word = availableWords.splice(index, 1)[0];
+  assembledWords.push(word);
+  
+  // Sonido/Vibración táctil sutil
+  if ("vibrate" in navigator) window.navigator.vibrate(15);
+  
+  render();
+}
+
+// 4. Regresar palabra a las opciones
+function moveToWords(index) {
+  feedbackMsg.innerText = ""; // Limpiar mensajes
+  const word = assembledWords.splice(index, 1)[0];
+  availableWords.push(word);
+  
+  // Sonido/Vibración táctil sutil
+  if ("vibrate" in navigator) window.navigator.vibrate(10);
+  
+  render();
+}
+
+// 5. Validar la respuesta
+function validateAssembly() {
+  // Comprobar si faltan piezas
+  if (assembledWords.length < correctSentence.length) {
+    feedbackMsg.style.color = "var(--cyan)";
+    feedbackMsg.innerText = "ESTRUCTURA INCOMPLETA. FALTAN BLOQUES.";
+    return;
+  }
+
+  // Comprobar orden exacto
+  let isCorrect = true;
+  for (let i = 0; i < correctSentence.length; i++) {
+    if (assembledWords[i] !== correctSentence[i]) {
+      isCorrect = false;
+      break;
+    }
+  }
+
+  // Animaciones y Feedback
+  const assembledBlocks = assemblyZone.querySelectorAll('.word-block');
+  
+  if (isCorrect) {
+    feedbackMsg.style.color = "var(--emerald)";
+    feedbackMsg.innerText = "¡CONEXIÓN NEURONAL ESTABLECIDA!";
+    if ("vibrate" in navigator) window.navigator.vibrate([30, 50, 30]);
+    
+    // Iluminar todo de verde
+    assembledBlocks.forEach(block => {
+      block.classList.add('correct-glow');
+    });
+  } else {
+    feedbackMsg.style.color = "var(--magenta)";
+    feedbackMsg.innerText = "ERROR DE ENSAMBLAJE. RECONFIGURA LA LÓGICA.";
+    if ("vibrate" in navigator) window.navigator.vibrate(200); // Vibración larga de error
+    
+    // Iluminar todo de rojo/magenta
+    assembledBlocks.forEach(block => {
+      block.classList.add('wrong-glow');
+      setTimeout(() => block.classList.remove('wrong-glow'), 1000);
+    });
+  }
+}
+
+// ==========================================
+// PARTÍCULAS DE FONDO (Diseño Cyber Neural)
+// ==========================================
+const canvasContainer = document.getElementById('canvas-container');
+const canvas = document.createElement('canvas'); canvasContainer.appendChild(canvas);
+const ctx = canvas.getContext('2d'); let particles = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.onresize = resize; resize();
+class Particle {
+  constructor() { this.reset(); }
+  reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.size = Math.random()*1.5; this.speedX = (Math.random()-0.5)*0.3; this.speedY = (Math.random()-0.5)*0.3; }
+  update() { this.x+=this.speedX; this.y+=this.speedY; if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height) this.reset(); }
+  draw() { ctx.fillStyle='rgba(0,255,255,0.6)'; ctx.shadowBlur=10; ctx.shadowColor='rgba(0,217,255,0.8)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); ctx.shadowBlur=0; }
+}
+for(let i=0; i<80; i++) particles.push(new Particle());
+function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+animate();
+
+// Arrancar el simulador al cargar la página
+initAssembler();
+</script>
+</body>
+</html>
