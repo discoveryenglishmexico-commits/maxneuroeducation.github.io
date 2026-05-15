@@ -17,11 +17,13 @@ body {
   font-family: 'Rajdhani', sans-serif;
   background-color: var(--navy);
   color: var(--text);
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
+  flex-direction: column; /* Arreglo crítico para que no se corte abajo */
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto; 
+  padding: 40px 20px; /* Margen superior e inferior garantizado */
   perspective: 1000px;
 }
 
@@ -33,7 +35,8 @@ body {
 
 /* INTERFAZ HUD SCI-FI */
 .hud-container {
-  width: 90%; max-width: 900px;
+  width: 100%; 
+  max-width: 900px;
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(15px);
   border: 1px solid rgba(0, 217, 255, 0.2);
@@ -42,11 +45,12 @@ body {
   text-align: center;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 217, 255, 0.05);
   position: relative;
+  margin: auto; /* Esto garantiza el centrado sin cortar los bordes en móvil */
 }
 
 h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
   text-transform: uppercase;
   letter-spacing: 5px;
   margin-bottom: 30px;
@@ -62,7 +66,7 @@ h1 {
   gap: 15px; 
   justify-content: center; 
   margin-bottom: 40px;
-  flex-wrap: wrap; /* Se adapta en móviles */
+  flex-wrap: wrap; 
 }
 
 .btn-neural {
@@ -93,7 +97,7 @@ h1 {
 
 /* SUBTÍTULOS SINCRONIZADOS */
 .subtitle-viewer {
-  height: 200px;
+  min-height: 180px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -102,8 +106,8 @@ h1 {
 }
 
 .phrase {
-  font-size: clamp(1.2rem, 3vw, 1.6rem);
-  line-height: 1.4;
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
+  line-height: 1.5;
   opacity: 0.2;
   filter: blur(2px);
   transition: all 0.5s ease;
@@ -123,7 +127,7 @@ h1 {
 
 /* CONTROL DE AUDIO */
 .audio-controls {
-  margin-top: 30px;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -132,12 +136,13 @@ h1 {
 
 .mute-toggle {
   background: none; border: 1px solid rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.5); padding: 5px 10px; cursor: pointer;
-  border-radius: 5px; font-family: 'Rajdhani', sans-serif;
+  color: rgba(255,255,255,0.5); padding: 8px 15px; cursor: pointer;
+  border-radius: 5px; font-family: 'Rajdhani', sans-serif; transition: 0.3s;
 }
+.mute-toggle:hover { color: white; border-color: white; }
 
 .start-mission {
-  margin-top: 40px;
+  margin-top: 30px;
   padding: 15px 40px;
   background: var(--emerald);
   color: var(--navy);
@@ -164,6 +169,11 @@ h1 {
   box-shadow: 0 0 30px var(--emerald);
 }
 
+/* AJUSTES ESPECÍFICOS PARA MÓVILES */
+@media (max-width: 600px) {
+  .hud-container { padding: 30px 20px; }
+  .subtitle-viewer { min-height: 250px; } 
+}
 </style>
 </head>
 <body>
@@ -193,7 +203,6 @@ h1 {
 <audio id="audio_en" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"></audio>
 
 <script>
-// --- CONFIGURACIÓN DE TEXTOS Y TIEMPOS ---
 const scripts = {
   es: [
     { start: 0, text: "¡Hey, neurosapien!" },
@@ -220,31 +229,24 @@ let timer = null;
 let currentLineIndex = -1;
 
 function startSimulation(lang) {
-  // Limpiar el cronómetro si ya había uno corriendo
+  const audioEs = document.getElementById('audio_es');
+  const audioEn = document.getElementById('audio_en');
+  audioEs.pause(); audioEs.currentTime = 0;
+  audioEn.pause(); audioEn.currentTime = 0;
+
   if (timer) clearInterval(timer);
-  
-  // Detener audio anterior si existía
-  if(currentAudio) { 
-    currentAudio.pause(); 
-    currentAudio.currentTime = 0; 
-  }
-  
   document.getElementById('init-msg').style.display = 'none';
   
-  // UI Botones
   document.querySelectorAll('.btn-neural').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
   
-  // Cargar nuevo audio
   currentAudio = document.getElementById('audio_' + lang);
   currentAudio.play();
   
-  // Sincronización
   const viewer = document.getElementById('viewer');
   const activeScript = scripts[lang];
   currentLineIndex = -1;
   
-  // Construir frases
   viewer.innerHTML = '';
   activeScript.forEach((line, index) => {
     const p = document.createElement('p');
@@ -254,13 +256,10 @@ function startSimulation(lang) {
     viewer.appendChild(p);
   });
 
-  // Cronómetro de Sincronización
   timer = setInterval(() => {
     if(!currentAudio || currentAudio.paused) return;
     
     const time = currentAudio.currentTime;
-    
-    // Buscar la línea correspondiente al segundo actual
     let activeIndex = -1;
     for(let i = 0; i < activeScript.length; i++) {
         if(time >= activeScript[i].start) {
@@ -268,23 +267,17 @@ function startSimulation(lang) {
         }
     }
 
-    // Si cambia de frase, actualizamos UI y Vibramos
     if(activeIndex !== currentLineIndex && activeIndex !== -1) {
         currentLineIndex = activeIndex;
-
-        // Limpiar todas
         document.querySelectorAll('.phrase').forEach(p => p.classList.remove('highlight'));
-        // Iluminar la actual
         const el = document.getElementById('line-' + activeIndex);
         if(el) el.classList.add('highlight');
 
-        // VIBRACIÓN (Patrón de pulso doble: Vibra 50ms, pausa 30ms, vibra 50ms)
         if ("vibrate" in navigator) {
             window.navigator.vibrate([50, 30, 50]);
         }
     }
 
-    // Al finalizar el audio
     if(currentAudio.ended) {
       document.getElementById('startBtn').classList.add('show');
       clearInterval(timer);
@@ -299,7 +292,6 @@ function toggleMute() {
   }
 }
 
-// EFECTO DE PARTÍCULAS (Más brillantes)
 const canvasContainer = document.getElementById('canvas-container');
 const canvas = document.createElement('canvas');
 canvasContainer.appendChild(canvas);
@@ -328,13 +320,12 @@ class Particle {
     if(this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
   }
   draw() {
-    ctx.fillStyle = 'rgba(0, 255, 255, 0.8)'; // Más brillantes
-    ctx.shadowBlur = 15; // Resplandor Neon
+    ctx.fillStyle = 'rgba(0, 255, 255, 0.8)';
+    ctx.shadowBlur = 15;
     ctx.shadowColor = 'rgba(0, 217, 255, 1)';
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
-    // Limpiar sombra para no afectar otras figuras si las hubiera
     ctx.shadowBlur = 0; 
   }
 }
