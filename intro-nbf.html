@@ -22,7 +22,7 @@ body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, var
 @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 15px rgba(0, 217, 255, 0.4); } 50% { box-shadow: 0 0 30px rgba(0, 217, 255, 0.8); } }
 @keyframes fadeInText { from { opacity: 0; transform: translateY(20px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
 
-.container { max-width: 800px; text-align: center; position: relative; z-index: 10; padding: 40px; background: var(--panel); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+.container { max-width: 900px; text-align: center; position: relative; z-index: 10; padding: 40px; background: var(--panel); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
 
 h1 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; margin-bottom: 20px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 2px; }
 
@@ -30,12 +30,16 @@ h1 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; margin-bottom: 20px
 .btn-lang { background: rgba(0,0,0,0.6); border: 2px solid var(--neon-blue); color: var(--text); padding: 15px 30px; border-radius: 50px; font-family: 'Orbitron', sans-serif; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; }
 .btn-lang:hover, .btn-lang.active { background: var(--neon-blue); color: var(--navy); box-shadow: 0 0 20px rgba(0, 217, 255, 0.6); }
 
-.subtitle-box { min-height: 150px; display: flex; align-items: center; justify-content: center; font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; line-height: 1.6; color: var(--neon-emerald); text-shadow: 0 0 10px rgba(0, 255, 157, 0.3); }
+.subtitle-box { min-height: 250px; display: flex; align-items: center; justify-content: center; font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; line-height: 1.8; color: var(--neon-emerald); text-shadow: 0 0 10px rgba(0, 255, 157, 0.3); }
 .subtitle-text { display: none; animation: fadeInText 1s forwards; }
 .subtitle-text.active { display: block; }
 
 .mute-btn { margin-top: 30px; background: transparent; border: 1px solid var(--muted); color: var(--muted); padding: 8px 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; font-family: 'Inter'; }
 .mute-btn:hover { color: white; border-color: white; }
+
+.start-btn { display: inline-block; margin-top: 30px; background: var(--neon-emerald); color: var(--navy); padding: 15px 40px; border-radius: 50px; font-family: 'Orbitron'; font-size: 1.3rem; font-weight: bold; text-decoration: none; text-transform: uppercase; animation: pulse-glow 2s infinite; transition: 0.3s; border: none; cursor: pointer; visibility: hidden; opacity: 0; transition: visibility 0s, opacity 0.5s linear; }
+.start-btn.show { visibility: visible; opacity: 1; }
+.start-btn:hover { transform: scale(1.05); }
 </style>
 </head>
 <body>
@@ -59,39 +63,51 @@ h1 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; margin-bottom: 20px
     
     <div id="text-es" class="subtitle-text">
       ¡Hey, neurosapien! Bienvenido a la fascinante experiencia de Discovery Max NBF Solution.<br><br>
-      Estás a punto de romper con el paradigma de la memorización tradicional de verbos y descubrir el poder del sustantivo funcional como puente cognitivo...
+      Estás a punto de romper con el paradigma de la memorización tradicional de verbos y descubrir el poder del sustantivo funcional como puente cognitivo. Tu misión en esta fase es memorizar el guion titulado «UNA CIUDAD EN LOS ESTADOS UNIDOS». Para lograr una reconfiguración cerebral efectiva, debemos desglosar los componentes lógicos precisos del inglés.<br><br>
+      ¿Tienes todo listo? ¡Arranquemos!
     </div>
     
     <div id="text-en" class="subtitle-text">
       Hey, neurosapien! Welcome to the fascinating Discovery Max NBF Solution experience.<br><br>
-      You're about to break free from the traditional verb memorization paradigm and discover the power of the functional noun as a cognitive bridge...
+      You're about to break free from the traditional verb memorization paradigm and discover the power of the functional noun as a cognitive bridge. Your mission in this phase is to memorize the script titled "A CITY IN THE UNITED STATES." To achieve effective brain rewiring, we must break down the precise logical components of English.<br><br>
+      Are you ready? Let's begin!
     </div>
   </div>
 
   <button class="mute-btn" onclick="stopAudio()">⏹ Silenciar Transmisión</button>
+  <br>
+  <button class="start-btn" id="start-btn" onclick="window.location.href='unidad-city.html'">INICIAR NEURO-MISIÓN</button>
 </div>
 
 <script>
 function playAudio(lang) {
-  // Pausar ambos audios y reiniciar tiempo
   const audioEs = document.getElementById('audio-es');
   const audioEn = document.getElementById('audio-en');
   audioEs.pause(); audioEs.currentTime = 0;
   audioEn.pause(); audioEn.currentTime = 0;
 
-  // Ocultar todos los textos
   document.getElementById('text-waiting').classList.remove('active');
   document.getElementById('text-es').classList.remove('active');
   document.getElementById('text-en').classList.remove('active');
 
-  // Resetear botones
   document.getElementById('btn-es').classList.remove('active');
   document.getElementById('btn-en').classList.remove('active');
 
-  // Activar el seleccionado
   document.getElementById('btn-' + lang).classList.add('active');
   document.getElementById('text-' + lang).classList.add('active');
-  document.getElementById('audio-' + lang).play();
+  
+  const currentAudio = document.getElementById('audio-' + lang);
+  currentAudio.play();
+
+  // Mostrar el botón de INICIAR cuando termine el audio
+  currentAudio.onended = function() {
+    document.getElementById('start-btn').classList.add('show');
+  };
+  
+  // Como alternativa por si el usuario silencia, mostramos el botón después de unos segundos
+  setTimeout(() => {
+    document.getElementById('start-btn').classList.add('show');
+  }, 10000);
 }
 
 function stopAudio() {
@@ -99,6 +115,8 @@ function stopAudio() {
   document.getElementById('audio-en').pause();
   document.getElementById('btn-es').classList.remove('active');
   document.getElementById('btn-en').classList.remove('active');
+  // Si silencia, le mostramos el botón de avanzar para que no se quede atorado
+  document.getElementById('start-btn').classList.add('show');
 }
 </script>
 </body>
