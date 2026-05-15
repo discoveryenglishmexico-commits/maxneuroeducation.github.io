@@ -19,11 +19,11 @@ body {
   color: var(--text);
   min-height: 100vh;
   display: flex;
-  flex-direction: column; /* Arreglo crítico para que no se corte abajo */
+  flex-direction: column; 
   align-items: center;
   overflow-x: hidden;
   overflow-y: auto; 
-  padding: 40px 20px; /* Margen superior e inferior garantizado */
+  padding: 40px 20px; 
   perspective: 1000px;
 }
 
@@ -45,7 +45,7 @@ body {
   text-align: center;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 217, 255, 0.05);
   position: relative;
-  margin: auto; /* Esto garantiza el centrado sin cortar los bordes en móvil */
+  margin: auto; 
 }
 
 h1 {
@@ -184,8 +184,8 @@ h1 {
   <h1>Discovery Max NBF</h1>
   
   <div class="lang-selector">
-    <button class="btn-neural" onclick="startSimulation('es')">Versión Español</button>
-    <button class="btn-neural" onclick="startSimulation('en')">English Version</button>
+    <button class="btn-neural" id="btn-es" onclick="startSimulation('es')">Versión Español</button>
+    <button class="btn-neural" id="btn-en" onclick="startSimulation('en')">English Version</button>
   </div>
 
   <div class="subtitle-viewer" id="viewer">
@@ -199,8 +199,8 @@ h1 {
   <a href="unidad-city.html" class="start-mission" id="startBtn">INICIAR NEURO-MISIÓN</a>
 </div>
 
-<audio id="audio_es" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_spanish_version.mp4"></audio>
-<audio id="audio_en" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"></audio>
+<audio id="audio_es" preload="auto" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_spanish_version.mp4"></audio>
+<audio id="audio_en" preload="auto" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"></audio>
 
 <script>
 const scripts = {
@@ -227,26 +227,52 @@ const scripts = {
 let currentAudio = null;
 let timer = null;
 let currentLineIndex = -1;
+let isGlobalMuted = false;
+
+// Función para reiniciar el audio de forma segura en dispositivos móviles
+function resetSafeAudio(audioEl) {
+    if(!audioEl) return;
+    audioEl.pause();
+    if (audioEl.readyState > 0) {
+        try { audioEl.currentTime = 0; } catch(e) { audioEl.load(); }
+    } else {
+        audioEl.load();
+    }
+}
 
 function startSimulation(lang) {
-  const audioEs = document.getElementById('audio_es');
-  const audioEn = document.getElementById('audio_en');
-  audioEs.pause(); audioEs.currentTime = 0;
-  audioEn.pause(); audioEn.currentTime = 0;
-
+  // Limpiar Timer
   if (timer) clearInterval(timer);
+  
+  // Detener de forma segura ambos reproductores
+  resetSafeAudio(document.getElementById('audio_es'));
+  resetSafeAudio(document.getElementById('audio_en'));
+
+  // Ocultar mensaje inicial y botón
   document.getElementById('init-msg').style.display = 'none';
+  document.getElementById('startBtn').classList.remove('show');
   
-  document.querySelectorAll('.btn-neural').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  // UI Botones (Actualizado usando IDs para evitar errores táctiles en móvil)
+  document.getElementById('btn-es').classList.remove('active');
+  document.getElementById('btn-en').classList.remove('active');
+  document.getElementById('btn-' + lang).classList.add('active');
   
+  // Activar Nuevo Audio
   currentAudio = document.getElementById('audio_' + lang);
-  currentAudio.play();
+  currentAudio.muted = isGlobalMuted; // Respeta si el usuario ya lo había silenciado
   
+  // Promesa de reproducción (Para que Safari/Chrome móvil no choquen si hay retraso)
+  let playPromise = currentAudio.play();
+  if (playPromise !== undefined) {
+      playPromise.catch(error => console.log("Cargando audio en red móvil...", error));
+  }
+  
+  // Sincronización
   const viewer = document.getElementById('viewer');
   const activeScript = scripts[lang];
   currentLineIndex = -1;
   
+  // Construir frases
   viewer.innerHTML = '';
   activeScript.forEach((line, index) => {
     const p = document.createElement('p');
@@ -256,6 +282,7 @@ function startSimulation(lang) {
     viewer.appendChild(p);
   });
 
+  // Cronómetro de Sincronización
   timer = setInterval(() => {
     if(!currentAudio || currentAudio.paused) return;
     
@@ -269,6 +296,7 @@ function startSimulation(lang) {
 
     if(activeIndex !== currentLineIndex && activeIndex !== -1) {
         currentLineIndex = activeIndex;
+        
         document.querySelectorAll('.phrase').forEach(p => p.classList.remove('highlight'));
         const el = document.getElementById('line-' + activeIndex);
         if(el) el.classList.add('highlight');
@@ -286,12 +314,13 @@ function startSimulation(lang) {
 }
 
 function toggleMute() {
-  if(currentAudio) {
-    currentAudio.muted = !currentAudio.muted;
-    document.getElementById('muteBtn').innerText = currentAudio.muted ? "UNMUTE AUDIO" : "MUTE AUDIO";
-  }
+  isGlobalMuted = !isGlobalMuted;
+  document.getElementById('audio_es').muted = isGlobalMuted;
+  document.getElementById('audio_en').muted = isGlobalMuted;
+  document.getElementById('muteBtn').innerText = isGlobalMuted ? "UNMUTE AUDIO" : "MUTE AUDIO";
 }
 
+// EFECTO DE PARTÍCULAS
 const canvasContainer = document.getElementById('canvas-container');
 const canvas = document.createElement('canvas');
 canvasContainer.appendChild(canvas);
