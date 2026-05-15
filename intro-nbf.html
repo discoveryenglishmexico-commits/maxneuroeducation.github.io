@@ -46,7 +46,7 @@ body {
 
 h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 2rem;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
   text-transform: uppercase;
   letter-spacing: 5px;
   margin-bottom: 30px;
@@ -58,22 +58,30 @@ h1 {
 
 /* BOTONES DE IDIOMA */
 .lang-selector {
-  display: flex; gap: 20px; justify-content: center; margin-bottom: 40px;
+  display: flex; 
+  gap: 15px; 
+  justify-content: center; 
+  margin-bottom: 40px;
+  flex-wrap: wrap; /* Se adapta en móviles */
 }
 
 .btn-neural {
   font-family: 'Orbitron', sans-serif;
-  padding: 15px 30px;
+  padding: 15px 25px;
   background: transparent;
   border: 2px solid var(--cyan);
   color: var(--cyan);
   text-transform: uppercase;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   letter-spacing: 2px;
   position: relative;
   overflow: hidden;
+  text-align: center;
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
 }
 
 .btn-neural:hover, .btn-neural.active {
@@ -94,7 +102,7 @@ h1 {
 }
 
 .phrase {
-  font-size: 1.6rem;
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
   line-height: 1.4;
   opacity: 0.2;
   filter: blur(2px);
@@ -125,6 +133,7 @@ h1 {
 .mute-toggle {
   background: none; border: 1px solid rgba(255,255,255,0.2);
   color: rgba(255,255,255,0.5); padding: 5px 10px; cursor: pointer;
+  border-radius: 5px; font-family: 'Rajdhani', sans-serif;
 }
 
 .start-mission {
@@ -135,14 +144,25 @@ h1 {
   border: none;
   font-family: 'Orbitron', sans-serif;
   font-weight: 900;
+  font-size: 1.2rem;
   border-radius: 50px;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 1s;
+  pointer-events: none;
+  transition: opacity 1s, transform 0.3s;
   box-shadow: 0 0 20px var(--emerald);
+  text-decoration: none;
+  display: inline-block;
 }
 
-.start-mission.show { opacity: 1; }
+.start-mission.show { 
+  opacity: 1; 
+  pointer-events: auto;
+}
+.start-mission.show:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px var(--emerald);
+}
 
 </style>
 </head>
@@ -151,7 +171,7 @@ h1 {
 <div id="canvas-container"></div>
 
 <div class="hud-container">
-  <h1>Discovery Max NBF Solution</h1>
+  <h1>Discovery Max NBF</h1>
   
   <div class="lang-selector">
     <button class="btn-neural" onclick="startSimulation('es')">Versión Español</button>
@@ -166,15 +186,14 @@ h1 {
     <button class="mute-toggle" id="muteBtn" onclick="toggleMute()">MUTE AUDIO</button>
   </div>
 
-  <button class="start-mission" id="startBtn">INICIAR NEURO-MISIÓN</button>
+  <a href="unidad-city.html" class="start-mission" id="startBtn">INICIAR NEURO-MISIÓN</a>
 </div>
 
 <audio id="audio_es" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_spanish_version.mp4"></audio>
 <audio id="audio_en" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"></audio>
 
 <script>
-// --- CONFIGURACIÓN DE LOS TEXTOS Y TIEMPOS (Segundos) ---
-// Aquí puedes ajustar los números (0.5, 3.2, etc) para que coincidan con tu voz
+// --- CONFIGURACIÓN DE TEXTOS Y TIEMPOS ---
 const scripts = {
   es: [
     { start: 0, text: "¡Hey, neurosapien!" },
@@ -197,26 +216,35 @@ const scripts = {
 };
 
 let currentAudio = null;
+let timer = null;
+let currentLineIndex = -1;
 
 function startSimulation(lang) {
-  // Reset
-  if(currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
-  document.getElementById('init-msg').style.display = 'none';
-  document.getElementById('startBtn').classList.remove('show');
+  // Limpiar el cronómetro si ya había uno corriendo
+  if (timer) clearInterval(timer);
   
-  // UI
+  // Detener audio anterior si existía
+  if(currentAudio) { 
+    currentAudio.pause(); 
+    currentAudio.currentTime = 0; 
+  }
+  
+  document.getElementById('init-msg').style.display = 'none';
+  
+  // UI Botones
   document.querySelectorAll('.btn-neural').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
   
-  // Audio
+  // Cargar nuevo audio
   currentAudio = document.getElementById('audio_' + lang);
   currentAudio.play();
   
   // Sincronización
   const viewer = document.getElementById('viewer');
   const activeScript = scripts[lang];
+  currentLineIndex = -1;
   
-  // Limpiar visor y crear frases
+  // Construir frases
   viewer.innerHTML = '';
   activeScript.forEach((line, index) => {
     const p = document.createElement('p');
@@ -226,26 +254,37 @@ function startSimulation(lang) {
     viewer.appendChild(p);
   });
 
-  // Monitor de tiempo
-  const timer = setInterval(() => {
-    if(!currentAudio || currentAudio.paused) { clearInterval(timer); return; }
+  // Cronómetro de Sincronización
+  timer = setInterval(() => {
+    if(!currentAudio || currentAudio.paused) return;
     
     const time = currentAudio.currentTime;
     
-    activeScript.forEach((line, index) => {
-      const el = document.getElementById('line-' + index);
-      if(time >= line.start) {
-        // Desactivar anteriores
-        document.querySelectorAll('.phrase').forEach(p => p.classList.remove('highlight'));
-        // Activar actual
-        el.classList.add('highlight');
-        
-        // Vibración ligera en móvil (si es soportado)
-        if ("vibrate" in navigator) window.navigator.vibrate(20);
-      }
-    });
+    // Buscar la línea correspondiente al segundo actual
+    let activeIndex = -1;
+    for(let i = 0; i < activeScript.length; i++) {
+        if(time >= activeScript[i].start) {
+            activeIndex = i;
+        }
+    }
 
-    // Al finalizar
+    // Si cambia de frase, actualizamos UI y Vibramos
+    if(activeIndex !== currentLineIndex && activeIndex !== -1) {
+        currentLineIndex = activeIndex;
+
+        // Limpiar todas
+        document.querySelectorAll('.phrase').forEach(p => p.classList.remove('highlight'));
+        // Iluminar la actual
+        const el = document.getElementById('line-' + activeIndex);
+        if(el) el.classList.add('highlight');
+
+        // VIBRACIÓN (Patrón de pulso doble: Vibra 50ms, pausa 30ms, vibra 50ms)
+        if ("vibrate" in navigator) {
+            window.navigator.vibrate([50, 30, 50]);
+        }
+    }
+
+    // Al finalizar el audio
     if(currentAudio.ended) {
       document.getElementById('startBtn').classList.add('show');
       clearInterval(timer);
@@ -260,7 +299,7 @@ function toggleMute() {
   }
 }
 
-// EFECTO DE PARTÍCULAS SIMPLE EN FONDO (Canvas)
+// EFECTO DE PARTÍCULAS (Más brillantes)
 const canvasContainer = document.getElementById('canvas-container');
 const canvas = document.createElement('canvas');
 canvasContainer.appendChild(canvas);
@@ -275,9 +314,7 @@ window.onresize = resize;
 resize();
 
 class Particle {
-  constructor() {
-    this.reset();
-  }
+  constructor() { this.reset(); }
   reset() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
@@ -291,10 +328,14 @@ class Particle {
     if(this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
   }
   draw() {
-    ctx.fillStyle = 'rgba(0, 217, 255, 0.3)';
+    ctx.fillStyle = 'rgba(0, 255, 255, 0.8)'; // Más brillantes
+    ctx.shadowBlur = 15; // Resplandor Neon
+    ctx.shadowColor = 'rgba(0, 217, 255, 1)';
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
+    // Limpiar sombra para no afectar otras figuras si las hubiera
+    ctx.shadowBlur = 0; 
   }
 }
 
