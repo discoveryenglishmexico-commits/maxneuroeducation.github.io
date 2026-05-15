@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTRO NEURAL (EN) - Discovery MAX</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+/* MISMOS ESTILOS EXACTOS QUE EL ESPAÑOL */
+:root { --navy: #050b14; --dark-blue: #0A1628; --cyan: #00D9FF; --magenta: #FF00FF; --emerald: #00FF9D; --text: #F8F9FA; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Rajdhani', sans-serif; background-color: var(--navy); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; overflow-y: auto; padding: 40px 20px; perspective: 1000px; }
+#canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, var(--dark-blue) 0%, var(--navy) 100%); }
+.hud-container { width: 100%; max-width: 900px; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(0, 217, 255, 0.2); border-radius: 20px; padding: 40px; text-align: center; box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 217, 255, 0.05); position: relative; margin: auto; }
+h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem, 5vw, 2.8rem); text-transform: uppercase; letter-spacing: 5px; margin-bottom: 30px; background: linear-gradient(90deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 10px rgba(0, 217, 255, 0.3)); }
+.lang-selector { display: flex; gap: 15px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
+.btn-neural { font-family: 'Orbitron', sans-serif; padding: 15px 25px; background: transparent; border: 2px solid var(--cyan); color: var(--cyan); text-transform: uppercase; cursor: pointer; border-radius: 8px; transition: all 0.4s; letter-spacing: 2px; text-align: center; flex: 1; min-width: 200px; max-width: 300px; text-decoration: none; display: inline-block;}
+.btn-neural:hover, .btn-neural.active { background: var(--cyan); color: var(--navy); box-shadow: 0 0 30px var(--cyan); transform: scale(1.05); }
+.subtitle-viewer { min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+.phrase { font-size: clamp(1.3rem, 4vw, 1.8rem); line-height: 1.5; opacity: 0.2; filter: blur(2px); transition: all 0.5s ease; position: absolute; width: 100%; transform: translateY(20px); pointer-events: none; text-align: center; }
+.phrase.highlight { opacity: 1; filter: blur(0); transform: translateY(0); color: var(--emerald); text-shadow: 0 0 15px var(--emerald); }
+.audio-controls { margin-top: 40px; display: flex; justify-content: center; align-items: center; gap: 15px; }
+.mute-toggle { background: none; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); padding: 8px 15px; cursor: pointer; border-radius: 5px; font-family: 'Rajdhani', sans-serif; transition: 0.3s; }
+.mute-toggle:hover { color: white; border-color: white; }
+.start-mission { margin-top: 30px; padding: 15px 40px; background: var(--emerald); color: var(--navy); border: none; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.2rem; border-radius: 50px; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 1s, transform 0.3s; box-shadow: 0 0 20px var(--emerald); text-decoration: none; display: inline-block; }
+.start-mission.show { opacity: 1; pointer-events: auto; }
+.start-mission.show:hover { transform: scale(1.05); box-shadow: 0 0 30px var(--emerald); }
+@media (max-width: 600px) { .hud-container { padding: 30px 20px; } .subtitle-viewer { min-height: 250px; } }
+</style>
+</head>
+<body>
+
+<div id="canvas-container"></div>
+<div class="hud-container">
+  <h1>Discovery Max NBF</h1>
+  
+  <div class="lang-selector">
+    <a href="intro-es.html" class="btn-neural">Versión Español</a>
+    <button class="btn-neural active" onclick="startAudio()">▶ START AUDIO (ENGLISH)</button>
+  </div>
+
+  <div class="subtitle-viewer" id="viewer">
+    <p class="phrase highlight" id="init-msg">WAITING FOR NEURAL INITIALIZATION...</p>
+  </div>
+
+  <div class="audio-controls">
+    <button class="mute-toggle" id="muteBtn" onclick="toggleMute()">MUTE AUDIO</button>
+  </div>
+
+  <a href="unidad-city.html" class="start-mission" id="startBtn">START NEURO-MISSION</a>
+</div>
+
+<audio id="audio_main" preload="auto" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_english_version.mp4"></audio>
+
+<script>
+// TIMESTAMPS PARA INGLÉS (Ajusta estos números si se desfasa tu voz)
+const scriptText = [
+  { start: 0, text: "Hey, neurosapien!" },
+  { start: 2.0, text: "Welcome to the fascinating Discovery Max NBF Solution experience." },
+  { start: 6.5, text: "You're about to break free from the traditional verb memorization paradigm..." },
+  { start: 12.0, text: "...and discover the power of the functional noun as a cognitive bridge." },
+  { start: 17.0, text: "Your mission in this phase is to memorize the script titled: 'A CITY IN THE UNITED STATES'." },
+  { start: 23.5, text: "To achieve effective brain rewiring, we must break down the precise logical components." },
+  { start: 29.0, text: "Are you ready? Let's begin!" }
+];
+
+let player = document.getElementById('audio_main');
+let timer = null;
+let currentLineIndex = -1;
+
+const viewer = document.getElementById('viewer');
+scriptText.forEach((line, index) => {
+  const p = document.createElement('p');
+  p.className = 'phrase'; p.id = 'line-' + index; p.innerText = line.text;
+  viewer.appendChild(p);
+});
+
+function startAudio() {
+  document.getElementById('init-msg').style.display = 'none';
+  player.play();
+  
+  if(timer) clearInterval(timer);
+  timer = setInterval(() => {
+    if(player.paused) return;
+    const time = player.currentTime;
+    let activeIndex = -1;
+    
+    for(let i = 0; i < scriptText.length; i++) {
+        if(time >= scriptText[i].start) activeIndex = i;
+    }
+
+    if(activeIndex !== currentLineIndex && activeIndex !== -1) {
+        currentLineIndex = activeIndex;
+        document.querySelectorAll('.phrase').forEach(p => p.classList.remove('highlight'));
+        const el = document.getElementById('line-' + activeIndex);
+        if(el) el.classList.add('highlight');
+
+        if ("vibrate" in navigator) window.navigator.vibrate([50, 30, 50]);
+    }
+
+    if(player.ended) {
+      document.getElementById('startBtn').classList.add('show');
+      clearInterval(timer);
+    }
+  }, 100);
+}
+
+function toggleMute() {
+  player.muted = !player.muted;
+  document.getElementById('muteBtn').innerText = player.muted ? "UNMUTE AUDIO" : "MUTE AUDIO";
+}
+
+// PARTÍCULAS
+const canvasContainer = document.getElementById('canvas-container');
+const canvas = document.createElement('canvas'); canvasContainer.appendChild(canvas);
+const ctx = canvas.getContext('2d'); let particles = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.onresize = resize; resize();
+class Particle {
+  constructor() { this.reset(); }
+  reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.size = Math.random()*2; this.speedX = (Math.random()-0.5)*0.5; this.speedY = (Math.random()-0.5)*0.5; }
+  update() { this.x+=this.speedX; this.y+=this.speedY; if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height) this.reset(); }
+  draw() { ctx.fillStyle='rgba(0,255,255,0.8)'; ctx.shadowBlur=15; ctx.shadowColor='rgba(0,217,255,1)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); ctx.shadowBlur=0; }
+}
+for(let i=0; i<100; i++) particles.push(new Particle());
+function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+animate();
+</script>
+</body>
+</html>
