@@ -9,7 +9,7 @@
 :root {
   --navy: #050b14; --dark-blue: #0A1628; --cyan: #00D9FF; 
   --magenta: #FF00FF; --emerald: #00FF9D; --text: #F8F9FA;
-  --muted: #4a5568;
+  --muted: #4a5568; --warning: #FF4500;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -46,35 +46,40 @@ body {
 h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;}
 h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 30px; }
 
-/* REPRODUCTOR DE INMERSIÓN */
-.audio-mission-box {
-  background: rgba(0, 217, 255, 0.05);
-  border: 1px solid var(--cyan);
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 30px;
+/* PANEL DE ESTRÉS COGNITIVO (CRONÓMETRO E INTENTOS) */
+.stress-panel {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  gap: 15px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid var(--magenta);
+  padding: 15px 30px;
+  border-radius: 10px;
+  margin-bottom: 30px;
 }
 
-.mission-text {
+.timer-box {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  color: var(--cyan);
+  font-weight: bold;
+}
+
+.attempts-box {
+  font-family: 'Orbitron', sans-serif;
   font-size: 1.2rem;
-  color: #A0AABF;
-  line-height: 1.5;
-  text-align: justify;
+  color: var(--emerald);
 }
 
-.btn-play-mission {
+.btn-start-timer {
   font-family: 'Orbitron', sans-serif; padding: 12px 30px; 
-  background: var(--cyan); color: var(--navy); 
+  background: var(--magenta); color: white; 
   border: none; border-radius: 50px; 
   font-size: 1.1rem; font-weight: bold;
   cursor: pointer; transition: 0.3s;
-  box-shadow: 0 0 15px rgba(0,217,255,0.4);
+  box-shadow: 0 0 15px rgba(255,0,255,0.4);
 }
-.btn-play-mission:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,217,255,0.6); }
+.btn-start-timer:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,0,255,0.6); }
 
 /* ZONAS DE ENSAMBLAJE */
 .zone-title { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: var(--muted); text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;}
@@ -94,6 +99,14 @@ h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 
   padding: 20px;
   border: 1px dashed rgba(255, 0, 255, 0.3);
   border-radius: 10px;
+  transition: all 0.3s;
+}
+
+/* ESTADO BLOQUEADO */
+.locked-zone {
+  pointer-events: none;
+  opacity: 0.3;
+  filter: grayscale(100%);
 }
 
 /* BLOQUES DE TEXTO */
@@ -117,11 +130,7 @@ h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 
   transform: translateY(-2px);
 }
 
-.empty-slot {
-  width: 80px; height: 42px;
-  border: 1px dashed var(--muted);
-  border-radius: 6px;
-}
+.empty-slot { width: 80px; height: 42px; border: 1px dashed var(--muted); border-radius: 6px; }
 
 /* RESPUESTAS */
 .correct-glow { border-color: var(--emerald) !important; background: rgba(0, 255, 157, 0.1) !important; color: var(--emerald) !important; box-shadow: 0 0 15px rgba(0, 255, 157, 0.4) !important;}
@@ -137,10 +146,12 @@ h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 
   margin-top: 20px;
 }
 .btn-action:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(0,217,255,0.5); }
+.btn-action:disabled { background: var(--muted); color: #222; cursor: not-allowed; box-shadow: none; transform: none;}
 
 #feedback-msg { margin-top: 25px; font-size: 1.4rem; font-weight: bold; min-height: 35px; letter-spacing: 1px; }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
+  .stress-panel { flex-direction: column; gap: 15px; }
   .word-block { font-size: 1rem; padding: 8px 12px; }
   .empty-slot { width: 60px; height: 35px; }
   .hud-panel { padding: 15px; }
@@ -155,77 +166,57 @@ h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 
   <h1>ENSAMBLADOR ESTRUCTURAL</h1>
   <h2>Fase 2: Reconstrucción Lógica del Bloque I</h2>
 
-  <div class="audio-mission-box">
-    <div class="mission-text">
-      <strong>INSTRUCCIÓN NEUROCOGNITIVA:</strong> Escucha el párrafo completo para asimilar la estructura rítmica. Posteriormente, el sistema desordenará los bloques. Deberás reconstruir el párrafo exacto aplicando la lógica NBF sin recurrir a reglas gramaticales.
-    </div>
-    <button class="btn-play-mission" onclick="playMissionAudio()">🔊 ESCUCHAR BLOQUE I</button>
+  <div class="stress-panel">
+    <div class="attempts-box" id="attempts-display">INTENTOS: 3/3</div>
+    <button class="btn-start-timer" id="btn-start" onclick="startMission()">▶ INICIAR CRONÓMETRO</button>
+    <div class="timer-box" id="timer-display">02:30</div>
   </div>
 
   <div class="zone-title">NÚCLEO DE ENSAMBLAJE (TU ESTRUCTURA)</div>
-  <div class="assembly-zone" id="assembly-zone"></div>
+  <div class="assembly-zone locked-zone" id="assembly-zone"></div>
 
   <div class="zone-title">BLOQUES DE MEMORIA FRAGMENTADOS</div>
-  <div class="words-zone" id="words-zone"></div>
+  <div class="words-zone locked-zone" id="words-zone"></div>
 
-  <button class="btn-action" id="btn-validate" onclick="validateAssembly()">VERIFICAR ESTRUCTURA NEURONAL</button>
+  <button class="btn-action" id="btn-validate" onclick="validateAssembly()" disabled>VERIFICAR ESTRUCTURA</button>
   <div id="feedback-msg"></div>
 </div>
 
-<audio id="audio_mission" src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/a_city_in_the_states.mp4" preload="auto"></audio>
-
 <script>
 // ==========================================
-// CONFIGURACIÓN DE RIGOR COGNITIVO (PÁRRAFO COMPLETO)
+// CONFIGURACIÓN DE BLOQUE Y CRONÓMETRO
 // ==========================================
-// Se utiliza el Bloque I íntegro según el documento
 const rawText = "In the city there are many sites that you can visit, there are many skyscrapers. There are good museums, galleries and exhibitions. There are from high culinary restaurants to hot-dog or pretzel stands. There are all type of schools. There are many malls and supermarkets, where you can buy whatever you want.";
-
-// Limpiar puntuación para el array de palabras
 const correctSentence = rawText.replace(/[.,;]/g, '').split(' ').filter(word => word.length > 0);
 let availableWords = [];
 let assembledWords = [];
 
+// Variables de Juego
+let attempts = 3;
+let totalSeconds = 150; // 2 min 30 seg
+let elapsedSeconds = 0;
+let timerInterval = null;
+let missionActive = false;
+
+// Elementos DOM
 const wordsZone = document.getElementById('words-zone');
 const assemblyZone = document.getElementById('assembly-zone');
 const feedbackMsg = document.getElementById('feedback-msg');
-const audioPlayer = document.getElementById('audio_mission');
+const timerDisplay = document.getElementById('timer-display');
+const attemptsDisplay = document.getElementById('attempts-display');
+const btnStart = document.getElementById('btn-start');
+const btnValidate = document.getElementById('btn-validate');
 
-function playMissionAudio() {
-  audioPlayer.currentTime = 0.5; // Inicia al comienzo del Bloque 1
-  audioPlayer.play();
-  
-  // Detener el audio automáticamente al terminar el Bloque I (aprox. seg 24)
-  const stopAudio = setInterval(() => {
-      if(audioPlayer.currentTime >= 24) {
-          audioPlayer.pause();
-          clearInterval(stopAudio);
-      }
-  }, 500);
+// Audio de voz nativo
+function speakStressPhrase(text, lang = 'es-MX') {
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  utterance.rate = 1.0;
+  window.speechSynthesis.speak(utterance);
 }
 
-// Motor de audio sintetizado nativo
-function triggerSynthSound(type) {
-  try {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
-    const ctx = new AudioContext();
-    if (type === 'click') {
-      const osc = ctx.createOscillator(); const gain = ctx.createGain();
-      osc.type = 'sine'; osc.frequency.setValueAtTime(800, ctx.currentTime);
-      gain.gain.setValueAtTime(0.05, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.start(); osc.stop(ctx.currentTime + 0.05);
-    } else if (type === 'error') {
-      const osc = ctx.createOscillator(); const gain = ctx.createGain();
-      osc.type = 'sawtooth'; osc.frequency.setValueAtTime(120, ctx.currentTime); osc.frequency.linearRampToValueAtTime(80, ctx.currentTime + 0.25);
-      gain.gain.setValueAtTime(0.15, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.start(); osc.stop(ctx.currentTime + 0.3);
-    }
-  } catch (e) { }
-}
-
+// Inicializar bloques
 function initAssembler() {
   availableWords = [...correctSentence].sort(() => Math.random() - 0.5);
   assembledWords = [];
@@ -238,7 +229,7 @@ function render() {
     const btn = document.createElement('div');
     btn.className = 'word-block';
     btn.innerText = word;
-    btn.onclick = () => moveToAssembly(index);
+    btn.onclick = () => { if(missionActive) moveToAssembly(index); };
     wordsZone.appendChild(btn);
   });
 
@@ -247,7 +238,7 @@ function render() {
     const btn = document.createElement('div');
     btn.className = 'word-block';
     btn.innerText = word;
-    btn.onclick = () => moveToWords(index);
+    btn.onclick = () => { if(missionActive) moveToWords(index); };
     assemblyZone.appendChild(btn);
   });
 
@@ -260,7 +251,6 @@ function render() {
 }
 
 function moveToAssembly(index) {
-  triggerSynthSound('click');
   feedbackMsg.innerText = "";
   const word = availableWords.splice(index, 1)[0];
   assembledWords.push(word);
@@ -268,27 +258,69 @@ function moveToAssembly(index) {
 }
 
 function moveToWords(index) {
-  triggerSynthSound('click');
   feedbackMsg.innerText = "";
   const word = assembledWords.splice(index, 1)[0];
   availableWords.push(word);
   render();
 }
 
+// INICIAR MISIÓN Y CRONÓMETRO
+function startMission() {
+  missionActive = true;
+  btnStart.style.display = 'none';
+  wordsZone.classList.remove('locked-zone');
+  assemblyZone.classList.remove('locked-zone');
+  btnValidate.disabled = false;
+  
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
+function updateTimer() {
+  elapsedSeconds++;
+  let remaining = totalSeconds - elapsedSeconds;
+  
+  if (remaining < 0) return;
+
+  // Formatear visualmente MM:SS
+  let m = Math.floor(remaining / 60).toString().padStart(2, '0');
+  let s = (remaining % 60).toString().padStart(2, '0');
+  timerDisplay.innerText = `${m}:${s}`;
+  if(remaining <= 10) timerDisplay.style.color = "var(--warning)";
+
+  // DISPARADORES DE ESTRÉS AUDITIVO
+  if (elapsedSeconds === 10) speakStressPhrase("Han pasado 10 segundos");
+  if (elapsedSeconds === 30) speakStressPhrase("Confío que hayas memorizado correctamente");
+  if (elapsedSeconds === 60) speakStressPhrase("Verifica en la caja que no tengas un error");
+  if (elapsedSeconds === 100) speakStressPhrase("Tenemos el tiempo encima");
+  if (elapsedSeconds === 120) speakStressPhrase("Estamos por terminar");
+  
+  // Cuenta regresiva 10 a 1
+  if (remaining <= 10 && remaining > 0) {
+    speakStressPhrase(remaining.toString());
+  }
+
+  // Final del tiempo
+  if (remaining === 0) {
+    clearInterval(timerInterval);
+    triggerGameOver("TIME IS OVER");
+    speakStressPhrase("Time is over", 'en-US');
+    setTimeout(() => speakStressPhrase("Debes regresar a la sección de entrenamiento a reforzar la memorización"), 1500);
+  }
+}
+
 function validateAssembly() {
+  if (!missionActive) return;
+
   if (assembledWords.length < correctSentence.length) {
-    triggerSynthSound('error');
     feedbackMsg.style.color = "var(--cyan)";
-    feedbackMsg.innerText = `SISTEMA INCOMPLETO: Faltan ${correctSentence.length - assembledWords.length} bloques.`;
+    feedbackMsg.innerText = `Faltan ${correctSentence.length - assembledWords.length} bloques.`;
     return;
   }
 
   let isCorrect = true;
   const assembledBlocks = assemblyZone.querySelectorAll('.word-block');
   
-  // Validar palabra por palabra
   for (let i = 0; i < correctSentence.length; i++) {
-    // Para simplificar el prototipo, comparamos en minúsculas ignorando mayúsculas iniciales
     if (assembledWords[i].toLowerCase() !== correctSentence[i].toLowerCase()) {
       isCorrect = false;
       assembledBlocks[i].classList.add('wrong-glow');
@@ -299,13 +331,34 @@ function validateAssembly() {
   }
 
   if (isCorrect) {
+    clearInterval(timerInterval);
+    missionActive = false;
+    btnValidate.disabled = true;
     feedbackMsg.style.color = "var(--emerald)";
     feedbackMsg.innerText = "¡RECONFIGURACIÓN LÓGICA EXITOSA!";
+    speakStressPhrase("Misión completada con éxito");
   } else {
-    triggerSynthSound('error');
-    feedbackMsg.style.color = "var(--magenta)";
-    feedbackMsg.innerText = "HAY ERRORES ESTRUCTURALES. REVISA LAS ZONAS MARCADAS EN MAGENTA.";
+    attempts--;
+    attemptsDisplay.innerText = `INTENTOS: ${attempts}/3`;
+    
+    if (attempts === 0) {
+      clearInterval(timerInterval);
+      triggerGameOver("INTENTOS AGOTADOS");
+      speakStressPhrase("Intentos agotados. Debes regresar a la sección de entrenamiento a reforzar la memorización.");
+    } else {
+      feedbackMsg.style.color = "var(--magenta)";
+      feedbackMsg.innerText = "ERROR ESTRUCTURAL. TE QUEDAN " + attempts + " INTENTOS.";
+    }
   }
+}
+
+function triggerGameOver(reason) {
+  missionActive = false;
+  wordsZone.classList.add('locked-zone');
+  assemblyZone.classList.add('locked-zone');
+  btnValidate.disabled = true;
+  feedbackMsg.style.color = "var(--warning)";
+  feedbackMsg.innerText = `${reason}. MISIÓN FALLIDA.`;
 }
 
 // PARTÍCULAS NEURALES
@@ -318,7 +371,7 @@ class Particle {
   constructor() { this.reset(); }
   reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.size = Math.random()*1.5; this.speedX = (Math.random()-0.5)*0.3; this.speedY = (Math.random()-0.5)*0.3; }
   update() { this.x+=this.speedX; this.y+=this.speedY; if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height) this.reset(); }
-  draw() { ctx.fillStyle='rgba(0,255,255,0.6)'; ctx.shadowBlur=10; ctx.shadowColor='rgba(0,217,255,0.8)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); ctx.shadowBlur=0; }
+  draw() { ctx.fillStyle='rgba(0,255,255,0.6)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); }
 }
 for(let i=0; i<80; i++) particles.push(new Particle());
 function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
