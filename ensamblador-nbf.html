@@ -171,7 +171,7 @@ h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 
   </div>
 
   <div class="stress-panel">
-    <div class="attempts-box" id="attempts-display">OPORTUNIDADES: 3</div>
+    <div class="attempts-box" id="attempts-display">INTENTOS RESTANTES: 3</div>
     <button class="btn-start-timer" id="btn-start" onclick="startMission()">▶ INICIAR CRONÓMETRO</button>
     <div class="timer-box" id="timer-display">02:30</div>
   </div>
@@ -185,7 +185,7 @@ h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 
   <button class="btn-action" id="btn-validate" onclick="validateAssembly()" disabled>VERIFICAR ESTRUCTURA NEURONAL</button>
   
   <button class="btn-action btn-next-phase" id="btn-next" onclick="window.location.href='fase3-nbf.html'">AVANZAR A FASE 3</button>
-  <button class="btn-action btn-restart" id="btn-restart" onclick="window.location.href='a-city-in-the-states.html'">REGRESAR A ENTRENAMIENTO</button>
+  <button class="btn-action btn-restart" id="btn-restart" onclick="javascript:history.back()">REGRESAR A ENTRENAMIENTO</button>
   
   <div id="feedback-msg"></div>
 </div>
@@ -288,9 +288,12 @@ function loadLevel(index) {
   const levelData = gameLevels[index];
   levelIndicator.innerText = levelData.label;
   btnPlayAudio.innerText = `🔊 ESCUCHAR ${levelData.label}`;
-  audioPlayer.src = levelData.audio;
   
-  // Limpiar y preparar texto (Separar por espacios)
+  // Asignar el nuevo audio y FORZAR LA RECARGA para navegadores móviles
+  audioPlayer.src = levelData.audio;
+  audioPlayer.load();
+  
+  // Limpiar y preparar texto
   correctSentence = levelData.text.split(' ').filter(word => word.trim().length > 0);
   availableWords = [...correctSentence].sort(() => Math.random() - 0.5);
   assembledWords = [];
@@ -301,7 +304,8 @@ function loadLevel(index) {
   missionActive = false;
   if(timerInterval) clearInterval(timerInterval);
   
-  attemptsDisplay.innerText = `OPORTUNIDADES: ${attempts}`;
+  // Ajuste de texto para claridad total
+  attemptsDisplay.innerText = `INTENTOS RESTANTES: ${attempts}`;
   timerDisplay.innerText = "02:30";
   timerDisplay.style.color = "var(--cyan)";
   feedbackMsg.innerText = "";
@@ -439,8 +443,9 @@ function validateAssembly() {
     }, 3000);
     
   } else {
+    // Restamos 1 al fallar
     attempts--;
-    attemptsDisplay.innerText = `OPORTUNIDADES: ${attempts}`;
+    attemptsDisplay.innerText = `INTENTOS RESTANTES: ${attempts}`;
     
     if (attempts === 0) {
       clearInterval(timerInterval);
