@@ -43,33 +43,52 @@ body {
   position: relative;
 }
 
-h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;}
-h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 30px; }
+/* Indicador de Nivel */
+.level-badge {
+  position: absolute; top: -15px; right: 20px;
+  background: var(--cyan); color: var(--navy);
+  font-family: 'Orbitron', sans-serif; font-weight: bold; font-size: 1rem;
+  padding: 8px 20px; border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0,217,255,0.4);
+}
+
+h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; margin-top: 10px;}
+h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 20px; }
+
+/* REPRODUCTOR DE INMERSIÓN */
+.audio-mission-box {
+  background: rgba(0, 217, 255, 0.05);
+  border: 1px solid var(--cyan);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.mission-text { font-size: 1.1rem; color: #A0AABF; line-height: 1.4; text-align: justify; }
+
+.btn-play-mission {
+  font-family: 'Orbitron', sans-serif; padding: 12px 30px; 
+  background: var(--cyan); color: var(--navy); 
+  border: none; border-radius: 50px; 
+  font-size: 1.1rem; font-weight: bold;
+  cursor: pointer; transition: 0.3s;
+  box-shadow: 0 0 15px rgba(0,217,255,0.4);
+}
+.btn-play-mission:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,217,255,0.6); }
 
 /* PANEL DE ESTRÉS COGNITIVO (CRONÓMETRO E INTENTOS) */
 .stress-panel {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(0,0,0,0.5);
-  border: 1px solid var(--magenta);
-  padding: 15px 30px;
-  border-radius: 10px;
-  margin-bottom: 30px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(0,0,0,0.5); border: 1px solid var(--magenta);
+  padding: 15px 30px; border-radius: 10px; margin-bottom: 30px;
 }
 
-.timer-box {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2rem;
-  color: var(--cyan);
-  font-weight: bold;
-}
-
-.attempts-box {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.2rem;
-  color: var(--emerald);
-}
+.timer-box { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--cyan); font-weight: bold; }
+.attempts-box { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--emerald); }
 
 .btn-start-timer {
   font-family: 'Orbitron', sans-serif; padding: 12px 30px; 
@@ -83,53 +102,27 @@ h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 
 
 /* ZONAS DE ENSAMBLAJE */
 .zone-title { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: var(--muted); text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;}
-
 .assembly-zone {
   display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start;
-  min-height: 150px; margin-bottom: 40px;
-  padding: 25px;
-  background: rgba(0,0,0,0.4);
-  border-radius: 10px;
-  border-bottom: 2px solid var(--cyan);
+  min-height: 150px; margin-bottom: 40px; padding: 25px;
+  background: rgba(0,0,0,0.4); border-radius: 10px; border-bottom: 2px solid var(--cyan);
 }
-
 .words-zone {
   display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
-  min-height: 150px; margin-bottom: 30px;
-  padding: 20px;
-  border: 1px dashed rgba(255, 0, 255, 0.3);
-  border-radius: 10px;
-  transition: all 0.3s;
+  min-height: 150px; margin-bottom: 30px; padding: 20px;
+  border: 1px dashed rgba(255, 0, 255, 0.3); border-radius: 10px; transition: all 0.3s;
 }
 
-/* ESTADO BLOQUEADO */
-.locked-zone {
-  pointer-events: none;
-  opacity: 0.3;
-  filter: grayscale(100%);
-}
+.locked-zone { pointer-events: none; opacity: 0.3; filter: grayscale(100%); }
 
 /* BLOQUES DE TEXTO */
 .word-block {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 1.2rem; font-weight: bold;
-  padding: 10px 18px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--text);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  user-select: none;
+  font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: bold;
+  padding: 10px 18px; background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2); color: var(--text);
+  border-radius: 6px; cursor: pointer; transition: all 0.2s ease; user-select: none;
 }
-
-.word-block:hover {
-  background: rgba(0, 217, 255, 0.2);
-  border-color: var(--cyan);
-  box-shadow: 0 0 10px rgba(0,217,255,0.3);
-  transform: translateY(-2px);
-}
-
+.word-block:hover { background: rgba(0, 217, 255, 0.2); border-color: var(--cyan); box-shadow: 0 0 10px rgba(0,217,255,0.3); transform: translateY(-2px); }
 .empty-slot { width: 80px; height: 42px; border: 1px dashed var(--muted); border-radius: 6px; }
 
 /* RESPUESTAS */
@@ -140,13 +133,15 @@ h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 
   font-family: 'Orbitron', sans-serif; padding: 15px 50px; 
   background: var(--cyan); color: var(--navy); 
   border: none; border-radius: 50px; 
-  font-size: 1.3rem; font-weight: 900;
-  cursor: pointer; transition: 0.3s;
-  box-shadow: 0 0 20px rgba(0,217,255,0.3);
-  margin-top: 20px;
+  font-size: 1.3rem; font-weight: 900; cursor: pointer; transition: 0.3s;
+  box-shadow: 0 0 20px rgba(0,217,255,0.3); margin-top: 20px;
 }
 .btn-action:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(0,217,255,0.5); }
 .btn-action:disabled { background: var(--muted); color: #222; cursor: not-allowed; box-shadow: none; transform: none;}
+
+.btn-next-phase { background: var(--magenta); color: white; box-shadow: 0 0 20px rgba(255,0,255,0.4); display: none; margin-top: 20px; }
+.btn-next-phase:hover { box-shadow: 0 0 30px rgba(255,0,255,0.6); }
+.btn-restart { background: var(--warning); display: none; margin-top: 20px;}
 
 #feedback-msg { margin-top: 25px; font-size: 1.4rem; font-weight: bold; min-height: 35px; letter-spacing: 1px; }
 
@@ -155,6 +150,7 @@ h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 
   .word-block { font-size: 1rem; padding: 8px 12px; }
   .empty-slot { width: 60px; height: 35px; }
   .hud-panel { padding: 15px; }
+  .level-badge { top: -10px; right: 10px; font-size: 0.8rem;}
 }
 </style>
 </head>
@@ -163,11 +159,19 @@ h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 
 <div id="canvas-container"></div>
 
 <div class="hud-panel">
+  <div class="level-badge" id="level-indicator">BLOQUE I</div>
   <h1>ENSAMBLADOR ESTRUCTURAL</h1>
-  <h2>Fase 2: Reconstrucción Lógica del Bloque I</h2>
+  <h2>Fase 2: Reconstrucción Lógica</h2>
+
+  <div class="audio-mission-box">
+    <div class="mission-text">
+      <strong>INSTRUCCIÓN NEUROCOGNITIVA:</strong> Escucha el bloque completo para asimilar la estructura rítmica. Cuando inicies el cronómetro, deberás reconstruir el párrafo exacto bajo presión cognitiva antes de 02:30.
+    </div>
+    <button class="btn-play-mission" id="btn-play-audio" onclick="playMissionAudio()">🔊 ESCUCHAR BLOQUE</button>
+  </div>
 
   <div class="stress-panel">
-    <div class="attempts-box" id="attempts-display">INTENTOS: 3/3</div>
+    <div class="attempts-box" id="attempts-display">OPORTUNIDADES: 3</div>
     <button class="btn-start-timer" id="btn-start" onclick="startMission()">▶ INICIAR CRONÓMETRO</button>
     <div class="timer-box" id="timer-display">02:30</div>
   </div>
@@ -178,16 +182,45 @@ h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 
   <div class="zone-title">BLOQUES DE MEMORIA FRAGMENTADOS</div>
   <div class="words-zone locked-zone" id="words-zone"></div>
 
-  <button class="btn-action" id="btn-validate" onclick="validateAssembly()" disabled>VERIFICAR ESTRUCTURA</button>
+  <button class="btn-action" id="btn-validate" onclick="validateAssembly()" disabled>VERIFICAR ESTRUCTURA NEURONAL</button>
+  
+  <button class="btn-action btn-next-phase" id="btn-next" onclick="window.location.href='fase3-nbf.html'">AVANZAR A FASE 3</button>
+  <button class="btn-action btn-restart" id="btn-restart" onclick="window.location.href='a-city-in-the-states.html'">REGRESAR A ENTRENAMIENTO</button>
+  
   <div id="feedback-msg"></div>
 </div>
 
+<audio id="audio_mission" preload="auto"></audio>
+
 <script>
 // ==========================================
-// CONFIGURACIÓN DE BLOQUE Y CRONÓMETRO
+// CONFIGURACIÓN DE NIVELES Y AUDIOS REALES
 // ==========================================
-const rawText = "In the city there are many sites that you can visit, there are many skyscrapers. There are good museums, galleries and exhibitions. There are from high culinary restaurants to hot-dog or pretzel stands. There are all type of schools. There are many malls and supermarkets, where you can buy whatever you want.";
-const correctSentence = rawText.replace(/[.,;]/g, '').split(' ').filter(word => word.length > 0);
+const gameLevels = [
+  {
+    id: 1, label: "BLOQUE I",
+    audio: "https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/a_city_1.mp4",
+    text: "In the city there are many sites that you can visit there are many skyscrapers There are good museums galleries and exhibitions There are from high culinary restaurants to hot-dog or pretzel stands There are all type of schools There are many malls and supermarkets where you can buy whatever you want"
+  },
+  {
+    id: 2, label: "BLOQUE II",
+    audio: "https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/a_city_2.mp4",
+    text: "You can find many hospitals with the latest crafts there are There are high-class hotels with the best sceneries The parks are ecologically intelligent The movie theaters are nice you can find 3-D or even 4-D cinemas in the city nowadays"
+  },
+  {
+    id: 3, label: "BLOQUE III",
+    audio: "https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/a_city_3.mp4",
+    text: "If you're looking for a place to live you could rent a small studio an apartment a loft or a house You can look up a place whether in the city or in the suburbs There are banks and bank tellers everywhere you look but there's no need to go straight to a bank because you can withdraw cash from almost anywhere"
+  },
+  {
+    id: 4, label: "BLOQUE IV",
+    audio: "https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/a_city_4.mp4",
+    text: "One of the major setbacks is the traffic there are traffic jams all over the city the good thing is that you can grab a cab very easy at any time Nightlife is great there are many places to go for example nightclubs theaters bars just to mention some"
+  }
+];
+
+let currentLevelIndex = 0;
+let correctSentence = [];
 let availableWords = [];
 let assembledWords = [];
 
@@ -206,21 +239,84 @@ const timerDisplay = document.getElementById('timer-display');
 const attemptsDisplay = document.getElementById('attempts-display');
 const btnStart = document.getElementById('btn-start');
 const btnValidate = document.getElementById('btn-validate');
+const audioPlayer = document.getElementById('audio_mission');
+const btnPlayAudio = document.getElementById('btn-play-audio');
+const levelIndicator = document.getElementById('level-indicator');
 
-// Audio de voz nativo
+// Audio de voz nativo (Estrés cognitivo)
 function speakStressPhrase(text, lang = 'es-MX') {
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = lang;
-  utterance.rate = 1.0;
+  utterance.lang = lang; utterance.rate = 1.0;
   window.speechSynthesis.speak(utterance);
 }
 
-// Inicializar bloques
-function initAssembler() {
+// Motor de audio sintetizado para clics/errores
+function triggerSynthSound(type) {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    if (type === 'click') {
+      const osc = ctx.createOscillator(); const gain = ctx.createGain();
+      osc.type = 'sine'; osc.frequency.setValueAtTime(800, ctx.currentTime);
+      gain.gain.setValueAtTime(0.05, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(); osc.stop(ctx.currentTime + 0.05);
+    } else if (type === 'error') {
+      const osc = ctx.createOscillator(); const gain = ctx.createGain();
+      osc.type = 'sawtooth'; osc.frequency.setValueAtTime(120, ctx.currentTime); osc.frequency.linearRampToValueAtTime(80, ctx.currentTime + 0.25);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(); osc.stop(ctx.currentTime + 0.3);
+    } else if (type === 'success') {
+      let osc1 = ctx.createOscillator(); let gain1 = ctx.createGain();
+      osc1.type = 'triangle'; osc1.frequency.setValueAtTime(523.25, ctx.currentTime);
+      gain1.gain.setValueAtTime(0.1, ctx.currentTime); gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      osc1.connect(gain1); gain1.connect(ctx.destination);
+      osc1.start(); osc1.stop(ctx.currentTime + 0.15);
+    }
+  } catch (e) { }
+}
+
+function loadLevel(index) {
+  if (index >= gameLevels.length) {
+    showFinalPhaseBtn();
+    return;
+  }
+  
+  const levelData = gameLevels[index];
+  levelIndicator.innerText = levelData.label;
+  btnPlayAudio.innerText = `🔊 ESCUCHAR ${levelData.label}`;
+  audioPlayer.src = levelData.audio;
+  
+  // Limpiar y preparar texto (Separar por espacios)
+  correctSentence = levelData.text.split(' ').filter(word => word.trim().length > 0);
   availableWords = [...correctSentence].sort(() => Math.random() - 0.5);
   assembledWords = [];
+  
+  // Resetear Variables UI y Lógica
+  attempts = 3;
+  elapsedSeconds = 0;
+  missionActive = false;
+  if(timerInterval) clearInterval(timerInterval);
+  
+  attemptsDisplay.innerText = `OPORTUNIDADES: ${attempts}`;
+  timerDisplay.innerText = "02:30";
+  timerDisplay.style.color = "var(--cyan)";
+  feedbackMsg.innerText = "";
+  
+  btnStart.style.display = 'inline-block';
+  btnValidate.disabled = true;
+  wordsZone.classList.add('locked-zone');
+  assemblyZone.classList.add('locked-zone');
+  
   render();
+}
+
+function playMissionAudio() {
+  audioPlayer.currentTime = 0;
+  audioPlayer.play();
 }
 
 function render() {
@@ -251,6 +347,8 @@ function render() {
 }
 
 function moveToAssembly(index) {
+  triggerSynthSound('click');
+  if ("vibrate" in navigator) window.navigator.vibrate(20);
   feedbackMsg.innerText = "";
   const word = availableWords.splice(index, 1)[0];
   assembledWords.push(word);
@@ -258,14 +356,16 @@ function moveToAssembly(index) {
 }
 
 function moveToWords(index) {
+  triggerSynthSound('click');
+  if ("vibrate" in navigator) window.navigator.vibrate(20);
   feedbackMsg.innerText = "";
   const word = assembledWords.splice(index, 1)[0];
   availableWords.push(word);
   render();
 }
 
-// INICIAR MISIÓN Y CRONÓMETRO
 function startMission() {
+  triggerSynthSound('click');
   missionActive = true;
   btnStart.style.display = 'none';
   wordsZone.classList.remove('locked-zone');
@@ -278,31 +378,24 @@ function startMission() {
 function updateTimer() {
   elapsedSeconds++;
   let remaining = totalSeconds - elapsedSeconds;
-  
   if (remaining < 0) return;
 
-  // Formatear visualmente MM:SS
   let m = Math.floor(remaining / 60).toString().padStart(2, '0');
   let s = (remaining % 60).toString().padStart(2, '0');
   timerDisplay.innerText = `${m}:${s}`;
   if(remaining <= 10) timerDisplay.style.color = "var(--warning)";
 
-  // DISPARADORES DE ESTRÉS AUDITIVO
   if (elapsedSeconds === 10) speakStressPhrase("Han pasado 10 segundos");
   if (elapsedSeconds === 30) speakStressPhrase("Confío que hayas memorizado correctamente");
   if (elapsedSeconds === 60) speakStressPhrase("Verifica en la caja que no tengas un error");
   if (elapsedSeconds === 100) speakStressPhrase("Tenemos el tiempo encima");
   if (elapsedSeconds === 120) speakStressPhrase("Estamos por terminar");
   
-  // Cuenta regresiva 10 a 1
-  if (remaining <= 10 && remaining > 0) {
-    speakStressPhrase(remaining.toString());
-  }
+  if (remaining <= 10 && remaining > 0) speakStressPhrase(remaining.toString());
 
-  // Final del tiempo
   if (remaining === 0) {
     clearInterval(timerInterval);
-    triggerGameOver("TIME IS OVER");
+    triggerGameOver("EL TIEMPO SE HA AGOTADO");
     speakStressPhrase("Time is over", 'en-US');
     setTimeout(() => speakStressPhrase("Debes regresar a la sección de entrenamiento a reforzar la memorización"), 1500);
   }
@@ -313,7 +406,7 @@ function validateAssembly() {
 
   if (assembledWords.length < correctSentence.length) {
     feedbackMsg.style.color = "var(--cyan)";
-    feedbackMsg.innerText = `Faltan ${correctSentence.length - assembledWords.length} bloques.`;
+    feedbackMsg.innerText = `SISTEMA INCOMPLETO: Faltan ${correctSentence.length - assembledWords.length} bloques.`;
     return;
   }
 
@@ -334,20 +427,29 @@ function validateAssembly() {
     clearInterval(timerInterval);
     missionActive = false;
     btnValidate.disabled = true;
+    triggerSynthSound('success');
     feedbackMsg.style.color = "var(--emerald)";
     feedbackMsg.innerText = "¡RECONFIGURACIÓN LÓGICA EXITOSA!";
     speakStressPhrase("Misión completada con éxito");
+    
+    // Avanzar de nivel
+    setTimeout(() => {
+        currentLevelIndex++;
+        loadLevel(currentLevelIndex);
+    }, 3000);
+    
   } else {
     attempts--;
-    attemptsDisplay.innerText = `INTENTOS: ${attempts}/3`;
+    attemptsDisplay.innerText = `OPORTUNIDADES: ${attempts}`;
     
     if (attempts === 0) {
       clearInterval(timerInterval);
       triggerGameOver("INTENTOS AGOTADOS");
       speakStressPhrase("Intentos agotados. Debes regresar a la sección de entrenamiento a reforzar la memorización.");
     } else {
+      triggerSynthSound('error');
       feedbackMsg.style.color = "var(--magenta)";
-      feedbackMsg.innerText = "ERROR ESTRUCTURAL. TE QUEDAN " + attempts + " INTENTOS.";
+      feedbackMsg.innerText = "ERROR ESTRUCTURAL. TE QUEDAN " + attempts + " OPORTUNIDADES.";
     }
   }
 }
@@ -356,9 +458,21 @@ function triggerGameOver(reason) {
   missionActive = false;
   wordsZone.classList.add('locked-zone');
   assemblyZone.classList.add('locked-zone');
-  btnValidate.disabled = true;
+  btnValidate.style.display = 'none';
+  document.getElementById('btn-restart').style.display = 'inline-block';
   feedbackMsg.style.color = "var(--warning)";
   feedbackMsg.innerText = `${reason}. MISIÓN FALLIDA.`;
+}
+
+function showFinalPhaseBtn() {
+    assemblyZone.innerHTML = '';
+    wordsZone.innerHTML = '';
+    document.querySelector('.stress-panel').style.display = 'none';
+    document.querySelector('.audio-mission-box').style.display = 'none';
+    btnValidate.style.display = 'none';
+    document.getElementById('btn-next').style.display = 'inline-block';
+    feedbackMsg.style.color = "var(--cyan)";
+    feedbackMsg.innerText = "¡SISTEMA ENSAMBLADO AL 100%! PREPARANDO SIGUIENTE FASE...";
 }
 
 // PARTÍCULAS NEURALES
@@ -377,7 +491,8 @@ for(let i=0; i<80; i++) particles.push(new Particle());
 function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
 animate();
 
-initAssembler();
+// Iniciar en Bloque I
+loadLevel(currentLevelIndex);
 </script>
 </body>
 </html>
