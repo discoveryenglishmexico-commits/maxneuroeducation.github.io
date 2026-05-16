@@ -87,7 +87,7 @@ h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-bottom: 
   padding: 15px 30px; border-radius: 10px; margin-bottom: 30px;
 }
 
-.timer-box { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--cyan); font-weight: bold; }
+.timer-box { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--cyan); font-weight: bold; transition: color 0.3s;}
 .attempts-box { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--emerald); }
 
 .btn-start-timer {
@@ -289,16 +289,12 @@ function loadLevel(index) {
   levelIndicator.innerText = levelData.label;
   btnPlayAudio.innerText = `🔊 ESCUCHAR ${levelData.label}`;
   
-  // Asignar el nuevo audio y FORZAR LA RECARGA para navegadores móviles
-  audioPlayer.src = levelData.audio;
-  audioPlayer.load();
-  
   // Limpiar y preparar texto
   correctSentence = levelData.text.split(' ').filter(word => word.trim().length > 0);
   availableWords = [...correctSentence].sort(() => Math.random() - 0.5);
   assembledWords = [];
   
-  // Resetear Variables UI y Lógica
+  // Resetear Variables UI y Lógica para el nuevo nivel
   attempts = 3;
   elapsedSeconds = 0;
   missionActive = false;
@@ -310,6 +306,7 @@ function loadLevel(index) {
   timerDisplay.style.color = "var(--cyan)";
   feedbackMsg.innerText = "";
   
+  btnStart.innerText = "▶ INICIAR CRONÓMETRO";
   btnStart.style.display = 'inline-block';
   btnValidate.disabled = true;
   wordsZone.classList.add('locked-zone');
@@ -319,8 +316,11 @@ function loadLevel(index) {
 }
 
 function playMissionAudio() {
+  // Para móviles: asignar src y hacer load() justo en el clic de interacción
+  audioPlayer.src = gameLevels[currentLevelIndex].audio;
+  audioPlayer.load();
   audioPlayer.currentTime = 0;
-  audioPlayer.play();
+  audioPlayer.play().catch(e => console.log("Navegador requiere interacción:", e));
 }
 
 function render() {
@@ -376,7 +376,33 @@ function startMission() {
   assemblyZone.classList.remove('locked-zone');
   btnValidate.disabled = false;
   
+  // Evitar múltiples intervalos si se da doble clic
+  if(timerInterval) clearInterval(timerInterval);
   timerInterval = setInterval(updateTimer, 1000);
+}
+
+function triggerRetry(reason) {
+  missionActive = false;
+  clearInterval(timerInterval);
+  wordsZone.classList.add('locked-zone');
+  assemblyZone.classList.add('locked-zone');
+  btnValidate.disabled = true;
+  
+  feedbackMsg.style.color = "var(--warning)";
+  feedbackMsg.innerText = `${reason}. TE QUEDAN ${attempts} INTENTOS.`;
+  
+  // Reactivar el botón de inicio para el siguiente intento
+  btnStart.style.display = 'inline-block';
+  btnStart.innerText = "▶ REINICIAR INTENTO";
+  
+  // Resetear el cronómetro y las palabras
+  elapsedSeconds = 0;
+  timerDisplay.innerText = "02:30";
+  timerDisplay.style.color = "var(--cyan)";
+  
+  availableWords = [...correctSentence].sort(() => Math.random() - 0.5);
+  assembledWords = [];
+  render();
 }
 
 function updateTimer() {
@@ -397,11 +423,20 @@ function updateTimer() {
   
   if (remaining <= 10 && remaining > 0) speakStressPhrase(remaining.toString());
 
+  // Si el tiempo se acaba, descontamos un intento y reiniciamos el tablero
   if (remaining === 0) {
     clearInterval(timerInterval);
-    triggerGameOver("EL TIEMPO SE HA AGOTADO");
-    speakStressPhrase("Time is over", 'en-US');
-    setTimeout(() => speakStressPhrase("Debes regresar a la sección de entrenamiento a reforzar la memorización"), 1500);
+    attempts--;
+    attemptsDisplay.innerText = `INTENTOS RESTANTES: ${attempts}`;
+    
+    if (attempts === 0) {
+        triggerGameOver("EL TIEMPO SE HA AGOTADO");
+        speakStressPhrase("Time is over. Debes regresar a la sección de entrenamiento a reforzar la memorización.", 'en-US');
+    } else {
+        triggerSynthSound('error');
+        triggerRetry("SE AGOTÓ EL TIEMPO");
+        speakStressPhrase("Time is over. Intenta de nuevo.", 'en-US');
+    }
   }
 }
 
@@ -453,8 +488,7 @@ function validateAssembly() {
       speakStressPhrase("Intentos agotados. Debes regresar a la sección de entrenamiento a reforzar la memorización.");
     } else {
       triggerSynthSound('error');
-      feedbackMsg.style.color = "var(--magenta)";
-      feedbackMsg.innerText = "ERROR ESTRUCTURAL. TE QUEDAN " + attempts + " OPORTUNIDADES.";
+      triggerRetry("ERROR ESTRUCTURAL"); // Llama a la función que resetea la mesa y muestra el botón
     }
   }
 }
