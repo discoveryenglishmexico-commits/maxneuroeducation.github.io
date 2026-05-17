@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Neurobiología de la Fluidez | NBF</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #050b14; --dark-blue: #0A1628; --cyan: #00D9FF; 
+  --magenta: #FF00FF; --emerald: #00FF9D; --text: #F8F9FA;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background-color: var(--navy);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* FONDO ANIMADO NEURAL */
+#bg-canvas {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2;
+  background: radial-gradient(circle at 50% 50%, var(--dark-blue) 0%, var(--navy) 100%);
+}
+
+/* EFECTO CINEMÁTICO AL HACER SCROLL */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* PANELES GLASSMORPHISM (CRISTAL) */
+.glass-panel {
+  background: rgba(10, 22, 40, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 217, 255, 0.15);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,217,255,0.05);
+  margin-bottom: 50px;
+}
+
+/* SECCIONES Y TEXTOS */
+section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); text-transform: uppercase; letter-spacing: 3px; color: var(--cyan); line-height: 1.1; margin-bottom: 20px; text-align: center; text-shadow: 0 0 20px rgba(0,217,255,0.4); }
+h2 { font-family: 'Orbitron', sans-serif; font-size: clamp(1.5rem, 3vw, 2.5rem); color: var(--magenta); margin-bottom: 20px; text-shadow: 0 0 15px rgba(255,0,255,0.4); }
+h3 { font-size: 1.8rem; color: var(--emerald); margin-bottom: 15px; }
+
+p { font-size: 1.3rem; line-height: 1.6; color: #B0B8C8; margin-bottom: 20px; }
+.highlight { color: var(--text); font-weight: bold; }
+
+/* ERROR SYSTEM ALERT */
+.system-error {
+  display: inline-block;
+  border: 2px solid #FF3333;
+  color: #FF3333;
+  font-family: 'Orbitron', sans-serif;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background: rgba(255, 51, 51, 0.1);
+  animation: pulse-error 2s infinite;
+  margin-bottom: 20px;
+}
+@keyframes pulse-error { 0% { box-shadow: 0 0 0 0 rgba(255,51,51,0.4); } 70% { box-shadow: 0 0 0 15px rgba(255,51,51,0); } 100% { box-shadow: 0 0 0 0 rgba(255,51,51,0); } }
+
+/* TABLA DE DIAGNÓSTICO ESTILO NEURAL */
+.matrix-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+.matrix-table th { font-family: 'Orbitron', sans-serif; color: var(--navy); background: var(--cyan); padding: 15px; font-size: 1.2rem; }
+.matrix-table td { border-bottom: 1px solid rgba(0,217,255,0.2); padding: 20px 15px; font-size: 1.2rem; color: #A0AABF; }
+.matrix-table tr:hover td { background: rgba(0,217,255,0.05); color: var(--text); }
+.nbf-col { border-left: 2px solid var(--emerald); color: var(--emerald) !important; font-weight: bold; }
+
+/* CONTENEDORES DE IMÁGENES HOLOGRÁFICAS */
+.hologram-box {
+  width: 100%;
+  height: 300px;
+  background: rgba(0,0,0,0.4);
+  border: 1px dashed var(--cyan);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+  position: relative;
+  overflow: hidden;
+}
+.hologram-box::before {
+  content: ''; position: absolute; width: 100px; height: 100px;
+  background: var(--magenta); filter: blur(50px); opacity: 0.3;
+  animation: float 6s infinite alternate;
+}
+@keyframes float { 0% { transform: translate(-50px, -50px); } 100% { transform: translate(50px, 50px); } }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 100%; align-items: center;}
+@media(max-width: 800px) { .grid-2 { grid-template-columns: 1fr; gap: 20px;} }
+
+/* BOTON UPGRADE */
+.btn-upgrade {
+  font-family: 'Orbitron', sans-serif; padding: 20px 50px; 
+  background: var(--emerald); color: var(--navy); 
+  border: none; border-radius: 50px; 
+  font-size: 1.5rem; font-weight: 900; cursor: pointer; transition: 0.3s;
+  box-shadow: 0 0 30px rgba(0,255,157,0.5); margin-top: 40px; text-decoration: none; display: inline-block;
+}
+.btn-upgrade:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(0,255,157,0.8); }
+
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<section>
+  <div class="reveal">
+    <h1>HACKEANDO EL IDIOMA</h1>
+    <h2>La Neurobiología de la Fluidez</h2>
+    <div class="glass-panel" style="text-align: center;">
+      <p class="highlight">Por qué tu cerebro intuitivamente rechaza el inglés tradicional, y cómo el entrenamiento neurocognitivo basado en el postulado de Toño Vicas reescribe tu mente.</p>
+      <h3 style="margin-top: 30px; font-family: 'Orbitron', sans-serif; color: var(--cyan);">DiscoveryMAX NEUROEDUCATION</h3>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="grid-2 reveal">
+    <div>
+      <div class="system-error">SYSTEM ERROR</div>
+      <h2>El Gran Glitch: "Lo Entiendo, Pero No Lo Hablo"</h2>
+      <p>No es una fase transitoria ni falta de práctica. Es una <span class="highlight">"simulación cognitiva"</span> que enmascara una falla en la decodificación profunda.</p>
+      <p><strong>El Mecanismo de Gap-Filling:</strong> El cerebro es una máquina predictiva. Al escuchar fragmentos, realiza una inferencia semántica superficial (usando solo 2 o 3 palabras clave) y "rellena los vacíos".</p>
+    </div>
+    <div class="glass-panel">
+      <h3 style="color: #FF3333;">El Veredicto Científico</h3>
+      <p>Si no puedes ejecutarlo (hablarlo), nunca activaste la "receta neuronal" completa. Lo que llamas entendimiento es solo una <span class="highlight">exitosa adivinanza evolutiva</span>.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="glass-panel reveal">
+    <h2>El Magneto Perceptual: Tu Lengua Materna es un Imán</h2>
+    <div class="grid-2" style="margin-top: 30px;">
+      <div>
+        <h3>Ahorro de Energía</h3>
+        <p>El cerebro adulto evita el altísimo gasto metabólico de crear rutas neuronales desde cero.</p>
+        <h3 style="margin-top: 20px;">Asimilación Forzada</h3>
+        <p>Los fonemas del español actúan como imanes. El cerebro arrastra los sonidos desconocidos hacia las casillas fonéticas que ya domina.</p>
+      </div>
+      <div>
+        <h3>El Puente Acústico-Motor (Trampa)</h3>
+        <p>Las <span class="highlight">Neuronas Espejo</span> facilitan un acoplamiento rápido. El cerebro "ensaya" el movimiento de forma refleja, permitiéndote imitar al profesor a la perfección en el aula.</p>
+        <p style="color: var(--magenta); font-weight: bold; margin-top: 15px;">El Peligro Biológico:</p>
+        <p>Es un reflejo de corto plazo. Imitar mecánicamente no reescribe tus mapas fonéticos a largo plazo, generando una Ilusión de Competencia (Placebo Educativo).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="reveal" style="width: 100%;">
+    <h2>Matriz de Diagnóstico</h2>
+    <div class="glass-panel" style="padding: 20px;">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th style="background: transparent; border-bottom: 2px solid var(--cyan);">PARÁMETRO</th>
+            <th style="background: rgba(255,255,255,0.05);">Modelo Tradicional</th>
+            <th style="background: rgba(0,255,157,0.1); color: var(--emerald);">Neuro-Entrenamiento NBF</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Enfoque</strong></td>
+            <td>Instrucción Mecánica Consciente</td>
+            <td class="nbf-col">Filtrado Estadístico del Entorno (HVPT)</td>
+          </tr>
+          <tr>
+            <td><strong>Percepción</strong></td>
+            <td>Asimilación Forzada (Magneto Perceptual)</td>
+            <td class="nbf-col">Desmantelamiento de atajos auditivos maternos</td>
+          </tr>
+          <tr>
+            <td><strong>Resultado Fonético</strong></td>
+            <td>Imitación temporal y placebo</td>
+            <td class="nbf-col">Calibración Motora y Deriva Fonética real</td>
+          </tr>
+          <tr>
+            <td><strong>Estado Psicológico</strong></td>
+            <td style="color: var(--magenta);">Culpa, ansiedad y estancamiento</td>
+            <td class="nbf-col">Metacognición activa y recompensa por dopamina</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="grid-2 reveal">
+    <div class="glass-panel">
+      <h2>La Solución Fonética: HVPT</h2>
+      <p>Entrenamiento de Alta Variabilidad. La <span class="highlight">Vía Dorsal del Lenguaje</span> actúa como el servomecanismo maestro que integra la percepción sensorial con la ejecución motora.</p>
+      <p>El bombardeo acústico (exposición controlada a múltiples acentos) satura el cerebro, impidiéndole usar la muleta del español y forzándolo a identificar los patrones estadísticos reales del inglés.</p>
+    </div>
+    <div class="glass-panel" style="border-color: var(--magenta);">
+      <h2 style="color: var(--text);">La Evidencia fMRI</h2>
+      <p>Comprensión y producción son uno solo. Las redes responsables de decodificar la estructura profunda están físicamente conectadas a las redes de producción motora.</p>
+      <p class="highlight" style="color: var(--magenta); font-size: 1.5rem; text-align: center; margin-top: 20px;">"Si no lo hablas, no lo has entendido."</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="reveal" style="width: 100%;">
+    <h2 style="text-align: center;">La Topografía del Idioma: Disociación Sustantivo-Verbo</h2>
+    <div class="grid-2">
+      <div class="glass-panel" style="border-top: 4px solid var(--cyan);">
+        <h3 style="color: var(--cyan);">SUSTANTIVOS (Entidades)</h3>
+        <p>Procesados en redes temporales (Giro Temporal Inferior). Almacenan entidades abstractas, objetos y semántica de referencia.</p>
+      </div>
+      <div class="glass-panel" style="border-top: 4px solid var(--magenta);">
+        <h3 style="color: var(--magenta);">VERBOS (El Motor)</h3>
+        <p>Procesados en el lóbulo frontal (Áreas BA 44, 45, 47). Computan la acción, la complejidad morfosintáctica y construyen la estructura. ¡Son el motor del idioma!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="glass-panel reveal">
+    <h2>La Ventaja Hispanohablante: El Núcleo Predictor</h2>
+    <p>El verbo español empaca hasta 5 dimensiones gramaticales (Persona, Número, Tiempo, Modo, Aspecto) en una sola palabra. Tu cerebro hispano ha evolucionado para esperar que toda la información vital emane del verbo.</p>
+    
+    <div class="hologram-box" style="height: auto; padding: 30px; margin-top: 40px; background: rgba(0,217,255,0.05); border: 1px solid var(--cyan); text-align: left;">
+      <h3 style="text-align: center; margin-bottom: 30px;">Hackeando el Inglés: El Método NBF</h3>
+      <div class="grid-2">
+        <div>
+          <p><span class="highlight" style="color: var(--cyan);">Fase 1: Verbo (Frontal BA 44-47)</span><br>El Ancla Neural. Explotamos el núcleo predictor.</p>
+        </div>
+        <div>
+          <p><span class="highlight" style="color: var(--magenta);">Fase 2: Sujeto (Temporal BA 21-22)</span><br>La Entidad. ¿Quién realiza la acción?</p>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 20px;">
+        <p><span class="highlight" style="color: var(--emerald);">Fase 3: Complementos (Parietal)</span><br>El Contexto. ¿Dónde, cómo y cuándo?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="reveal" style="text-align: center; width: 100%;">
+    <h2>Hackeo Bioquímico: De la Amígdala a la Dopamina</h2>
+    <div class="grid-2" style="text-align: left; margin-bottom: 50px;">
+      <div class="glass-panel" style="border-left: 5px solid #FF3333;">
+        <h3 style="color: #FF3333;">Cortisol / Amígdala</h3>
+        <p><strong>El Secuestro de la Amígdala (Tradicional):</strong> Intentar hablar y fallar constantemente genera culpa, activa la amígdala y produce ansiedad bloqueando el aprendizaje.</p>
+      </div>
+      <div class="glass-panel" style="border-left: 5px solid var(--emerald);">
+        <h3 style="color: var(--emerald);">Dopamina</h3>
+        <p><strong>El Disparo de Dopamina (NBF):</strong> La metacognición activa y el descubrimiento lógico de patrones posicionales liberan dopamina, creando una adicción neuroquímica al aprendizaje.</p>
+      </div>
+    </div>
+    
+    <h1 style="color: var(--emerald); font-size: 3rem; margin-top: 50px;">SYSTEM UPGRADE READY</h1>
+    <p style="font-size: 1.5rem;">Tu cerebro es una máquina evolutiva perfecta de eficiencia; simplemente estabas usando el manual de instrucciones equivocado.</p>
+    <a href="a-city-in-the-states.html" class="btn-upgrade">INICIAR ENTRENAMIENTO NBF</a>
+  </div>
+</section>
+
+<script>
+// Animación de partículas de fondo (Simulación de sinapsis)
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize); resize();
+
+class Node {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.5;
+    this.vy = (Math.random() - 0.5) * 0.5;
+    this.radius = Math.random() * 2;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    if(this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if(this.y < 0 || this.y > canvas.height) this.vy *= -1;
+  }
+  draw() {
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0, 217, 255, 0.5)'; ctx.fill();
+  }
+}
+
+for(let i=0; i<100; i++) particles.push(new Node());
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  
+  // Conectar nodos cercanos (Sinapsis)
+  for(let i=0; i<particles.length; i++) {
+    for(let j=i+1; j<particles.length; j++) {
+      let dx = particles[i].x - particles[j].x;
+      let dy = particles[i].y - particles[j].y;
+      let dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 120) {
+        ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(0, 217, 255, ${0.1 - dist/1200})`; ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+// Intersection Observer para revelar elementos al hacer scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
