@@ -11,7 +11,6 @@
   --dark-blue: #0A1628; 
   --cyan: #00D9FF; 
   --magenta: #FF00FF; 
-  --emerald-gradient: linear-gradient(135deg, #00FF9D, #00b3ff);
   --discovery-gradient: linear-gradient(90deg, #00D9FF, #FF00FF);
   --text-bright: #FFFFFF;
   --text-muted: #E2E8F0;
@@ -26,7 +25,7 @@ body {
   overflow-x: hidden;
 }
 
-/* NAVEGACIÓN CORREGIDA PARA MÓVILES */
+/* NAVEGACIÓN */
 .top-nav {
   position: fixed; top: 0; width: 100%; z-index: 100;
   background: rgba(5, 11, 20, 0.85); backdrop-filter: blur(10px);
@@ -35,11 +34,12 @@ body {
   padding: 10px 30px;
 }
 .logo-text { height: 40px; object-fit: contain; flex-shrink: 1; max-width: 65%; }
-.logo-brain { height: 50px; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 0 10px rgba(0,217,255,0.5)); animation: pulse-brain 3s infinite alternate;}
+.logo-brain-nav { height: 50px; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 0 10px rgba(0,217,255,0.5)); animation: pulse-brain 3s infinite alternate;}
 
+/* ANIMACIÓN DE LATIDO GLOBAL */
 @keyframes pulse-brain { 0% { filter: drop-shadow(0 0 5px rgba(0,217,255,0.4)); transform: scale(1); } 100% { filter: drop-shadow(0 0 20px rgba(255,0,255,0.6)); transform: scale(1.05); } }
 
-/* FONDO ANIMADO NEURAL GLOBAL (Z-INDEX AJUSTADO PARA QUE SE VEA SOBRE LAS FOTOS) */
+/* FONDO ANIMADO NEURAL GLOBAL (Z-index asegura que floten SOBRE los fondos oscuros) */
 #bg-canvas {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1;
   pointer-events: none;
@@ -57,6 +57,7 @@ body {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  z-index: 0;
 }
 
 .overlay {
@@ -66,7 +67,7 @@ body {
 }
 
 .content-wrapper {
-  position: relative; z-index: 2;
+  position: relative; z-index: 2; /* Texto sobre partículas */
   max-width: 1200px; width: 100%;
 }
 
@@ -103,18 +104,19 @@ p { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-botto
   padding: 10px 20px; border-radius: 5px; background: rgba(255, 51, 51, 0.1);
   animation: pulse-error 2s infinite; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px;
 }
-@keyframes pulse-error { 0% { box-shadow: 0 0 0 0 rgba(255,51,51,0.4); } 70% { box-shadow: 0 0 0 15px rgba(255,51,51,0); } 100% { box-shadow: 0 0 0 0 rgba(255,51,51,0); } }
+@keyframes pulse-error { 0% { box-shadow: 0 0 0 0 rgba(255,51,51,0.4); } 70% { box-shadow: 0 0 0 15px rgba(255,51,51,0);  } 100% { box-shadow: 0 0 0 0 rgba(255,51,51,0); } }
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 100%; align-items: start;}
 .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; width: 100%; }
 
-/* TABLA DIAGNÓSTICO (ESTRUCTURA RESPONSIVA CERO CORTES) */
+/* TABLA DIAGNÓSTICO RESPONSIVA */
 .matrix-container { width: 100%; overflow-x: auto; background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid rgba(0,217,255,0.2); }
 .matrix-table { width: 100%; border-collapse: collapse; min-width: 600px; }
-.matrix-table th { font-family: 'Orbitron', sans-serif; color: var(--text-bright); background: rgba(0, 217, 255, 0.15); padding: 15px; font-size: 1.1rem; border-bottom: 2px solid var(--cyan); text-align: left; width: 33%;}
+.matrix-table th { font-family: 'Orbitron', sans-serif; color: var(--text-bright); background: rgba(0, 217, 255, 0.15); padding: 15px; font-size: 1.1rem; border-bottom: 2px solid var(--cyan); text-align: left;}
 .matrix-table td { border-bottom: 1px solid rgba(0,217,255,0.1); padding: 20px 15px; font-size: 1.1rem; color: var(--text-muted); vertical-align: top;}
 .nbf-col { border-left: 2px solid var(--magenta); color: var(--text-bright) !important; font-weight: bold; background: rgba(255,0,255,0.05);}
 
+/* BOTONES */
 .btn-premium {
   font-family: 'Orbitron', sans-serif; padding: 20px 50px; 
   background: var(--discovery-gradient); color: var(--text-bright); 
@@ -125,17 +127,27 @@ p { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-botto
 }
 .btn-premium:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 15px 40px rgba(0,217,255,0.6); color: var(--navy); background: var(--text-bright);}
 
-/* AJUSTES MÓVILES EXTREMOS PARA EVITAR CORTES */
+/* CEREBRO FINAL ESPECTACULAR */
+.logo-brain-final {
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 15px rgba(255, 0, 255, 0.6));
+  animation: pulse-brain 2.5s infinite alternate; /* Latido un poco más rápido y pronunciado */
+}
+
+/* AJUSTES MÓVILES */
 @media(max-width: 800px) { 
   .grid-2 { grid-template-columns: 1fr; gap: 20px;} 
   .glass-panel { padding: 25px; }
   .immersive-section { padding-top: 100px; padding-bottom: 40px; background-attachment: scroll;} 
   .top-nav { padding: 10px 15px; gap: 10px;}
   .logo-text { height: 20px; }
-  .logo-brain { height: 30px; }
+  .logo-brain-nav { height: 30px; }
+  .logo-brain-final { height: 80px; }
   .btn-premium { width: 100%; text-align: center; padding: 15px 20px; font-size: 1.1rem;}
   
-  /* Transformar tabla a tarjetas en móvil para evitar huecos negros */
+  /* Tabla a tarjetas en móvil */
   .matrix-table, .matrix-table tbody, .matrix-table tr, .matrix-table td { display: block; width: 100%; }
   .matrix-table thead { display: none; }
   .matrix-table tr { margin-bottom: 15px; border: 1px solid rgba(0,217,255,0.2); border-radius: 8px; background: rgba(0,0,0,0.3);}
@@ -150,7 +162,7 @@ p { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-botto
 
 <nav class="top-nav">
   <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_official_titulo_logo_discovery_1.png" alt="Discovery Max" class="logo-text">
-  <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_brain_discoverylogo_brain_1.png" alt="Neuro Brain" class="logo-brain">
+  <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_brain_discoverylogo_brain_1.png" alt="Neuro Brain" class="logo-brain-nav">
 </nav>
 
 <canvas id="bg-canvas"></canvas>
@@ -333,6 +345,9 @@ p { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-botto
 <section class="immersive-section" style="background-image: url('https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/upgrade_ready_1.png'); padding-bottom: 120px;">
   <div class="overlay" style="background: linear-gradient(to bottom, rgba(5,11,20,0.9), rgba(5,11,20,0.95));"></div>
   <div class="content-wrapper reveal" style="text-align: center;">
+    
+    <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_brain_discoverylogo_brain_1.png" alt="Neuro Brain" class="logo-brain-final">
+    
     <h1 class="text-gradient" style="font-size: clamp(3rem, 6vw, 5rem);">SYSTEM UPGRADE READY</h1>
     <p style="font-size: 1.6rem; max-width: 800px; margin: 0 auto; color: var(--text-bright);">Tu cerebro es una máquina evolutiva perfecta de eficiencia; simplemente estabas usando el manual de instrucciones equivocado.</p>
     
@@ -341,7 +356,7 @@ p { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-botto
 </section>
 
 <script>
-// Canvas Particles (Z-index asegura que estén sobre las fotos)
+// Canvas Particles
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
