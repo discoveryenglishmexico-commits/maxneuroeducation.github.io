@@ -26,22 +26,22 @@ body {
   overflow-x: hidden;
 }
 
-/* NAVBAR Y LOGOS */
+/* NAVEGACIÓN CORREGIDA PARA MÓVILES */
 .top-nav {
   position: fixed; top: 0; width: 100%; z-index: 100;
-  background: rgba(5, 11, 20, 0.8); backdrop-filter: blur(10px);
+  background: rgba(5, 11, 20, 0.85); backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 217, 255, 0.2);
   display: flex; justify-content: space-between; align-items: center;
   padding: 10px 30px;
 }
-.logo-text { height: 40px; object-fit: contain; }
-.logo-brain { height: 50px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(0,217,255,0.5)); animation: pulse-brain 3s infinite alternate;}
+.logo-text { height: 40px; object-fit: contain; flex-shrink: 1; max-width: 65%; }
+.logo-brain { height: 50px; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 0 10px rgba(0,217,255,0.5)); animation: pulse-brain 3s infinite alternate;}
 
 @keyframes pulse-brain { 0% { filter: drop-shadow(0 0 5px rgba(0,217,255,0.4)); transform: scale(1); } 100% { filter: drop-shadow(0 0 20px rgba(255,0,255,0.6)); transform: scale(1.05); } }
 
-/* FONDO ANIMADO NEURAL GLOBAL */
+/* FONDO ANIMADO NEURAL GLOBAL (Z-INDEX AJUSTADO PARA QUE SE VEA SOBRE LAS FOTOS) */
 #bg-canvas {
-  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1;
   pointer-events: none;
 }
 
@@ -49,17 +49,16 @@ body {
 .immersive-section {
   position: relative;
   width: 100%;
-  padding: 120px 20px 80px 20px; /* Evita cortes en móvil */
+  padding: 120px 20px 80px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed; /* Parallax effect */
+  background-attachment: fixed;
 }
 
-/* Overlay oscuro para que el texto resalte siempre */
 .overlay {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
   background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.95));
@@ -71,11 +70,10 @@ body {
   max-width: 1200px; width: 100%;
 }
 
-/* EFECTO CINEMÁTICO */
 .reveal { opacity: 0; transform: translateY(40px); transition: all 1s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
 
-/* PANELES GLASSMORPHISM REFINADOS */
+/* PANELES GLASSMORPHISM */
 .glass-panel {
   background: rgba(10, 22, 40, 0.5);
   backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
@@ -86,7 +84,6 @@ body {
   margin-bottom: 40px;
 }
 
-/* TIPOGRAFÍA CORREGIDA */
 .text-gradient {
   background: var(--discovery-gradient);
   -webkit-background-clip: text;
@@ -101,7 +98,6 @@ h3 { font-size: 1.8rem; margin-bottom: 15px; color: var(--cyan); text-shadow: 0 
 p { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); text-align: justify;}
 .highlight { color: var(--text-bright); font-weight: bold; background: rgba(0,217,255,0.15); padding: 0 5px; border-radius: 4px;}
 
-/* ERROR SYSTEM ALERT */
 .system-error {
   display: inline-block; border: 2px solid #FF3333; color: #FF3333; font-family: 'Orbitron', sans-serif;
   padding: 10px 20px; border-radius: 5px; background: rgba(255, 51, 51, 0.1);
@@ -109,17 +105,16 @@ p { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-botto
 }
 @keyframes pulse-error { 0% { box-shadow: 0 0 0 0 rgba(255,51,51,0.4); } 70% { box-shadow: 0 0 0 15px rgba(255,51,51,0); } 100% { box-shadow: 0 0 0 0 rgba(255,51,51,0); } }
 
-/* GRILLAS REFINADAS */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 100%; align-items: start;}
 .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; width: 100%; }
 
-/* TABLA DE DIAGNÓSTICO ESTILO NEURAL */
-.matrix-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: rgba(0,0,0,0.4); border-radius: 10px; overflow: hidden;}
-.matrix-table th { font-family: 'Orbitron', sans-serif; color: var(--text-bright); background: rgba(0, 217, 255, 0.15); padding: 15px; font-size: 1.2rem; border-bottom: 2px solid var(--cyan); text-align: left;}
-.matrix-table td { border-bottom: 1px solid rgba(0,217,255,0.1); padding: 20px 15px; font-size: 1.15rem; color: var(--text-muted); }
+/* TABLA DIAGNÓSTICO (ESTRUCTURA RESPONSIVA CERO CORTES) */
+.matrix-container { width: 100%; overflow-x: auto; background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid rgba(0,217,255,0.2); }
+.matrix-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+.matrix-table th { font-family: 'Orbitron', sans-serif; color: var(--text-bright); background: rgba(0, 217, 255, 0.15); padding: 15px; font-size: 1.1rem; border-bottom: 2px solid var(--cyan); text-align: left; width: 33%;}
+.matrix-table td { border-bottom: 1px solid rgba(0,217,255,0.1); padding: 20px 15px; font-size: 1.1rem; color: var(--text-muted); vertical-align: top;}
 .nbf-col { border-left: 2px solid var(--magenta); color: var(--text-bright) !important; font-weight: bold; background: rgba(255,0,255,0.05);}
 
-/* BOTONES MEJORADOS (Elegantes y no ruidosos) */
 .btn-premium {
   font-family: 'Orbitron', sans-serif; padding: 20px 50px; 
   background: var(--discovery-gradient); color: var(--text-bright); 
@@ -130,15 +125,24 @@ p { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-botto
 }
 .btn-premium:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 15px 40px rgba(0,217,255,0.6); color: var(--navy); background: var(--text-bright);}
 
-/* AJUSTES MÓVILES */
+/* AJUSTES MÓVILES EXTREMOS PARA EVITAR CORTES */
 @media(max-width: 800px) { 
   .grid-2 { grid-template-columns: 1fr; gap: 20px;} 
   .glass-panel { padding: 25px; }
-  .immersive-section { padding-top: 100px; padding-bottom: 40px; background-attachment: scroll;} /* Mejora parallax en móviles */
-  .top-nav { padding: 10px 15px; }
-  .logo-text { height: 25px; }
-  .logo-brain { height: 35px; }
+  .immersive-section { padding-top: 100px; padding-bottom: 40px; background-attachment: scroll;} 
+  .top-nav { padding: 10px 15px; gap: 10px;}
+  .logo-text { height: 20px; }
+  .logo-brain { height: 30px; }
   .btn-premium { width: 100%; text-align: center; padding: 15px 20px; font-size: 1.1rem;}
+  
+  /* Transformar tabla a tarjetas en móvil para evitar huecos negros */
+  .matrix-table, .matrix-table tbody, .matrix-table tr, .matrix-table td { display: block; width: 100%; }
+  .matrix-table thead { display: none; }
+  .matrix-table tr { margin-bottom: 15px; border: 1px solid rgba(0,217,255,0.2); border-radius: 8px; background: rgba(0,0,0,0.3);}
+  .matrix-table td { text-align: left; padding: 15px; position: relative; padding-left: 40%; font-size: 1rem;}
+  .matrix-table td::before { content: attr(data-label); position: absolute; left: 15px; width: 35%; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; color: var(--cyan); font-weight: bold; text-transform: uppercase;}
+  .nbf-col { border-left: none; border-top: 2px solid var(--magenta); }
+  .matrix-table td.nbf-col::before { color: var(--magenta); }
 }
 </style>
 </head>
@@ -209,7 +213,7 @@ p { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-botto
     <h2 class="text-gradient">El Placebo Educativo</h2>
     <p style="font-size: 1.4rem; text-align: center;">Explicar racionalmente "dónde poner la lengua" fomenta esfuerzo consciente temporal, pero choca violentamente contra nuestra arquitectura biológica automatizada.</p>
     
-    <div class="glass-panel" style="margin-top: 30px; padding: 20px;">
+    <div class="matrix-container" style="margin-top: 30px; padding: 20px;">
       <table class="matrix-table">
         <thead>
           <tr>
@@ -220,24 +224,24 @@ p { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-botto
         </thead>
         <tbody>
           <tr>
-            <td><strong>Enfoque</strong></td>
-            <td>Instrucción Mecánica Consciente</td>
-            <td class="nbf-col">Filtrado Estadístico del Entorno (HVPT)</td>
+            <td data-label="PARÁMETRO"><strong>Enfoque</strong></td>
+            <td data-label="Tradicional">Instrucción Mecánica Consciente</td>
+            <td data-label="NBF" class="nbf-col">Filtrado Estadístico del Entorno (HVPT)</td>
           </tr>
           <tr>
-            <td><strong>Percepción</strong></td>
-            <td>Asimilación Forzada (Magneto)</td>
-            <td class="nbf-col">Desmantelamiento de atajos auditivos</td>
+            <td data-label="PARÁMETRO"><strong>Percepción</strong></td>
+            <td data-label="Tradicional">Asimilación Forzada (Magneto)</td>
+            <td data-label="NBF" class="nbf-col">Desmantelamiento de atajos auditivos</td>
           </tr>
           <tr>
-            <td><strong>Resultado Fonético</strong></td>
-            <td>Imitación temporal y placebo</td>
-            <td class="nbf-col">Calibración Motora y Deriva Fonética real</td>
+            <td data-label="PARÁMETRO"><strong>Resultado Fonético</strong></td>
+            <td data-label="Tradicional">Imitación temporal y placebo</td>
+            <td data-label="NBF" class="nbf-col">Calibración Motora y Deriva Fonética real</td>
           </tr>
           <tr>
-            <td><strong>Psicología</strong></td>
-            <td style="color: #FF3333;">Culpa, ansiedad y estancamiento</td>
-            <td class="nbf-col text-gradient" style="font-weight: bold;">Metacognición activa y dopamina</td>
+            <td data-label="PARÁMETRO"><strong>Psicología</strong></td>
+            <td data-label="Tradicional" style="color: #FF3333;">Culpa, ansiedad y estancamiento</td>
+            <td data-label="NBF" class="nbf-col text-gradient" style="font-weight: bold;">Metacognición activa y dopamina</td>
           </tr>
         </tbody>
       </table>
@@ -329,9 +333,6 @@ p { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-botto
 <section class="immersive-section" style="background-image: url('https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/upgrade_ready_1.png'); padding-bottom: 120px;">
   <div class="overlay" style="background: linear-gradient(to bottom, rgba(5,11,20,0.9), rgba(5,11,20,0.95));"></div>
   <div class="content-wrapper reveal" style="text-align: center;">
-    
-    <img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/max_brain_discoverylogo_brain_1.png" alt="Brain" style="width: 150px; margin-bottom: 20px; filter: drop-shadow(0 0 20px #FF00FF); animation: pulse-brain 2s infinite alternate;">
-    
     <h1 class="text-gradient" style="font-size: clamp(3rem, 6vw, 5rem);">SYSTEM UPGRADE READY</h1>
     <p style="font-size: 1.6rem; max-width: 800px; margin: 0 auto; color: var(--text-bright);">Tu cerebro es una máquina evolutiva perfecta de eficiencia; simplemente estabas usando el manual de instrucciones equivocado.</p>
     
@@ -340,7 +341,7 @@ p { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-botto
 </section>
 
 <script>
-// Canvas Particles (Sinapsis Ligeras de Fondo)
+// Canvas Particles (Z-index asegura que estén sobre las fotos)
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -373,7 +374,6 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   particles.forEach(p => { p.update(); p.draw(); });
   
-  // Conexiones
   for(let i=0; i<particles.length; i++) {
     for(let j=i+1; j<particles.length; j++) {
       let dx = particles[i].x - particles[j].x;
@@ -389,7 +389,6 @@ function animate() {
 }
 animate();
 
-// Observer Cinematográfico
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if(entry.isIntersecting) { entry.target.classList.add('active'); }
