@@ -15,9 +15,12 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* Scroll suave activado para toda la página */
+html { scroll-behavior: smooth; }
+
 body {
   font-family: 'Rajdhani', sans-serif; background-color: var(--navy); color: var(--text-bright);
-  overflow-x: hidden; scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 #bg-canvas {
@@ -49,7 +52,9 @@ body {
   flex: 1; display: flex; flex-direction: column; gap: 60px;
 }
 
-/* PANELES GLASSMORPHISM CON EFECTOS CREATIVOS */
+/* SECCIONES Y PANELES GLASSMORPHISM */
+section { scroll-margin-top: 50px; /* Espacio superior al deslizarse */ }
+
 .glass-panel {
   background: rgba(10, 22, 40, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(0, 217, 255, 0.2);
   border-radius: 20px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,217,255,0.05);
@@ -95,12 +100,25 @@ p { font-size: 1.2rem; line-height: 1.6; color: var(--text-muted); margin-bottom
 
 .alert-box { border: 2px solid #FF3333; background: rgba(255,51,51,0.1); padding: 20px; border-radius: 10px; margin-top: 20px; }
 
-/* RESPONSIVE */
+/* BOTÓN FLOTANTE "VOLVER ARRIBA" */
+.btn-scroll-top {
+  position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px;
+  background: var(--gradient-neon); color: var(--navy); border: none; border-radius: 50%;
+  font-size: 1.5rem; font-weight: bold; cursor: pointer; box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+  display: flex; justify-content: center; align-items: center; z-index: 1000;
+  opacity: 0; visibility: hidden; transition: all 0.4s ease; transform: translateY(20px);
+}
+.btn-scroll-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.btn-scroll-top:hover { transform: scale(1.1); box-shadow: 0 0 30px rgba(0, 217, 255, 0.8); }
+
+/* RESPONSIVE MÓVIL */
 @media(max-width: 950px) {
   .lab-layout { flex-direction: column; padding: 20px 10px; }
-  .sidebar { position: relative; top: 0; height: auto; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .sidebar { position: relative; top: 0; height: auto; flex-direction: row; flex-wrap: wrap; justify-content: center; z-index: 100; }
   .menu-btn { flex: 1 1 auto; text-align: center; font-size: 0.8rem; padding: 10px; }
   .menu-btn:hover, .menu-btn.active { transform: scale(1.05); }
+  section { scroll-margin-top: 150px; /* Más margen en móvil para que el menú no tape el título */ }
+  .btn-scroll-top { bottom: 20px; right: 20px; width: 45px; height: 45px; font-size: 1.2rem; }
 }
 </style>
 </head>
@@ -110,11 +128,11 @@ p { font-size: 1.2rem; line-height: 1.6; color: var(--text-muted); margin-bottom
 
 <div class="lab-layout">
   <nav class="sidebar">
-    <a href="#ecuaciones" class="menu-btn active">1. Ecuaciones Brújula</a>
-    <a href="#vocabulario" class="menu-btn">2. El Gran Vocabulario</a>
-    <a href="#foco" class="menu-btn">3. Reconfiguración de Foco</a>
-    <a href="#deeplearning" class="menu-btn">4. Clave Deep Learning</a>
-    <a href="#conectores" class="menu-btn">5. Conectores & Localizadores</a>
+    <a href="#ecuaciones" class="menu-btn active" onclick="triggerSynthSound('click')">1. Ecuaciones Brújula</a>
+    <a href="#vocabulario" class="menu-btn" onclick="triggerSynthSound('click')">2. El Gran Vocabulario</a>
+    <a href="#foco" class="menu-btn" onclick="triggerSynthSound('click')">3. Reconfiguración de Foco</a>
+    <a href="#deeplearning" class="menu-btn" onclick="triggerSynthSound('click')">4. Clave Deep Learning</a>
+    <a href="#conectores" class="menu-btn" onclick="triggerSynthSound('click')">5. Conectores & Localizadores</a>
   </nav>
 
   <main class="main-content">
@@ -190,16 +208,16 @@ p { font-size: 1.2rem; line-height: 1.6; color: var(--text-muted); margin-bottom
   </main>
 </div>
 
+<button id="scroll-top-btn" class="btn-scroll-top" onclick="scrollToTop()">▲</button>
+
 <script>
 // ==========================================
 // BASE DE DATOS Y LÓGICA DE VOZ (ECUACIÓN #2)
 // ==========================================
 
-// Función de voz aplicando la Ecuación #2: No traducir, Definir para Interpretar.
 function speakDefinition(word, baseEs, actEs) {
   window.speechSynthesis.cancel();
   
-  // Si tiene acción (verbo), aplicamos la fórmula completa. Si es estático, solo la definición.
   let textToSpeak = "";
   if(actEs) {
     textToSpeak = `${word}. Su entidad base se define como ${baseEs}. Al interactuar con un determinante, se interpreta como la acción de ${actEs}.`;
@@ -277,7 +295,7 @@ vocabColumns.forEach(col => {
   col.words.forEach(wordObj => {
     const btn = document.createElement('button'); btn.className = 'word-btn'; btn.innerText = wordObj.w;
     btn.onclick = (e) => {
-      e.stopPropagation(); // Evita que el panel destelle al tocar el botón
+      e.stopPropagation();
       btn.classList.add('spinning');
       setTimeout(() => btn.classList.remove('spinning'), 600);
       if("vibrate" in navigator) navigator.vibrate(20);
@@ -322,6 +340,21 @@ function flashPanel(element) {
   setTimeout(() => element.classList.remove('flash-neon'), 600);
 }
 
+// Botón Scroll Top
+const scrollTopBtn = document.getElementById('scroll-top-btn');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    scrollTopBtn.classList.add('visible');
+  } else {
+    scrollTopBtn.classList.remove('visible');
+  }
+});
+
+function scrollToTop() {
+  triggerSynthSound('click');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // PARTÍCULAS DE FONDO
 const canvas = document.getElementById('bg-canvas'); const ctx = canvas.getContext('2d'); let particles = [];
 function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -340,9 +373,23 @@ function animate() {
   }} requestAnimationFrame(animate);
 } animate();
 
-// NAVEGACIÓN (Intersection Observer para el menú)
+// NAVEGACIÓN (Intersection Observer para iluminar el menú)
 const sections = document.querySelectorAll('section');
 const menuLinks = document.querySelectorAll('.menu-btn');
+
+function triggerSynthSound(type) {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    if (type === 'click') {
+      const osc = ctx.createOscillator(); const gain = ctx.createGain();
+      osc.type = 'sine'; osc.frequency.setValueAtTime(700, ctx.currentTime);
+      gain.gain.setValueAtTime(0.05, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+      osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime + 0.1);
+    }
+  } catch(e){}
+}
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
