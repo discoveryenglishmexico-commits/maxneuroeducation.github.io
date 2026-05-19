@@ -8,360 +8,354 @@
 <style>
 :root {
   --navy: #050b14; --dark-blue: #0A1628; --cyan: #00D9FF; 
-  --magenta: #FF00FF; --emerald: #00FF9D; --text: #F8F9FA;
-  --muted: #A0AABF; --panel-bg: rgba(5, 11, 20, 0.85);
+  --magenta: #FF00FF; --emerald: #00FF9D; 
+  --text-bright: #FFFFFF; --text-muted: #A0AABF;
+  --gradient-neon: linear-gradient(135deg, #00D9FF, #FF00FF);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: 'Rajdhani', sans-serif; background-color: var(--navy); color: var(--text);
-  min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-  padding: 30px 15px; overflow-x: hidden;
+  font-family: 'Rajdhani', sans-serif; background-color: var(--navy); color: var(--text-bright);
+  overflow-x: hidden; scroll-behavior: smooth;
 }
 
-#canvas-container {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-  background: radial-gradient(circle at center, var(--dark-blue) 0%, var(--navy) 100%);
+#bg-canvas {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;
 }
 
-.hud-panel {
-  width: 100%; max-width: 1300px; background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(15px); border: 1px solid rgba(0, 217, 255, 0.2);
-  border-radius: 15px; padding: 30px; box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
-  display: flex; flex-direction: column;
+/* NAVEGACIÓN Y ESTRUCTURA HÍBRIDA */
+.lab-layout {
+  display: flex; max-width: 1400px; margin: 0 auto; padding: 40px 20px; gap: 30px; position: relative;
 }
 
-.header { text-align: center; border-bottom: 1px solid rgba(0,217,255,0.2); padding-bottom: 20px; margin-bottom: 25px; }
-h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem, 4vw, 2.5rem); color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; }
-h2 { font-size: 1.3rem; color: var(--emerald); font-weight: 300; margin-top: 10px; }
-.core-concept { margin-top: 15px; padding: 15px; background: rgba(255, 0, 255, 0.05); border-left: 4px solid var(--magenta); font-size: 1.1rem; text-align: left; line-height: 1.5; color: var(--muted);}
+/* MENÚ LATERAL FIJO */
+.sidebar {
+  flex: 0 0 280px; position: sticky; top: 40px; height: calc(100vh - 80px);
+  display: flex; flex-direction: column; gap: 15px; z-index: 10;
+}
 
-.lab-container { display: flex; gap: 30px; align-items: flex-start; }
-
-/* MENÚ LATERAL */
-.elements-menu { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: 10px; }
 .menu-btn {
   font-family: 'Orbitron', sans-serif; font-size: 0.95rem; text-transform: uppercase;
-  padding: 15px; background: rgba(0, 217, 255, 0.05); border: 1px solid rgba(0, 217, 255, 0.3);
-  color: var(--text); text-align: left; border-radius: 8px; cursor: pointer; transition: all 0.3s; letter-spacing: 1px;
+  padding: 15px; background: rgba(10, 22, 40, 0.7); border: 1px solid rgba(0, 217, 255, 0.2);
+  color: var(--text-muted); text-align: left; border-radius: 8px; cursor: pointer; 
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; backdrop-filter: blur(10px);
 }
-.menu-btn:hover { background: rgba(0, 217, 255, 0.15); border-color: var(--cyan); transform: translateX(5px); }
-.menu-btn.active { background: var(--cyan); color: var(--navy); font-weight: bold; box-shadow: 0 0 15px rgba(0,217,255,0.4); transform: translateX(5px);}
+.menu-btn:hover { background: rgba(0, 217, 255, 0.15); border-color: var(--cyan); color: var(--cyan); transform: translateX(10px); }
+.menu-btn.active { background: var(--gradient-neon); color: var(--navy); font-weight: bold; border: none; box-shadow: 0 0 20px rgba(255, 0, 255, 0.5); transform: scale(1.05) translateX(10px); }
 
-/* VISOR DERECHO */
-.cards-viewer { flex: 3; background: var(--panel-bg); border: 1px solid rgba(0, 255, 157, 0.2); border-radius: 10px; padding: 30px; min-height: 600px; }
-.category-title { font-family: 'Orbitron', sans-serif; color: var(--emerald); font-size: 1.6rem; margin-bottom: 10px; border-bottom: 1px solid rgba(0, 255, 157, 0.2); padding-bottom: 10px; }
-.category-desc { color: var(--muted); font-size: 1.1rem; margin-bottom: 25px; line-height: 1.5;}
-
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-
-/* TARJETAS TÁCTILES NEURALES */
-.neural-card {
-  background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.4s ease; position: relative; overflow: hidden;
+/* ÁREA DE SCROLL PRINCIPAL */
+.main-content {
+  flex: 1; display: flex; flex-direction: column; gap: 60px;
 }
-.neural-card:hover { border-color: var(--cyan); box-shadow: 0 0 20px rgba(0, 217, 255, 0.15); transform: translateY(-5px); }
-.neural-card.expanded { border-color: var(--emerald); box-shadow: 0 0 30px rgba(0, 255, 157, 0.2); background: rgba(0, 255, 157, 0.05); }
 
-.card-word { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: var(--text); font-weight: bold; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; text-transform: uppercase;}
-.card-word .icon { font-size: 1rem; color: var(--cyan); opacity: 0.5; }
+/* PANELES GLASSMORPHISM CON EFECTOS CREATIVOS */
+.glass-panel {
+  background: rgba(10, 22, 40, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(0, 217, 255, 0.2);
+  border-radius: 20px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,217,255,0.05);
+  transition: all 0.5s ease; position: relative; overflow: hidden;
+}
+.glass-panel:hover { box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(255,0,255,0.15); border-color: var(--magenta); }
 
-.card-details { max-height: 0; overflow: hidden; transition: max-height 0.5s ease, opacity 0.5s ease; opacity: 0; }
-.neural-card.expanded .card-details { max-height: 400px; opacity: 1; margin-top: 15px; border-top: 1px dashed rgba(0, 255, 157, 0.3); padding-top: 15px; }
+/* Animación de destello al tocar panel */
+.flash-neon { animation: flashEffect 0.6s ease-out; }
+@keyframes flashEffect { 0% { box-shadow: 0 0 50px var(--cyan), inset 0 0 50px var(--cyan); } 100% { box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,217,255,0.05); } }
 
-.detail-row { margin-bottom: 12px; font-size: 1.1rem; line-height: 1.4; color: var(--text);}
-.tag { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; margin-right: 8px; font-weight: bold; display: inline-block; margin-bottom: 5px;}
-.tag-base { border: 1px solid var(--cyan); color: var(--cyan); background: rgba(0,217,255,0.1); }
-.tag-active { border: 1px solid var(--magenta); color: var(--magenta); background: rgba(255,0,255,0.1); }
-.tag-info { border: 1px solid var(--emerald); color: var(--emerald); background: rgba(0,255,157,0.1); }
+h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 4vw, 3rem); color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; text-shadow: 0 0 15px rgba(0,217,255,0.5);}
+h2 { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--magenta); margin-bottom: 20px; border-bottom: 2px solid rgba(255,0,255,0.3); padding-bottom: 10px;}
+h3 { font-size: 1.5rem; color: var(--emerald); margin-bottom: 10px; }
+p { font-size: 1.2rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 15px; }
+.highlight { color: var(--text-bright); font-weight: bold; background: rgba(0,217,255,0.15); padding: 2px 6px; border-radius: 4px;}
 
-/* CONTROLES DE NAVEGACIÓN INFERIOR */
-.nav-controls { display: flex; justify-content: space-between; margin-top: 40px; border-top: 1px solid rgba(0,217,255,0.2); padding-top: 20px;}
-.btn-nav { font-family: 'Orbitron', sans-serif; padding: 12px 25px; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-decoration: none; border: none;}
-.btn-back { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); }
-.btn-back:hover { background: rgba(0,217,255,0.1); box-shadow: 0 0 15px rgba(0,217,255,0.3); }
-.btn-next { background: var(--cyan); color: var(--navy); box-shadow: 0 0 15px rgba(0,217,255,0.4); }
-.btn-next:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,217,255,0.6); }
+/* ECUACIONES BRÚJULA */
+.compass-equation {
+  background: rgba(0,0,0,0.4); border-left: 4px solid var(--emerald); padding: 20px; margin-bottom: 20px; border-radius: 0 10px 10px 0; transition: 0.3s;
+}
+.compass-equation:hover { transform: translateX(10px); background: rgba(0,255,157,0.1); box-shadow: 0 0 20px rgba(0,255,157,0.2); }
 
-@media (max-width: 900px) {
-  .lab-container { flex-direction: column; }
-  .elements-menu { width: 100%; flex-direction: row; flex-wrap: wrap; }
-  .menu-btn { flex: 1; min-width: 140px; text-align: center; padding: 10px; font-size: 0.8rem;}
-  .cards-viewer { width: 100%; min-height: auto; padding: 20px;}
-  .nav-controls { flex-direction: column; gap: 15px;}
-  .btn-nav { width: 100%; text-align: center;}
+/* GRID PARA LAS 5 COLUMNAS Y PALABRAS INTERACTIVAS */
+.columns-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px;}
+.column-box { background: rgba(255,255,255,0.02); border: 1px dashed rgba(0,217,255,0.3); border-radius: 10px; padding: 15px; display: flex; flex-direction: column; gap: 10px;}
+.col-title { text-align: center; font-family: 'Orbitron', sans-serif; color: var(--cyan); font-size: 1.2rem; margin-bottom: 10px;}
+
+/* BOTONES DE VOCABULARIO (GIRO 3D) */
+.word-btn {
+  background: rgba(0,0,0,0.5); border: 1px solid var(--muted); color: var(--text-bright);
+  font-family: 'Orbitron', sans-serif; font-size: 1.1rem; padding: 12px; border-radius: 6px;
+  cursor: pointer; transition: all 0.5s; position: relative; transform-style: preserve-3d;
+}
+.word-btn:hover { border-color: var(--cyan); box-shadow: 0 0 15px rgba(0,217,255,0.4); color: var(--cyan); }
+.word-btn.spinning { animation: spin3D 0.6s ease-in-out; border-color: var(--magenta); color: var(--magenta); box-shadow: 0 0 25px rgba(255,0,255,0.6); background: rgba(255,0,255,0.1);}
+@keyframes spin3D { 0% { transform: rotateY(0deg) scale(1); } 50% { transform: rotateY(180deg) scale(1.1); } 100% { transform: rotateY(360deg) scale(1); } }
+
+/* RECONFIGURACIÓN DE FOCO & DEEP LEARNING */
+.focus-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.focus-card { background: rgba(0,0,0,0.4); border: 1px solid var(--cyan); border-radius: 10px; padding: 20px; cursor: pointer; transition: 0.3s; }
+.focus-card:hover { background: rgba(0,217,255,0.1); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,217,255,0.3); }
+
+.alert-box { border: 2px solid #FF3333; background: rgba(255,51,51,0.1); padding: 20px; border-radius: 10px; margin-top: 20px; }
+
+/* RESPONSIVE */
+@media(max-width: 950px) {
+  .lab-layout { flex-direction: column; padding: 20px 10px; }
+  .sidebar { position: relative; top: 0; height: auto; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .menu-btn { flex: 1 1 auto; text-align: center; font-size: 0.8rem; padding: 10px; }
+  .menu-btn:hover, .menu-btn.active { transform: scale(1.05); }
 }
 </style>
 </head>
 <body>
 
-<div id="canvas-container"></div>
+<canvas id="bg-canvas"></canvas>
 
-<div class="hud-panel">
-  <div class="header">
-    <h1>LABORATORIO DE DESGLOSE NBF</h1>
-    <h2>Fase 3: La Verdadera Función de las Palabras</h2>
-    <div class="core-concept">
-      <strong style="color: var(--text);">Deep Learning NBF:</strong> A continuación verás el idioma como un sistema de unidades léxicas reutilizables, no como categorías rígidas. Entenderás que conceptos como "comprar" o "visitar" son cosas (sustantivos), y descubrirás cómo se ensamblan las piezas para crear la realidad del inglés. Toca cualquier tarjeta para escuchar su reconfiguración.
-    </div>
-  </div>
+<div class="lab-layout">
+  <nav class="sidebar">
+    <a href="#ecuaciones" class="menu-btn active">1. Ecuaciones Brújula</a>
+    <a href="#vocabulario" class="menu-btn">2. El Gran Vocabulario</a>
+    <a href="#foco" class="menu-btn">3. Reconfiguración de Foco</a>
+    <a href="#deeplearning" class="menu-btn">4. Clave Deep Learning</a>
+    <a href="#conectores" class="menu-btn">5. Conectores & Localizadores</a>
+  </nav>
 
-  <div class="lab-container">
-    <div class="elements-menu">
-      <button class="menu-btn active" onclick="loadCategory('dual')">1. Anclaje Dual</button>
-      <button class="menu-btn" onclick="loadCategory('logic')">2. Bloques Lógicos</button>
-      <button class="menu-btn" onclick="loadCategory('static')">3. Sustantivos Inalterables</button>
-      <button class="menu-btn" onclick="loadCategory('focus')">4. Reconfiguración de Foco</button>
-      <button class="menu-btn" onclick="loadCategory('activators')">5. Determinantes Funcionales</button>
-      <button class="menu-btn" onclick="loadCategory('preps')">6. Preposiciones y Conectores</button>
-      <button class="menu-btn" onclick="loadCategory('modifiers')">7. Modificadores y Expansores</button>
+  <main class="main-content">
+    
+    <div style="text-align: center; margin-bottom: -20px;">
+      <h1>LABORATORIO DE DESGLOSE</h1>
+      <p style="color: var(--cyan); font-family: 'Orbitron'; font-size: 1.2rem;">Fase 3: La Lógica Irrefutable NBF</p>
     </div>
 
-    <div class="cards-viewer">
-      <h3 class="category-title" id="cat-title">Cargando Sistema...</h3>
-      <p class="category-desc" id="cat-desc">Iniciando interfaz neuronal.</p>
+    <section id="ecuaciones" class="glass-panel" onclick="flashPanel(this)">
+      <h2>Las 3 Ecuaciones Brújula</h2>
+      <p>Para decodificar el inglés, debes abandonar la traducción literal. El cerebro no debe buscar significados ambiguos, debe aplicar lógica estructural.</p>
       
-      <div class="cards-grid" id="cards-grid">
-        </div>
-      
-      <div class="nav-controls">
-        <a href="ensamblador-nbf.html" class="btn-nav btn-back">◄ REGRESAR A ENSAMBLAJE</a>
-        <a href="fase4-nbf.html" class="btn-nav btn-next">INICIAR GRABADORA DE CONFIANZA ►</a>
+      <div class="compass-equation">
+        <h3>Ecuación 1: La Identidad</h3>
+        <p><span class="highlight">Pensar en Español = Verbo</span> <br> <span class="highlight">Pensar en Inglés = Sustantivo</span></p>
       </div>
-    </div>
-  </div>
+      <div class="compass-equation">
+        <h3>Ecuación 2: El Procesamiento</h3>
+        <p><span class="highlight">NO TRADUCIR, NO SIGNIFICAR.</span> <br> Sino <strong>Definir para Interpretar</strong>.</p>
+      </div>
+      <div class="compass-equation">
+        <h3>Ecuación 3: El Motor</h3>
+        <p><span class="highlight">Pensamiento Lógico + Pensamiento Crítico.</span> <br> Si piensas en español, intentar hacerlo igual en inglés es un error. Usa la lógica para buscar el sustantivo que nombra la acción.</p>
+      </div>
+    </section>
+
+    <section id="vocabulario" class="glass-panel" onclick="flashPanel(this)">
+      <h2>El Ecosistema (5 Columnas)</h2>
+      <p>Toca cualquier botón. El sistema aplicará la Ecuación Brújula #2: Te definirá su entidad base y cómo se interpreta al interactuar con un determinante.</p>
+      
+      <div class="columns-grid" id="vocab-grid">
+        </div>
+    </section>
+
+    <section id="foco" class="glass-panel" onclick="flashPanel(this)">
+      <h2>Reconfiguración de Foco</h2>
+      <p>Sustantivos que a la mayoría se les enseñan solo como verbos. Constata que son entidades tangibles (cosas). <strong>Toca para interpretar.</strong></p>
+      <div class="focus-grid" id="focus-grid">
+        </div>
+    </section>
+
+    <section id="deeplearning" class="glass-panel" onclick="flashPanel(this)">
+      <h2>Clave Deep Learning</h2>
+      <p>Esto es lo fuerte que debe comprender tu sistema cognitivo:</p>
+      <div class="alert-box">
+        <h3 style="color: #FF3333; text-align: center;">No existen verbos como entidad natural</h3>
+        <p style="text-align: center; color: var(--text-bright);">Existen <strong>Bases Léxicas (sustantivos)</strong> y <strong>Determinantes</strong> que las activan.</p>
+      </div>
+
+      <div style="margin-top: 30px; background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; border-left: 4px solid var(--cyan);">
+        <h3 style="color: var(--cyan);">Ejemplo Real: "you can visit"</h3>
+        <p><strong>You:</strong> Sujeto (Determinante PPD). Activador ineludible. Sin esta pieza, la estructura colapsa.</p>
+        <p><strong>Can:</strong> Modulador (Determinante).</p>
+        <p><strong>Visit:</strong> Base (Sustantivo determinante).</p>
+        <h3 style="color: var(--emerald); margin-top: 15px; text-align: center;">La acción NO está en "visit", está en la interacción.</h3>
+      </div>
+      
+      <div style="margin-top: 30px; background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; border-left: 4px solid var(--magenta);">
+        <h3 style="color: var(--magenta);">Paralelo Comparativo (Lectura Radical)</h3>
+        <p>❌ NO es: Sujeto + Verbo + Complemento</p>
+        <p>✅ <strong>SÍ ES: Determinantes + Sustantivos + Relaciones</strong></p>
+      </div>
+    </section>
+
+    <section id="conectores" class="glass-panel" onclick="flashPanel(this)">
+      <h2>Estructura y Contexto</h2>
+      <p>Elementos que no tienen significado de acción, pero organizan el sistema, definen dónde existe la base o limitan su alcance. <strong>Tócalos para definirlos.</strong></p>
+      <div class="columns-grid" id="connectors-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        </div>
+    </section>
+
+  </main>
 </div>
 
 <script>
 // ==========================================
-// BASE DE DATOS EXACTA DEL PDF (A CITY IN THE STATES)
+// BASE DE DATOS Y LÓGICA DE VOZ (ECUACIÓN #2)
 // ==========================================
-const db = {
-  dual: {
-    title: "1. Sustantivos de Anclaje Dual",
-    desc: "Piezas que tu cerebro debe identificar como entidades y luego flexibilizar para activarlas como acciones. Esta es la clave para la libertad del bilingüe.",
-    cards: [
-      { word: "Park", base: "El parque (Lugar recreativo)", active: "Estacionar", audio: "Park. Como sustantivo es el parque. Al activarse funciona como la acción de estacionar." },
-      { word: "Site", base: "El sitio", active: "Situar en un lugar concreto", audio: "Site. El sitio. Al activarse, situar en un lugar concreto." },
-      { word: "Sky", base: "El cielo", active: "Colgar muy alto", audio: "Sky. El cielo. Al activarse, significa colgar muy alto." },
-      { word: "Scrape", base: "El raspado o rasguño", active: "Raspar o arañar", audio: "Scrape. El raspado. Activado significa raspar o arañar." },
-      { word: "Type", base: "El tipo o clasificación", active: "Escribir a través de un teclado", audio: "Type. El tipo o clasificación. Activado es escribir a través de un teclado." },
-      { word: "Place", base: "El lugar", active: "Colocar con precisión o ubicar", audio: "Place. El lugar. Activado es colocar con precisión o ubicar." },
-      { word: "Stand", base: "El puesto (ej. de hot-dogs)", active: "Estar de pie o soportar", audio: "Stand. El puesto. Activado significa estar de pie o soportar." },
-      { word: "Bank", base: "El banco (institución)", active: "Depositar en el banco", audio: "Bank. El banco. Activado significa depositar en el banco." },
-      { word: "House", base: "La casa", active: "Alojar o dar asilo", audio: "House. La casa. Activado significa alojar o dar asilo." },
-      { word: "Time", base: "El tiempo", active: "Cronometrar", audio: "Time. El tiempo. Activado significa cronometrar." },
-      { word: "Need", base: "La necesidad", active: "Necesitar", audio: "Need. La necesidad. Activado significa necesitar." },
-      { word: "Cash", base: "El dinero en efectivo", active: "Pagar en efectivo al contado", audio: "Cash. Dinero en efectivo. Activado significa pagar al contado." },
-      { word: "Jam", base: "El embotellamiento", active: "Atascar", audio: "Jam. El embotellamiento. Activado significa atascar." },
-      { word: "Bar", base: "El bar o la barra", active: "Bloquear o prohibir", audio: "Bar. La barra. Activado significa bloquear o prohibir." },
-      { word: "Craft", base: "El arte exclusivo", active: "Crear con habilidades sobresalientes", audio: "Craft. El arte exclusivo. Activado significa crear con habilidades sobresalientes." },
-      { word: "Cab", base: "El taxi", active: "Viajar en taxi", audio: "Cab. El taxi. Activado significa viajar en taxi." },
-      { word: "Can", base: "La lata (contenedor)", active: "Poder o saber (Modulador)", audio: "Can. Una lata. Activado funciona como palabra modal para expresar poder o saber." }
-    ]
-  },
-  logic: {
-    title: "2. Bloques Lógicos (Sustantivos Compuestos)",
-    desc: "Un sustantivo modifica a otro para crear conceptos completos sin pensar en reglas gramaticales complejas, solo usando la lógica posicional del cerebro bilingüe.",
-    cards: [
-      { word: "Skyscrapers", info: "Sky + scraper", desc: "Complementa la idea visual de la ciudad. (Rascacielos)", audio: "Skyscrapers. Sky más scraper. Complementa la idea visual de la ciudad." },
-      { word: "Hot-dog / Pretzel stands", info: "Complementos directos", desc: "Hot-dog y pretzel actúan como complementos que definen al sustantivo principal (stands/puestos).", audio: "Hot-dog stands. El producto define directamente al tipo de puesto." },
-      { word: "Movie theaters", info: "Movie + theater", desc: "Movie complementa y categoriza qué tipo de teatro es.", audio: "Movie theaters. Movie categoriza exactamente a qué tipo de teatro se refiere." },
-      { word: "Bank tellers", info: "Bank + teller", desc: "Bank especifica al sustantivo tellers (cajeros). Precisa a qué tipo de cajero se refiere.", audio: "Bank tellers. El banco especifica la naturaleza de los cajeros." },
-      { word: "Traffic jams", info: "Traffic + jam", desc: "Traffic complementa a jams para crear el concepto de embotellamiento de tráfico.", audio: "Traffic jams. Tráfico complementa a la palabra atasco." },
-      { word: "Nightlife", info: "Night + life", desc: "Sustantivo compuesto conceptual que define la vida nocturna.", audio: "Nightlife. Night más life. Sustantivo compuesto conceptual." }
-    ]
-  },
-  static: {
-    title: "3. Sustantivos Inalterables",
-    desc: "Préstamos lingüísticos o raíces puras que no se convierten en verbos y que le dan descanso al cerebro por su similitud con el español.",
-    cards: [
-      { word: "Museums", info: "Raíz grecolatina", desc: "Museos.", audio: "Museums. Raíz grecolatina inalterable." },
-      { word: "Galleries", info: "Préstamo italiano/francés", desc: "Galerías.", audio: "Galleries. Préstamo italiano o francés." },
-      { word: "Restaurants", info: "Préstamo francés", desc: "Restaurantes.", audio: "Restaurants. Préstamo del francés." },
-      { word: "Cinemas", info: "Raíz grecolatina", desc: "Cines.", audio: "Cinemas. Raíz grecolatina." },
-      { word: "Studio", info: "Préstamo italiano", desc: "Estudio.", audio: "Studio. Préstamo del italiano." },
-      { word: "Apartment", info: "Préstamo francés/italiano", desc: "Apartamento.", audio: "Apartment. Préstamo internacional." },
-      { word: "Suburbs", info: "Clasificación espacial fija", desc: "Suburbios / Afueras.", audio: "Suburbs. Raíz latina de clasificación espacial." },
-      { word: "Loft", info: "Término arquitectónico", desc: "Loft / Ático.", audio: "Loft. Término arquitectónico inalterable." }
-    ]
-  },
-  focus: {
-    title: "4. Reconfiguración de Foco",
-    desc: "Palabras que a la mayoría se les enseñan solo como verbos. Debes constatar que en su naturaleza son sustantivos tangibles.",
-    cards: [
-      { word: "Visit", base: "A visit (Una visita)", active: "You can visit (Visitar)", audio: "Visit. En su base es una visita. Activado por el pronombre, funciona como visitar." },
-      { word: "Buy", base: "A good buy (Una buena compra)", active: "You can buy (Comprar)", audio: "Buy. En su base es la compra. Activado es comprar." },
-      { word: "Find", base: "A great find (Un gran hallazgo)", active: "You can find (Encontrar)", audio: "Find. Un gran hallazgo. Activado es encontrar." },
-      { word: "Rent", base: "The rent (La renta o alquiler)", active: "You could rent (Rentar)", audio: "Rent. La renta o alquiler. Activado es rentar." },
-      { word: "Look", base: "A close look (Una mirada)", active: "You look (Mirar/Buscar)", audio: "Look. Una mirada. Activado funciona como mirar o buscar." },
-      { word: "Go", base: "Make a go (Un intento)", active: "Places to go (Ir)", audio: "Go. En su base es un intento. Activado es ir." },
-      { word: "Grab", base: "A grab (Un agarre)", active: "Grab a cab (Agarrar/Tomar)", audio: "Grab. Un agarre. Activado funciona como agarrar un taxi." },
-      { word: "Mention", base: "A mention (Una mención)", active: "To mention (Mencionar)", audio: "Mention. Una mención. Activado es mencionar." }
-    ]
-  },
-  activators: {
-    title: "5. Determinantes Funcionales",
-    desc: "Pronombres Personales Directos y Modales. Son los activadores ineludibles de la acción. Sin esta pieza, la estructura colapsa.",
-    cards: [
-      { word: "You", info: "PPD (Activador Directo)", desc: "Activa al filtro modulador 'can' para que este module a la base. También activa directamente (you look).", audio: "You. Funciona como el activador ineludible de la acción. Sin esta pieza, la estructura colapsa." },
-      { word: "There", info: "PPD (Sujeto indefinido)", desc: "Combinado con bases para denotar existencia o lugar.", audio: "There. Funciona como pronombre sujeto indefinido para denotar existencia." },
-      { word: "One", info: "PPD Numeral/Indefinido", desc: "Actúa como sujeto o referencia abstracta (One of the major setbacks...).", audio: "One. Funciona como pronombre sujeto para una entidad abstracta o general." },
-      { word: "Can / Could", info: "Moduladores", desc: "Modulan a la base indicando capacidad o posibilidad.", audio: "Can o Could. Moduladores que otorgan capacidad a la base léxica siguiente." }
-    ]
-  },
-  preps: {
-    title: "6. Preposiciones y Conectores",
-    desc: "Piezas clave para mantener el estricto orden sintáctico que el inglés necesita como 'mecanismo de supervivencia lingüística'.",
-    cards: [
-      { word: "For", info: "Propósito", desc: "Pieza ensambladora (looking for) y marcador de propósito (a place to live for...).", audio: "For. Pieza ensambladora que indica propósito o destino." },
-      { word: "With", info: "Herramienta", desc: "Acompañamiento o herramienta (with the latest crafts). También como prefijo (with+draw).", audio: "With. Indica acompañamiento, o funciona integrado como prefijo en palabras compuestas." },
-      { word: "Up", info: "Dirección/Modificador", desc: "Modifica la dirección de la acción activada (look up) o indica dirección física.", audio: "Up. Indicador de dirección física o modificador de una acción." },
-      { word: "To", info: "Rango / Dirección", desc: "Establece rangos (from... to...), marca dirección (to a bank), o funciona como activador (a place to live).", audio: "To. Funciona para establecer rangos, dirección o como activador para dar función verbal." }
-    ]
-  },
-  modifiers: {
-    title: "7. Modificadores y Expansores",
-    desc: "Adjetivos, adverbios y pronombres compuestos. Determinan cantidad, alcance, ubicación espacial o sustituyen estructuras completas.",
-    cards: [
-      { word: "Many / All", info: "Adjetivos / Cuantificadores", desc: "Modifican a los sustantivos (many sites). Pueden fungir como pronombre sujeto en contextos indefinidos.", audio: "Many. Modifica y cuantifica directamente a los sustantivos." },
-      { word: "High-class", info: "Adjetivo Compuesto", desc: "Describe el nivel o calidad. 'High' por sí solo puede ser un estado de ánimo.", audio: "High class. Adjetivo compuesto que describe calidad." },
-      { word: "Everywhere / Anywhere", info: "Adverbios Espaciales", desc: "Indican ubicación espacial sin límites. Construidas a partir de 'where'.", audio: "Adverbios compuestos que indican una ubicación espacial sin límites." },
-      { word: "Nowadays", info: "Adverbio Temporal", desc: "Ensamblaje (now + days) para situar la idea en el presente.", audio: "Nowadays. Ensamblaje de tiempo que sitúa la idea en el presente." },
-      { word: "Whatever", info: "Expansor Conceptual", desc: "Pronombre compuesto (what + ever) que sustituye una estructura completa.", audio: "Whatever. Expansor conceptual que sustituye estructuras completas." }
-    ]
-  }
-};
 
-const grid = document.getElementById('cards-grid');
-const catTitle = document.getElementById('cat-title');
-const catDesc = document.getElementById('cat-desc');
-
-// Sistema de Audio WebAPI (Latidos y Clics)
-function triggerSynthSound(type) {
-  try {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
-    const ctx = new AudioContext();
-    if (type === 'click') {
-      const osc = ctx.createOscillator(); const gain = ctx.createGain();
-      osc.type = 'sine'; osc.frequency.setValueAtTime(700, ctx.currentTime);
-      gain.gain.setValueAtTime(0.05, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
-      osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime + 0.1);
-    }
-  } catch(e){}
-}
-
-// Text-to-Speech nativo
-function speak(text) {
+// Función de voz aplicando la Ecuación #2: No traducir, Definir para Interpretar.
+function speakDefinition(word, baseEs, actEs) {
   window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Si tiene acción (verbo), aplicamos la fórmula completa. Si es estático, solo la definición.
+  let textToSpeak = "";
+  if(actEs) {
+    textToSpeak = `${word}. Su entidad base se define como ${baseEs}. Al interactuar con un determinante, se interpreta como la acción de ${actEs}.`;
+  } else {
+    textToSpeak = `${word}. Entidad estructural. Se define conceptualmente como ${baseEs}.`;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(textToSpeak);
   utterance.lang = 'es-MX'; utterance.rate = 0.95;
   window.speechSynthesis.speak(utterance);
 }
 
-// Cargar información en la interfaz
-function loadCategory(catId) {
-  triggerSynthSound('click');
-  
-  // Reflejar menú activo
-  document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
+// 1. Datos de las 5 Columnas
+const vocabColumns = [
+  { title: "Columna 1", words: [
+    {w: "city", b: "la ciudad"}, {w: "site", b: "el sitio", a: "situar"}, {w: "can", b: "la lata", a: "poder o saber"}, 
+    {w: "visit", b: "la visita", a: "visitar"}, {w: "skyscraper", b: "cielo y rascador", a: "rascar el cielo"}, 
+    {w: "museum", b: "el museo"}, {w: "gallery", b: "la galería"}, {w: "exhibition", b: "la exhibición"}, 
+    {w: "restaurant", b: "el restaurante"}, {w: "dog", b: "el perro"}, {w: "pretzel", b: "el pretzel"}, 
+    {w: "stand", b: "el puesto", a: "soportar o estar de pie"}, {w: "type", b: "el tipo", a: "escribir a máquina"}, 
+    {w: "school", b: "la escuela"}, {w: "mall", b: "la plaza comercial"}
+  ]},
+  { title: "Columna 2", words: [
+    {w: "supermarket", b: "el súper mercado"}, {w: "buy", b: "la compra", a: "comprar"}, 
+    {w: "want", b: "la carencia", a: "querer o necesitar"}, {w: "find", b: "el hallazgo", a: "encontrar"}, 
+    {w: "hospital", b: "el hospital"}, {w: "craft", b: "el arte exclusivo", a: "crear con habilidad"}, 
+    {w: "class", b: "la clase"}, {w: "hotel", b: "el hotel"}, {w: "scenery", b: "el paisaje"}, 
+    {w: "park", b: "el parque", a: "estacionar"}, {w: "movie", b: "la película"}, {w: "theater", b: "el teatro"}, {w: "cinema", b: "el cine"}
+  ]},
+  { title: "Columna 3", words: [
+    {w: "place", b: "el lugar", a: "colocar"}, {w: "live", b: "la vida", a: "vivir"}, 
+    {w: "rent", b: "la renta", a: "rentar"}, {w: "small", b: "lo pequeño"}, {w: "studio", b: "el estudio"}, 
+    {w: "apartment", b: "el apartamento"}, {w: "loft", b: "el ático"}, {w: "house", b: "la casa", a: "alojar"}, 
+    {w: "look", b: "la mirada", a: "mirar"}, {w: "suburb", b: "el suburbio"}, {w: "bank", b: "el banco", a: "depositar"}, {w: "teller", b: "el cajero"}
+  ]},
+  { title: "Columna 4", words: [
+    {w: "need", b: "la necesidad", a: "necesitar"}, {w: "go", b: "el intento", a: "ir"}, 
+    {w: "draw", b: "el trazo o extracción", a: "dibujar o retirar"}, {w: "cash", b: "el efectivo", a: "pagar al contado"}, 
+    {w: "one", b: "la unidad uno"}, {w: "setback", b: "el contratiempo"}, {w: "traffic", b: "el tráfico"}, 
+    {w: "jam", b: "el atasco", a: "atascar"}, {w: "thing", b: "la cosa"}, {w: "grab", b: "el agarre", a: "agarrar"}
+  ]},
+  { title: "Columna 5", words: [
+    {w: "cab", b: "el taxi", a: "viajar en taxi"}, {w: "time", b: "el tiempo", a: "cronometrar"}, 
+    {w: "nightlife", b: "la vida nocturna"}, {w: "example", b: "el ejemplo"}, 
+    {w: "nightclub", b: "el club nocturno"}, {w: "bar", b: "la barra", a: "bloquear o prohibir"}, {w: "mention", b: "la mención", a: "mencionar"}
+  ]}
+];
 
-  const data = db[catId];
-  catTitle.innerText = data.title;
-  catDesc.innerText = data.desc;
-  
-  grid.innerHTML = '';
-  
-  data.cards.forEach(card => {
-    const cardEl = document.createElement('div');
-    cardEl.className = 'neural-card';
-    
-    // Si la tarjeta tiene 'base' y 'active' (Categorías 1 y 4)
-    if (card.base && card.active) {
-      cardEl.innerHTML = `
-        <div class="card-word">${card.word} <span class="icon">▼</span></div>
-        <div class="card-details">
-          <div class="detail-row"><span class="tag tag-base">ESTADO BASE (Sustantivo)</span><br>${card.base}</div>
-          <div class="detail-row"><span class="tag tag-active">ESTADO ACTIVADO (Acción)</span><br>${card.active}</div>
-        </div>
-      `;
-    } 
-    // Si la tarjeta tiene 'info' y 'desc' (Categorías 2, 3, 5, 6, 7)
-    else if (card.info && card.desc) {
-      cardEl.innerHTML = `
-        <div class="card-word">${card.word} <span class="icon">▼</span></div>
-        <div class="card-details">
-          <div class="detail-row"><span class="tag tag-info">${card.info}</span></div>
-          <div class="detail-row" style="color: var(--text-muted);">${card.desc}</div>
-        </div>
-      `;
-    }
+// 2. Datos de Reconfiguración de Foco
+const focusWords = [
+  {w: "Visit", d: "a visit / una visita", a: "you can visit (visitar)"},
+  {w: "Buy", d: "a good buy / una buena compra", a: "you can buy (comprar)"},
+  {w: "Find", d: "a great find / un gran hallazgo", a: "you can find (encontrar)"},
+  {w: "Rent", d: "the rent / la renta", a: "you could rent (rentar)"},
+  {w: "Look", d: "a close look / una mirada", a: "you look (mirar/buscar)"},
+  {w: "Go", d: "make a go / un intento", a: "places to go (ir)"},
+  {w: "Grab", d: "a grab / un agarre", a: "grab a cab (tomar)"},
+  {w: "Mention", d: "a mention / una mención", a: "to mention (mencionar)"},
+  {w: "Want", d: "a want / una carencia", a: "you want (querer/necesitar)"}
+];
 
-    cardEl.onclick = () => {
-      const isExpanded = cardEl.classList.contains('expanded');
-      
-      // Cerrar todas las demás tarjetas
-      document.querySelectorAll('.neural-card').forEach(c => {
-        c.classList.remove('expanded');
-        c.querySelector('.icon').innerText = "▼";
-      });
-      
-      if (!isExpanded) {
-        cardEl.classList.add('expanded');
-        cardEl.querySelector('.icon').innerText = "▲";
-        triggerSynthSound('click');
-        if("vibrate" in navigator) navigator.vibrate(15);
-        speak(card.audio); // Activa la explicación neurocognitiva
-      } else {
-        window.speechSynthesis.cancel();
-      }
+// 3. Conectores y Estructuras
+const connectWords = [
+  { title: "Conectores Estructurales", items: [{w: "In, From, To, Of, With, For, At, Over", b: "enlaces que organizan el sistema"}, {w: "That, Where, Whether, Because", b: "relativos de conexión"}] },
+  { title: "Localizadores Espaciales", items: [{w: "There, Everywhere, Anywhere, Nowadays", b: "el contexto de dónde existe la base"}] },
+  { title: "Limitadores", items: [{w: "Many, All, One, Almost, No", b: "cantidades y alcances"}] },
+  { title: "Expansores", items: [{w: "Whatever (What + Ever)", b: "expansores conceptuales que sustituyen estructuras"}] }
+];
+
+// Inyección en el DOM
+const vocabGrid = document.getElementById('vocab-grid');
+vocabColumns.forEach(col => {
+  const colDiv = document.createElement('div'); colDiv.className = 'column-box';
+  colDiv.innerHTML = `<div class="col-title">📦 ${col.title}</div>`;
+  col.words.forEach(wordObj => {
+    const btn = document.createElement('button'); btn.className = 'word-btn'; btn.innerText = wordObj.w;
+    btn.onclick = (e) => {
+      e.stopPropagation(); // Evita que el panel destelle al tocar el botón
+      btn.classList.add('spinning');
+      setTimeout(() => btn.classList.remove('spinning'), 600);
+      if("vibrate" in navigator) navigator.vibrate(20);
+      speakDefinition(wordObj.w, wordObj.b, wordObj.a);
     };
-    
-    grid.appendChild(cardEl);
+    colDiv.appendChild(btn);
   });
+  vocabGrid.appendChild(colDiv);
+});
+
+const focusGrid = document.getElementById('focus-grid');
+focusWords.forEach(fw => {
+  const card = document.createElement('div'); card.className = 'focus-card';
+  card.innerHTML = `<h3 style="color:var(--cyan); margin-bottom:5px;">${fw.w}</h3><p style="font-size:1rem; margin-bottom:5px;">Base: ${fw.d}</p><p style="font-size:1rem; color:var(--magenta);">Activado: ${fw.a}</p>`;
+  card.onclick = (e) => {
+    e.stopPropagation();
+    card.classList.add('spinning'); setTimeout(() => card.classList.remove('spinning'), 600);
+    speakDefinition(fw.w, fw.d, fw.a);
+  };
+  focusGrid.appendChild(card);
+});
+
+const connGrid = document.getElementById('connectors-grid');
+connectWords.forEach(group => {
+  const box = document.createElement('div'); box.className = 'column-box';
+  box.innerHTML = `<div class="col-title" style="color:var(--emerald);">${group.title}</div>`;
+  group.items.forEach(item => {
+    const btn = document.createElement('button'); btn.className = 'word-btn'; btn.innerText = item.w;
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      btn.classList.add('spinning'); setTimeout(() => btn.classList.remove('spinning'), 600);
+      speakDefinition(item.w, item.b, null);
+    };
+    box.appendChild(btn);
+  });
+  connGrid.appendChild(box);
+});
+
+// INTERACCIONES Y EFECTOS
+function flashPanel(element) {
+  element.classList.add('flash-neon');
+  setTimeout(() => element.classList.remove('flash-neon'), 600);
 }
 
-// Inicializar lienzo de Partículas (Red Neuronal)
-const canvasContainer = document.getElementById('canvas-container');
-const canvas = document.createElement('canvas'); canvasContainer.appendChild(canvas);
-const ctx = canvas.getContext('2d'); let particles = [];
+// PARTÍCULAS DE FONDO
+const canvas = document.getElementById('bg-canvas'); const ctx = canvas.getContext('2d'); let particles = [];
 function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-window.onresize = resize; resize();
-class Particle {
-  constructor() { this.reset(); }
-  reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.size = Math.random()*1.5; this.speedX = (Math.random()-0.5)*0.2; this.speedY = (Math.random()-0.5)*0.2; }
-  update() { this.x+=this.speedX; this.y+=this.speedY; if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height) this.reset(); }
-  draw() { ctx.fillStyle='rgba(0,217,255,0.3)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); }
+window.addEventListener('resize', resize); resize();
+class Node {
+  constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.vx = (Math.random()-0.5)*0.3; this.vy = (Math.random()-0.5)*0.3; this.r = Math.random()*1.5; }
+  update() { this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>canvas.width)this.vx*=-1; if(this.y<0||this.y>canvas.height)this.vy*=-1; }
+  draw() { ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.fillStyle='rgba(0,217,255,0.4)'; ctx.fill(); }
 }
-for(let i=0; i<80; i++) particles.push(new Particle());
-function animate() { 
-  ctx.clearRect(0,0,canvas.width,canvas.height); 
-  particles.forEach(p => { p.update(); p.draw(); }); 
-  
-  // Dibujar sinapsis
-  for(let i=0; i<particles.length; i++) {
-    for(let j=i+1; j<particles.length; j++) {
-      let dx = particles[i].x - particles[j].x;
-      let dy = particles[i].y - particles[j].y;
-      let dist = Math.sqrt(dx*dx + dy*dy);
-      if(dist < 100) {
-        ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = `rgba(0, 217, 255, ${0.1 - dist/1000})`; ctx.stroke();
-      }
-    }
-  }
-  requestAnimationFrame(animate); 
-}
-animate();
+for(let i=0; i<60; i++) particles.push(new Node());
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); });
+  for(let i=0;i<particles.length;i++){ for(let j=i+1;j<particles.length;j++){
+    let dist = Math.hypot(particles[i].x-particles[j].x, particles[i].y-particles[j].y);
+    if(dist<100){ ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.strokeStyle=`rgba(0,217,255,${0.1-dist/1000})`; ctx.stroke(); }
+  }} requestAnimationFrame(animate);
+} animate();
 
-// Cargar la primera categoría al inicio simulando el clic
-window.onload = () => {
-    // Forzamos el click en el primer botón del menú para inicializar todo correctamente
-    document.querySelector('.menu-btn').click();
-};
+// NAVEGACIÓN (Intersection Observer para el menú)
+const sections = document.querySelectorAll('section');
+const menuLinks = document.querySelectorAll('.menu-btn');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      menuLinks.forEach(link => {
+        link.classList.remove('active');
+        if(link.getAttribute('href').substring(1) === entry.target.id) link.classList.add('active');
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(sec => observer.observe(sec));
 </script>
 </body>
 </html>
