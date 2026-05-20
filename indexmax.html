@@ -7,9 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy: #0A1628; --metallic-gray: #C0C5CE; --shiny-white: #F8F9FA;
+  --navy: #050b14; --metallic-gray: #C0C5CE; --shiny-white: #F8F9FA;
   --neon-fuchsia: #FF00FF; --neon-emerald: #00FF9D; --neon-blue: #00D9FF;
-  --dark-metallic: #1A1F2E; --glass-bg: rgba(255, 255, 255, 0.05); --glass-border: rgba(255, 255, 255, 0.2);
+  --neon-yellow: #FFFFAA; --neon-red: #FF3333;
+  --dark-metallic: #0A1628; --glass-bg: rgba(10, 22, 40, 0.6); 
+  --glass-border: rgba(0, 217, 255, 0.4);
   --discovery-gradient: linear-gradient(90deg, #00D9FF, #FF00FF);
 }
 
@@ -20,97 +22,102 @@ body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--s
 /* ANIMACIONES */
 @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 30px rgba(0, 217, 255, 0.4); } 50% { box-shadow: 0 0 60px rgba(255, 0, 255, 0.6), 0 0 100px rgba(0, 255, 157, 0.3); } }
 @keyframes particle-form { 0% { filter: blur(20px); opacity: 0; transform: scale(1.1); letter-spacing: 15px; } 100% { filter: blur(0); opacity: 1; transform: scale(1); letter-spacing: 0.05em; } }
-@keyframes pulse-error { 0% { box-shadow: 0 0 0 0 rgba(255,51,51,0.7); } 70% { box-shadow: 0 0 0 20px rgba(255,51,51,0); } 100% { box-shadow: 0 0 0 0 rgba(255,51,51,0); } }
-@keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, 40px) scale(1.1); } }
+@keyframes blink-alert { 0%, 100% { box-shadow: 0 0 10px var(--neon-red), inset 0 0 10px var(--neon-red); border-color: var(--neon-red); color: var(--neon-red); } 50% { box-shadow: 0 0 30px var(--neon-red), inset 0 0 20px var(--neon-red); border-color: #FF8888; color: #FF8888; } }
+@keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(40px, 50px) scale(1.2); } }
+
+/* FONDOS HIGH-TECH (HUD) */
+.hud-grid-bg { position: fixed; inset: 0; z-index: -2; background-image: linear-gradient(rgba(0, 217, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 217, 255, 0.05) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
+#bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; mix-blend-mode: screen; }
+
+/* ORBES DE LUZ METÁLICA (GLOW-BLUR) */
+.orbs-container { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.orb { position: absolute; border-radius: 50%; filter: blur(80px); animation: floatOrb 6s infinite alternate ease-in-out; mix-blend-mode: screen; }
+.orb-yellow { background: radial-gradient(circle, var(--neon-yellow) 0%, transparent 70%); width: 500px; height: 500px; top: -10%; left: -10%; opacity: 0.4;}
+.orb-green { background: radial-gradient(circle, var(--neon-emerald) 0%, transparent 70%); width: 450px; height: 450px; bottom: 10%; right: -5%; animation-delay: -2s; opacity: 0.3; }
+.orb-red { background: radial-gradient(circle, var(--neon-red) 0%, transparent 70%); width: 400px; height: 400px; top: 30%; left: 40%; animation-delay: -4s; opacity: 0.35; }
+.orb-fuchsia { background: radial-gradient(circle, var(--neon-fuchsia) 0%, transparent 70%); width: 600px; height: 600px; bottom: -20%; left: 10%; animation-delay: -1s; opacity: 0.25; }
+
+/* TARJETAS GLASSMORPHISM CON LUZ */
+.glass-panel { background: rgba(15, 25, 45, 0.65); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(0, 217, 255, 0.1); position: relative; z-index: 10; transition: 0.3s; }
+.glass-panel:hover { box-shadow: 0 15px 50px rgba(0, 217, 255, 0.3), inset 0 0 40px rgba(255, 0, 255, 0.15); border-color: var(--neon-fuchsia); }
 
 /* HERO HEADER */
-.hero-header { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: linear-gradient(180deg, var(--navy) 0%, var(--dark-metallic) 100%); }
-.video-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; z-index: 0; }
-.neural-overlay { position: absolute; inset: 0; z-index: 1; background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%); }
+.hero-header { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: rgba(5,11,20,0.8); }
+.video-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: 0; }
 .hero-content { position: relative; z-index: 10; text-align: center; padding: 40px; max-width: 1200px; }
 .hero-title { font-family: 'Orbitron', sans-serif; font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 900; background: linear-gradient(135deg, var(--shiny-white) 0%, var(--neon-blue) 50%, var(--neon-emerald) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px; text-transform: uppercase; animation: particle-form 2.5s ease-out forwards; }
 .hero-button { padding: 20px 60px; font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; background: linear-gradient(135deg, var(--neon-fuchsia), var(--neon-emerald)); border: none; border-radius: 50px; color: var(--navy); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 40px rgba(255, 0, 255, 0.4); text-transform: uppercase; letter-spacing: 0.1em; animation: pulse-glow 3s ease-in-out infinite; }
-.hero-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 20px 60px rgba(255, 0, 255, 0.6); }
 
-/* CARRUSELES (CORREGIDOS PARA BUCLE INFINITO) */
+/* CARRUSELES (RESTITUIDOS CON ONCLICK) */
 .thumbnail-carousel, .unit-carousel-container { overflow-x: auto; scrollbar-width: none; white-space: nowrap; -webkit-overflow-scrolling: touch; }
 .thumbnail-carousel::-webkit-scrollbar, .unit-carousel-container::-webkit-scrollbar { display: none; }
 .thumbnail-carousel { position: absolute; bottom: 40px; left: 0; right: 0; z-index: 10; padding: 20px 0; }
 .thumbnail-track, .unit-track { display: inline-flex; gap: 20px; padding: 0 40px; }
-.thumbnail-item { flex-shrink: 0; width: 150px; height: 100px; border-radius: 15px; overflow: hidden; border: 2px solid rgba(0, 217, 255, 0.3); transition: all 0.3s ease; cursor: pointer; }
-.thumbnail-item:hover { transform: scale(1.1); border-color: var(--neon-emerald); box-shadow: 0 0 30px rgba(0, 255, 157, 0.5); }
+.thumbnail-item { flex-shrink: 0; width: 150px; height: 100px; border-radius: 15px; overflow: hidden; border: 2px solid rgba(0, 217, 255, 0.4); transition: all 0.3s ease; cursor: pointer; box-shadow: 0 0 15px rgba(0, 217, 255, 0.2); }
+.thumbnail-item:hover { transform: scale(1.1); border-color: var(--neon-emerald); box-shadow: 0 0 30px rgba(0, 255, 157, 0.6); }
 .thumbnail-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none;}
 
-.third-block { padding: 120px 0; background: linear-gradient(180deg, var(--navy) 0%, var(--dark-metallic) 100%); text-align: center; }
+.third-block { padding: 120px 0; background: transparent; text-align: center; position: relative;}
 .unit-track { gap: 30px; }
-.unit-card { flex-shrink: 0; width: clamp(280px, 75vw, 500px); height: clamp(350px, 60vh, 500px); border-radius: 30px; overflow: hidden; border: 3px solid rgba(0, 217, 255, 0.3); background: var(--glass-bg); position: relative; transition: transform 0.4s ease; cursor: pointer; }
-.unit-card:hover { border-color: var(--neon-emerald); box-shadow: 0 0 50px rgba(0, 255, 157, 0.2); transform: translateY(-10px); }
+.unit-card { flex-shrink: 0; width: clamp(280px, 75vw, 500px); height: clamp(350px, 60vh, 500px); border-radius: 30px; overflow: hidden; border: 3px solid rgba(0, 217, 255, 0.4); background: var(--glass-bg); position: relative; transition: transform 0.4s ease; cursor: pointer; box-shadow: 0 0 20px rgba(0, 217, 255, 0.2); }
+.unit-card:hover { border-color: var(--neon-emerald); box-shadow: 0 0 50px rgba(0, 255, 157, 0.5); transform: translateY(-10px); }
 .unit-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none;}
 .unit-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(transparent, rgba(10, 22, 40, 0.95)); text-align: left; }
 .unit-title { font-family: 'Rajdhani', sans-serif; font-size: clamp(1.2rem, 4vw, 1.8rem); font-weight: 700; color: var(--shiny-white); }
 
-/* ESTADÍSTICAS */
-.first-block { padding: 120px 40px; background: linear-gradient(180deg, var(--dark-metallic) 0%, var(--navy) 100%); position: relative; }
-.block-content { max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
-.block-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem, 4vw, 3rem); text-align: center; margin-bottom: 80px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-.stat-card { text-align: center; padding: 40px; cursor: pointer; transition: transform 0.3s; background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 30px; }
-.stat-card:hover { transform: translateY(-10px); border-color: var(--neon-blue); box-shadow: 0 0 30px rgba(0,217,255,0.2);}
-.stat-number { font-family: 'Orbitron', sans-serif; font-size: 6rem; font-weight: 900; background: linear-gradient(135deg, var(--neon-emerald), var(--neon-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; margin-bottom: 20px; }
-.stat-label { font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; color: var(--metallic-gray); text-transform: uppercase; }
+/* MODAL */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 11, 20, 0.95); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 9999; opacity: 0; transition: opacity 0.3s ease; }
+.modal-content { background: linear-gradient(135deg, var(--dark-metallic), var(--navy)); border: 2px solid var(--neon-blue); border-radius: 20px; padding: 40px; max-width: 600px; width: 90%; text-align: center; position: relative; transform: scale(0.8); transition: transform 0.3s ease; box-shadow: 0 0 50px rgba(0,217,255,0.3);}
+.modal-close { position: absolute; top: 15px; right: 20px; font-size: 2.5rem; color: var(--shiny-white); cursor: pointer; }
+.modal-close:hover { color: var(--neon-fuchsia); }
+.modal-image { width: 100%; max-height: 400px; object-fit: contain; border-radius: 10px; margin-bottom: 20px; }
+.modal-title { font-family: 'Orbitron', sans-serif; color: var(--neon-emerald); margin-bottom: 10px; font-size: 1.8rem; }
+.modal-desc { color: var(--metallic-gray); font-size: 1.2rem; line-height: 1.6; }
 
-.second-block { padding: 100px 40px; background: linear-gradient(180deg, var(--shiny-white) 0%, var(--metallic-gray) 100%); color: var(--navy); text-align: center; }
-.second-block h2 { font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 30px; background: linear-gradient(135deg, var(--navy), var(--neon-fuchsia)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.second-block p { font-size: 1.5rem; max-width: 800px; margin: 0 auto; color: var(--dark-metallic); font-weight: bold; }
+/* SECCIONES Y TEXTOS */
+.block-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem, 4vw, 3rem); text-align: center; margin-bottom: 60px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-fuchsia)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.first-block { padding: 120px 40px; position: relative; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1200px; margin: 0 auto; }
+.stat-card { text-align: center; padding: 40px; cursor: pointer; }
+.stat-number { font-family: 'Orbitron', sans-serif; font-size: 6rem; font-weight: 900; background: linear-gradient(135deg, var(--neon-emerald), var(--neon-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; margin-bottom: 20px; }
 
 /* MAGIC SCROLL & ZOOM */
-.magic-scroll-section { height: 400vh; position: relative; background: var(--dark-metallic); }
+.magic-scroll-section { height: 400vh; position: relative; }
 .magic-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; }
 .magic-track { display: flex; gap: 50px; padding: 0 50vw; will-change: transform; align-items: center; }
-.magic-card { width: clamp(280px, 80vw, 400px); height: 450px; flex-shrink: 0; background: rgba(10, 22, 40, 0.8); backdrop-filter: blur(20px); border: 2px solid var(--neon-blue); border-radius: 20px; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.magic-card { width: clamp(280px, 80vw, 400px); height: 450px; flex-shrink: 0; border: 2px solid var(--neon-blue); border-radius: 20px; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .magic-card h3 { font-family: 'Orbitron', sans-serif; color: var(--neon-fuchsia); font-size: 2rem; margin-bottom: 20px; }
 
-.zoom-section { height: 300vh; position: relative; background: linear-gradient(180deg, var(--dark-metallic) 0%, var(--navy) 100%); }
+.zoom-section { height: 300vh; position: relative; }
 .zoom-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; }
 .zoom-text-container { display: flex; flex-direction: column; align-items: center; will-change: transform, opacity; text-align: center; }
 .zt-small { font-family: 'Rajdhani', sans-serif; font-size: clamp(1.5rem, 4vw, 3rem); color: var(--metallic-gray); letter-spacing: 0.2em; }
 .zt-medium { font-family: 'Orbitron', sans-serif; font-size: clamp(2.5rem, 6vw, 5rem); color: var(--neon-blue); margin: 10px 0; }
 .zt-large { font-family: 'Orbitron', sans-serif; font-size: clamp(4rem, 10vw, 8rem); font-weight: 900; color: var(--neon-fuchsia); text-transform: uppercase; text-shadow: 0 0 40px var(--neon-fuchsia); line-height: 1; }
 
-/* MÓDULO DE VOCES (ORBES CSS Y BOTÓN RETO) */
-.voice-intro-section { padding: 100px 20px; background: var(--navy); position: relative; text-align: center; overflow: hidden; }
-.orbs-container { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.orb { position: absolute; border-radius: 50%; filter: blur(90px); animation: floatOrb 8s infinite alternate ease-in-out; }
-.orb-1 { background: #FFFFAA; width: 400px; height: 400px; top: -10%; left: -10%; opacity: 0.2;}
-.orb-2 { background: #00FF9D; width: 350px; height: 350px; bottom: -10%; right: -5%; animation-delay: -2s; opacity: 0.15; }
-.orb-3 { background: #FF3333; width: 300px; height: 300px; top: 40%; left: 50%; animation-delay: -4s; opacity: 0.2; }
+/* MÓDULO VOCES */
+.voice-intro-section { padding: 100px 20px; position: relative; text-align: center; }
+.voice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 40px; max-width: 1100px; margin-left: auto; margin-right: auto;}
+.btn-speak { font-family: 'Orbitron', sans-serif; padding: 15px 30px; border-radius: 50px; border: none; cursor: pointer; font-weight: bold; font-size: 1.1rem; color: var(--navy); margin-top: 20px; transition: 0.3s; width: 100%;}
+.btn-es { background: var(--neon-blue); box-shadow: 0 0 15px rgba(0,217,255,0.6); }
+.btn-en { background: var(--neon-fuchsia); color: white; box-shadow: 0 0 15px rgba(255,0,255,0.6); }
 
-.voice-content { position: relative; z-index: 10; max-width: 1100px; margin: 0 auto; }
-.voice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 40px; }
-.voice-card { background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 15px; padding: 30px; transition: 0.3s; }
-.voice-card:hover { border-color: var(--neon-blue); box-shadow: 0 0 30px rgba(0,217,255,0.2); }
-.btn-speak { font-family: 'Orbitron', sans-serif; padding: 15px 30px; border-radius: 50px; border: none; cursor: pointer; font-weight: bold; font-size: 1rem; color: var(--navy); margin-top: 20px; transition: 0.3s; width: 100%;}
-.btn-es { background: var(--neon-blue); box-shadow: 0 0 15px rgba(0,217,255,0.4); }
-.btn-en { background: var(--neon-fuchsia); color: white; box-shadow: 0 0 15px rgba(255,0,255,0.4); }
+/* BOTONES TITILANTES */
+.btn-blinker { background: transparent; border: 2px solid var(--neon-red); color: var(--neon-red); font-family: 'Orbitron', sans-serif; font-size: 1.3rem; text-transform: uppercase; font-weight: bold; text-decoration: none; display: inline-block; padding: 20px 50px; border-radius: 10px; margin-top: 50px; transition: 0.3s; animation: blink-alert 1.5s infinite; }
+.btn-blinker:hover { background: rgba(255,51,51,0.2); transform: scale(1.05); }
 
-.btn-reto { border: 2px solid #FF3333; color: #FF3333; background: rgba(255, 51, 51, 0.1); animation: pulse-error 2s infinite; padding: 20px 50px; font-family: 'Orbitron', sans-serif; font-size: 1.3rem; text-transform: uppercase; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 60px; border-radius: 10px; transition: 0.3s;}
-.btn-reto:hover { background: rgba(255,51,51,0.3); transform: scale(1.05); }
-
-/* CENTRAL DE MISIONES NBF (CON CERROJOS) */
-.central-hub { padding: 120px 20px; background: linear-gradient(180deg, var(--navy) 0%, var(--dark-metallic) 100%); }
-.hub-title { font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); text-align: center; margin-bottom: 60px; background: var(--discovery-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
-.missions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
-.mission-card { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 30px; transition: all 0.4s ease; text-decoration: none; color: var(--shiny-white); display: flex; flex-direction: column; height: 100%; position: relative; overflow: hidden; cursor: pointer; }
+/* CENTRAL DE MISIONES NBF */
+.central-hub { padding: 120px 20px; position: relative; }
+.missions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10;}
+.mission-card { border: 1px solid rgba(255,255,255,0.2); border-radius: 15px; padding: 30px; transition: all 0.4s ease; text-decoration: none; color: var(--shiny-white); display: flex; flex-direction: column; height: 100%; position: relative; cursor: pointer; }
 .mission-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
 
-/* Tarjeta Desbloqueada (La Ciencia) */
 .card-intro::before { background: var(--neon-blue); }
-.card-intro:hover { border-color: var(--neon-blue); box-shadow: 0 10px 30px rgba(0,217,255,0.2); transform: translateY(-10px); background: rgba(10,22,40,0.8);}
 .card-intro .phase-tag { color: var(--neon-blue); border-color: var(--neon-blue); background: rgba(0,217,255,0.1);}
 
-/* Tarjetas Bloqueadas */
-.card-locked { opacity: 0.7; }
-.card-locked:hover { opacity: 1; border-color: var(--metallic-gray); }
+.card-locked { opacity: 0.8; }
+.card-locked:hover { border-color: var(--neon-red); box-shadow: 0 0 20px rgba(255,51,51,0.2);}
 .card-f1::before { background: var(--neon-emerald); }
 .card-f2::before { background: var(--neon-fuchsia); }
 .card-f3::before { background: #FFB800; }
@@ -121,97 +128,105 @@ body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--s
 .m-desc { color: var(--metallic-gray); font-size: 1.1rem; line-height: 1.5; flex-grow: 1; }
 .m-action { font-family: 'Orbitron', sans-serif; margin-top: 20px; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
 
-footer { padding: 40px; text-align: center; background: #050b14; font-family: 'Rajdhani', sans-serif; color: var(--metallic-gray); }
 @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
+<div class="hud-grid-bg"></div>
+<canvas id="bg-canvas"></canvas>
+
+<div class="modal-overlay" id="thumbModal">
+  <div class="modal-content" id="modalBox">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <img id="modalImg" class="modal-image" src="" alt="Vista previa">
+    <h2 id="modalTitle" class="modal-title">Capítulo</h2>
+    <p id="modalDesc" class="modal-desc"></p>
+  </div>
+</div>
+
 <header class="hero-header">
   <video class="video-background" autoplay muted loop playsinline><source src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/welcome_dmax.mp4" type="video/mp4"></video>
-  <div class="neural-overlay"></div>
   <div class="hero-content">
     <h1 class="hero-title">La Revolución Cognitiva Ha Llegado</h1>
     <p style="font-family: 'Orbitron'; font-size: clamp(1.3rem, 3vw, 2rem); color: var(--neon-fuchsia); margin-bottom: 20px; text-transform: uppercase;">Los verbos en inglés no existen</p>
-    <button class="hero-button" onclick="document.getElementById('method-section').scrollIntoView({behavior: 'smooth'})">START NOW</button>
+    <button class="hero-button" onclick="document.getElementById('hub-misiones').scrollIntoView({behavior: 'smooth'})">START NOW</button>
   </div>
   
   <div class="thumbnail-carousel" id="carousel1">
     <div class="thumbnail-track" id="track1">
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/20.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/21.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/22.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/23.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/24.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/25.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/26.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/27.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/28.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/29.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/30.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/31.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/20.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/21.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/22.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/23.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/24.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/25.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/26.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/27.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/28.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/29.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/30.png"></div>
-      <div class="thumbnail-item"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/31.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 1', 'Desmantelamiento estructural base.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/20.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 2', 'Sincronización rítmica cortical.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/21.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 3', 'Desactivación de traducción literal.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/22.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 4', 'Ecosistema posicional avanzado.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/23.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 5', 'Mapeo de bases léxicas fijas.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/24.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 6', 'Calibración fonética dorsal.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/25.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 7', 'Reconfiguración de Foco.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/26.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 8', 'Determinantes funcionales PPD.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/27.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 9', 'Moduladores de capacidad.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/28.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 10', 'Bloques lógicos compuestos.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/29.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 11', 'Expansores conceptuales.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/30.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 12', 'Fluidez estructural absoluta.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/31.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 1', 'Desmantelamiento estructural base.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/20.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 2', 'Sincronización rítmica cortical.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/21.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 3', 'Desactivación de traducción literal.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/22.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 4', 'Ecosistema posicional avanzado.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/23.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 5', 'Mapeo de bases léxicas fijas.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/24.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 6', 'Calibración fonética dorsal.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/25.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 7', 'Reconfiguración de Foco.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/26.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 8', 'Determinantes funcionales PPD.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/27.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 9', 'Moduladores de capacidad.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/28.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 10', 'Bloques lógicos compuestos.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/29.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 11', 'Expansores conceptuales.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/30.png"></div>
+      <div class="thumbnail-item" onclick="openModal(this, 'Unidad 12', 'Fluidez estructural absoluta.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/31.png"></div>
     </div>
   </div>
 </header>
 
 <section class="first-block">
+  <div class="orbs-container"><div class="orb orb-fuchsia"></div></div>
   <div class="block-content">
     <h2 class="block-title">Únete a la comunidad que ya reconfiguró su mente</h2>
     <div class="stats-grid">
-      <div class="stat-card glass-card" onclick="document.getElementById('hub-misiones').scrollIntoView({behavior: 'smooth'})">
+      <div class="stat-card glass-panel" onclick="document.getElementById('hub-misiones').scrollIntoView({behavior: 'smooth'})">
         <span class="stat-number">7</span><p class="stat-label">Elementos Determinantes</p>
       </div>
-      <div class="stat-card glass-card" onclick="document.getElementById('voice-intro').scrollIntoView({behavior: 'smooth'})">
+      <div class="stat-card glass-panel" onclick="document.getElementById('voice-intro').scrollIntoView({behavior: 'smooth'})">
         <span class="stat-number">3</span><p class="stat-label">Ecuaciones Brújula</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="method-section" class="second-block">
-  <h2>Descubre el poder de tu mente</h2><p>Aprender inglés con Neurociencias será tu gran diferenciador.</p>
-</section>
-
 <section class="third-block">
+  <div class="orbs-container"><div class="orb orb-yellow"></div><div class="orb orb-green"></div></div>
   <h2 class="block-title">Unidades de Entrenamiento Neural</h2>
   <div class="unit-carousel-container" id="carousel2">
     <div class="unit-track" id="track2">
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/a.png"><div class="unit-overlay"><div class="unit-number">01</div><div class="unit-title">Household</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/b.png"><div class="unit-overlay"><div class="unit-number">02</div><div class="unit-title">G.DAY</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/c.png"><div class="unit-overlay"><div class="unit-number">03</div><div class="unit-title">Sports</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/d.png"><div class="unit-overlay"><div class="unit-number">04</div><div class="unit-title">City</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/e.png"><div class="unit-overlay"><div class="unit-number">05</div><div class="unit-title">Home</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/f.png"><div class="unit-overlay"><div class="unit-number">06</div><div class="unit-title">Seaside</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/g.png"><div class="unit-overlay"><div class="unit-number">07</div><div class="unit-title">Cinema</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/h.png"><div class="unit-overlay"><div class="unit-number">08</div><div class="unit-title">GRUB</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/i.png"><div class="unit-overlay"><div class="unit-number">09</div><div class="unit-title">ME</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/j.png"><div class="unit-overlay"><div class="unit-number">10</div><div class="unit-title">Country</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/k.png"><div class="unit-overlay"><div class="unit-number">11</div><div class="unit-title">Weather</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/l.png"><div class="unit-overlay"><div class="unit-number">12</div><div class="unit-title">Shopping</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/a.png"><div class="unit-overlay"><div class="unit-number">01</div><div class="unit-title">Household</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/b.png"><div class="unit-overlay"><div class="unit-number">02</div><div class="unit-title">G.DAY</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/c.png"><div class="unit-overlay"><div class="unit-number">03</div><div class="unit-title">Sports</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/d.png"><div class="unit-overlay"><div class="unit-number">04</div><div class="unit-title">City</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/e.png"><div class="unit-overlay"><div class="unit-number">05</div><div class="unit-title">Home</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/f.png"><div class="unit-overlay"><div class="unit-number">06</div><div class="unit-title">Seaside</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/g.png"><div class="unit-overlay"><div class="unit-number">07</div><div class="unit-title">Cinema</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/h.png"><div class="unit-overlay"><div class="unit-number">08</div><div class="unit-title">GRUB</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/i.png"><div class="unit-overlay"><div class="unit-number">09</div><div class="unit-title">ME</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/j.png"><div class="unit-overlay"><div class="unit-number">10</div><div class="unit-title">Country</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/k.png"><div class="unit-overlay"><div class="unit-number">11</div><div class="unit-title">Weather</div></div></div>
-      <div class="unit-card"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/l.png"><div class="unit-overlay"><div class="unit-number">12</div><div class="unit-title">Shopping</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Household', 'Vocabulario esencial para el hogar a través de neuroasociaciones.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/a.png"><div class="unit-overlay"><div class="unit-number">01</div><div class="unit-title">Household</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'G.DAY', 'Domina las interacciones diarias con nuestra estructura NBF.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/b.png"><div class="unit-overlay"><div class="unit-number">02</div><div class="unit-title">G.DAY</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Sports', 'Sumérgete en el mundo deportivo sin verbos tradicionales.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/c.png"><div class="unit-overlay"><div class="unit-number">03</div><div class="unit-title">Sports</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'City', 'Navega por la ciudad usando mapas mentales en inglés.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/d.png"><div class="unit-overlay"><div class="unit-number">04</div><div class="unit-title">City</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Home', 'Expande tus conceptos sobre el entorno personal.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/e.png"><div class="unit-overlay"><div class="unit-number">05</div><div class="unit-title">Home</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Seaside', 'Vocabulario y situaciones costeras con anclaje visual.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/f.png"><div class="unit-overlay"><div class="unit-number">06</div><div class="unit-title">Seaside</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Cinema', 'El entretenimiento decodificado neuro-lingüísticamente.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/g.png"><div class="unit-overlay"><div class="unit-number">07</div><div class="unit-title">Cinema</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'GRUB', 'Alimentación y restaurantes: pide lo que quieras con fluidez.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/h.png"><div class="unit-overlay"><div class="unit-number">08</div><div class="unit-title">GRUB</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'ME', 'Habla de ti mismo, tus emociones y estados mentales.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/i.png"><div class="unit-overlay"><div class="unit-number">09</div><div class="unit-title">ME</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Country', 'Explora diferentes entornos geográficos.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/j.png"><div class="unit-overlay"><div class="unit-number">10</div><div class="unit-title">Country</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Weather', 'Expresiones climáticas automatizadas en tu cerebro.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/k.png"><div class="unit-overlay"><div class="unit-number">11</div><div class="unit-title">Weather</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Shopping', 'Interacciones de compra y negociaciones sin bloqueos.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/l.png"><div class="unit-overlay"><div class="unit-number">12</div><div class="unit-title">Shopping</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Household', 'Vocabulario esencial para el hogar a través de neuroasociaciones.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/a.png"><div class="unit-overlay"><div class="unit-number">01</div><div class="unit-title">Household</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'G.DAY', 'Domina las interacciones diarias con nuestra estructura NBF.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/b.png"><div class="unit-overlay"><div class="unit-number">02</div><div class="unit-title">G.DAY</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Sports', 'Sumérgete en el mundo deportivo sin verbos tradicionales.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/c.png"><div class="unit-overlay"><div class="unit-number">03</div><div class="unit-title">Sports</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'City', 'Navega por la ciudad usando mapas mentales en inglés.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/d.png"><div class="unit-overlay"><div class="unit-number">04</div><div class="unit-title">City</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Home', 'Expande tus conceptos sobre el entorno personal.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/e.png"><div class="unit-overlay"><div class="unit-number">05</div><div class="unit-title">Home</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Seaside', 'Vocabulario y situaciones costeras con anclaje visual.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/f.png"><div class="unit-overlay"><div class="unit-number">06</div><div class="unit-title">Seaside</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Cinema', 'El entretenimiento decodificado neuro-lingüísticamente.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/g.png"><div class="unit-overlay"><div class="unit-number">07</div><div class="unit-title">Cinema</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'GRUB', 'Alimentación y restaurantes: pide lo que quieras con fluidez.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/h.png"><div class="unit-overlay"><div class="unit-number">08</div><div class="unit-title">GRUB</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'ME', 'Habla de ti mismo, tus emociones y estados mentales.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/i.png"><div class="unit-overlay"><div class="unit-number">09</div><div class="unit-title">ME</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Country', 'Explora diferentes entornos geográficos.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/j.png"><div class="unit-overlay"><div class="unit-number">10</div><div class="unit-title">Country</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Weather', 'Expresiones climáticas automatizadas en tu cerebro.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/k.png"><div class="unit-overlay"><div class="unit-number">11</div><div class="unit-title">Weather</div></div></div>
+      <div class="unit-card" onclick="openModal(this, 'Shopping', 'Interacciones de compra y negociaciones sin bloqueos.')"><img src="https://www.maxneuroeducation.com/uploads/1/2/6/0/126057965/l.png"><div class="unit-overlay"><div class="unit-number">12</div><div class="unit-title">Shopping</div></div></div>
     </div>
   </div>
 </section>
@@ -219,10 +234,10 @@ footer { padding: 40px; text-align: center; background: #050b14; font-family: 'R
 <section class="magic-scroll-section" id="magicSection">
   <div class="magic-sticky">
     <div class="magic-track" id="magicTrack">
-      <div class="magic-card"><h3>Paso 1</h3><p>Inmersión cognitiva profunda para reprogramar tus estructuras mentales.</p></div>
-      <div class="magic-card"><h3>Paso 2</h3><p>Eliminación de la dependencia de verbos tradicionales.</p></div>
-      <div class="magic-card"><h3>Paso 3</h3><p>Aceleración de fluidez mediante estímulos neuronales.</p></div>
-      <div class="magic-card"><h3>Paso 4</h3><p>Dominio absoluto del entorno conversacional en inglés.</p></div>
+      <div class="magic-card glass-panel"><h3>Paso 1</h3><p>Inmersión cognitiva profunda para reprogramar tus estructuras mentales.</p></div>
+      <div class="magic-card glass-panel"><h3>Paso 2</h3><p>Eliminación de la dependencia de verbos tradicionales.</p></div>
+      <div class="magic-card glass-panel"><h3>Paso 3</h3><p>Aceleración de fluidez mediante estímulos neuronales.</p></div>
+      <div class="magic-card glass-panel"><h3>Paso 4</h3><p>Dominio absoluto del entorno conversacional en inglés.</p></div>
     </div>
   </div>
 </section>
@@ -235,65 +250,66 @@ footer { padding: 40px; text-align: center; background: #050b14; font-family: 'R
 </section>
 
 <section id="voice-intro" class="voice-intro-section">
-  <div class="orbs-container"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
-  <div class="voice-content">
-    <h2 style="font-family:'Orbitron'; color:var(--neon-blue); font-size: 2.5rem;">Laboratorio Introductorio de Voz</h2>
+  <div class="orbs-container"><div class="orb orb-yellow"></div><div class="orb orb-red"></div></div>
+  <div class="voice-content glass-panel" style="max-width: 1100px; margin: 0 auto; padding: 60px 20px;">
+    <h2 style="font-family:'Orbitron'; color:var(--neon-blue); font-size: 2.5rem; text-shadow: 0 0 20px rgba(0,217,255,0.5);">Laboratorio Introductorio de Voz</h2>
     <p style="font-size:1.3rem; max-width:800px; margin: 10px auto; color:var(--shiny-white);">Siente el contraste neurobiológico. Escucha las Ecuaciones Brújula dictadas por la arquitectura bilingüe de tu simulador.</p>
     
     <div class="voice-grid">
-      <div class="voice-card">
+      <div class="voice-card glass-panel" style="background: rgba(0,0,0,0.4);">
         <h3 style="color: var(--neon-blue); font-family: 'Orbitron'; font-size: 1.5rem;">Ecuación en Español</h3>
         <p style="margin-top:15px; font-size: 1.2rem; line-height: 1.6;">"Tu cerebro hispano ha evolucionado para depender de la acción concentrada en el verbo. Pensar en español es igual a verbo."</p>
         <button class="btn-speak btn-es" onclick="speakIntro('es')">🔊 ESCUCHAR AUDIO ESPAÑOL</button>
       </div>
-      <div class="voice-card">
+      <div class="voice-card glass-panel" style="background: rgba(0,0,0,0.4);">
         <h3 style="color: var(--neon-fuchsia); font-family: 'Orbitron'; font-size: 1.5rem;">Ecuación en Inglés</h3>
         <p style="margin-top:15px; font-size: 1.2rem; line-height: 1.6;">"The English language operates based on positional architecture. Verbs do not exist; they are structural bases activated by determiners."</p>
         <button class="btn-speak btn-en" onclick="speakIntro('en')">🔊 ESCUCHAR AUDIO INGLÉS</button>
       </div>
     </div>
     
-    <a href="deportes-nbf.html" class="btn-reto">RETO DISCOVERY</a>
+    <a href="deportes-nbf.html" class="btn-blinker">RETO DISCOVERY</a>
   </div>
 </section>
 
 <section class="central-hub" id="hub-misiones">
-  <h2 class="hub-title">CENTRO DE MANDO NBF</h2>
+  <div class="orbs-container"><div class="orb orb-green"></div><div class="orb orb-fuchsia"></div></div>
+  <h2 class="block-title">CENTRO DE MANDO NBF</h2>
   <div class="missions-grid">
     
-    <a href="neuro-presentacion.html" class="mission-card card-intro">
+    <a href="neuro-presentacion.html" class="mission-card glass-panel card-intro">
       <div class="phase-tag">La Ciencia</div>
       <div class="m-title">La Neurobiología de la Fluidez</div>
       <div class="m-desc">El postulado científico completo. Conoce la trampa del magneto perceptual y la calibración fMRI.</div>
       <div class="m-action" style="color: var(--neon-blue);">INICIAR RECORRIDO ►</div>
     </a>
 
-    <div class="mission-card card-locked card-f1" onclick="alertLock()">
-      <div class="phase-tag" style="border-color: var(--metallic-gray); color: var(--metallic-gray); background: transparent;">Fase 1</div>
+    <div class="mission-card glass-panel card-locked card-f1" onclick="alertLock()">
+      <div class="phase-tag" style="border-color: var(--neon-red); color: var(--neon-red); background: rgba(255,51,51,0.1);">Fase 1</div>
       <div class="m-title">Sincronización Lecto-Auditiva</div>
       <div class="m-desc">Bombardeo HVPT de alta variabilidad acústica para desmantelar la sordera fonética.</div>
-      <div class="m-action" style="color: #FF3333;">🔒 BLOQUEADO - Requiere Prueba Gratis</div>
+      <div class="m-action" style="color: #FF8888;">🔒 BLOQUEADO - Requiere Prueba Gratis</div>
     </div>
 
-    <div class="mission-card card-locked card-f2" onclick="alertLock()">
-      <div class="phase-tag" style="border-color: var(--metallic-gray); color: var(--metallic-gray); background: transparent;">Fase 2</div>
+    <div class="mission-card glass-panel card-locked card-f2" onclick="alertLock()">
+      <div class="phase-tag" style="border-color: var(--neon-red); color: var(--neon-red); background: rgba(255,51,51,0.1);">Fase 2</div>
       <div class="m-title">Ensamblador Estructural</div>
       <div class="m-desc">Reconstrucción sintáctica bajo estrés cognitivo controlado. Misiones contrarreloj de 150 segundos.</div>
-      <div class="m-action" style="color: #FF3333;">🔒 BLOQUEADO - Requiere Prueba Gratis</div>
+      <div class="m-action" style="color: #FF8888;">🔒 BLOQUEADO - Requiere Prueba Gratis</div>
     </div>
 
-    <div class="mission-card card-locked card-f3" onclick="alertLock()">
-      <div class="phase-tag" style="border-color: var(--metallic-gray); color: var(--metallic-gray); background: transparent;">Fase 3</div>
+    <div class="mission-card glass-panel card-locked card-f3" onclick="alertLock()">
+      <div class="phase-tag" style="border-color: var(--neon-red); color: var(--neon-red); background: rgba(255,51,51,0.1);">Fase 3</div>
       <div class="m-title">Laboratorio de Desglose</div>
       <div class="m-desc">Explora las 5 columnas lógicas y las 3 Ecuaciones Brújula. Define para interpretar.</div>
-      <div class="m-action" style="color: #FF3333;">🔒 BLOQUEADO - Requiere Prueba Gratis</div>
+      <div class="m-action" style="color: #FF8888;">🔒 BLOQUEADO - Requiere Prueba Gratis</div>
     </div>
 
-    <div class="mission-card card-locked card-f4" onclick="alertLock()">
-      <div class="phase-tag" style="border-color: var(--metallic-gray); color: var(--metallic-gray); background: transparent;">Fase 4</div>
+    <div class="mission-card glass-panel card-locked card-f4" onclick="alertLock()">
+      <div class="phase-tag" style="border-color: var(--neon-red); color: var(--neon-red); background: rgba(255,51,51,0.1);">Fase 4</div>
       <div class="m-title">Grabadora de Confianza</div>
       <div class="m-desc">Activación cortical y puente acústico-motor. El micro validará tus metas de fluidez real.</div>
-      <div class="m-action" style="color: #FF3333;">🔒 BLOQUEADO - Requiere Prueba Gratis</div>
+      <div class="m-action" style="color: #FF8888;">🔒 BLOQUEADO - Requiere Prueba Gratis</div>
     </div>
 
   </div>
@@ -302,74 +318,90 @@ footer { padding: 40px; text-align: center; background: #050b14; font-family: 'R
 <footer><p>© 2026 Discovery MAX Neuroeducation | Método NBF</p></footer>
 
 <script>
-// Alerta de Bloqueo
-function alertLock() {
-  alert("🔒 FASE BLOQUEADA.\n\nPara acceder a los simuladores, primero debes comprender la ciencia detrás del método.\n\nPor favor, ingresa a 'La Neurobiología de la Fluidez'.");
-}
+function alertLock() { alert("🔒 FASE BLOQUEADA.\n\nPara acceder a los simuladores, primero debes comprender la ciencia detrás del método.\n\nPor favor, ingresa a 'La Neurobiología de la Fluidez'."); }
 
-// Motor de Audio
 function speakIntro(lang) {
   window.speechSynthesis.cancel();
   let text = lang === 'es' 
     ? "Tu cerebro hispano ha evolucionado para depender de la acción concentrada en el verbo. Al aplicar el Método N.B.F, desmantelamos ese vicio de traducción. Pensar en español es igual a verbo."
     : "The English language operates based on structural and positional architecture. Traditional verbs do not exist. They are naming bases activated by relationships. Think in English, seek the noun.";
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = lang === 'es' ? 'es-MX' : 'en-US';
-  utterance.rate = 0.9;
+  utterance.lang = lang === 'es' ? 'es-MX' : 'en-US'; utterance.rate = 0.9;
   window.speechSynthesis.speak(utterance);
 }
 
-// LÓGICA DE CARRUSELES (Infinito + Swipe manual permitido)
+// Modal
+const modal = document.getElementById('thumbModal');
+const modalBox = document.getElementById('modalBox');
+const modalImg = document.getElementById('modalImg');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+
+function openModal(element, titleText, descText) {
+  modalImg.src = element.querySelector('img').src;
+  modalTitle.innerText = titleText; modalDesc.innerText = descText;
+  modal.style.display = 'flex';
+  setTimeout(() => { modal.style.opacity = '1'; modalBox.style.transform = 'scale(1)'; }, 10);
+}
+function closeModal() {
+  modal.style.opacity = '0'; modalBox.style.transform = 'scale(0.8)';
+  setTimeout(() => { modal.style.display = 'none'; }, 300);
+}
+
+// LÓGICA DE CARRUSELES (Infinito + Swipe)
 function initCarousel(containerId, trackId) {
   const container = document.getElementById(containerId);
   const track = document.getElementById(trackId);
   if(!container || !track) return;
-  
   let isHovered = false;
-  
   container.addEventListener('mouseenter', () => isHovered = true);
   container.addEventListener('mouseleave', () => isHovered = false);
   container.addEventListener('touchstart', () => isHovered = true, {passive: true});
-  container.addEventListener('touchend', () => { setTimeout(() => isHovered = false, 2000); }); // Tarda 2 seg en reanudar tras deslizar
-
+  container.addEventListener('touchend', () => { setTimeout(() => isHovered = false, 2000); }); 
   function scroll() {
-    if (!isHovered) {
-      container.scrollLeft += 1;
-      if (container.scrollLeft >= track.scrollWidth / 2) container.scrollLeft = 0;
-    }
+    if (!isHovered) { container.scrollLeft += 1; if (container.scrollLeft >= track.scrollWidth / 2) container.scrollLeft = 0; }
     requestAnimationFrame(scroll);
   }
   requestAnimationFrame(scroll);
 }
-initCarousel('carousel1', 'track1');
-initCarousel('carousel2', 'track2');
+initCarousel('carousel1', 'track1'); initCarousel('carousel2', 'track2');
 
-// Scroll Cinemático del Track y Zoom de Letras
+// Scroll Cinemático
 window.addEventListener('scroll', () => {
-  const magicSection = document.getElementById('magicSection');
-  const magicTrack = document.getElementById('magicTrack');
+  const magicSection = document.getElementById('magicSection'); const magicTrack = document.getElementById('magicTrack');
   if (magicSection && magicTrack) {
-    const rect = magicSection.getBoundingClientRect();
-    const progress = -rect.top / (rect.height - window.innerHeight);
-    if (progress >= 0 && progress <= 1) {
-      const maxScroll = magicTrack.scrollWidth - window.innerWidth;
-      magicTrack.style.transform = `translateX(${-progress * maxScroll}px)`;
-    }
+    const rect = magicSection.getBoundingClientRect(); const progress = -rect.top / (rect.height - window.innerHeight);
+    if (progress >= 0 && progress <= 1) { const maxScroll = magicTrack.scrollWidth - window.innerWidth; magicTrack.style.transform = `translateX(${-progress * maxScroll}px)`; }
   }
-  const zoomSection = document.getElementById('zoomSection');
-  const zoomText = document.getElementById('zoomText');
+  const zoomSection = document.getElementById('zoomSection'); const zoomText = document.getElementById('zoomText');
   if (zoomSection && zoomText) {
-    const rectZoom = zoomSection.getBoundingClientRect();
-    const progressZoom = -rectZoom.top / (rectZoom.height - window.innerHeight);
+    const rectZoom = zoomSection.getBoundingClientRect(); const progressZoom = -rectZoom.top / (rectZoom.height - window.innerHeight);
     if (progressZoom >= 0) {
-      const scale = 1 + (progressZoom * 22);
-      let opacity = 1;
+      const scale = 1 + (progressZoom * 22); let opacity = 1;
       if (progressZoom > 0.6) { opacity = 1 - ((progressZoom - 0.6) * 2.5); }
-      zoomText.style.transform = `scale(${scale})`;
-      zoomText.style.opacity = Math.max(0, opacity);
+      zoomText.style.transform = `scale(${scale})`; zoomText.style.opacity = Math.max(0, opacity);
     }
   }
 });
+
+// NEURONITAS fMRI CANVA
+const canvas = document.getElementById('bg-canvas'); const ctx = canvas.getContext('2d'); let particles = [];
+const colors = ['#00D9FF', '#FF00FF', '#00FF9D', '#FFFFAA'];
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resizeCanvas); resizeCanvas();
+class Particle {
+  constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.vx = (Math.random()-0.5)*0.5; this.vy = (Math.random()-0.5)*0.5; this.r = Math.random()*2 + 1; this.color = colors[Math.floor(Math.random()*colors.length)]; this.angle = Math.random() * Math.PI * 2; }
+  update() { this.x += this.vx + Math.sin(this.angle)*0.5; this.y += this.vy + Math.cos(this.angle)*0.5; this.angle += 0.02; if(this.x<0||this.x>canvas.width)this.vx*=-1; if(this.y<0||this.y>canvas.height)this.vy*=-1; }
+  draw() { ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.fillStyle = this.color; ctx.shadowBlur = 10; ctx.shadowColor = this.color; ctx.fill(); ctx.shadowBlur = 0; }
+}
+for(let i=0; i<80; i++) particles.push(new Particle());
+function animateParticles() {
+  ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); });
+  for(let i=0;i<particles.length;i++){ for(let j=i+1;j<particles.length;j++){
+    let dist = Math.hypot(particles[i].x-particles[j].x, particles[i].y-particles[j].y);
+    if(dist<150){ ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.strokeStyle=`rgba(0, 217, 255, ${0.15-dist/1000})`; ctx.stroke(); }
+  }} requestAnimationFrame(animateParticles);
+} animateParticles();
 </script>
 </body>
 </html>
