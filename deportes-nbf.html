@@ -607,11 +607,19 @@ function showResults() {
   document.getElementById('time-val').textContent = time + 's';
   
   let rec = "";
-  if (score < 40) rec = "<span style='color:var(--neon-fuchsia); font-size:1.5rem;'>🔴</span> <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'autoengaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural (Pronombres + Auxiliares) antes de avanzar.";
+  if (score < 40) rec = "<span style='color:var(--neon-fuchsia); font-size:1.5rem;'>🔴</span> <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'autoengaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural antes de avanzar.";
   else if (score < 70) rec = "<span style='color:var(--warning); font-size:1.5rem;'>🟡</span> <strong>Fase 2: Reensamblaje Cognitivo.</strong> Tienes conocimiento fragmentado. Cometes errores sistemáticos porque tu cerebro busca 'navajas suizas' (verbos compactos) en lugar de 'piezas Lego'. Enfócate en automatizar los 7 Elementos Determinantes.";
-  else rec = "<span style='color:var(--neon-emerald); font-size:1.5rem;'>🟢</span> <strong>Fase 3: Integración Profunda.</strong> Tu estructura es sólida, pero aún traduces mentalmente en tiempo real. El siguiente paso es la <strong>Producción Espontánea</strong>: eliminar el 'traductor interno' mediante repetición espaciada y audio therapy.";
+  else rec = "<span style='color:var(--neon-emerald); font-size:1.5rem;'>🟢</span> <strong>Fase 3: Integración Profunda.</strong> Tu estructura es sólida, pero aún traduces mentalmente. El siguiente paso es la Producción Espontánea.";
   
-  document.getElementById('nbf-recommendation').innerHTML = `<strong style="font-family:'Orbitron', sans-serif; font-size:1.2rem; color: var(--neon-blue);">💡 Tu Ruta NBF Deportiva:</strong><br><br><span style="font-size:1rem; line-height: 1.6;">${rec}</span>`;
+  // AQUI INYECTAMOS EL BOTON DE REGRESO AL CENTRO DE MANDO
+  document.getElementById('nbf-recommendation').innerHTML = `
+    <strong style="font-family:'Orbitron', sans-serif; font-size:1.2rem; color: var(--neon-blue);">💡 Tu Ruta NBF Deportiva:</strong><br><br>
+    <span style="font-size:1rem; line-height: 1.6;">${rec}</span>
+    <div style="margin-top: 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+      <p style="font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; color: var(--text); margin-bottom: 15px;">¿Quieres llevar tu mente a un nivel de inglés profesional único?</p>
+      <a href="indexmax.html#hub-misiones" class="btn" style="width: 100%; display: block; text-decoration: none;">🚀 CONOCE EL CENTRO DE MANDO NBF</a>
+    </div>
+  `;
 }
 
 async function toggleRecord() {
