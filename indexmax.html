@@ -96,6 +96,17 @@ body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--s
 .zt-medium { font-family: 'Orbitron', sans-serif; font-size: clamp(2.5rem, 6vw, 5rem); color: var(--neon-blue); margin: 10px 0; }
 .zt-large { font-family: 'Orbitron', sans-serif; font-size: clamp(4rem, 10vw, 8rem); font-weight: 900; color: var(--neon-fuchsia); text-transform: uppercase; text-shadow: 0 0 40px var(--neon-fuchsia); line-height: 1; }
 
+  /* EFECTO FLIP 3D PARA TARJETAS DE ESTADÍSTICAS */
+.flip-card { background: transparent; perspective: 1000px; height: 280px; cursor: pointer; }
+.flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 30px; }
+.flip-card-front { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.3s; }
+.flip-card-front:hover { border-color: var(--neon-blue); box-shadow: 0 0 30px rgba(0,217,255,0.2); }
+.flip-card-back { background: rgba(10, 22, 40, 0.9); border: 2px solid var(--neon-blue); transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 25px; box-shadow: inset 0 0 30px rgba(0,217,255,0.2); }
+.nbf-list { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; color: var(--shiny-white); line-height: 1.5; list-style: none; }
+.nbf-list li::before { content: '⚡ '; color: var(--neon-emerald); }
+  
 /* MÓDULO VOCES */
 .voice-intro-section { padding: 100px 20px; position: relative; text-align: center; }
 .voice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 40px; max-width: 1100px; margin-left: auto; margin-right: auto;}
@@ -184,18 +195,45 @@ body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--s
 </header>
 
 <section class="first-block">
-  <div class="orbs-container"><div class="orb orb-fuchsia"></div></div>
-  <div class="block-content">
-    <h2 class="block-title">Únete a la comunidad que ya reconfiguró su mente</h2>
-    <div class="stats-grid">
-      <div class="stat-card glass-panel" onclick="document.getElementById('hub-misiones').scrollIntoView({behavior: 'smooth'})">
-        <span class="stat-number">7</span><p class="stat-label">Elementos Determinantes</p>
+<div class="stats-grid">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <span class="stat-number">7</span>
+            <p class="stat-label">Elementos Determinantes</p>
+          </div>
+          <div class="flip-card-back">
+            <h4 style="color: var(--neon-blue); font-family: 'Orbitron'; margin-bottom: 10px;">Los 7 Pilares:</h4>
+            <ul class="nbf-list">
+              <li>Sujetos (Activadores)</li>
+              <li>Auxiliares / Modales</li>
+              <li>Bases Léxicas (Sustantivos)</li>
+              <li>Conectores Estructurales</li>
+              <li>Localizadores Espaciales</li>
+              <li>Limitadores</li>
+              <li>Expansores Conceptuales</li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="stat-card glass-panel" onclick="document.getElementById('voice-intro').scrollIntoView({behavior: 'smooth'})">
-        <span class="stat-number">3</span><p class="stat-label">Ecuaciones Brújula</p>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <span class="stat-number">3</span>
+            <p class="stat-label">Ecuaciones Brújula</p>
+          </div>
+          <div class="flip-card-back">
+            <h4 style="color: var(--neon-fuchsia); font-family: 'Orbitron'; margin-bottom: 10px;">La Lógica NBF:</h4>
+            <ul class="nbf-list">
+              <li>Pensar ES = Verbo | EN = Sustantivo</li>
+              <li>No Traducir. Definir para Interpretar.</li>
+              <li>Lógica Estructural sobre Gramática.</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 </section>
 
 <section class="third-block">
