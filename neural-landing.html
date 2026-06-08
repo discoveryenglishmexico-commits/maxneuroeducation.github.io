@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEURAL | Discovery MAX Neuroeducation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #05080f;
+  --glass: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.12);
+  --cyan: #00F3FF;
+  --magenta: #FF00E5;
+  --gold: #FFD700;
+  --emerald: #00FF9D;
+  --text: #F5F2ED;
+  --muted: #8A94A6;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; overflow-x:hidden; }
+.container { max-width:1200px; margin:0 auto; padding:0 20px; }
+
+/* NAV */
+nav { position:fixed; top:0; width:100%; padding:20px 0; background:rgba(5,8,15,0.85); backdrop-filter:blur(12px); z-index:100; border-bottom:1px solid var(--border); }
+.nav-inner { display:flex; justify-content:space-between; align-items:center; }
+.logo { font-family:'Orbitron',sans-serif; font-size:1.4rem; font-weight:700; background:linear-gradient(90deg,var(--cyan),var(--magenta)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.nav-links { display:flex; gap:25px; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:0.9rem; transition:0.3s; }
+.nav-links a:hover { color:var(--cyan); }
+.cta-nav { background:var(--cyan); color:#000; padding:8px 16px; border-radius:20px; font-weight:600; }
+.cta-nav:hover { color:#000; box-shadow:0 0 15px var(--cyan); }
+
+/* HERO */
+.hero { min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; position:relative; overflow:hidden; padding:100px 20px; }
+.hero-bg { position:absolute; inset:0; background:radial-gradient(circle at 30% 40%, rgba(0,243,255,0.15) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(255,0,229,0.15) 0%, transparent 50%); animation:pulse 8s infinite alternate; }
+@keyframes pulse { 0%{opacity:0.6} 100%{opacity:1} }
+.hero-content { position:relative; z-index:2; max-width:800px; }
+.hero h1 { font-family:'Orbitron',sans-serif; font-size:clamp(2.5rem,6vw,4.5rem); line-height:1.1; margin-bottom:20px; background:linear-gradient(90deg,#fff,var(--cyan),var(--magenta)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero p { font-size:1.2rem; color:var(--muted); margin-bottom:30px; max-width:600px; margin-left:auto; margin-right:auto; }
+.btn-main { display:inline-block; padding:16px 32px; background:linear-gradient(90deg,var(--cyan),var(--emerald)); color:#000; font-weight:700; border-radius:30px; text-decoration:none; transition:0.3s; box-shadow:0 10px 30px rgba(0,243,255,0.3); }
+.btn-main:hover { transform:translateY(-3px); box-shadow:0 15px 40px rgba(0,243,255,0.5); }
+.scroll-hint { position:absolute; bottom:30px; left:50%; transform:translateX(-50%); animation:bounce 2s infinite; color:var(--muted); font-size:0.8rem; }
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-10px)} }
+
+/* SECTIONS GENERAL */
+section { padding:100px 0; position:relative; }
+.section-title { font-family:'Orbitron',sans-serif; font-size:clamp(1.8rem,4vw,2.8rem); text-align:center; margin-bottom:20px; color:var(--gold); }
+.section-sub { text-align:center; color:var(--muted); max-width:700px; margin:0 auto 60px; }
+
+/* PROBLEMÁTICA */
+.grid-3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px; }
+.card { background:var(--glass); border:1px solid var(--border); border-radius:16px; padding:30px; transition:0.4s; position:relative; overflow:hidden; }
+.card:hover { transform:translateY(-5px); border-color:var(--cyan); box-shadow:0 10px 30px rgba(0,0,0,0.5); }
+.card-icon { font-size:2.5rem; margin-bottom:15px; }
+.card h3 { font-size:1.3rem; margin-bottom:10px; color:var(--text); }
+.card p { color:var(--muted); font-size:0.95rem; }
+.fail { border-left:3px solid var(--magenta); }
+.fix { border-left:3px solid var(--emerald); }
+
+/* SOLUCIÓN NBF */
+.nbf-demo { background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:20px; padding:40px; text-align:center; margin-top:40px; }
+.nbf-words { display:flex; justify-content:center; gap:15px; flex-wrap:wrap; margin:30px 0; }
+.word { padding:12px 20px; background:var(--glass); border:1px solid var(--border); border-radius:10px; cursor:pointer; transition:0.3s; font-family:'Orbitron',sans-serif; }
+.word.active { background:var(--cyan); color:#000; border-color:var(--cyan); box-shadow:0 0 15px var(--cyan); }
+.nbf-insight { margin-top:20px; padding:15px; background:rgba(0,255,157,0.1); border-radius:10px; color:var(--emerald); font-weight:600; display:none; }
+.nbf-insight.show { display:block; animation:fadeUp 0.5s; }
+@keyframes fadeUp { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
+
+/* TECNOLOGÍA */
+.tech-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:25px; margin-top:40px; }
+.tech-item { background:var(--glass); border:1px solid var(--border); border-radius:12px; padding:25px; }
+.tech-item h4 { color:var(--cyan); margin-bottom:10px; font-family:'Orbitron',sans-serif; }
+.tech-item p { color:var(--muted); font-size:0.9rem; }
+
+/* ROADMAP */
+.timeline { position:relative; max-width:800px; margin:0 auto; padding-left:30px; border-left:2px solid var(--border); }
+.phase { margin-bottom:40px; position:relative; }
+.phase::before { content:''; position:absolute; left:-36px; top:5px; width:12px; height:12px; border-radius:50%; background:var(--muted); border:2px solid var(--bg); }
+.phase.active::before { background:var(--emerald); box-shadow:0 0 10px var(--emerald); }
+.phase.dev::before { background:var(--gold); box-shadow:0 0 10px var(--gold); }
+.phase.soon::before { background:var(--magenta); box-shadow:0 0 10px var(--magenta); }
+.phase h3 { font-family:'Orbitron',sans-serif; font-size:1.2rem; margin-bottom:5px; }
+.phase span { font-size:0.8rem; padding:4px 8px; border-radius:4px; background:rgba(255,255,255,0.1); margin-right:10px; }
+.phase p { color:var(--muted); font-size:0.95rem; }
+
+/* CTA / WAITLIST */
+.cta-section { background:linear-gradient(135deg,rgba(0,243,255,0.05),rgba(255,0,229,0.05)); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.form-box { max-width:500px; margin:0 auto; background:var(--glass); border:1px solid var(--border); border-radius:16px; padding:40px; text-align:center; }
+.input { width:100%; padding:14px; margin-bottom:15px; background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:8px; color:var(--text); font-size:1rem; }
+.input:focus { outline:none; border-color:var(--cyan); }
+.btn-submit { width:100%; padding:14px; background:linear-gradient(90deg,var(--magenta),var(--gold)); color:#000; font-weight:700; border:none; border-radius:8px; cursor:pointer; transition:0.3s; }
+.btn-submit:hover { transform:scale(1.02); box-shadow:0 10px 25px rgba(255,0,229,0.4); }
+.success-msg { display:none; margin-top:20px; color:var(--emerald); font-weight:600; }
+
+/* FOOTER */
+footer { padding:40px 0; text-align:center; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); }
+
+/* RESPONSIVE */
+@media(max-width:768px) {
+  .nav-links { display:none; }
+  .hero h1 { font-size:2.2rem; }
+  .section-title { font-size:1.8rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <div class="logo">NEURAL | Discovery MAX</div>
+    <div class="nav-links">
+      <a href="#vision">Visión</a>
+      <a href="#method">Método NBF</a>
+      <a href="#tech">Tecnología</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#access" class="cta-nav">Acceso Anticipado</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="vision">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <h1>El inglés no se aprende.<br>Se codifica.</h1>
+    <p>Descubre NEURAL: El primer ecosistema neurocognitivo que reconfigura tu cerebro para pensar en inglés. Sin traducción lineal. Sin gramática teórica. Solo estructura pura.</p>
+    <a href="#access" class="btn-main">🚀 Acceder a la Fase 1</a>
+  </div>
+  <div class="scroll-hint">↓ Desliza para explorar</div>
+</section>
+
+<!-- PROBLEMÁTICA -->
+<section id="problem">
+  <div class="container">
+    <h2 class="section-title">Por qué los métodos tradicionales fallan</h2>
+    <p class="section-sub">Tu cerebro ejecutivo no tiene tiempo para metodologías obsoletas. La memorización lineal exige un recurso que no puedes desperdiciar: el tiempo.</p>
+    <div class="grid-3">
+      <div class="card fail">
+        <div class="card-icon">🐌</div>
+        <h3>Traducción Lineal</h3>
+        <p>El cerebro pierde velocidad al convertir español → inglés en tiempo real. Genera latencia cognitiva y bloqueo fluido.</p>
+      </div>
+      <div class="card fail">
+        <div class="card-icon"></div>
+        <h3>Gramática Abstracta</h3>
+        <p>Reglas teóricas que no reflejan cómo el idioma realmente se ensambla en contextos reales de alto rendimiento.</p>
+      </div>
+      <div class="card fail">
+        <div class="card-icon">🔄</div>
+        <h3>Repetición Forzada</h3>
+        <p>Miles de horas de práctica sin reconfiguración neuronal. Resultados limitados y frustración ejecutiva.</p>
+      </div>
+      <div class="card fix">
+        <div class="card-icon">⚡</div>
+        <h3>Codificación Directa</h3>
+        <p>NEURAL elimina el traductor interno. Entrena patrones estructurales que el cerebro adopta como nativos.</p>
+      </div>
+      <div class="card fix">
+        <div class="card-icon">🧩</div>
+        <h3>Arquitectura NBF</h3>
+        <p>El idioma se descompone en Bases + Determinantes. Aprendes a ensamblar, no a memorizar listas inertes.</p>
+      </div>
+      <div class="card fix">
+        <div class="card-icon">🎯</div>
+        <h3>Simulación de Realidad</h3>
+        <p>Ejercicios interactivos que replican escenarios ejecutivos, negociaciones y comunicación coloquial de alto impacto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUCIÓN NBF -->
+<section id="method">
+  <div class="container">
+    <h2 class="section-title">Metodología NBF: La Arquitectura Oculta</h2>
+    <p class="section-sub">"El verbo en inglés es una ilusión estructural. La acción no está en la palabra, está en el ensamblaje."</p>
+    <div class="nbf-demo">
+      <p style="color:var(--muted); margin-bottom:20px;">Toca las palabras para activar la estructura funcional:</p>
+      <div class="nbf-words">
+        <div class="word" onclick="toggleWord(this)">you</div>
+        <div class="word" onclick="toggleWord(this)">can</div>
+        <div class="word" onclick="toggleWord(this)">visit</div>
+        <div class="word" onclick="toggleWord(this)">many</div>
+        <div class="word" onclick="toggleWord(this)">sites</div>
+      </div>
+      <div class="nbf-insight" id="nbf-insight">
+        ✅ <strong>Estructura NBF Activada:</strong> No conjugaste. Ensamblaste determinantes (you+can) que activaron bases (visit+sites). La acción emerge del sistema, no de la palabra.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECNOLOGÍA -->
+<section id="tech">
+  <div class="container">
+    <h2 class="section-title">SYNAPSIA: Motor Cognitivo Personal</h2>
+    <p class="section-sub">Más que una herramienta de idiomas. Un simulador neuro-digital que evoluciona contigo.</p>
+    <div class="tech-grid">
+      <div class="tech-item">
+        <h4> Traducción Contextual Instantánea</h4>
+        <p>Resuelve dudas en milisegundos. SYNAPSIA no solo traduce: explica matices, genera escenarios reales y adapta el registro a tu industria.</p>
+      </div>
+      <div class="tech-item">
+        <h4> Práctica Conversacional en Tiempo Real</h4>
+        <p>Entrena fluidez con un agente IA hiper-rápido. Sin juicios. Sin pausas incómodas. Solo repetición espaciada y calibración fonética.</p>
+      </div>
+      <div class="tech-item">
+        <h4>🎛️ Diseño de Frases Coloquiales</h4>
+        <p>Extrae estructuras de tus unidades y las transforma en lenguaje nativo. Negocia, persuade y socializa como un hablante nativo.</p>
+      </div>
+      <div class="tech-item">
+        <h4>🎧 Neuro-Audio Terapias (Fase 2)</h4>
+        <p>Audio inmersivo diseñado para penetrar barreras cognitivas. Calibración automática de pronunciación y absorción de frecuencias nativas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <h2 class="section-title">Roadmap de Evolución</h2>
+    <p class="section-sub">Dos mundos. Una arquitectura independiente. Transparencia total en nuestro desarrollo.</p>
+    <div class="timeline">
+      <div class="phase active">
+        <h3>Fase 1: Plataforma Web Interactiva</h3>
+        <span style="background:var(--emerald); color:#000;">🟢 DISPONIBLE AHORA</span>
+        <p>Núcleo NBF completo. 40 unidades interactivas, validación estructural, sistema de progreso visual, ejercicios de ensamblaje y audio terapia básico. Acceso inmediato para early adopters.</p>
+      </div>
+      <div class="phase dev">
+        <h3>Fase 2: Integración SYNAPSIA + Neuro-Audio</h3>
+        <span style="background:var(--gold); color:#000;">🟡 Q3 2026</span>
+        <p>Motor AI conversacional en beta. Audio inmersivo Dolby Atmos (prototipo). Calibración fonética automática y generación de contextos ejecutivos personalizados.</p>
+      </div>
+      <div class="phase soon">
+        <h3>Fase 3: Ecosistema Ejecutivo NEURAL</h3>
+        <span style="background:var(--magenta); color:#fff;">🔴 2027</span>
+        <p>Plataforma cerrada por invitación. Inmersión neuro-sensorial total. Entrenamiento especializado para alta dirección, negociación internacional y dominio coloquial nativo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / WAITLIST -->
+<section class="cta-section" id="access">
+  <div class="container">
+    <div class="form-box">
+      <h2 style="font-family:'Orbitron',sans-serif; margin-bottom:10px;">Únete a la Vanguardia</h2>
+      <p style="color:var(--muted); margin-bottom:30px;">La Fase 1 está abierta. Sé parte de los primeros en experimentar la reconfiguración neuronal del inglés.</p>
+      <form id="waitlist-form">
+        <input type="text" class="input" placeholder="Nombre completo" required>
+        <input type="email" class="input" placeholder="Correo electrónico ejecutivo" required>
+        <select class="input" style="background:rgba(0,0,0,0.4); color:var(--muted);">
+          <option value="">Perfil de acceso</option>
+          <option value="exec">Ejecutivo / Directivo</option>
+          <option value="pro">Profesional Freelance</option>
+          <option value="student">Estudiante Avanzado</option>
+        </select>
+        <button type="submit" class="btn-submit">🔓 Solicitar Acceso Anticipado</button>
+      </form>
+      <div class="success-msg" id="success-msg">✅ Solicitud registrada. Recibirás tus credenciales de acceso a la Fase 1 en menos de 24h.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Discovery MAX Neuroeducation | Método NBF | Toño Vicas</p>
+    <p style="margin-top:10px; font-size:0.75rem; opacity:0.6;">NEURAL es un ecosistema en desarrollo continuo. La Fase 1 representa la base operativa actual.</p>
+  </div>
+</footer>
+
+<script>
+// NBF INTERACTIVE DEMO
+function toggleWord(el) {
+  el.classList.toggle('active');
+  const words = document.querySelectorAll('.nbf-words .word');
+  const activeCount = document.querySelectorAll('.nbf-words .word.active').length;
+  const insight = document.getElementById('nbf-insight');
+  
+  if(activeCount >= 2) {
+    insight.classList.add('show');
+    insight.innerHTML = `✅ <strong>Estructura NBF Activada:</strong> ${activeCount} elementos ensamblados. La acción emerge del sistema, no de la palabra.`;
+  } else {
+    insight.classList.remove('show');
+  }
+}
+
+// FORM HANDLING
+document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  this.style.display = 'none';
+  document.getElementById('success-msg').style.display = 'block';
+});
+
+// SCROLL ANIMATIONS
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = 1;
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('section').forEach(sec => {
+  sec.style.opacity = 0;
+  sec.style.transform = 'translateY(30px)';
+  sec.style.transition = 'all 0.8s ease';
+  observer.observe(sec);
+});
+</script>
+
+</body>
+</html>
