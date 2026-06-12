@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preguntas Frecuentes | Discovery MAX Neuroeducation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #05080f;
+  --glass: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.12);
+  --cyan: #00F3FF;
+  --magenta: #FF00E5;
+  --gold: #FFD700;
+  --emerald: #00FF9D;
+  --text: #F5F2ED;
+  --muted: #8A94A6;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.7; overflow-x:hidden; }
+.container { max-width:1100px; margin:0 auto; padding:0 20px; }
+
+/* HERO FAQ */
+.faq-hero {
+  min-height:60vh;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:120px 20px 60px;
+  position:relative; overflow:hidden;
+}
+.faq-hero-bg {
+  position:absolute; inset:0; z-index:-1;
+  background:radial-gradient(circle at 30% 40%, rgba(0,243,255,0.15) 0%, transparent 50%),
+             radial-gradient(circle at 70% 60%, rgba(255,0,229,0.15) 0%, transparent 50%);
+}
+.faq-hero h1 {
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(2rem,5vw,3.5rem);
+  background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--gold));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  margin-bottom:20px;
+}
+.faq-hero p { color:var(--muted); max-width:700px; margin:0 auto 30px; font-size:1.1rem; }
+
+/* INTRO CARD */
+.intro-card {
+  background:var(--glass); backdrop-filter:blur(16px);
+  border:1px solid var(--border); border-radius:20px;
+  padding:40px; margin-bottom:60px; position:relative; overflow:hidden;
+}.intro-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--gold));
+}
+.intro-card h2 {
+  font-family:'Orbitron',sans-serif;
+  color:var(--gold); margin-bottom:15px; font-size:1.5rem;
+}
+.intro-card p { color:var(--muted); font-size:1.05rem; }
+
+/* VIDEO SECTION */
+.video-section {
+  background:var(--glass); backdrop-filter:blur(16px);
+  border:1px solid var(--border); border-radius:20px;
+  padding:40px; margin-bottom:60px; text-align:center;
+}
+.video-section h2 {
+  font-family:'Orbitron',sans-serif;
+  color:var(--cyan); margin-bottom:20px;
+}
+.video-placeholder {
+  position:relative; padding-top:56.25%; /* 16:9 */
+  background:#000; border-radius:12px; overflow:hidden;
+  border:1px solid var(--border);
+}
+.video-placeholder iframe {
+  position:absolute; top:0; left:0; width:100%; height:100%; border:none;
+}
+.video-placeholder-text {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  color:var(--muted); font-family:'Orbitron',sans-serif;
+}
+
+/* NAVIGATION TABS */
+.faq-nav {
+  display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+  margin-bottom:40px; padding:20px;
+  background:var(--glass); backdrop-filter:blur(16px);
+  border:1px solid var(--border); border-radius:16px;
+}
+.faq-nav button {
+  padding:12px 20px; background:transparent;
+  border:1px solid var(--border); border-radius:10px;
+  color:var(--text); cursor:pointer; transition:0.3s;
+  font-family:'Inter',sans-serif; font-size:0.9rem;
+}
+.faq-nav button:hover { border-color:var(--cyan); color:var(--cyan); }
+.faq-nav button.active {
+  background:linear-gradient(135deg,var(--cyan),var(--emerald));
+  color:#000; border-color:transparent; font-weight:600;}
+
+/* FAQ SECTIONS */
+.faq-section { display:none; animation:fadeIn 0.5s ease; }
+.faq-section.active { display:block; }
+@keyframes fadeIn { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
+
+.section-header {
+  display:flex; align-items:center; gap:15px;
+  margin-bottom:30px; padding-bottom:15px;
+  border-bottom:1px solid var(--border);
+}
+.section-icon {
+  width:50px; height:50px; border-radius:12px;
+  background:linear-gradient(135deg,var(--cyan),var(--magenta));
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.5rem; flex-shrink:0;
+}
+.section-header h2 {
+  font-family:'Orbitron',sans-serif;
+  color:var(--gold); font-size:1.3rem;
+}
+
+/* FAQ ITEMS (ACCORDION) */
+.faq-item {
+  background:var(--glass); backdrop-filter:blur(16px);
+  border:1px solid var(--border); border-radius:14px;
+  margin-bottom:15px; overflow:hidden; transition:0.3s;
+}
+.faq-item:hover { border-color:rgba(0,243,255,0.4); }
+.faq-item.open { border-color:var(--cyan); box-shadow:0 0 20px rgba(0,243,255,0.15); }
+
+.faq-question {
+  padding:20px 25px; cursor:pointer;
+  display:flex; justify-content:space-between; align-items:center;
+  gap:15px; transition:0.3s;
+}
+.faq-question:hover { background:rgba(255,255,255,0.02); }
+.faq-question h3 {
+  font-size:1.05rem; font-weight:600; color:var(--text);
+  flex:1; line-height:1.4;
+}
+.faq-icon {
+  width:30px; height:30px; border-radius:50%;
+  background:rgba(0,243,255,0.1); border:1px solid var(--cyan);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--cyan); font-size:1.2rem; flex-shrink:0;
+  transition:0.3s;
+}
+.faq-item.open .faq-icon {  background:var(--cyan); color:#000; transform:rotate(45deg);
+}
+
+.faq-answer {
+  max-height:0; overflow:hidden; transition:max-height 0.4s ease;
+}
+.faq-item.open .faq-answer { max-height:2000px; }
+.faq-answer-inner {
+  padding:0 25px 25px;
+  border-top:1px solid var(--border);
+  color:var(--muted); font-size:0.98rem;
+}
+.faq-answer-inner p { margin-bottom:12px; }
+.faq-answer-inner strong { color:var(--cyan); }
+.faq-answer-inner ul { margin:10px 0 10px 20px; }
+.faq-answer-inner li { margin-bottom:8px; }
+
+/* HIGHLIGHT QUOTE */
+.highlight-quote {
+  background:rgba(255,215,0,0.08);
+  border-left:3px solid var(--gold);
+  padding:15px 20px; margin:15px 0;
+  border-radius:0 8px 8px 0;
+  font-style:italic; color:var(--text);
+}
+
+/* TEAM SECTION */
+.team-section {
+  background:var(--glass); backdrop-filter:blur(16px);
+  border:1px solid var(--border); border-radius:20px;
+  padding:40px; margin:60px 0; text-align:center;
+}
+.team-section h2 {
+  font-family:'Orbitron',sans-serif;
+  color:var(--emerald); margin-bottom:15px;
+}
+.team-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px; margin-top:30px;
+}
+.team-card {
+  background:rgba(0,0,0,0.3); border:1px solid var(--border);
+  border-radius:12px; padding:20px; transition:0.3s;
+}
+.team-card:hover { border-color:var(--emerald); transform:translateY(-5px); }
+.team-avatar {
+  width:80px; height:80px; border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),var(--magenta));
+  margin:0 auto 15px; display:flex; align-items:center; justify-content:center;
+  font-size:2rem; color:#000;}
+.team-card h4 { color:var(--text); margin-bottom:5px; }
+.team-card p { color:var(--muted); font-size:0.85rem; }
+
+/* CTA FINAL */
+.cta-faq {
+  background:linear-gradient(135deg,rgba(0,243,255,0.08),rgba(255,0,229,0.08));
+  border:1px solid var(--border); border-radius:20px;
+  padding:50px 30px; margin:60px 0; text-align:center;
+}
+.cta-faq h2 {
+  font-family:'Orbitron',sans-serif;
+  color:var(--gold); margin-bottom:15px;
+}
+.cta-faq p { color:var(--muted); margin-bottom:25px; max-width:600px; margin-left:auto; margin-right:auto; }
+.btn-main {
+  display:inline-block; padding:16px 32px;
+  background:linear-gradient(90deg,var(--cyan),var(--emerald));
+  color:#000; font-weight:700; border-radius:30px;
+  text-decoration:none; transition:0.3s;
+  box-shadow:0 10px 30px rgba(0,243,255,0.3);
+}
+.btn-main:hover { transform:translateY(-3px); box-shadow:0 15px 40px rgba(0,243,255,0.5); }
+
+/* FOOTER */
+footer {
+  padding:40px 0; text-align:center; color:var(--muted);
+  font-size:0.85rem; border-top:1px solid var(--border);
+}
+
+/* RESPONSIVE */
+@media(max-width:768px) {
+  .faq-nav { gap:8px; }
+  .faq-nav button { padding:10px 15px; font-size:0.8rem; }
+  .faq-question { padding:15px 20px; }
+  .faq-question h3 { font-size:0.95rem; }
+  .faq-answer-inner { padding:0 20px 20px; }
+  .intro-card, .video-section, .team-section { padding:25px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="faq-hero">
+  <div class="faq-hero-bg"></div>
+  <div class="container">
+    <h1>Preguntas Frecuentes</h1>
+    <p>Entrenamiento Neurocognitivo de Inglés para Hispanohablantes. Descubre las bases neurocientíficas de nuestro método disruptivo.</p>
+  </div></section>
+
+<div class="container">
+
+  <!-- INTRO -->
+  <div class="intro-card">
+    <h2>🧠 Bienvenido a Discovery MAX Neuroeducation</h2>
+    <p>Esta sección está diseñada para responder a las dudas más comunes sobre nuestra innovadora metodología. Comprendemos la frustración que muchos hispanohablantes experimentan con los cursos de inglés tradicionales, y es por eso que hemos desarrollado un entrenamiento neurocognitivo que exige un cuestionamiento disruptivo de todo lo que le han enseñado.</p>
+    <p style="margin-top:15px;">A continuación, exploraremos las <strong style="color:var(--cyan);">bases neurocientíficas</strong> de nuestro programa, por qué rompe con los modelos convencionales y cómo puede desbloquear su verdadero potencial para dominar el idioma.</p>
+  </div>
+
+  <!-- VIDEO BIENVENIDA -->
+  <div class="video-section">
+    <h2>🎬 Mensaje de Bienvenida</h2>
+    <p style="color:var(--muted); margin-bottom:20px;">Conoce de primera mano a Toño Vicas y la filosofía detrás del método NBF.</p>
+    <div class="video-placeholder">
+      <!-- REEMPLAZA ESTE IFRAME CON TU VIDEO DE YOUTUBE/VIMEO -->
+      <!-- Ejemplo: <iframe src="https://www.youtube.com/embed/TU_VIDEO_ID" allowfullscreen></iframe> -->
+      <div class="video-placeholder-text">📹 Video de Bienvenida<br><small>Reemplaza con tu embed de YouTube</small></div>
+    </div>
+  </div>
+
+  <!-- NAVEGACIÓN TABS -->
+  <div class="faq-nav">
+    <button class="active" onclick="showSection(1)">1. Sobre el Entrenamiento</button>
+    <button onclick="showSection(2)">2. Método NBF</button>
+    <button onclick="showSection(3)">3. Frustraciones Comunes</button>
+    <button onclick="showSection(4)">4. Inscripción</button>
+  </div>
+
+  <!-- SECCIÓN 1 -->
+  <div class="faq-section active" id="section1">
+    <div class="section-header">
+      <div class="section-icon">🎯</div>
+      <h2>Sobre el Entrenamiento y su Enfoque</h2>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>¿Para quién está diseñado este entrenamiento?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Este entrenamiento está diseñado principalmente para <strong>hispanohablantes</strong>, con un enfoque particular en adultos (a partir de los 16 años) que se sienten frustrados o estancados con los métodos tradicionales, pero al mismo tiempo insistentes y optimistas por encontrar una alternativa fundamentada para alcanzar la meta lingüística.</p>
+          <p>Nuestra metodología reconoce y aborda directamente los desafíos cognitivos específicos que enfrenta el cerebro hispanohablante al intentar asimilar la lógica del idioma inglés.</p>
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>¿Por qué no utilizan los niveles tradicionales como A1, B2 o C1?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>No clasificamos a nuestros estudiantes en los niveles estandarizados del Marco Común Europeo (A1, B2, C1) porque nuestro enfoque no es la memorización de reglas para pasar exámenes, sino conceptos de inicio para posteriormente memorizar los <strong>guiones NBF con estructura neurocognitiva</strong>.</p>
+          <p>Creemos que los niveles tradicionales a menudo miden la capacidad de completar ejercicios gramaticales, pero no reflejan una competencia o habilidad comunicativa real. Nuestro objetivo es la construcción de un entendimiento profundo y una habilidad de comunicación genuina, no la obtención de un certificado estandarizado que pueda reflejar engaño o falsedad.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>¿Realizan exámenes de nivelación o ubicación al inicio?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p><strong>No, de forma categórica.</strong> Los exámenes de nivelación tradicionales se basan en la premisa de medir el conocimiento gramatical memorizado, lo cual, desde la perspectiva de la neurociencia, no es un indicador fiable de la capacidad de una persona para comunicarse.</p>
+          <p>Nuestro entrenamiento tiene <strong>etapas iniciales obligatorias para todos los participantes</strong>, asegurando que cada estudiante construya la misma base conceptual sólida desde el principio, sin importar su experiencia previa. Esto elimina las lagunas de conocimiento que los métodos convencionales suelen pasar por alto.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>¿En qué se diferencia este entrenamiento de otros cursos de inglés en línea?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Nuestra propuesta se diferencia en varios puntos clave:</p>
+          <ul>
+            <li><strong>Base Neurocientífica:</strong> No somos un curso de gramática tradicional. Somos un "Entrenamiento neurocognitivo". Nuestro método se sustenta en hallazgos neurocientíficos principalmente de la Dra. Evelina Fedorenko (EvLab, MIT), investigado y promovido por Toño Vicas.</li>
+            <li><strong>Enfoque en la Lógica del Idioma:</strong> En lugar de forzar la memorización de listas de verbos, nos centramos en que usted comprenda la lógica interna del inglés, que es fundamentalmente diferente a la del español.</li>
+            <li><strong>Sin Falsas Promesas:</strong> Nos distanciamos de la "publicidad engañosa" de cursos que prometen fluidez en 3 meses. El progreso real se gesta en la disciplina y la constancia.</li>
+            <li><strong>Diseñado para Hispanohablantes:</strong> Ha sido específicamente creado desde cero para superar los bloqueos cognitivos comunes en hispanohablantes.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>¿Este método reemplaza o está en contra de la enseñanza tradicional?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">        <div class="faq-answer-inner">
+          <p>Nuestra metodología no pretende imponer verdades absolutas ni reemplazar los procesos adquiridos en la enseñanza tradicional. Nuestra misión es <strong>"abrir espacios de conocimiento neuro-científicamente respaldados"</strong>, ofreciendo una mirada más amplia que estimule el pensamiento crítico y el cuestionamiento inteligente.</p>
+          <p>Buscamos complementar y enriquecer su proceso de aprendizaje con una perspectiva que la enseñanza convencional a menudo ignora.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2 -->
+  <div class="faq-section" id="section2">
+    <div class="section-header">
+      <div class="section-icon">🧠</div>
+      <h2>La Metodología Neurocognitiva: El Método NBF</h2>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>¿Cuál es el postulado central del método? ¿A qué se refieren con que "los verbos en inglés no existen"?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Esta es la idea más disruptiva y fundamental de nuestro método, postulada por Toño Vicas. No significa que en inglés no existan palabras de acción, sino que el inglés carece de <strong>"verbos naturales autosuficientes"</strong> como los que conocemos en español.</p>
+          <div class="highlight-quote">
+            En español, "Caminamos" es una "navaja suiza": contiene acción, tiempo y persona en una sola palabra. En inglés, la acción se debe ensamblar pieza por pieza, como legos: sujeto + palabra base + complemento.
+          </div>
+          <p>Desde nuestra perspectiva neurocognitiva, palabras como <em>hand, water, book, store</em> son en esencia <strong>"sustantivos funcionales"</strong>. El inglés funciona nombrando conceptos y solo se "activan" como acción a través de mecanismos gramaticales externos, como la presencia ineludible de un sujeto (<em>I water my…</em>) o de la preposición "to" (<em>to water</em>).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>Si no me enfoco en los verbos, ¿en qué me debo enfocar?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Debe enfocarse en la <strong>"Primera Ecuación Brújula"</strong> del Método NBF:</p>
+          <div class="highlight-quote">
+            Pensar en español = pensar en verbos<br>
+            Pensar en inglés = pensar en sustantivos
+          </div>
+          <p>La verdadera columna vertebral del inglés son los <strong>"Siete Elementos Determinantes"</strong>:</p>
+          <ul>
+            <li>Pronombres Personales Directos (sujetos)</li>
+            <li>Sustantivos</li>
+            <li>Preposiciones</li>
+            <li>Adjetivos</li>
+            <li>Adverbios</li>            <li>Palabras Auxiliares (no "verbos auxiliares")</li>
+            <li>Palabras Modales (no "verbos modales")</li>
+          </ul>
+          <p>Al dominar estos siete elementos, usted no está memorizando reglas, sino aprendiendo a manejar el verdadero sistema operativo del inglés.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>¿Qué base científica respalda esta metodología?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Nuestra metodología se sustenta en evidencia neurocientífica. La investigación de la <strong>Dra. Evelina Fedorenko (EvLab, MIT)</strong>, utilizando técnicas de neuroimagen, ha demostrado que el cerebro humano procesa sustantivos y verbos en redes neuronales parcialmente distintas.</p>
+          <p>Los sustantivos tienden a activar más las áreas temporales y occipito-temporales, mientras que los verbos activan más las áreas frontales y parietales.</p>
+          <p>Este hallazgo es crucial: el cerebro hispano está entrenado para esperar que el verbo sea el centro neurálgico de la frase. Sin embargo, la lógica del inglés se organiza en torno a estructuras nominales. Nuestro método busca crear un <strong>"puente cognitivo"</strong> para alinear el proceso de aprendizaje con esta realidad cerebral, reduciendo drásticamente la carga cognitiva y la frustración.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>¿Por qué dicen que el mito de "aprender como un niño" es una trampa?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>El consejo de "aprender como un niño" o por inmersión pasiva ignora una verdad biológica fundamental: el cerebro adulto ya ha superado su etapa crítica de adquisición del lenguaje por "contagio". Esperar que el idioma se absorba por ósmosis condena al adulto a la frustración.</p>
+          <div class="highlight-quote">
+            A diferencia de un niño, el cerebro adulto no necesita simplemente inmersión; necesita "una lógica escrita a lo que se expresa intuitivamente".
+          </div>
+          <p>Requiere un sistema estructurado y coherente que conecte lo que se dice con el porqué gramatical de lo que se dice. Nuestro método proporciona precisamente este sistema lógico, que es el único camino hacia la fluidez para un cerebro que ya ha madurado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3 -->
+  <div class="faq-section" id="section3">
+    <div class="section-header">
+      <div class="section-icon">💡</div>
+      <h2>Resolviendo Frustraciones Comunes del Estudiante Hispano</h2>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>Siento que "entiendo el inglés, pero no puedo hablarlo". ¿Por qué me pasa esto?</h3>
+        <div class="faq-icon">+</div>      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Este sentimiento es un síntoma común y <strong>no una falla personal</strong>. La neurociencia revela que el cerebro no puede ejecutar dos funciones cognitivas complejas (como pensar en la lógica de un idioma y hablar en la lógica de otro) de manera eficiente y simultánea.</p>
+          <p>El bloqueo que experimenta es un <strong>"choque de sistemas operativos"</strong>. Su cerebro hispano, programado para pensar en verbos, intenta aplicar esa lógica a la estructura del inglés, que se basa en sustantivos. Este conflicto interno es lo que causa la parálisis.</p>
+          <div class="highlight-quote">
+            Este choque se evidencia en el uso del pronombre 'it', a menudo "el terror del cerebro hispano", en frases como 'It is raining'. El cerebro hispano busca un verbo autosuficiente ('Llueve'), pero la lógica del inglés exige un sujeto ('It') para activar la acción.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>Me dicen que "debo pensar en inglés", pero no sé cómo hacerlo. ¿Qué significa realmente?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>El consejo tradicional de "pensar en inglés" es inútil si no se proporciona un método claro para lograrlo. No es un acto de magia, sino el resultado de reconfigurar conscientemente el proceso de pensamiento.</p>
+          <p>Nuestra solución es práctica y directa: <strong>deje de perseguir la acción (el verbo) y ánclese en el sustantivo principal</strong> de la idea que quiere expresar. Este simple cambio le da a su cerebro un punto de partida estable y alineado con la estructura real del inglés, eliminando la parálisis causada por la traducción literal.</p>
+          <p>Es el primer paso real y tangible para "pensar en inglés".</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>¿Por qué es obligatorio usar siempre el sujeto (I, you, he, it) en inglés?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>La respuesta reside en nuestro postulado central. Ante la <strong>"ausencia de un verbo natural autosuficiente"</strong>, el sujeto se convierte en el elemento ineludible que "activa" la función de acción en un sustantivo funcional.</p>
+          <div class="highlight-quote">
+            En español, "Vemos T.V" es suficiente porque la conjugación ya contiene al actor. En inglés, "We watch" es obligatoria porque la palabra watch por sí sola (reloj) no contiene ni la acción ni al actor; necesita al sujeto "We" para que la acción se manifieste.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>Tengo miedo de hablar por mi pronunciación o mi acento. ¿Cómo aborda el curso este tema?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Es científicamente absurdo y éticamente cuestionable exigirle a un adulto que elimine por completo su acento, ya que la capacidad para adquirir la fonética de otra lengua se fija en la infancia. La idea de un "inglés perfecto" es una construcción artificial que sirve a un sistema de exclusión y colonialismo lingüístico.</p>
+          <p>Adoptamos el concepto de <strong>"English as a Lingua Franca" (ELF)</strong>. El objetivo no es imitar a un hablante nativo de una clase social o país específico, sino lograr una comunicación clara y efectiva (inteligibilidad).</p>          <div class="highlight-quote">
+            Su acento no es un error, es un mapa de su historia. Hacemos nuestra la declaración de Toño Vicas: "mi español alimenta mi inglés y mi inglés no anula mi raíz. Hablo con la cadencia de mi tierra y eso es política."
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4 -->
+  <div class="faq-section" id="section4">
+    <div class="section-header">
+      <div class="section-icon">🚀</div>
+      <h2>Inscripción y Siguientes Pasos</h2>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>¿Cómo puedo inscribirme en el entrenamiento?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Nuestro entrenamiento es un curso digital completamente en línea, lo que le permite aprender a su propio ritmo.</p>
+          <p>Para inscribirse, <strong>pulse en el ícono de precios</strong> en nuestra página principal, o para recibir más información sobre el proceso, puede contactarnos a través de nuestros canales directos:</p>
+          <ul>
+            <li>📧 Email: <strong>contacto@maxneuroeducation.com</strong></li>
+            <li>📱 WhatsApp: Servicio de atención para América Latina</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>¿Qué puedo esperar al comenzar el curso?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Puede esperar una experiencia diseñada para inspirar la curiosidad, el aprendizaje intuitivo y una comprensión profunda del idioma. Todo esto se desarrolla en un entorno de respeto y libertad intelectual, donde valoramos el pensamiento crítico.</p>
+          <p>Es importante destacar que las <strong>primeras 3 de las 9 etapas</strong> del "Entrenamiento neurocognitivo" son obligatorias para todos los estudiantes, sin importar su nivel didáctico previo. Esto garantiza que todos construyan los fundamentos conceptuales correctos desde cero, estableciendo una base sólida para el éxito futuro.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h3>¿A quién puedo contactar si tengo más preguntas?</h3>
+        <div class="faq-icon">+</div>
+      </div>      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Si tiene cualquier otra duda antes, durante o después de su inscripción, no dude en utilizar nuestros canales de contacto. Nuestro equipo está listo para asistirlo:</p>
+          <ul>
+            <li>📧 Email: <strong>contacto@maxneuroeducation.com</strong></li>
+            <li>📱 WhatsApp: Servicio de atención para América Latina</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN EQUIPO -->
+  <div class="team-section">
+    <h2>👥 Acompañamiento Humano Real</h2>
+    <p style="color:var(--muted); max-width:700px; margin:0 auto;">
+      No es solo una plataforma digital. Es un entrenamiento acompañado por profesionales reales. Video sesiones en vivo uno-a-uno y grupales con Toño Vicas y su equipo.
+    </p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">🧠</div>
+        <h4>Toño Vicas</h4>
+        <p>Creador del Método NBF<br>Mentor Principal</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👨‍🏫</div>
+        <h4>Equipo de Coaches</h4>
+        <p>Sesiones 1-a-1<br>Personalizadas</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👥</div>
+        <h4>Comunidad NBF</h4>
+        <p>Sesiones Grupales<br>Práctica Real</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">🎧</div>
+        <h4>Soporte Continuo</h4>
+        <p>Acompañamiento<br>Durante todo el proceso</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA FINAL -->
+  <div class="cta-faq">
+    <h2>¿Listo para reconfigurar tu cerebro?</h2>
+    <p>Este no es otro curso de inglés. Es una reconfiguración de tu proceso de pensamiento, diseñada para reemplazar la frustración de la memorización con la lógica de la comprensión.</p>
+    <a href="#access" class="btn-main">🚀 Comenzar Ahora</a>
+    <p style="margin-top:20px; font-size:0.9rem;">Únete a nosotros para dejar de traducir y, por fin, empezar a pensar en inglés.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Discovery MAX Neuroeducation | Método NBF | Toño Vicas</p>
+    <p style="margin-top:10px; font-size:0.75rem; opacity:0.6;">Entrenamiento neurocognitivo basado en neurociencias de la Dra. Evelina Fedorenko (EvLab, MIT)</p>
+  </div>
+</footer>
+
+<script>
+// NAVEGACIÓN ENTRE SECCIONES
+function showSection(num) {
+  // Ocultar todas las secciones
+  document.querySelectorAll('.faq-section').forEach(s => s.classList.remove('active'));
+  // Quitar active de todos los botones
+  document.querySelectorAll('.faq-nav button').forEach(b => b.classList.remove('active'));
+  
+  // Mostrar la sección seleccionada
+  document.getElementById('section' + num).classList.add('active');
+  // Activar el botón correspondiente
+  document.querySelectorAll('.faq-nav button')[num-1].classList.add('active');
+  
+  // Scroll suave al inicio de las FAQs
+  document.querySelector('.faq-nav').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ACORDEÓN FAQ
+function toggleFaq(element) {
+  const item = element.parentElement;
+  const wasOpen = item.classList.contains('open');
+  
+  // Cerrar todos los demás en la misma sección (opcional: comenta estas 2 líneas si quieres múltiples abiertos)
+  // item.parentElement.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  
+  // Toggle del actual
+  if (wasOpen) {
+    item.classList.remove('open');
+  } else {
+    item.classList.add('open');
+  }
+}
+
+// ANIMACIÓN DE ENTRADA
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = 1;
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });}, { threshold: 0.1 });
+
+document.querySelectorAll('.faq-item, .team-card, .video-section, .team-section, .cta-faq').forEach(el => {
+  el.style.opacity = 0;
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'all 0.6s ease';
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
