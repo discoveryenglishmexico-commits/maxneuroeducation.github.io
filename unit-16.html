@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 16: Home Again | Discovery MAX Neuroeducation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0E27;
+  --glass: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.12);
+  --emerald: #00FF9D;
+  --purple: #9D4EDD;
+  --cyan: #00F3FF;
+  --gold: #FFD700;
+  --text: #F5F2ED;
+  --muted: #8A94A6;
+  --error: #FF4444;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.7; overflow-x:hidden; }
+.container { max-width:1100px; margin:0 auto; padding:0 20px; }
+
+/* HERO */
+.hero {
+  min-height:70vh; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:100px 20px 60px; position:relative; overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0; z-index:-1;
+  background:radial-gradient(circle at 30% 40%, rgba(0,255,157,0.12) 0%, transparent 50%),
+             radial-gradient(circle at 70% 60%, rgba(157,78,221,0.12) 0%, transparent 50%);
+  animation:pulse 8s infinite alternate;
+}
+@keyframes pulse { 0%{opacity:0.6} 100%{opacity:1} }
+.hero-content { position:relative; z-index:2; max-width:800px; }
+.hero h1 {
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(2rem,5vw,3.5rem);
+  background:linear-gradient(90deg,var(--emerald),var(--purple),var(--cyan));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  margin-bottom:15px;
+}
+.hero .unit-badge {
+  display:inline-block; padding:8px 20px; background:rgba(0,255,157,0.15);
+  border:1px solid var(--emerald); border-radius:20px; color:var(--emerald);
+  font-size:0.9rem; margin-bottom:20px; font-family:'Orbitron',sans-serif;
+}
+.hero p { color:var(--muted); font-size:1.1rem; max-width:600px; margin:0 auto; }
+
+/* PROGRESS BAR */
+.progress-wrap {
+  height:8px; background:rgba(255,255,255,0.1); border-radius:10px;
+  overflow:hidden; margin:20px 0; position:sticky; top:0; z-index:50;
+  background:rgba(10,14,39,0.9); backdrop-filter:blur(12px); padding:10px 0;
+}
+.progress-fill {
+  height:100%; width:0%; background:linear-gradient(90deg,var(--emerald),var(--purple));
+  transition:width 0.5s ease;
+}
+
+/* SECTIONS */
+.section {
+  background:var(--glass); backdrop-filter:blur(16px);
+  border:1px solid var(--border); border-radius:20px;
+  padding:30px; margin-bottom:30px; position:relative; overflow:hidden;
+  opacity:0.6; pointer-events:none; filter:grayscale(0.5);
+  transition:all 0.4s ease;
+}
+.section.active { opacity:1; pointer-events:all; filter:none; border-color:var(--emerald); box-shadow:0 0 30px rgba(0,255,157,0.15); }
+.section::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--emerald),var(--purple),var(--cyan));
+  opacity:0.7;
+}
+.section-title {
+  font-family:'Orbitron',sans-serif; font-size:1.4rem;
+  color:var(--gold); margin-bottom:15px;
+  display:flex; align-items:center; gap:12px;
+}
+.section-desc { color:var(--muted); margin-bottom:25px; font-size:0.95rem; }
+
+/* READING CARD */
+.reading-card {
+  background:rgba(0,0,0,0.3); border-left:4px solid var(--emerald);
+  border-radius:12px; padding:25px; margin-bottom:20px;
+}
+.reading-card h3 { color:var(--emerald); margin-bottom:15px; font-family:'Orbitron',sans-serif; font-size:1.1rem; }
+.reading-card p { margin-bottom:12px; color:var(--text); font-size:0.95rem; }
+
+/* EXERCISE ITEM */
+.exercise-item {
+  background:rgba(0,0,0,0.3); border-radius:12px;
+  padding:20px; margin-bottom:20px; border-left:4px solid var(--purple);
+}
+.exercise-label { font-weight:600; margin-bottom:12px; display:block; color:var(--text); }
+.exercise-input {
+  width:100%; padding:12px; background:rgba(255,255,255,0.05);
+  border:1px solid var(--border); border-radius:8px; color:var(--text);
+  font-size:1rem; margin-bottom:12px;
+}
+.exercise-input:focus { outline:none; border-color:var(--emerald); }
+.exercise-textarea {
+  width:100%; padding:12px; background:rgba(255,255,255,0.05);
+  border:1px solid var(--border); border-radius:8px; color:var(--text);
+  font-size:1rem; margin-bottom:12px; resize:vertical; min-height:80px;
+}
+
+/* BUTTONS */
+.btn {
+  padding:10px 20px; border:none; border-radius:10px; font-weight:600; cursor:pointer;
+  transition:0.3s; font-size:0.95rem; margin:5px;
+}
+.btn-verify { background:var(--glass); border:1px solid var(--border); color:var(--text); }
+.btn-verify:hover { background:rgba(255,255,255,0.1); border-color:var(--emerald); }
+.btn-next {
+  background:linear-gradient(135deg,var(--emerald),var(--purple));
+  color:#000; padding:15px 30px; font-size:1rem; margin-top:20px;
+}
+.btn-next:hover { transform:translateY(-2px); box-shadow:0 5px 20px rgba(0,255,157,0.4); }
+
+/* FEEDBACK */
+.feedback {
+  margin-top:10px; padding:10px; border-radius:8px; font-size:0.9rem; display:none;
+  border-left:4px solid;
+}
+.feedback.success { background:rgba(0,255,157,0.1); border-left-color:var(--emerald); color:var(--emerald); }
+.feedback.error { background:rgba(255,68,68,0.1); border-left-color:var(--error); color:var(--error); }
+.hidden-answer {
+  display:none; margin-top:10px; padding:10px; background:rgba(255,51,102,0.15);
+  border-left:3px solid #ff3366; border-radius:6px; color:#ff6699;
+  font-family:'Orbitron',sans-serif; font-size:0.9rem;
+}
+
+/* OPTIONS (Multiple Choice) */
+.options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin:15px 0; }
+.option-btn {
+  padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border);
+  border-radius:8px; cursor:pointer; transition:0.3s; color:var(--text);
+  text-align:left; font-size:0.9rem;
+}
+.option-btn:hover { border-color:var(--emerald); background:rgba(0,255,157,0.05); }
+.option-btn.selected { background:rgba(0,255,157,0.15); border-color:var(--emerald); color:var(--emerald); }
+.option-btn.correct { background:rgba(0,255,157,0.25); border-color:var(--emerald); color:var(--emerald); }
+.option-btn.wrong { background:rgba(255,68,68,0.2); border-color:var(--error); color:var(--error); }
+
+/* GRAMMAR TABLE */
+.grammar-table {
+  width:100%; border-collapse:collapse; margin:20px 0;
+  background:rgba(0,0,0,0.3); border-radius:12px; overflow:hidden;
+}
+.grammar-table th, .grammar-table td {
+  padding:12px; text-align:left; border-bottom:1px solid var(--border);
+}
+.grammar-table th { background:rgba(0,255,157,0.1); color:var(--emerald); font-family:'Orbitron',sans-serif; font-size:0.9rem; }
+.grammar-table td { color:var(--text); font-size:0.9rem; }
+
+/* HIGHLIGHT */
+.highlight {
+  background:rgba(255,215,0,0.1); border-left:3px solid var(--gold);
+  padding:15px 20px; margin:15px 0; border-radius:0 8px 8px 0;
+  color:var(--text); font-style:italic;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px) {
+  .section { padding:20px 15px; }
+  .hero h1 { font-size:1.8rem; }
+  .options-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="unit-badge">UNIT 16</span>
+    <h1>Home Again</h1>
+    <p>Business, Travel & Life Balance. Master Present Perfect and Passive Voice through real-world scenarios.</p>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-wrap">
+    <div class="progress-fill" id="progressBar"></div>
+  </div>
+
+  <!-- SECTION 1: READING -->
+  <section class="section active" id="sec1">
+    <h2 class="section-title">📖 1. Reading: The Williams Family</h2>
+    <p class="section-desc">Read the story carefully. You'll answer comprehension questions after.</p>
+    
+    <div class="reading-card">
+      <h3>🏠 Home Again</h3>
+      <p>The Williams are back home, ready to head on to their daily come and go. Now they are filled with awesome reminiscences from their tour of the old continent. Little Kim fell in love with all the places they visited, but her favorite part was "The Alcázar of Segovia" 'cause of its breathtaking contour.</p>
+      <p>Eddy felt the same way as his sister but in his case his favorite part was the visit to the Colosseum, because of all the history that it holds with-in.</p>
+      <p>Rose Mary and James Williams are just plain old happy and they take pleasure in knowing that they had the opportunity to spend some quality time as a family, although apart from that, Rose Mary cherished the most, the stopover in France, because of all the art, culture and history that one can find there.</p>
+      <p>For James it was all good, but in his case his favorite part was their stay over at Costa del Sol in Spain, because of the sun, the beach, the ocean but in special those Flaming Doctor Pepper Cocktails.</p>
+      <p>Now each one of them has to go back to their common activities, the children have to go back to their own school. Rose Mary goes back to the house chores as well as the family chores and James has to show up at the office.</p>
+      <p>He works for a Dutch company which produces energy-from-waste, this process happens to be very interesting because it generates energy in the form of electricity. The method of using incineration to convert municipal solid waste to energy is relatively an old method of waste-to-energy production. Incineration generally entails burning waste to boil water which powers steam generators that make electric energy and heat so that it can be used in homes, businesses, institutions and industries.</p>
+      <p>James Williams relishes on the thought of giving out a hand on diminishing global warming, in a way because he knows that one enterprise can't take on the whole package on its own. Today he has to prepare for a conference about the process of waste-to-energy to some potential investors. The investors are going to arrive at the corporation's conference room at noon by then Mr. James will have finished elaborating the theme he's going to present to them.</p>
+      <p>The conference came out as it had been planned, quite an achievement for Mr. James Williams and his colleagues. After the presentation everyone seemed a little famished so they all headed down to the company's lunchroom to savor a nice brunch, which it had already been waiting for them. They all sat by the table and the food was served.</p>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">What was Kim's favorite place?</label>
+      <input type="text" class="exercise-input" id="ex1a" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx1a()">Verificar</button>
+      <div class="hidden-answer" id="ans1a">The Alcázar of Segovia</div>
+      <div class="feedback" id="fb1a"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">What does James Williams' company produce?</label>
+      <input type="text" class="exercise-input" id="ex1b" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx1b()">Verificar</button>
+      <div class="hidden-answer" id="ans1b">Energy from waste</div>
+      <div class="feedback" id="fb1b"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">What method does the company use to generate energy?</label>
+      <input type="text" class="exercise-input" id="ex1c" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx1c()">Verificar</button>
+      <div class="hidden-answer" id="ans1c">Incineration</div>
+      <div class="feedback" id="fb1c"></div>
+    </div>
+
+    <button class="btn btn-next" onclick="scrollToSec(2)">Siguiente Sección →</button>
+  </section>
+
+  <!-- SECTION 2: CRITICAL THINKING - EXTREME EMPLOYEES -->
+  <section class="section" id="sec2">
+    <h2 class="section-title">🧠 2. Critical Thinking: Extreme Employees</h2>
+    <p class="section-desc">Read the article and complete the sentences from the text.</p>
+    
+    <div class="reading-card">
+      <h3>💼 Extreme Employees</h3>
+      <p>Some countries like France and Australia have experimented with vacation time. Businesses in these countries give employees more time off because they understand work and personal happiness must have some balance. But the trend in many other countries is the opposite. Employees are working longer and longer hours in recent years. "Extreme employees" are the result.</p>
+      <p>Researchers examined more than two million surveys of high-salaried employees in the US. They concluded that people must work long hours if they want to climb the corporate ladder. However, the extreme employees are unusually dedicated to the company. With their commute and the hours at the office, extreme employees might work 70 hours or more. They are also available for clients and office emergencies every day of the week, including weekends. Lastly, they take far fewer vacation days.</p>
+      <p>The researchers also discovered that most extreme employees are very unhappy. These employees would be healthier with less work. They also don't spend enough time with their spouse or children, which could be one reason for their unhappiness.</p>
+      <p>Experts suggest the seventy-hour workweek should drop to forty-five hours, if possible. And despite the trend, some companies like American Express and Johnson & Johnson are trying to reduce the pressure and stress on managers.</p>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Complete: "Businesses in these countries give employees more time off because..."</label>
+      <input type="text" class="exercise-input" id="ex2a" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx2a()">Verificar</button>
+      <div class="hidden-answer" id="ans2a">they understand work and personal happiness must have some balance</div>
+      <div class="feedback" id="fb2a"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Complete: "Researchers examined more than two million surveys of..."</label>
+      <input type="text" class="exercise-input" id="ex2b" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx2b()">Verificar</button>
+      <div class="hidden-answer" id="ans2b">high-salaried employees in the US</div>
+      <div class="feedback" id="fb2b"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Complete: "The researchers also discovered that..."</label>
+      <input type="text" class="exercise-input" id="ex2c" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx2c()">Verificar</button>
+      <div class="hidden-answer" id="ans2c">most extreme employees are very unhappy</div>
+      <div class="feedback" id="fb2c"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Complete: "They also don't spend enough time with their spouse or children, which..."</label>
+      <input type="text" class="exercise-input" id="ex2d" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx2d()">Verificar</button>
+      <div class="hidden-answer" id="ans2d">could be one reason for their unhappiness</div>
+      <div class="feedback" id="fb2d"></div>
+    </div>
+
+    <button class="btn btn-next" onclick="scrollToSec(3)">Siguiente Sección →</button>
+  </section>
+
+  <!-- SECTION 3: BUSINESS EXPRESSIONS -->
+  <section class="section" id="sec3">
+    <h2 class="section-title">💼 3. Business Expressions</h2>
+    <p class="section-desc">Choose the correct answer for each business idiom.</p>
+    
+    <div class="exercise-item">
+      <label class="exercise-label">1. "I thought this time things were going to be better. Losing the contract was ___ to swallow."</label>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectOption(this, 'q3a', 'a')">a. bottom line</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3a', 'b')">b. blue collar</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3a', 'c')">c. a bitter pill</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3a', 'd')">d. blow-by-blow</button>
+      </div>
+      <button class="btn btn-verify" onclick="checkMC('q3a', 'c', 'fb3a')">Verificar</button>
+      <div class="hidden-answer" id="ans3a">c. a bitter pill</div>
+      <div class="feedback" id="fb3a"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">2. "We've lost the contract thanks to your incompetence. You really ___, didn't you?"</label>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectOption(this, 'q3b', 'a')">a. bottlenecks</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3b', 'b')">b. bottom line</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3b', 'c')">c. blue collar</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3b', 'd')">d. blew it</button>
+      </div>
+      <button class="btn btn-verify" onclick="checkMC('q3b', 'd', 'fb3b')">Verificar</button>
+      <div class="hidden-answer" id="ans3b">d. blew it</div>
+      <div class="feedback" id="fb3b"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">3. "I'd be better off stopping my legal job and doing jobs for cash. The ___ is the only way to make money these days."</label>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectOption(this, 'q3c', 'a')">a. blow-by-blow</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3c', 'b')">b. bottlenecks</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3c', 'c')">c. black economy</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3c', 'd')">d. bottom line</button>
+      </div>
+      <button class="btn btn-verify" onclick="checkMC('q3c', 'c', 'fb3c')">Verificar</button>
+      <div class="hidden-answer" id="ans3c">c. black economy</div>
+      <div class="feedback" id="fb3c"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">4. "The product didn't work in the States. As they say there, it really ___."</label>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectOption(this, 'q3d', 'a')">a. bottlenecks</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3d', 'b')">b. bombed</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3d', 'c')">c. blow-by-blow</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3d', 'd')">d. bottom line</button>
+      </div>
+      <button class="btn btn-verify" onclick="checkMC('q3d', 'b', 'fb3d')">Verificar</button>
+      <div class="hidden-answer" id="ans3d">b. bombed</div>
+      <div class="feedback" id="fb3d"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">5. "However, the same product sold really well in England. As they say there, it ___."</label>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectOption(this, 'q3e', 'a')">a. back to the drawing board</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3e', 'b')">b. bottlenecks</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3e', 'c')">c. blue collar</button>
+        <button class="option-btn" onclick="selectOption(this, 'q3e', 'd')">d. went like a bomb</button>
+      </div>
+      <button class="btn btn-verify" onclick="checkMC('q3e', 'd', 'fb3e')">Verificar</button>
+      <div class="hidden-answer" id="ans3e">d. went like a bomb</div>
+      <div class="feedback" id="fb3e"></div>
+    </div>
+
+    <button class="btn btn-next" onclick="scrollToSec(4)">Siguiente Sección →</button>
+  </section>
+
+  <!-- SECTION 4: EVENTS IN BUSINESS -->
+  <section class="section" id="sec4">
+    <h2 class="section-title">📊 4. Events in Business</h2>
+    <p class="section-desc">Unscramble the sentences using business vocabulary.</p>
+    
+    <div class="highlight">
+      <strong>Word Box:</strong> build up • fail • fire • go bankrupt • resign • run • set up • take over
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">1. Unscramble: "of/I/employees/fire/to/because/had/two/theft/"</label>
+      <input type="text" class="exercise-input" id="ex4a" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx4a()">Verificar</button>
+      <div class="hidden-answer" id="ans4a">I had to fire two employees because of theft.</div>
+      <div class="feedback" id="fb4a"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">2. Unscramble: "won't/your/sure/restaurant/I'm/fail/"</label>
+      <input type="text" class="exercise-input" id="ex4b" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx4b()">Verificar</button>
+      <div class="hidden-answer" id="ans4b">I'm sure your restaurant won't fail.</div>
+      <div class="feedback" id="fb4b"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">3. Unscramble: "up/you/company/when/set/are/your/to/planning/?"</label>
+      <input type="text" class="exercise-input" id="ex4c" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx4c()">Verificar</button>
+      <div class="hidden-answer" id="ans4c">When are you planning to set up your company?</div>
+      <div class="feedback" id="fb4c"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">4. Unscramble: "within/business/up/we/ a/have/build/year/our/to/"</label>
+      <input type="text" class="exercise-input" id="ex4d" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx4d()">Verificar</button>
+      <div class="hidden-answer" id="ans4d">We have to build up our business within a year.</div>
+      <div class="feedback" id="fb4d"></div>
+    </div>
+
+    <button class="btn btn-next" onclick="scrollToSec(5)">Siguiente Sección →</button>
+  </section>
+
+  <!-- SECTION 5: PRESENT PERFECT -->
+  <section class="section" id="sec5">
+    <h2 class="section-title">⏰ 5. Present Perfect</h2>
+    <p class="section-desc">Complete the questions using the correct past participle form.</p>
+    
+    <div class="highlight">
+      <strong>Formula:</strong> Subject + Have/Has + Verb (past participle) + Complement
+    </div>
+
+    <table class="grammar-table">
+      <tr><th>Infinitive</th><th>Simple Past</th><th>Past Participle</th></tr>
+      <tr><td>Play</td><td>played</td><td>played</td></tr>
+      <tr><td>Go</td><td>went</td><td>gone</td></tr>
+      <tr><td>Eat</td><td>ate</td><td>eaten</td></tr>
+      <tr><td>Ride</td><td>rode</td><td>ridden</td></tr>
+      <tr><td>See</td><td>saw</td><td>seen</td></tr>
+      <tr><td>Win</td><td>won</td><td>won</td></tr>
+      <tr><td>Meet</td><td>met</td><td>met</td></tr>
+      <tr><td>Read</td><td>read</td><td>read</td></tr>
+      <tr><td>Fall</td><td>fell</td><td>fallen</td></tr>
+      <tr><td>Buy</td><td>bought</td><td>bought</td></tr>
+    </table>
+
+    <div class="exercise-item">
+      <label class="exercise-label">1. Play/golf → Have you ever ___?</label>
+      <input type="text" class="exercise-input" id="ex5a" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx5a()">Verificar</button>
+      <div class="hidden-answer" id="ans5a">Have you ever played golf?</div>
+      <div class="feedback" id="fb5a"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">2. Go/another country → Have you ever ___?</label>
+      <input type="text" class="exercise-input" id="ex5b" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx5b()">Verificar</button>
+      <div class="hidden-answer" id="ans5b">Have you ever gone to another country?</div>
+      <div class="feedback" id="fb5b"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">3. Eat/sushi → Have you ever ___?</label>
+      <input type="text" class="exercise-input" id="ex5c" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx5c()">Verificar</button>
+      <div class="hidden-answer" id="ans5c">Have you ever eaten sushi?</div>
+      <div class="feedback" id="fb5c"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">4. Ride/an elephant → Have you ever ___?</label>
+      <input type="text" class="exercise-input" id="ex5d" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx5d()">Verificar</button>
+      <div class="hidden-answer" id="ans5d">Have you ever ridden an elephant?</div>
+      <div class="feedback" id="fb5d"></div>
+    </div>
+
+    <button class="btn btn-next" onclick="scrollToSec(6)">Siguiente Sección →</button>
+  </section>
+
+  <!-- SECTION 6: PASSIVE VOICE -->
+  <section class="section" id="sec6">
+    <h2 class="section-title">🔍 6. Passive Voice: Diamond Story</h2>
+    <p class="section-desc">Read the story and identify passive voice sentences.</p>
+    
+    <div class="reading-card">
+      <h3>💎 Huge Diamond Found in Bangkok Sewer System</h3>
+      <p>The largest recorded diamond ever discovered was unearthed beneath the streets of lower Sukhumvit, Bangkok last week. The 37,500 carat stone was stumbled upon by a team of maintenance workers cleaning out the sewer lines between soi's 89 and 90 last Friday night.</p>
+      <p>According to witnesses, the stone was found by Mr. Supakorn, of Nakhon Phanom province. "I was walking through the sludge when suddenly I tripped over an obstacle and fell flat on my face. When I reached down to remove the object, I noticed it had a very fine surface, almost like glass, but it was so heavy I thought that maybe it was a piece of concrete."</p>
+      <p>"When I looked at it close to the light, I couldn't believe my eyes", he is reported to have told his boss. Mr. Supakorn was immediately taken back to headquarters where the account of his story was confirmed.</p>
+      <p>The head office of Supakorn's company was inundated with friends and family wanting to know more about the precious stone. After hearing media reports of his finding, Mr. Supakorn then fled Bangkok not wanting to draw too much attention to himself.</p>
+      <p>Attempts to find Mr. Supakorn by police and local authorities have been unsuccessful. The stone was reported to have been purchased by an unknown buyer from Dubai, going by the name of "Mr. T". After collecting the precious stone from Mr. Supakorn, a private jet was chartered to fly Mr. T, back to Dubai.</p>
+      <p>The sale of the precious stone is said to have caused devastation to the team of maintenance workers. The sewers of Bangkok have since been overrun with prospectors looking to follow the fortunes of Mr. Supakorn.</p>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Identify a passive voice sentence from the story:</label>
+      <textarea class="exercise-textarea" id="ex6a" placeholder=""></textarea>
+      <button class="btn btn-verify" onclick="checkEx6a()">Verificar</button>
+      <div class="hidden-answer" id="ans6a">Example: "The 37,500 carat stone was stumbled upon by a team of maintenance workers."</div>
+      <div class="feedback" id="fb6a"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Rewrite in active voice: "The stone was found by Mr. Supakorn."</label>
+      <input type="text" class="exercise-input" id="ex6b" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx6b()">Verificar</button>
+      <div class="hidden-answer" id="ans6b">Mr. Supakorn found the stone.</div>
+      <div class="feedback" id="fb6b"></div>
+    </div>
+
+    <button class="btn btn-next" onclick="completeUnit()">🎉 Completar Unidad</button>
+  </section>
+
+  <!-- FINAL MESSAGE -->
+  <div id="finalMsg" style="display:none; text-align:center; margin-top:30px; padding:40px; background:linear-gradient(135deg,rgba(0,255,157,0.1),rgba(157,78,221,0.1)); border:1px solid var(--emerald); border-radius:20px;">
+    <h2 style="font-family:'Orbitron',sans-serif; color:var(--emerald); margin-bottom:15px;">🎉 ¡Unidad Completada!</h2>
+    <p style="color:var(--text); font-size:1.1rem; margin-bottom:20px;">Has dominado Unit 16: Home Again</p>
+    <p style="color:var(--muted);">Present Perfect + Passive Voice + Business Expressions</p>
+    <a href="indexmax.html" class="btn btn-next" style="display:inline-block; margin-top:20px; text-decoration:none;">Continuar a la Siguiente Unidad →</a>
+  </div>
+
+</div>
+
+<footer style="text-align:center; margin-top:50px; color:var(--muted); font-size:0.85rem; padding:30px 20px; border-top:1px solid var(--border);">
+  <p>© 2026 Discovery MAX Neuroeducation | Método NBF | Toño Vicas</p>
+  <p style="margin-top:10px; font-size:0.75rem; opacity:0.6;">Unit 16: Home Again - Business & Travel</p>
+</footer>
+
+<script>
+// AUDIO FEEDBACK
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.1; u.pitch = 1;
+  synth.speak(u);
+}
+
+let completedCount = 0;
+const totalEx = 20;
+
+function updateProgress() {
+  document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
+}
+
+function normalizeText(text) {
+  if (!text) return "";
+  return text.toLowerCase().replace(/[?!.,']/g, "").replace(/\s+/g, " ").trim();
+}
+
+function scrollToSec(num) {
+  document.getElementById(`sec${num-1}`).classList.remove('active');
+  document.getElementById(`sec${num}`).classList.add('active');
+  document.getElementById(`sec${num}`).scrollIntoView({behavior:'smooth'});
+  speak('Next section unlocked');
+}
+
+// SECTION 1: READING
+function checkEx1a() {
+  const val = normalizeText(document.getElementById('ex1a').value);
+  const correct = normalizeText("The Alcázar of Segovia");
+  const fb = document.getElementById('fb1a');
+  const ans = document.getElementById('ans1a');
+  
+  if(val.includes("alcazar") || val.includes("segovia")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Very Nice!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx1b() {
+  const val = normalizeText(document.getElementById('ex1b').value);
+  const fb = document.getElementById('fb1b');
+  const ans = document.getElementById('ans1b');
+  
+  if(val.includes("energy") && val.includes("waste")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Great!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx1c() {
+  const val = normalizeText(document.getElementById('ex1c').value);
+  const fb = document.getElementById('fb1c');
+  const ans = document.getElementById('ans1c');
+  
+  if(val.includes("incineration")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+// SECTION 2: CRITICAL THINKING
+function checkEx2a() {
+  const val = normalizeText(document.getElementById('ex2a').value);
+  const fb = document.getElementById('fb2a');
+  const ans = document.getElementById('ans2a');
+  
+  if(val.includes("balance") || val.includes("happiness")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Very Nice!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx2b() {
+  const val = normalizeText(document.getElementById('ex2b').value);
+  const fb = document.getElementById('fb2b');
+  const ans = document.getElementById('ans2b');
+  
+  if(val.includes("high") && val.includes("salaried") && val.includes("us")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Great!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx2c() {
+  const val = normalizeText(document.getElementById('ex2c').value);
+  const fb = document.getElementById('fb2c');
+  const ans = document.getElementById('ans2c');
+  
+  if(val.includes("unhappy")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx2d() {
+  const val = normalizeText(document.getElementById('ex2d').value);
+  const fb = document.getElementById('fb2d');
+  const ans = document.getElementById('ans2d');
+  
+  if(val.includes("unhappiness")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Perfect!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+// SECTION 3: MULTIPLE CHOICE
+let selectedOptions = {};
+
+function selectOption(btn, questionId, option) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedOptions[questionId] = option;
+}
+
+function checkMC(questionId, correctAnswer, feedbackId) {
+  const fb = document.getElementById(feedbackId);
+  const ans = document.getElementById(feedbackId.replace('fb', 'ans'));
+  
+  if (!selectedOptions[questionId]) {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ Selecciona una opción primero';
+    fb.style.display = 'block';
+    return;
+  }
+  
+  if (selectedOptions[questionId] === correctAnswer) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Very Nice!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+// SECTION 4: UNSCRAMBLE
+function checkEx4a() {
+  const val = normalizeText(document.getElementById('ex4a').value);
+  const fb = document.getElementById('fb4a');
+  const ans = document.getElementById('ans4a');
+  
+  if(val.includes("fire") && val.includes("employees") && val.includes("theft")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Great!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx4b() {
+  const val = normalizeText(document.getElementById('ex4b').value);
+  const fb = document.getElementById('fb4b');
+  const ans = document.getElementById('ans4b');
+  
+  if(val.includes("sure") && val.includes("restaurant") && val.includes("fail")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx4c() {
+  const val = normalizeText(document.getElementById('ex4c').value);
+  const fb = document.getElementById('fb4c');
+  const ans = document.getElementById('ans4c');
+  
+  if(val.includes("when") && val.includes("set up") && val.includes("company")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Perfect!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx4d() {
+  const val = normalizeText(document.getElementById('ex4d').value);
+  const fb = document.getElementById('fb4d');
+  const ans = document.getElementById('ans4d');
+  
+  if(val.includes("build up") && val.includes("business") && val.includes("year")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Very Nice!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+// SECTION 5: PRESENT PERFECT
+function checkEx5a() {
+  const val = normalizeText(document.getElementById('ex5a').value);
+  const fb = document.getElementById('fb5a');
+  const ans = document.getElementById('ans5a');
+  
+  if(val.includes("played") && val.includes("golf")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Great!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx5b() {
+  const val = normalizeText(document.getElementById('ex5b').value);
+  const fb = document.getElementById('fb5b');
+  const ans = document.getElementById('ans5b');
+  
+  if(val.includes("gone") && val.includes("country")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx5c() {
+  const val = normalizeText(document.getElementById('ex5c').value);
+  const fb = document.getElementById('fb5c');
+  const ans = document.getElementById('ans5c');
+  
+  if(val.includes("eaten") && val.includes("sushi")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Perfect!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx5d() {
+  const val = normalizeText(document.getElementById('ex5d').value);
+  const fb = document.getElementById('fb5d');
+  const ans = document.getElementById('ans5d');
+  
+  if(val.includes("ridden") && val.includes("elephant")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Very Nice!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+// SECTION 6: PASSIVE VOICE
+function checkEx6a() {
+  const val = document.getElementById('ex6a').value.trim();
+  const fb = document.getElementById('fb6a');
+  const ans = document.getElementById('ans6a');
+  
+  if(val.includes("was") || val.includes("were") || val.includes("been")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto - Has identificado una oración pasiva';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Great!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Busca una oración con "was/were + past participle"';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx6b() {
+  const val = normalizeText(document.getElementById('ex6b').value);
+  const fb = document.getElementById('fb6b');
+  const ans = document.getElementById('ans6b');
+  
+  if(val.includes("supakorn") && val.includes("found") && val.includes("stone")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function completeUnit() {
+  if(completedCount >= 16) {
+    document.getElementById('sec6').classList.remove('active');
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! You completed Unit 16!');
+  } else {
+    alert(`⚠️ Completa al menos 16 de 20 ejercicios.\nCompletados: ${completedCount}/20`);
+  }
+}
+
+// INICIALIZAR
+window.addEventListener('DOMContentLoaded', () => {
+  updateProgress();
+});
+</script>
+
+</body>
+</html>
