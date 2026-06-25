@@ -105,7 +105,9 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
   width:100%; padding:12px; background:rgba(255,255,255,0.05);
   border:1px solid var(--border); border-radius:8px; color:var(--text);
   font-size:1rem; margin-bottom:12px; resize:vertical; min-height:80px;
+  font-family:'Inter',sans-serif;
 }
+.exercise-textarea:focus { outline:none; border-color:var(--emerald); }
 
 /* BUTTONS */
 .btn {
@@ -142,8 +144,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 }
 .option-btn:hover { border-color:var(--emerald); background:rgba(0,255,157,0.05); }
 .option-btn.selected { background:rgba(0,255,157,0.15); border-color:var(--emerald); color:var(--emerald); }
-.option-btn.correct { background:rgba(0,255,157,0.25); border-color:var(--emerald); color:var(--emerald); }
-.option-btn.wrong { background:rgba(255,68,68,0.2); border-color:var(--error); color:var(--error); }
 
 /* GRAMMAR TABLE */
 .grammar-table {
@@ -163,11 +163,24 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
   color:var(--text); font-style:italic;
 }
 
+/* MATCHING */
+.matching-container { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:20px 0; }
+.matching-column h4 { color:var(--cyan); margin-bottom:10px; font-family:'Orbitron',sans-serif; font-size:0.9rem; }
+.match-item {
+  padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border);
+  border-radius:8px; margin-bottom:8px; cursor:pointer; transition:0.3s;
+  font-size:0.9rem;
+}
+.match-item:hover { border-color:var(--emerald); }
+.match-item.selected { background:rgba(0,255,157,0.15); border-color:var(--emerald); }
+.match-item.matched { background:rgba(0,255,157,0.25); border-color:var(--emerald); opacity:0.7; }
+
 /* RESPONSIVE */
 @media(max-width:768px) {
   .section { padding:20px 15px; }
   .hero h1 { font-size:1.8rem; }
   .options-grid { grid-template-columns:1fr; }
+  .matching-container { grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -282,126 +295,295 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <button class="btn btn-next" onclick="scrollToSec(3)">Siguiente Sección →</button>
   </section>
 
-  <!-- SECTION 3: BUSINESS EXPRESSIONS -->
+  <!-- SECTION 3: DISCUSSION QUESTIONS -->
   <section class="section" id="sec3">
-    <h2 class="section-title">💼 3. Business Expressions</h2>
-    <p class="section-desc">Choose the correct answer for each business idiom.</p>
+    <h2 class="section-title"> 3. Discussion Questions</h2>
+    <p class="section-desc">Do you agree or disagree with these statements? Write your opinion and explain why.</p>
     
     <div class="exercise-item">
-      <label class="exercise-label">1. "I thought this time things were going to be better. Losing the contract was ___ to swallow."</label>
-      <div class="options-grid">
-        <button class="option-btn" onclick="selectOption(this, 'q3a', 'a')">a. bottom line</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3a', 'b')">b. blue collar</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3a', 'c')">c. a bitter pill</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3a', 'd')">d. blow-by-blow</button>
-      </div>
-      <button class="btn btn-verify" onclick="checkMC('q3a', 'c', 'fb3a')">Verificar</button>
-      <div class="hidden-answer" id="ans3a">c. a bitter pill</div>
+      <label class="exercise-label">1. People work too much nowadays.</label>
+      <textarea class="exercise-textarea" id="ex3a" placeholder="Write your opinion..."></textarea>
+      <button class="btn btn-verify" onclick="checkDiscussion('ex3a','fb3a')">Verificar</button>
       <div class="feedback" id="fb3a"></div>
     </div>
 
     <div class="exercise-item">
-      <label class="exercise-label">2. "We've lost the contract thanks to your incompetence. You really ___, didn't you?"</label>
-      <div class="options-grid">
-        <button class="option-btn" onclick="selectOption(this, 'q3b', 'a')">a. bottlenecks</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3b', 'b')">b. bottom line</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3b', 'c')">c. blue collar</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3b', 'd')">d. blew it</button>
-      </div>
-      <button class="btn btn-verify" onclick="checkMC('q3b', 'd', 'fb3b')">Verificar</button>
-      <div class="hidden-answer" id="ans3b">d. blew it</div>
+      <label class="exercise-label">2. I should work harder for my company.</label>
+      <textarea class="exercise-textarea" id="ex3b" placeholder="Write your opinion..."></textarea>
+      <button class="btn btn-verify" onclick="checkDiscussion('ex3b','fb3b')">Verificar</button>
       <div class="feedback" id="fb3b"></div>
     </div>
 
     <div class="exercise-item">
-      <label class="exercise-label">3. "I'd be better off stopping my legal job and doing jobs for cash. The ___ is the only way to make money these days."</label>
-      <div class="options-grid">
-        <button class="option-btn" onclick="selectOption(this, 'q3c', 'a')">a. blow-by-blow</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3c', 'b')">b. bottlenecks</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3c', 'c')">c. black economy</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3c', 'd')">d. bottom line</button>
-      </div>
-      <button class="btn btn-verify" onclick="checkMC('q3c', 'c', 'fb3c')">Verificar</button>
-      <div class="hidden-answer" id="ans3c">c. black economy</div>
+      <label class="exercise-label">3. People who work less than 40 hours per week are lazy.</label>
+      <textarea class="exercise-textarea" id="ex3c" placeholder="Write your opinion..."></textarea>
+      <button class="btn btn-verify" onclick="checkDiscussion('ex3c','fb3c')">Verificar</button>
       <div class="feedback" id="fb3c"></div>
     </div>
 
     <div class="exercise-item">
-      <label class="exercise-label">4. "The product didn't work in the States. As they say there, it really ___."</label>
-      <div class="options-grid">
-        <button class="option-btn" onclick="selectOption(this, 'q3d', 'a')">a. bottlenecks</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3d', 'b')">b. bombed</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3d', 'c')">c. blow-by-blow</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3d', 'd')">d. bottom line</button>
-      </div>
-      <button class="btn btn-verify" onclick="checkMC('q3d', 'b', 'fb3d')">Verificar</button>
-      <div class="hidden-answer" id="ans3d">b. bombed</div>
+      <label class="exercise-label">4. In the future, it will be normal for everyone to work more than 60 hours per week.</label>
+      <textarea class="exercise-textarea" id="ex3d" placeholder="Write your opinion..."></textarea>
+      <button class="btn btn-verify" onclick="checkDiscussion('ex3d','fb3d')">Verificar</button>
       <div class="feedback" id="fb3d"></div>
     </div>
 
     <div class="exercise-item">
-      <label class="exercise-label">5. "However, the same product sold really well in England. As they say there, it ___."</label>
-      <div class="options-grid">
-        <button class="option-btn" onclick="selectOption(this, 'q3e', 'a')">a. back to the drawing board</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3e', 'b')">b. bottlenecks</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3e', 'c')">c. blue collar</button>
-        <button class="option-btn" onclick="selectOption(this, 'q3e', 'd')">d. went like a bomb</button>
-      </div>
-      <button class="btn btn-verify" onclick="checkMC('q3e', 'd', 'fb3e')">Verificar</button>
-      <div class="hidden-answer" id="ans3e">d. went like a bomb</div>
+      <label class="exercise-label">5. I love my job!!</label>
+      <textarea class="exercise-textarea" id="ex3e" placeholder="Write your opinion..."></textarea>
+      <button class="btn btn-verify" onclick="checkDiscussion('ex3e','fb3e')">Verificar</button>
       <div class="feedback" id="fb3e"></div>
     </div>
 
     <button class="btn btn-next" onclick="scrollToSec(4)">Siguiente Sección →</button>
   </section>
 
-  <!-- SECTION 4: EVENTS IN BUSINESS -->
+  <!-- SECTION 4: PERSONAL QUESTIONS -->
   <section class="section" id="sec4">
-    <h2 class="section-title">📊 4. Events in Business</h2>
-    <p class="section-desc">Unscramble the sentences using business vocabulary.</p>
+    <h2 class="section-title">🎯 4. Personal Questions</h2>
+    <p class="section-desc">Answer these questions about your own work experience. Write complete sentences in English.</p>
     
-    <div class="highlight">
-      <strong>Word Box:</strong> build up • fail • fire • go bankrupt • resign • run • set up • take over
-    </div>
-
     <div class="exercise-item">
-      <label class="exercise-label">1. Unscramble: "of/I/employees/fire/to/because/had/two/theft/"</label>
-      <input type="text" class="exercise-input" id="ex4a" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx4a()">Verificar</button>
-      <div class="hidden-answer" id="ans4a">I had to fire two employees because of theft.</div>
+      <label class="exercise-label">1. How many hours do you work per week? Is this too much, too little, or just right?</label>
+      <textarea class="exercise-textarea" id="ex4a" placeholder="Write your answer..."></textarea>
+      <button class="btn btn-verify" onclick="checkDiscussion('ex4a','fb4a')">Verificar</button>
       <div class="feedback" id="fb4a"></div>
     </div>
 
     <div class="exercise-item">
-      <label class="exercise-label">2. Unscramble: "won't/your/sure/restaurant/I'm/fail/"</label>
-      <input type="text" class="exercise-input" id="ex4b" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx4b()">Verificar</button>
-      <div class="hidden-answer" id="ans4b">I'm sure your restaurant won't fail.</div>
+      <label class="exercise-label">2. Would you take a high-paying position if you had to work 70 hours per week?</label>
+      <textarea class="exercise-textarea" id="ex4b" placeholder="Write your answer..."></textarea>
+      <button class="btn btn-verify" onclick="checkDiscussion('ex4b','fb4b')">Verificar</button>
       <div class="feedback" id="fb4b"></div>
     </div>
 
     <div class="exercise-item">
-      <label class="exercise-label">3. Unscramble: "up/you/company/when/set/are/your/to/planning/?"</label>
-      <input type="text" class="exercise-input" id="ex4c" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx4c()">Verificar</button>
-      <div class="hidden-answer" id="ans4c">When are you planning to set up your company?</div>
+      <label class="exercise-label">3. Would you take a 50% salary cut if it meant working only 25 hours per week?</label>
+      <textarea class="exercise-textarea" id="ex4c" placeholder="Write your answer..."></textarea>
+      <button class="btn btn-verify" onclick="checkDiscussion('ex4c','fb4c')">Verificar</button>
       <div class="feedback" id="fb4c"></div>
     </div>
 
     <div class="exercise-item">
-      <label class="exercise-label">4. Unscramble: "within/business/up/we/ a/have/build/year/our/to/"</label>
-      <input type="text" class="exercise-input" id="ex4d" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx4d()">Verificar</button>
-      <div class="hidden-answer" id="ans4d">We have to build up our business within a year.</div>
+      <label class="exercise-label">4. Why do you think people work so much if they hate it? Please explain.</label>
+      <textarea class="exercise-textarea" id="ex4d" placeholder="Write your answer..."></textarea>
+      <button class="btn btn-verify" onclick="checkDiscussion('ex4d','fb4d')">Verificar</button>
       <div class="feedback" id="fb4d"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">5. Could you do more for your company? Should you do more? Why or why not?</label>
+      <textarea class="exercise-textarea" id="ex4e" placeholder="Write your answer..."></textarea>
+      <button class="btn btn-verify" onclick="checkDiscussion('ex4e','fb4e')">Verificar</button>
+      <div class="feedback" id="fb4e"></div>
     </div>
 
     <button class="btn btn-next" onclick="scrollToSec(5)">Siguiente Sección →</button>
   </section>
 
-  <!-- SECTION 5: PRESENT PERFECT -->
+  <!-- SECTION 5: BUSINESS EXPRESSIONS -->
   <section class="section" id="sec5">
-    <h2 class="section-title">⏰ 5. Present Perfect</h2>
+    <h2 class="section-title">💼 5. Business Expressions</h2>
+    <p class="section-desc">Choose the correct answer for each business idiom.</p>
+    
+    <div class="exercise-item">
+      <label class="exercise-label">1. "I thought this time things were going to be better. Losing the contract was ___ to swallow."</label>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectOption(this, 'q5a', 'a')">a. bottom line</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5a', 'b')">b. blue collar</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5a', 'c')">c. a bitter pill</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5a', 'd')">d. blow-by-blow</button>
+      </div>
+      <button class="btn btn-verify" onclick="checkMC('q5a', 'c', 'fb5a')">Verificar</button>
+      <div class="hidden-answer" id="ans5a">c. a bitter pill</div>
+      <div class="feedback" id="fb5a"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">2. "We've lost the contract thanks to your incompetence. You really ___, didn't you?"</label>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectOption(this, 'q5b', 'a')">a. bottlenecks</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5b', 'b')">b. bottom line</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5b', 'c')">c. blue collar</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5b', 'd')">d. blew it</button>
+      </div>
+      <button class="btn btn-verify" onclick="checkMC('q5b', 'd', 'fb5b')">Verificar</button>
+      <div class="hidden-answer" id="ans5b">d. blew it</div>
+      <div class="feedback" id="fb5b"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">3. "I'd be better off stopping my legal job and doing jobs for cash. The ___ is the only way to make money these days."</label>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectOption(this, 'q5c', 'a')">a. blow-by-blow</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5c', 'b')">b. bottlenecks</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5c', 'c')">c. black economy</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5c', 'd')">d. bottom line</button>
+      </div>
+      <button class="btn btn-verify" onclick="checkMC('q5c', 'c', 'fb5c')">Verificar</button>
+      <div class="hidden-answer" id="ans5c">c. black economy</div>
+      <div class="feedback" id="fb5c"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">4. "The product didn't work in the States. As they say there, it really ___."</label>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectOption(this, 'q5d', 'a')">a. bottlenecks</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5d', 'b')">b. bombed</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5d', 'c')">c. blow-by-blow</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5d', 'd')">d. bottom line</button>
+      </div>
+      <button class="btn btn-verify" onclick="checkMC('q5d', 'b', 'fb5d')">Verificar</button>
+      <div class="hidden-answer" id="ans5d">b. bombed</div>
+      <div class="feedback" id="fb5d"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">5. "However, the same product sold really well in England. As they say there, it ___."</label>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectOption(this, 'q5e', 'a')">a. back to the drawing board</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5e', 'b')">b. bottlenecks</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5e', 'c')">c. blue collar</button>
+        <button class="option-btn" onclick="selectOption(this, 'q5e', 'd')">d. went like a bomb</button>
+      </div>
+      <button class="btn btn-verify" onclick="checkMC('q5e', 'd', 'fb5e')">Verificar</button>
+      <div class="hidden-answer" id="ans5e">d. went like a bomb</div>
+      <div class="feedback" id="fb5e"></div>
+    </div>
+
+    <button class="btn btn-next" onclick="scrollToSec(6)">Siguiente Sección →</button>
+  </section>
+
+  <!-- SECTION 6: EVENTS IN BUSINESS -->
+  <section class="section" id="sec6">
+    <h2 class="section-title">📊 6. Events in Business</h2>
+    <p class="section-desc">Fill in the blanks with the correct word from the box, then unscramble the sentences.</p>
+    
+    <div class="highlight">
+      <strong>Word Box:</strong> build up • fail • fire • go bankrupt • resign • run • set up • take over
+    </div>
+
+    <div class="reading-card">
+      <h3>📝 Fill in the Blanks</h3>
+      <p>My sister and I <strong>started / _______________</strong> a dry cleaning business a year ago. So far it's doing quite well. She <strong>manages / _______________</strong> it from day to day, while I travel, make contacts and try to <strong>increase / _______________</strong> the business. Times are tough but I try not to worry about not being <strong>successful / _______________</strong> or being unable to pay our debts / <strong>_______________</strong>. I mean, people need clean clothes, bedding and stuff, so I think we should be OK.</p>
+      <p>My mother was sure that one of our employees was stealing from the company. She wanted to <strong>get rid of / _______________</strong> the guy but she had no proof. This went on until my mother retired and I became <strong>head of / _______________</strong> the company. I talked to the man and he got angry at first but eventually he left on his own choice / <strong>_______________</strong>. There were no more thefts after that.</p>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Unscramble: "of/I/employees/fire/to/because/had/two/theft/"</label>
+      <input type="text" class="exercise-input" id="ex6a" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx6a()">Verificar</button>
+      <div class="hidden-answer" id="ans6a">I had to fire two employees because of theft.</div>
+      <div class="feedback" id="fb6a"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Unscramble: "won't/your/sure/restaurant/I'm/fail/"</label>
+      <input type="text" class="exercise-input" id="ex6b" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx6b()">Verificar</button>
+      <div class="hidden-answer" id="ans6b">I'm sure your restaurant won't fail.</div>
+      <div class="feedback" id="fb6b"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Unscramble: "up/you/company/when/set/are/your/to/planning/?"</label>
+      <input type="text" class="exercise-input" id="ex6c" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx6c()">Verificar</button>
+      <div class="hidden-answer" id="ans6c">When are you planning to set up your company?</div>
+      <div class="feedback" id="fb6c"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Unscramble: "within/business/up/we/a/have/build/year/our/to/"</label>
+      <input type="text" class="exercise-input" id="ex6d" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx6d()">Verificar</button>
+      <div class="hidden-answer" id="ans6d">We have to build up our business within a year.</div>
+      <div class="feedback" id="fb6d"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Unscramble: "resign/his/just/to/he's/from/decided/job/"</label>
+      <input type="text" class="exercise-input" id="ex6e" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx6e()">Verificar</button>
+      <div class="hidden-answer" id="ans6e">He's just decided to resign from his job.</div>
+      <div class="feedback" id="fb6e"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Unscramble: "my/I'm/to/business/running/own/looking/forward/"</label>
+      <input type="text" class="exercise-input" id="ex6f" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx6f()">Verificar</button>
+      <div class="hidden-answer" id="ans6f">I'm looking forward to running my own business.</div>
+      <div class="feedback" id="fb6f"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Unscramble: "uncle's/over/she/business/her/taken/has/"</label>
+      <input type="text" class="exercise-input" id="ex6g" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx6g()">Verificar</button>
+      <div class="hidden-answer" id="ans6g">She has taken over her uncle's business.</div>
+      <div class="feedback" id="fb6g"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Unscramble: "just/bankrupt/Store/gone/Department/has/Martin's/"</label>
+      <input type="text" class="exercise-input" id="ex6h" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx6h()">Verificar</button>
+      <div class="hidden-answer" id="ans6h">Martin's Department Store has just gone bankrupt.</div>
+      <div class="feedback" id="fb6h"></div>
+    </div>
+
+    <button class="btn btn-next" onclick="scrollToSec(7)">Siguiente Sección →</button>
+  </section>
+
+  <!-- SECTION 7: MATCHING EXERCISE -->
+  <section class="section" id="sec7">
+    <h2 class="section-title">🔗 7. Matching Exercise</h2>
+    <p class="section-desc">Match the sentence beginnings with the correct endings.</p>
+    
+    <div class="matching-container">
+      <div class="matching-column">
+        <h4>BEGINNINGS</h4>
+        <div class="match-item" onclick="selectMatch(this, 'begin', 1)">1. We only do business</div>
+        <div class="match-item" onclick="selectMatch(this, 'begin', 2)">2. We produce</div>
+        <div class="match-item" onclick="selectMatch(this, 'begin', 3)">3. We've recently invested</div>
+        <div class="match-item" onclick="selectMatch(this, 'begin', 4)">4. Our company imports</div>
+        <div class="match-item" onclick="selectMatch(this, 'begin', 5)">5. I went into partnership</div>
+        <div class="match-item" onclick="selectMatch(this, 'begin', 6)">6. They hope to make a profit</div>
+        <div class="match-item" onclick="selectMatch(this, 'begin', 7)">7. We export</div>
+        <div class="match-item" onclick="selectMatch(this, 'begin', 8)">8. It's hard for my small shop to compete</div>
+      </div>
+      <div class="matching-column">
+        <h4>ENDINGS</h4>
+        <div class="match-item" onclick="selectMatch(this, 'end', 'a')">a. most of our products to North and South America.</div>
+        <div class="match-item" onclick="selectMatch(this, 'end', 'b')">b. a lot of goods from China.</div>
+        <div class="match-item" onclick="selectMatch(this, 'end', 'c')">c. against the big department stores.</div>
+        <div class="match-item" onclick="selectMatch(this, 'end', 'd')">d. with 'green' organizations.</div>
+        <div class="match-item" onclick="selectMatch(this, 'end', 'e')">e. in two gold mines in Brazil.</div>
+        <div class="match-item" onclick="selectMatch(this, 'end', 'f')">f. about ten thousand trucks a year in our factory.</div>
+        <div class="match-item" onclick="selectMatch(this, 'end', 'g')">g. with two of my cousins last year.</div>
+        <div class="match-item" onclick="selectMatch(this, 'end', 'h')">h. within the next five years</div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <strong>Correct Answers:</strong> 1-d, 2-f, 3-e, 4-b, 5-g, 6-h, 7-a, 8-c
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Write your matches (e.g., 1-d, 2-f, etc.):</label>
+      <input type="text" class="exercise-input" id="ex7match" placeholder="1-?, 2-?, 3-?, 4-?, 5-?, 6-?, 7-?, 8-?">
+      <button class="btn btn-verify" onclick="checkMatching()">Verificar</button>
+      <div class="hidden-answer" id="ans7match">1-d, 2-f, 3-e, 4-b, 5-g, 6-h, 7-a, 8-c</div>
+      <div class="feedback" id="fb7match"></div>
+    </div>
+
+    <button class="btn btn-next" onclick="scrollToSec(8)">Siguiente Sección →</button>
+  </section>
+
+  <!-- SECTION 8: PRESENT PERFECT -->
+  <section class="section" id="sec8">
+    <h2 class="section-title"> 8. Present Perfect</h2>
     <p class="section-desc">Complete the questions using the correct past participle form.</p>
     
     <div class="highlight">
@@ -424,43 +606,218 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 
     <div class="exercise-item">
       <label class="exercise-label">1. Play/golf → Have you ever ___?</label>
-      <input type="text" class="exercise-input" id="ex5a" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx5a()">Verificar</button>
-      <div class="hidden-answer" id="ans5a">Have you ever played golf?</div>
-      <div class="feedback" id="fb5a"></div>
+      <input type="text" class="exercise-input" id="ex8a" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx8a()">Verificar</button>
+      <div class="hidden-answer" id="ans8a">Have you ever played golf?</div>
+      <div class="feedback" id="fb8a"></div>
     </div>
 
     <div class="exercise-item">
       <label class="exercise-label">2. Go/another country → Have you ever ___?</label>
-      <input type="text" class="exercise-input" id="ex5b" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx5b()">Verificar</button>
-      <div class="hidden-answer" id="ans5b">Have you ever gone to another country?</div>
-      <div class="feedback" id="fb5b"></div>
+      <input type="text" class="exercise-input" id="ex8b" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx8b()">Verificar</button>
+      <div class="hidden-answer" id="ans8b">Have you ever gone to another country?</div>
+      <div class="feedback" id="fb8b"></div>
     </div>
 
     <div class="exercise-item">
       <label class="exercise-label">3. Eat/sushi → Have you ever ___?</label>
-      <input type="text" class="exercise-input" id="ex5c" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx5c()">Verificar</button>
-      <div class="hidden-answer" id="ans5c">Have you ever eaten sushi?</div>
-      <div class="feedback" id="fb5c"></div>
+      <input type="text" class="exercise-input" id="ex8c" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx8c()">Verificar</button>
+      <div class="hidden-answer" id="ans8c">Have you ever eaten sushi?</div>
+      <div class="feedback" id="fb8c"></div>
     </div>
 
     <div class="exercise-item">
       <label class="exercise-label">4. Ride/an elephant → Have you ever ___?</label>
-      <input type="text" class="exercise-input" id="ex5d" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx5d()">Verificar</button>
-      <div class="hidden-answer" id="ans5d">Have you ever ridden an elephant?</div>
-      <div class="feedback" id="fb5d"></div>
+      <input type="text" class="exercise-input" id="ex8d" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx8d()">Verificar</button>
+      <div class="hidden-answer" id="ans8d">Have you ever ridden an elephant?</div>
+      <div class="feedback" id="fb8d"></div>
     </div>
 
-    <button class="btn btn-next" onclick="scrollToSec(6)">Siguiente Sección →</button>
+    <div class="exercise-item">
+      <label class="exercise-label">5. See/a black and white movie → Have you ever ___?</label>
+      <input type="text" class="exercise-input" id="ex8e" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx8e()">Verificar</button>
+      <div class="hidden-answer" id="ans8e">Have you ever seen a black and white movie?</div>
+      <div class="feedback" id="fb8e"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">6. Win/a competition → Have you ever ___?</label>
+      <input type="text" class="exercise-input" id="ex8f" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx8f()">Verificar</button>
+      <div class="hidden-answer" id="ans8f">Have you ever won a competition?</div>
+      <div class="feedback" id="fb8f"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">7. Meet/a famous person → Have you ever ___?</label>
+      <input type="text" class="exercise-input" id="ex8g" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx8g()">Verificar</button>
+      <div class="hidden-answer" id="ans8g">Have you ever met a famous person?</div>
+      <div class="feedback" id="fb8g"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">8. Read/a book in English → Have you ever ___?</label>
+      <input type="text" class="exercise-input" id="ex8h" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx8h()">Verificar</button>
+      <div class="hidden-answer" id="ans8h">Have you ever read a book in English?</div>
+      <div class="feedback" id="fb8h"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">9. Fall/in love → Have you ever ___?</label>
+      <input type="text" class="exercise-input" id="ex8i" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx8i()">Verificar</button>
+      <div class="hidden-answer" id="ans8i">Have you ever fallen in love?</div>
+      <div class="feedback" id="fb8i"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">10. Buy/a computer → Have you ever ___?</label>
+      <input type="text" class="exercise-input" id="ex8j" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx8j()">Verificar</button>
+      <div class="hidden-answer" id="ans8j">Have you ever bought a computer?</div>
+      <div class="feedback" id="fb8j"></div>
+    </div>
+
+    <button class="btn btn-next" onclick="scrollToSec(9)">Siguiente Sección →</button>
   </section>
 
-  <!-- SECTION 6: PASSIVE VOICE -->
-  <section class="section" id="sec6">
-    <h2 class="section-title">🔍 6. Passive Voice: Diamond Story</h2>
-    <p class="section-desc">Read the story and identify passive voice sentences.</p>
+  <!-- SECTION 9: PRESENT PERFECT - 10 SENTENCES -->
+  <section class="section" id="sec9">
+    <h2 class="section-title">✍️ 9. Present Perfect: True or False</h2>
+    <p class="section-desc">Write 10 sentences about things you have and haven't done in your life. Some should be TRUE and some FALSE. Your coach will guess which are which in the Live session.</p>
+    
+    <div class="highlight">
+      <strong>Words to use:</strong> meet • find • try • play • see • ride • take • visit • be • do • eat • make
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">1.</label>
+      <textarea class="exercise-textarea" id="ex9a" placeholder="Write a sentence..."></textarea>
+      <button class="btn btn-verify" onclick="checkSentence('ex9a','fb9a')">Verificar</button>
+      <div class="feedback" id="fb9a"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">2.</label>
+      <textarea class="exercise-textarea" id="ex9b" placeholder="Write a sentence..."></textarea>
+      <button class="btn btn-verify" onclick="checkSentence('ex9b','fb9b')">Verificar</button>
+      <div class="feedback" id="fb9b"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">3.</label>
+      <textarea class="exercise-textarea" id="ex9c" placeholder="Write a sentence..."></textarea>
+      <button class="btn btn-verify" onclick="checkSentence('ex9c','fb9c')">Verificar</button>
+      <div class="feedback" id="fb9c"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">4.</label>
+      <textarea class="exercise-textarea" id="ex9d" placeholder="Write a sentence..."></textarea>
+      <button class="btn btn-verify" onclick="checkSentence('ex9d','fb9d')">Verificar</button>
+      <div class="feedback" id="fb9d"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">5.</label>
+      <textarea class="exercise-textarea" id="ex9e" placeholder="Write a sentence..."></textarea>
+      <button class="btn btn-verify" onclick="checkSentence('ex9e','fb9e')">Verificar</button>
+      <div class="feedback" id="fb9e"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">6.</label>
+      <textarea class="exercise-textarea" id="ex9f" placeholder="Write a sentence..."></textarea>
+      <button class="btn btn-verify" onclick="checkSentence('ex9f','fb9f')">Verificar</button>
+      <div class="feedback" id="fb9f"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">7.</label>
+      <textarea class="exercise-textarea" id="ex9g" placeholder="Write a sentence..."></textarea>
+      <button class="btn btn-verify" onclick="checkSentence('ex9g','fb9g')">Verificar</button>
+      <div class="feedback" id="fb9g"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">8.</label>
+      <textarea class="exercise-textarea" id="ex9h" placeholder="Write a sentence..."></textarea>
+      <button class="btn btn-verify" onclick="checkSentence('ex9h','fb9h')">Verificar</button>
+      <div class="feedback" id="fb9h"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">9.</label>
+      <textarea class="exercise-textarea" id="ex9i" placeholder="Write a sentence..."></textarea>
+      <button class="btn btn-verify" onclick="checkSentence('ex9i','fb9i')">Verificar</button>
+      <div class="feedback" id="fb9i"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">10.</label>
+      <textarea class="exercise-textarea" id="ex9j" placeholder="Write a sentence..."></textarea>
+      <button class="btn btn-verify" onclick="checkSentence('ex9j','fb9j')">Verificar</button>
+      <div class="feedback" id="fb9j"></div>
+    </div>
+
+    <button class="btn btn-next" onclick="scrollToSec(10)">Siguiente Sección →</button>
+  </section>
+
+  <!-- SECTION 10: GRAMMAR REVIEW -->
+  <section class="section" id="sec10">
+    <h2 class="section-title">📚 10. Grammar Review</h2>
+    <p class="section-desc">Review the grammar rules before the final exercises.</p>
+    
+    <div class="reading-card">
+      <h3> Present Perfect</h3>
+      <p><strong>Form:</strong> Subject + Have/Has + Verb (past participle) + Complement</p>
+      <p><strong>Positive:</strong> I have worked</p>
+      <p><strong>Negative:</strong> I have not worked (I haven't worked)</p>
+      <p><strong>Interrogative:</strong> Have you worked?</p>
+      <div class="highlight">
+        I have worked = I've worked<br>
+        He has worked = He's worked<br>
+        I have not = I haven't worked<br>
+        He has not = He hasn't worked
+      </div>
+      <p><strong>Regular verbs:</strong> Verb + ed (play → played, visit → visited, finish → finished)</p>
+      <p><strong>Irregular verbs:</strong> Must be memorized (be → been, come → come, go → gone, do → done, meet → met)</p>
+      <p><strong>Use 1:</strong> Emphasize the result of a past action without mentioning when it happened.</p>
+      <p><em>Example: I have met that girl before.</em></p>
+      <p><strong>Use 2:</strong> Action performed in a period that has not finished yet.</p>
+      <p><em>Example: Have you seen John today? (The day is not over yet.)</em></p>
+    </div>
+
+    <div class="reading-card">
+      <h3>🔍 Passive Voice</h3>
+      <p>Used when the focus is on the action, not who performs it.</p>
+      <p><strong>Example:</strong> My bike was stolen. (We don't know who did it.)</p>
+      <p><strong>Active:</strong> The man drove the car.</p>
+      <p><strong>Passive:</strong> The car was driven by the man.</p>
+      <div class="highlight">
+        We always use 'by' to introduce the passive agent.
+      </div>
+      <table class="grammar-table">
+        <tr><th>Active Voice</th><th>Passive Voice</th></tr>
+        <tr><td>The man drove the car.</td><td>The car was driven by the man.</td></tr>
+        <tr><td>Snakes eat mice.</td><td>Mice are eaten by snakes.</td></tr>
+        <tr><td>News reporters write news stories.</td><td>News stories are written by news reporters.</td></tr>
+      </table>
+    </div>
+
+    <button class="btn btn-next" onclick="scrollToSec(11)">Siguiente Sección →</button>
+  </section>
+
+  <!-- SECTION 11: PASSIVE VOICE - DIAMOND STORY -->
+  <section class="section" id="sec11">
+    <h2 class="section-title">💎 11. Passive Voice: Diamond Story</h2>
+    <p class="section-desc">Read the story and identify passive voice sentences, then rewrite them in active voice.</p>
     
     <div class="reading-card">
       <h3>💎 Huge Diamond Found in Bangkok Sewer System</h3>
@@ -473,19 +830,35 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 
     <div class="exercise-item">
-      <label class="exercise-label">Identify a passive voice sentence from the story:</label>
-      <textarea class="exercise-textarea" id="ex6a" placeholder=""></textarea>
-      <button class="btn btn-verify" onclick="checkEx6a()">Verificar</button>
-      <div class="hidden-answer" id="ans6a">Example: "The 37,500 carat stone was stumbled upon by a team of maintenance workers."</div>
-      <div class="feedback" id="fb6a"></div>
+      <label class="exercise-label">Identify 4 passive voice sentences from the story:</label>
+      <textarea class="exercise-textarea" id="ex11a" placeholder="Write 4 sentences..."></textarea>
+      <button class="btn btn-verify" onclick="checkEx11a()">Verificar</button>
+      <div class="hidden-answer" id="ans11a">Examples: 1) The stone was found by Mr. Supakorn. 2) Mr. Supakorn was taken back to headquarters. 3) A private jet was chartered. 4) The sewers have been overrun with prospectors.</div>
+      <div class="feedback" id="fb11a"></div>
     </div>
 
     <div class="exercise-item">
       <label class="exercise-label">Rewrite in active voice: "The stone was found by Mr. Supakorn."</label>
-      <input type="text" class="exercise-input" id="ex6b" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx6b()">Verificar</button>
-      <div class="hidden-answer" id="ans6b">Mr. Supakorn found the stone.</div>
-      <div class="feedback" id="fb6b"></div>
+      <input type="text" class="exercise-input" id="ex11b" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx11b()">Verificar</button>
+      <div class="hidden-answer" id="ans11b">Mr. Supakorn found the stone.</div>
+      <div class="feedback" id="fb11b"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Rewrite in active voice: "A private jet was chartered to fly Mr. T back to Dubai."</label>
+      <input type="text" class="exercise-input" id="ex11c" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx11c()">Verificar</button>
+      <div class="hidden-answer" id="ans11c">They chartered a private jet to fly Mr. T back to Dubai.</div>
+      <div class="feedback" id="fb11c"></div>
+    </div>
+
+    <div class="exercise-item">
+      <label class="exercise-label">Rewrite in active voice: "News stories are written by news reporters."</label>
+      <input type="text" class="exercise-input" id="ex11d" placeholder="">
+      <button class="btn btn-verify" onclick="checkEx11d()">Verificar</button>
+      <div class="hidden-answer" id="ans11d">News reporters write news stories.</div>
+      <div class="feedback" id="fb11d"></div>
     </div>
 
     <button class="btn btn-next" onclick="completeUnit()">🎉 Completar Unidad</button>
@@ -517,7 +890,7 @@ function speak(text) {
 }
 
 let completedCount = 0;
-const totalEx = 20;
+const totalEx = 45;
 
 function updateProgress() {
   document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
@@ -538,7 +911,6 @@ function scrollToSec(num) {
 // SECTION 1: READING
 function checkEx1a() {
   const val = normalizeText(document.getElementById('ex1a').value);
-  const correct = normalizeText("The Alcázar of Segovia");
   const fb = document.getElementById('fb1a');
   const ans = document.getElementById('ans1a');
   
@@ -685,7 +1057,26 @@ function checkEx2d() {
   }
 }
 
-// SECTION 3: MULTIPLE CHOICE
+// SECTION 3 & 4: DISCUSSION & PERSONAL QUESTIONS
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  
+  if(val.length > 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Respuesta registrada. ¡Buen trabajo!';
+    fb.style.display = 'block';
+    speak('Great answer!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = ' Escribe una respuesta más completa (mínimo 20 caracteres).';
+    fb.style.display = 'block';
+    speak('Try again');
+  }
+}
+
+// SECTION 5: MULTIPLE CHOICE
 let selectedOptions = {};
 
 function selectOption(btn, questionId, option) {
@@ -722,11 +1113,11 @@ function checkMC(questionId, correctAnswer, feedbackId) {
   }
 }
 
-// SECTION 4: UNSCRAMBLE
-function checkEx4a() {
-  const val = normalizeText(document.getElementById('ex4a').value);
-  const fb = document.getElementById('fb4a');
-  const ans = document.getElementById('ans4a');
+// SECTION 6: UNSCRAMBLE
+function checkEx6a() {
+  const val = normalizeText(document.getElementById('ex6a').value);
+  const fb = document.getElementById('fb6a');
+  const ans = document.getElementById('ans6a');
   
   if(val.includes("fire") && val.includes("employees") && val.includes("theft")) {
     fb.className = 'feedback success';
@@ -744,10 +1135,10 @@ function checkEx4a() {
   }
 }
 
-function checkEx4b() {
-  const val = normalizeText(document.getElementById('ex4b').value);
-  const fb = document.getElementById('fb4b');
-  const ans = document.getElementById('ans4b');
+function checkEx6b() {
+  const val = normalizeText(document.getElementById('ex6b').value);
+  const fb = document.getElementById('fb6b');
+  const ans = document.getElementById('ans6b');
   
   if(val.includes("sure") && val.includes("restaurant") && val.includes("fail")) {
     fb.className = 'feedback success';
@@ -758,17 +1149,17 @@ function checkEx4b() {
     completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
+    fb.textContent = ' Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
   }
 }
 
-function checkEx4c() {
-  const val = normalizeText(document.getElementById('ex4c').value);
-  const fb = document.getElementById('fb4c');
-  const ans = document.getElementById('ans4c');
+function checkEx6c() {
+  const val = normalizeText(document.getElementById('ex6c').value);
+  const fb = document.getElementById('fb6c');
+  const ans = document.getElementById('ans6c');
   
   if(val.includes("when") && val.includes("set up") && val.includes("company")) {
     fb.className = 'feedback success';
@@ -786,10 +1177,10 @@ function checkEx4c() {
   }
 }
 
-function checkEx4d() {
-  const val = normalizeText(document.getElementById('ex4d').value);
-  const fb = document.getElementById('fb4d');
-  const ans = document.getElementById('ans4d');
+function checkEx6d() {
+  const val = normalizeText(document.getElementById('ex6d').value);
+  const fb = document.getElementById('fb6d');
+  const ans = document.getElementById('ans6d');
   
   if(val.includes("build up") && val.includes("business") && val.includes("year")) {
     fb.className = 'feedback success';
@@ -807,13 +1198,12 @@ function checkEx4d() {
   }
 }
 
-// SECTION 5: PRESENT PERFECT
-function checkEx5a() {
-  const val = normalizeText(document.getElementById('ex5a').value);
-  const fb = document.getElementById('fb5a');
-  const ans = document.getElementById('ans5a');
+function checkEx6e() {
+  const val = normalizeText(document.getElementById('ex6e').value);
+  const fb = document.getElementById('fb6e');
+  const ans = document.getElementById('ans6e');
   
-  if(val.includes("played") && val.includes("golf")) {
+  if(val.includes("resign") && val.includes("job")) {
     fb.className = 'feedback success';
     fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
@@ -829,10 +1219,132 @@ function checkEx5a() {
   }
 }
 
-function checkEx5b() {
-  const val = normalizeText(document.getElementById('ex5b').value);
-  const fb = document.getElementById('fb5b');
-  const ans = document.getElementById('ans5b');
+function checkEx6f() {
+  const val = normalizeText(document.getElementById('ex6f').value);
+  const fb = document.getElementById('fb6f');
+  const ans = document.getElementById('ans6f');
+  
+  if(val.includes("looking forward") && val.includes("running") && val.includes("business")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = ' Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx6g() {
+  const val = normalizeText(document.getElementById('ex6g').value);
+  const fb = document.getElementById('fb6g');
+  const ans = document.getElementById('ans6g');
+  
+  if(val.includes("taken over") && val.includes("uncle")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Perfect!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx6h() {
+  const val = normalizeText(document.getElementById('ex6h').value);
+  const fb = document.getElementById('fb6h');
+  const ans = document.getElementById('ans6h');
+  
+  if(val.includes("martin") && val.includes("bankrupt")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Very Nice!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+// SECTION 7: MATCHING
+let selectedBegin = null;
+let selectedEnd = null;
+const correctMatches = {1:'d', 2:'f', 3:'e', 4:'b', 5:'g', 6:'h', 7:'a', 8:'c'};
+
+function selectMatch(el, type, value) {
+  const parent = el.parentElement;
+  parent.querySelectorAll('.match-item').forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected');
+  
+  if (type === 'begin') selectedBegin = value;
+  else selectedEnd = value;
+}
+
+function checkMatching() {
+  const val = document.getElementById('ex7match').value.trim().toLowerCase();
+  const fb = document.getElementById('fb7match');
+  const ans = document.getElementById('ans7match');
+  
+  const correct = "1-d, 2-f, 3-e, 4-b, 5-g, 6-h, 7-a, 8-c";
+  
+  if (val.replace(/\s/g, '') === correct.replace(/\s/g, '')) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ ¡Todos correctos!';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Perfect!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Revisa tus matches';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+// SECTION 8: PRESENT PERFECT
+function checkEx8a() {
+  const val = normalizeText(document.getElementById('ex8a').value);
+  const fb = document.getElementById('fb8a');
+  const ans = document.getElementById('ans8a');
+  
+  if(val.includes("played") && val.includes("golf")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Great!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = ' Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx8b() {
+  const val = normalizeText(document.getElementById('ex8b').value);
+  const fb = document.getElementById('fb8b');
+  const ans = document.getElementById('ans8b');
   
   if(val.includes("gone") && val.includes("country")) {
     fb.className = 'feedback success';
@@ -850,10 +1362,10 @@ function checkEx5b() {
   }
 }
 
-function checkEx5c() {
-  const val = normalizeText(document.getElementById('ex5c').value);
-  const fb = document.getElementById('fb5c');
-  const ans = document.getElementById('ans5c');
+function checkEx8c() {
+  const val = normalizeText(document.getElementById('ex8c').value);
+  const fb = document.getElementById('fb8c');
+  const ans = document.getElementById('ans8c');
   
   if(val.includes("eaten") && val.includes("sushi")) {
     fb.className = 'feedback success';
@@ -864,17 +1376,17 @@ function checkEx5c() {
     completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
+    fb.textContent = ' Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
   }
 }
 
-function checkEx5d() {
-  const val = normalizeText(document.getElementById('ex5d').value);
-  const fb = document.getElementById('fb5d');
-  const ans = document.getElementById('ans5d');
+function checkEx8d() {
+  const val = normalizeText(document.getElementById('ex8d').value);
+  const fb = document.getElementById('fb8d');
+  const ans = document.getElementById('ans8d');
   
   if(val.includes("ridden") && val.includes("elephant")) {
     fb.className = 'feedback success';
@@ -892,32 +1404,177 @@ function checkEx5d() {
   }
 }
 
-// SECTION 6: PASSIVE VOICE
-function checkEx6a() {
-  const val = document.getElementById('ex6a').value.trim();
-  const fb = document.getElementById('fb6a');
-  const ans = document.getElementById('ans6a');
+function checkEx8e() {
+  const val = normalizeText(document.getElementById('ex8e').value);
+  const fb = document.getElementById('fb8e');
+  const ans = document.getElementById('ans8e');
   
-  if(val.includes("was") || val.includes("were") || val.includes("been")) {
+  if(val.includes("seen") && val.includes("black")) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto - Has identificado una oración pasiva';
+    fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
     speak('Great!');
     completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Busca una oración con "was/were + past participle"';
+    fb.textContent = '❌ Incorrecto';
     fb.style.display = 'block';
     ans.style.display = 'block';
     speak('Sorry, try again');
   }
 }
 
-function checkEx6b() {
-  const val = normalizeText(document.getElementById('ex6b').value);
-  const fb = document.getElementById('fb6b');
-  const ans = document.getElementById('ans6b');
+function checkEx8f() {
+  const val = normalizeText(document.getElementById('ex8f').value);
+  const fb = document.getElementById('fb8f');
+  const ans = document.getElementById('ans8f');
+  
+  if(val.includes("won") && val.includes("competition")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx8g() {
+  const val = normalizeText(document.getElementById('ex8g').value);
+  const fb = document.getElementById('fb8g');
+  const ans = document.getElementById('ans8g');
+  
+  if(val.includes("met") && val.includes("famous")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Perfect!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx8h() {
+  const val = normalizeText(document.getElementById('ex8h').value);
+  const fb = document.getElementById('fb8h');
+  const ans = document.getElementById('ans8h');
+  
+  if(val.includes("read") && val.includes("book")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Very Nice!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx8i() {
+  const val = normalizeText(document.getElementById('ex8i').value);
+  const fb = document.getElementById('fb8i');
+  const ans = document.getElementById('ans8i');
+  
+  if(val.includes("fallen") && val.includes("love")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Great!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = ' Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx8j() {
+  const val = normalizeText(document.getElementById('ex8j').value);
+  const fb = document.getElementById('fb8j');
+  const ans = document.getElementById('ans8j');
+  
+  if(val.includes("bought") && val.includes("computer")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+// SECTION 9: SENTENCES
+function checkSentence(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  
+  if(val.length > 15 && (val.toLowerCase().includes("have") || val.toLowerCase().includes("has"))) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Oración registrada con Present Perfect';
+    fb.style.display = 'block';
+    speak('Great sentence!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Usa Present Perfect (have/has + past participle)';
+    fb.style.display = 'block';
+    speak('Try again');
+  }
+}
+
+// SECTION 11: PASSIVE VOICE
+function checkEx11a() {
+  const val = document.getElementById('ex11a').value.trim();
+  const fb = document.getElementById('fb11a');
+  const ans = document.getElementById('ans11a');
+  
+  if(val.includes("was") || val.includes("were") || val.includes("been")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Has identificado oraciones pasivas';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Great!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Busca oraciones con "was/were + past participle"';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx11b() {
+  const val = normalizeText(document.getElementById('ex11b').value);
+  const fb = document.getElementById('fb11b');
+  const ans = document.getElementById('ans11b');
   
   if(val.includes("supakorn") && val.includes("found") && val.includes("stone")) {
     fb.className = 'feedback success';
@@ -935,14 +1592,56 @@ function checkEx6b() {
   }
 }
 
+function checkEx11c() {
+  const val = normalizeText(document.getElementById('ex11c').value);
+  const fb = document.getElementById('fb11c');
+  const ans = document.getElementById('ans11c');
+  
+  if(val.includes("charter") && val.includes("jet")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Perfect!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkEx11d() {
+  const val = normalizeText(document.getElementById('ex11d').value);
+  const fb = document.getElementById('fb11d');
+  const ans = document.getElementById('ans11d');
+  
+  if(val.includes("reporter") && val.includes("write") && val.includes("stories")) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Very Nice!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Incorrecto';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
 function completeUnit() {
-  if(completedCount >= 16) {
-    document.getElementById('sec6').classList.remove('active');
+  if(completedCount >= 35) {
+    document.getElementById('sec11').classList.remove('active');
     document.getElementById('finalMsg').style.display = 'block';
     document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
     speak('Congratulations! You completed Unit 16!');
   } else {
-    alert(`⚠️ Completa al menos 16 de 20 ejercicios.\nCompletados: ${completedCount}/20`);
+    alert(`⚠️ Completa al menos 35 de 45 ejercicios.\nCompletados: ${completedCount}/45`);
   }
 }
 
