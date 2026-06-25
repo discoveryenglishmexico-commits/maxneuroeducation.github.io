@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 17: Teenage Life | Discovery MAX Neuroeducation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple: #6B4E71;
+  --turquoise: #4ECDC4;
+  --pink: #FF6B9D;
+  --navy: #1A1A2E;
+  --white: #F7F7F7;
+  --text-dark: #1a1a1a;
+  --text-light: #ffffff;
+  --text-muted: #4b5563;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--white); }
+
+.hero {
+  height:90vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(26,26,46,0.85), rgba(107,78,113,0.75)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:10px 25px; background:var(--pink); color:var(--text-light); font-weight:700; font-size:0.9rem; letter-spacing:2px; margin-bottom:20px; border-radius:4px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.hero p { font-size:1.3rem; font-weight:300; max-width:700px; margin:0 auto; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--navy); padding:12px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--pink),var(--turquoise)); transition: width 0.5s ease; }
+
+.section-image {
+  min-height:50vh; position:relative; background-size:cover; background-position:center;
+  display:flex; align-items:center; justify-content:center; padding:60px 20px;
+}
+.section-image::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(26,26,46,0.85), rgba(107,78,113,0.75)); }
+.section-image-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; }
+.section-image-content h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; margin-bottom:15px; }
+
+.section-solid { padding:80px 40px; }
+.section-solid.navy { background:var(--navy); color:var(--text-light); }
+.section-solid.purple { background:var(--purple); color:var(--text-light); }
+.section-solid.turquoise { background:var(--turquoise); color:var(--text-dark); }
+.section-solid.pink { background:var(--pink); color:var(--text-light); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:1100px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { background:var(--text-light); padding:40px; border-radius:8px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-left:6px solid var(--pink); }
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--navy); margin-bottom:20px; }
+.reading-block p { font-size:1.05rem; line-height:1.9; color:var(--text-dark); margin-bottom:15px; }
+
+.card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; margin:40px 0; }
+.card { background:var(--text-light); border-radius:8px; overflow:hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transition: transform 0.3s; }
+.card:hover { transform: translateY(-8px); }
+.card-content { padding:25px; }
+.card-content h3 { font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:10px; color:var(--navy); }
+.card-content p { color:var(--text-muted); font-size:0.95rem; line-height:1.7; }
+
+.exercise-box { background:var(--text-light); padding:30px; border-radius:8px; margin:30px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--navy); margin-bottom:20px; }
+.exercise-item { margin:20px 0; padding:20px; background:var(--white); border-left:4px solid var(--pink); border-radius:4px; }
+.exercise-item label { font-weight:600; font-size:1.05rem; display:block; margin-bottom:12px; color:var(--text-dark); }
+.exercise-input, .exercise-textarea {
+  width:100%; padding:12px; border:2px solid #d1d5db; border-radius:6px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--text-light); color:var(--text-dark); transition: border-color 0.3s;
+}
+.exercise-input:focus, .exercise-textarea:focus { outline:none; border-color:var(--pink); }
+.exercise-textarea { min-height:100px; resize:vertical; }
+
+.btn-verify {
+  margin-top:12px; padding:10px 24px; background:var(--pink); color:var(--text-light);
+  border:none; border-radius:6px; font-weight:600; cursor:pointer; transition: background 0.3s;
+}
+.btn-verify:hover { background:#e5558a; }
+
+.feedback { margin-top:12px; padding:12px; border-radius:6px; font-weight:600; display:none; }
+.feedback.success { background:#d1fae5; color:#065f46; border-left:4px solid #10b981; }
+.feedback.error { background:#fee2e2; color:#991b1b; border-left:4px solid #ef4444; }
+.hidden-answer { display:none; margin-top:12px; padding:12px; background:#fef3c7; border-left:4px solid var(--turquoise); border-radius:6px; color:#92400e; font-weight:600; }
+
+.options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:15px 0; }
+.option-btn { padding:14px; background:var(--text-light); border:2px solid #d1d5db; border-radius:6px; cursor:pointer; transition:0.3s; color:var(--text-dark); text-align:left; font-size:0.95rem; font-family:'Inter',sans-serif; }
+.option-btn:hover { border-color:var(--pink); background:rgba(255,107,157,0.1); }
+.option-btn.selected { background:var(--pink); color:var(--text-light); border-color:var(--pink); font-weight:600; }
+
+.nav-btn {
+  display:inline-block; margin-top:30px; padding:15px 40px; background:var(--pink); color:var(--text-light);
+  text-decoration:none; border-radius:6px; font-weight:700; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer;
+}
+.nav-btn:hover { background:#e5558a; transform:translateY(-2px); }
+
+.highlight-box { background:rgba(78,205,196,0.15); border-left:4px solid var(--turquoise); padding:20px 25px; margin:20px 0; border-radius:0 8px 8px 0; font-style:italic; color:var(--text-dark); }
+
+.grammar-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--text-light); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.grammar-table th, .grammar-table td { padding:14px; text-align:left; border-bottom:1px solid #e5e7eb; }
+.grammar-table th { background:var(--navy); color:var(--text-light); font-family:'Playfair Display',serif; font-size:1rem; }
+.grammar-table td { color:var(--text-dark); font-size:0.95rem; }
+
+.scale-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; margin:20px 0; }
+.scale-item { padding:15px; background:var(--text-light); border-radius:6px; text-align:center; font-weight:600; color:var(--navy); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.scale-item.positive { border-top:4px solid var(--turquoise); }
+.scale-item.negative { border-top:4px solid var(--pink); }
+
+.idiom-card { background:var(--text-light); padding:20px; border-radius:8px; margin:15px 0; border-left:4px solid var(--turquoise); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.idiom-card p { color:var(--text-dark); font-size:1rem; line-height:1.7; }
+
+@media(max-width:768px) {
+  .hero { height:75vh; }
+  .section-image { min-height:40vh; }
+  .section-solid { padding:60px 20px; }
+  .card-grid { grid-template-columns:1fr; }
+  .reading-block { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">UNIT 17</div>
+    <h1>Teenage Life</h1>
+    <p>Hey-ya fellows! It's me again, Eddy Williams. Acompáñame en mi regreso a la preparatoria mientras debatimos sobre los desafíos reales de la vida adolescente.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<!-- SECTION 1: EDDY'S STORY -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Eddy's Back at High School</h2>
+    <p>Youngsters and our surroundings</p>
+  </div>
+</section>
+
+<section class="section-solid navy">
+  <div class="container">
+    <h2>📖 Eddy's Debate Class</h2>
+    <div class="reading-block">
+      <h3>Hey-ya fellows! It's me again Eddy Williams</h3>
+      <p>Remember me? Well I remember you all. O.k. as well as my folks I'm back at high school doing my thing. Today we had a really interesting discussion in our debate class; it was about "Youngsters and our surroundings". I mean the problems that we can face nowadays, for example some have attitude problems, peer pressure, bullying, smoking and in the worst situations drug and alcohol abuse.</p>
+      <p>We also talk about how some youngsters are able to avoid these same problems as well, but the most interesting of all is how parents, social services, and schools are working together to put a stall to those kind of problems.</p>
+    </div>
+    <div class="exercise-box">
+      <h3>Comprensión Estratégica</h3>
+      <div class="exercise-item">
+        <label>1. ¿De qué trató el debate en la clase de Eddy?</label>
+        <input type="text" class="exercise-input" id="ex1a" placeholder="Responde con precisión...">
+        <button class="btn-verify" onclick="checkSimple('ex1a',['youngsters','surroundings'],'fb1a','ans1a')">Validar</button>
+        <div class="hidden-answer" id="ans1a">Youngsters and our surroundings</div>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. ¿Qué problemas enfrentan los jóvenes según Eddy?</label>
+        <input type="text" class="exercise-input" id="ex1b" placeholder="Responde con precisión...">
+        <button class="btn-verify" onclick="checkSimple('ex1b',['attitude','peer','pressure','bullying'],'fb1b','ans1b')">Validar</button>
+        <div class="hidden-answer" id="ans1b">Attitude problems, peer pressure, bullying, smoking, drug and alcohol abuse</div>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. ¿Quiénes están trabajando juntos para resolver estos problemas?</label>
+        <input type="text" class="exercise-input" id="ex1c" placeholder="Responde con precisión...">
+        <button class="btn-verify" onclick="checkSimple('ex1c',['parents','social','services','schools'],'fb1c','ans1c')">Validar</button>
+        <div class="hidden-answer" id="ans1c">Parents, social services, and schools</div>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 2: TEEN ISSUES -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1529390079861-591de354faf5?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Teen Issues Analyzed</h2>
+    <p>Attitude problems, peer pressure, bullying, smoking, drugs</p>
+  </div>
+</section>
+
+<section class="section-solid purple">
+  <div class="container">
+    <h2>🧠 Issues & Solutions</h2>
+    
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--pink);">Attitude Problems</h3>
+          <p>Teens think parents disapprove because it looks wrong. Some parents express disapproval rather than respecting teens as their own person with their own preferences.</p>
+          <p><strong>Solution:</strong> Declare a truce and start off again with better communication.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--pink);">Peer Pressure</h3>
+          <p>Common causes: wanting to fit in, vying for leadership, or exerting dominance.</p>
+          <p><strong>Solution:</strong> Have higher self-esteem.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--pink);">Bullying</h3>
+          <p>Often caused by social factors. Many bullies come from dysfunctional families, are disciplined with violence, or exposed to violence. Violent video games and TV shows also contribute.</p>
+          <p><strong>Solutions:</strong> Identify and respond to bullying, create anti-bullying forums, encourage bystanders to become "upstanders".</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--pink);">Smoking</h3>
+          <p>Reasons: fit in, peer influence, cope with stress, control weight, social habit, combat boredom. Tobacco industries used to target children in marketing.</p>
+          <p><strong>Solutions:</strong> Parents' relationship with children, parental influence, knowing who kids hang out with, high expectations, listen and treat with respect.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--pink);">Drugs & Alcohol</h3>
+          <p>Reasons: change something about their lives, fit in with the in-crowd, escape reality, feel like a grown up, curiosity. Some do drugs as a solution but end up with a bigger problem.</p>
+          <p><strong>Solutions:</strong> Schools should communicate how destructive drugs are physically, mentally, emotionally and financially.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Reflexión Ejecutiva</h3>
+      <div class="exercise-item">
+        <label>¿Cuál de estos problemas crees que es más difícil de resolver y por qué?</label>
+        <textarea class="exercise-textarea" id="ex2a" placeholder="Desarrolla tu respuesta..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex2a','fb2a')">Validar Esfuerzo</button>
+        <div class="feedback" id="fb2a"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--turquoise); color:var(--text-dark);">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 3: ETHICS -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Critical Thinking: Ethics</h2>
+    <p>Are you an ethical person?</p>
+  </div>
+</section>
+
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--navy);">🧠 Ethics & Honesty</h2>
+    <p>El cerebro ejecutivo reflexiona sobre valores reales. Responde con profundidad mínima (20+ caracteres).</p>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. Are you an ethical person? Why do you think so?</label><textarea class="exercise-textarea" id="ex3a" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3a','fb3a')">Validar Esfuerzo</button><div class="feedback" id="fb3a"></div></div>
+      <div class="exercise-item"><label>2. Do you have any friends who often lie? If yes, what do they lie about?</label><textarea class="exercise-textarea" id="ex3b" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3b','fb3b')">Validar Esfuerzo</button><div class="feedback" id="fb3b"></div></div>
+      <div class="exercise-item"><label>3. If a store clerk gave you too much change, would you tell him? Why/not?</label><textarea class="exercise-textarea" id="ex3c" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3c','fb3c')">Validar Esfuerzo</button><div class="feedback" id="fb3c"></div></div>
+      <div class="exercise-item"><label>4. Are white lies okay? Why/not?</label><textarea class="exercise-textarea" id="ex3d" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3d','fb3d')">Validar Esfuerzo</button><div class="feedback" id="fb3d"></div></div>
+      <div class="exercise-item"><label>5. What is the difference between a lie and an exaggeration?</label><textarea class="exercise-textarea" id="ex3e" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3e','fb3e')">Validar Esfuerzo</button><div class="feedback" id="fb3e"></div></div>
+      <div class="exercise-item"><label>6. When is lying a good thing? Why do you think so?</label><textarea class="exercise-textarea" id="ex3f" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3f','fb3f')">Validar Esfuerzo</button><div class="feedback" id="fb3f"></div></div>
+      <div class="exercise-item"><label>7. Who lies more, men or women? Why do you think so?</label><textarea class="exercise-textarea" id="ex3g" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3g','fb3g')">Validar Esfuerzo</button><div class="feedback" id="fb3g"></div></div>
+      <div class="exercise-item"><label>8. Do you agree or disagree? The best liars are politicians. Why/not?</label><textarea class="exercise-textarea" id="ex3h" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3h','fb3h')">Validar Esfuerzo</button><div class="feedback" id="fb3h"></div></div>
+      <div class="exercise-item"><label>9. What qualities do you think an ethical person has? Why do you think so?</label><textarea class="exercise-textarea" id="ex3i" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3i','fb3i')">Validar Esfuerzo</button><div class="feedback" id="fb3i"></div></div>
+      <div class="exercise-item"><label>10. Would you cheat on a test? Why/not?</label><textarea class="exercise-textarea" id="ex3j" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3j','fb3j')">Validar Esfuerzo</button><div class="feedback" id="fb3j"></div></div>
+      <div class="exercise-item"><label>11. Would you lie on a job resume? Why/not?</label><textarea class="exercise-textarea" id="ex3k" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3k','fb3k')">Validar Esfuerzo</button><div class="feedback" id="fb3k"></div></div>
+      <div class="exercise-item"><label>12. Do you trust people easily? Why/not?</label><textarea class="exercise-textarea" id="ex3l" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3l','fb3l')">Validar Esfuerzo</button><div class="feedback" id="fb3l"></div></div>
+      <div class="exercise-item"><label>13. What would you do if you saw a classmate cheating on a test?</label><textarea class="exercise-textarea" id="ex3m" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3m','fb3m')">Validar Esfuerzo</button><div class="feedback" id="fb3m"></div></div>
+      <div class="exercise-item"><label>14. Are there any jobs that require you to be an ethical person? Which ones? Why?</label><textarea class="exercise-textarea" id="ex3n" placeholder="Desarrolla tu respuesta..."
