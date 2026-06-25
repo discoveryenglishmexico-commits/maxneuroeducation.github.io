@@ -22,7 +22,6 @@
 body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.7; overflow-x:hidden; }
 .container { max-width:1100px; margin:0 auto; padding:0 20px; }
 
-/* HERO */
 .hero {
   min-height:70vh; display:flex; align-items:center; justify-content:center;
   text-align:center; padding:100px 20px 60px; position:relative; overflow:hidden;
@@ -49,7 +48,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 }
 .hero p { color:var(--muted); font-size:1.1rem; max-width:600px; margin:0 auto; }
 
-/* PROGRESS BAR */
 .progress-wrap {
   height:8px; background:rgba(255,255,255,0.1); border-radius:10px;
   overflow:hidden; margin:20px 0; position:sticky; top:0; z-index:50;
@@ -60,7 +58,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
   transition:width 0.5s ease;
 }
 
-/* SECTIONS */
 .section {
   background:var(--glass); backdrop-filter:blur(16px);
   border:1px solid var(--border); border-radius:20px;
@@ -81,7 +78,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 }
 .section-desc { color:var(--muted); margin-bottom:25px; font-size:0.95rem; }
 
-/* READING CARD */
 .reading-card {
   background:rgba(0,0,0,0.3); border-left:4px solid var(--emerald);
   border-radius:12px; padding:25px; margin-bottom:20px;
@@ -89,18 +85,29 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .reading-card h3 { color:var(--emerald); margin-bottom:15px; font-family:'Orbitron',sans-serif; font-size:1.1rem; }
 .reading-card p { margin-bottom:12px; color:var(--text); font-size:0.95rem; }
 
-/* EXERCISE ITEM */
 .exercise-item {
   background:rgba(0,0,0,0.3); border-radius:12px;
   padding:20px; margin-bottom:20px; border-left:4px solid var(--purple);
 }
-.exercise-label { font-weight:600; margin-bottom:12px; display:block; color:var(--text); }
+.exercise-label { 
+  font-weight:600; margin-bottom:12px; display:block; color:var(--text);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  font-size:0.95rem;
+  line-height: 1.5;
+}
 .exercise-input {
   width:100%; padding:12px; background:rgba(255,255,255,0.05);
   border:1px solid var(--border); border-radius:8px; color:var(--text);
   font-size:1rem; margin-bottom:12px;
 }
 .exercise-input:focus { outline:none; border-color:var(--emerald); }
+.exercise-input.inline-input {
+  width: 140px; display: inline-block; margin: 0 5px; 
+  text-align: center; padding: 6px 10px; font-size: 0.9rem;
+}
 .exercise-textarea {
   width:100%; padding:12px; background:rgba(255,255,255,0.05);
   border:1px solid var(--border); border-radius:8px; color:var(--text);
@@ -109,7 +116,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 }
 .exercise-textarea:focus { outline:none; border-color:var(--emerald); }
 
-/* BUTTONS */
 .btn {
   padding:10px 20px; border:none; border-radius:10px; font-weight:600; cursor:pointer;
   transition:0.3s; font-size:0.95rem; margin:5px;
@@ -122,7 +128,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 }
 .btn-next:hover { transform:translateY(-2px); box-shadow:0 5px 20px rgba(0,255,157,0.4); }
 
-/* FEEDBACK */
 .feedback {
   margin-top:10px; padding:10px; border-radius:8px; font-size:0.9rem; display:none;
   border-left:4px solid;
@@ -135,7 +140,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
   font-family:'Orbitron',sans-serif; font-size:0.9rem;
 }
 
-/* OPTIONS (Multiple Choice) */
 .options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin:15px 0; }
 .option-btn {
   padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border);
@@ -145,7 +149,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .option-btn:hover { border-color:var(--emerald); background:rgba(0,255,157,0.05); }
 .option-btn.selected { background:rgba(0,255,157,0.15); border-color:var(--emerald); color:var(--emerald); }
 
-/* GRAMMAR TABLE */
 .grammar-table {
   width:100%; border-collapse:collapse; margin:20px 0;
   background:rgba(0,0,0,0.3); border-radius:12px; overflow:hidden;
@@ -156,14 +159,12 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .grammar-table th { background:rgba(0,255,157,0.1); color:var(--emerald); font-family:'Orbitron',sans-serif; font-size:0.9rem; }
 .grammar-table td { color:var(--text); font-size:0.9rem; }
 
-/* HIGHLIGHT */
 .highlight {
   background:rgba(255,215,0,0.1); border-left:3px solid var(--gold);
   padding:15px 20px; margin:15px 0; border-radius:0 8px 8px 0;
   color:var(--text); font-style:italic;
 }
 
-/* MATCHING */
 .matching-container { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:20px 0; }
 .matching-column h4 { color:var(--cyan); margin-bottom:10px; font-family:'Orbitron',sans-serif; font-size:0.9rem; }
 .match-item {
@@ -173,20 +174,24 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 }
 .match-item:hover { border-color:var(--emerald); }
 .match-item.selected { background:rgba(0,255,157,0.15); border-color:var(--emerald); }
-.match-item.matched { background:rgba(0,255,157,0.25); border-color:var(--emerald); opacity:0.7; }
 
-/* RESPONSIVE */
+.reading-text { line-height: 2.2; font-size: 1rem; }
+.reading-text .inline-input { transition: all 0.3s; }
+.reading-text .inline-input:focus { border-color: var(--emerald); background: rgba(0,255,157,0.1); }
+
 @media(max-width:768px) {
   .section { padding:20px 15px; }
   .hero h1 { font-size:1.8rem; }
   .options-grid { grid-template-columns:1fr; }
   .matching-container { grid-template-columns:1fr; }
+  .exercise-label { font-size: 0.9rem; }
+  .exercise-input.inline-input { width: 110px; font-size: 0.8rem; padding: 5px 8px; }
+  .reading-text { font-size: 0.95rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-content">
@@ -198,7 +203,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 
 <div class="container">
 
-  <!-- PROGRESS BAR -->
   <div class="progress-wrap">
     <div class="progress-fill" id="progressBar"></div>
   </div>
@@ -247,9 +251,9 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <button class="btn btn-next" onclick="scrollToSec(2)">Siguiente Sección →</button>
   </section>
 
-  <!-- SECTION 2: CRITICAL THINKING - EXTREME EMPLOYEES -->
+  <!-- SECTION 2: CRITICAL THINKING -->
   <section class="section" id="sec2">
-    <h2 class="section-title">🧠 2. Critical Thinking: Extreme Employees</h2>
+    <h2 class="section-title"> 2. Critical Thinking: Extreme Employees</h2>
     <p class="section-desc">Read the article and complete the sentences from the text.</p>
     
     <div class="reading-card">
@@ -295,9 +299,9 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <button class="btn btn-next" onclick="scrollToSec(3)">Siguiente Sección →</button>
   </section>
 
-  <!-- SECTION 3: DISCUSSION QUESTIONS -->
+  <!-- SECTION 3: DISCUSSION -->
   <section class="section" id="sec3">
-    <h2 class="section-title"> 3. Discussion Questions</h2>
+    <h2 class="section-title">💬 3. Discussion Questions</h2>
     <p class="section-desc">Do you agree or disagree with these statements? Write your opinion and explain why.</p>
     
     <div class="exercise-item">
@@ -454,7 +458,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <button class="btn btn-next" onclick="scrollToSec(6)">Siguiente Sección →</button>
   </section>
 
-  <!-- SECTION 6: EVENTS IN BUSINESS -->
+  <!-- SECTION 6: EVENTS IN BUSINESS (FILL IN + UNSCRAMBLE) -->
   <section class="section" id="sec6">
     <h2 class="section-title">📊 6. Events in Business</h2>
     <p class="section-desc">Fill in the blanks with the correct word from the box, then unscramble the sentences.</p>
@@ -465,8 +469,15 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 
     <div class="reading-card">
       <h3>📝 Fill in the Blanks</h3>
-      <p>My sister and I <strong>started / _______________</strong> a dry cleaning business a year ago. So far it's doing quite well. She <strong>manages / _______________</strong> it from day to day, while I travel, make contacts and try to <strong>increase / _______________</strong> the business. Times are tough but I try not to worry about not being <strong>successful / _______________</strong> or being unable to pay our debts / <strong>_______________</strong>. I mean, people need clean clothes, bedding and stuff, so I think we should be OK.</p>
-      <p>My mother was sure that one of our employees was stealing from the company. She wanted to <strong>get rid of / _______________</strong> the guy but she had no proof. This went on until my mother retired and I became <strong>head of / _______________</strong> the company. I talked to the man and he got angry at first but eventually he left on his own choice / <strong>_______________</strong>. There were no more thefts after that.</p>
+      <p class="reading-text">
+        My sister and I started / <input type="text" class="exercise-input inline-input" id="fill1a" placeholder="_____"> a dry cleaning business a year ago. So far it's doing quite well. She manages / <input type="text" class="exercise-input inline-input" id="fill1b" placeholder="_____"> it from day to day, while I travel, make contacts and try to increase / <input type="text" class="exercise-input inline-input" id="fill1c" placeholder="_____"> the business. Times are tough but I try not to worry about not being successful / <input type="text" class="exercise-input inline-input" id="fill1d" placeholder="_____"> or being unable to pay our debts / <input type="text" class="exercise-input inline-input" id="fill1e" placeholder="_____">. I mean, people need clean clothes, bedding and stuff, so I think we should be OK.
+      </p>
+      <p class="reading-text" style="margin-top: 20px;">
+        My mother was sure that one of our employees was stealing from the company. She wanted to get rid of / <input type="text" class="exercise-input inline-input" id="fill1f" placeholder="_____"> the guy but she had no proof. This went on until my mother retired and I became head of / <input type="text" class="exercise-input inline-input" id="fill1g" placeholder="_____"> the company. I talked to the man and he got angry at first but eventually he left on his own choice / <input type="text" class="exercise-input inline-input" id="fill1h" placeholder="_____">. There were no more thefts after that.
+      </p>
+      
+      <button class="btn btn-verify" onclick="checkFillInBlanks()" style="margin-top: 20px;">Verificar Todo</button>
+      <div class="feedback" id="fbFillBlanks"></div>
     </div>
 
     <div class="exercise-item">
@@ -536,7 +547,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <button class="btn btn-next" onclick="scrollToSec(7)">Siguiente Sección →</button>
   </section>
 
-  <!-- SECTION 7: MATCHING EXERCISE -->
+  <!-- SECTION 7: MATCHING -->
   <section class="section" id="sec7">
     <h2 class="section-title">🔗 7. Matching Exercise</h2>
     <p class="section-desc">Match the sentence beginnings with the correct endings.</p>
@@ -544,25 +555,25 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="matching-container">
       <div class="matching-column">
         <h4>BEGINNINGS</h4>
-        <div class="match-item" onclick="selectMatch(this, 'begin', 1)">1. We only do business</div>
-        <div class="match-item" onclick="selectMatch(this, 'begin', 2)">2. We produce</div>
-        <div class="match-item" onclick="selectMatch(this, 'begin', 3)">3. We've recently invested</div>
-        <div class="match-item" onclick="selectMatch(this, 'begin', 4)">4. Our company imports</div>
-        <div class="match-item" onclick="selectMatch(this, 'begin', 5)">5. I went into partnership</div>
-        <div class="match-item" onclick="selectMatch(this, 'begin', 6)">6. They hope to make a profit</div>
-        <div class="match-item" onclick="selectMatch(this, 'begin', 7)">7. We export</div>
-        <div class="match-item" onclick="selectMatch(this, 'begin', 8)">8. It's hard for my small shop to compete</div>
+        <div class="match-item">1. We only do business</div>
+        <div class="match-item">2. We produce</div>
+        <div class="match-item">3. We've recently invested</div>
+        <div class="match-item">4. Our company imports</div>
+        <div class="match-item">5. I went into partnership</div>
+        <div class="match-item">6. They hope to make a profit</div>
+        <div class="match-item">7. We export</div>
+        <div class="match-item">8. It's hard for my small shop to compete</div>
       </div>
       <div class="matching-column">
         <h4>ENDINGS</h4>
-        <div class="match-item" onclick="selectMatch(this, 'end', 'a')">a. most of our products to North and South America.</div>
-        <div class="match-item" onclick="selectMatch(this, 'end', 'b')">b. a lot of goods from China.</div>
-        <div class="match-item" onclick="selectMatch(this, 'end', 'c')">c. against the big department stores.</div>
-        <div class="match-item" onclick="selectMatch(this, 'end', 'd')">d. with 'green' organizations.</div>
-        <div class="match-item" onclick="selectMatch(this, 'end', 'e')">e. in two gold mines in Brazil.</div>
-        <div class="match-item" onclick="selectMatch(this, 'end', 'f')">f. about ten thousand trucks a year in our factory.</div>
-        <div class="match-item" onclick="selectMatch(this, 'end', 'g')">g. with two of my cousins last year.</div>
-        <div class="match-item" onclick="selectMatch(this, 'end', 'h')">h. within the next five years</div>
+        <div class="match-item">a. most of our products to North and South America.</div>
+        <div class="match-item">b. a lot of goods from China.</div>
+        <div class="match-item">c. against the big department stores.</div>
+        <div class="match-item">d. with 'green' organizations.</div>
+        <div class="match-item">e. in two gold mines in Brazil.</div>
+        <div class="match-item">f. about ten thousand trucks a year in our factory.</div>
+        <div class="match-item">g. with two of my cousins last year.</div>
+        <div class="match-item">h. within the next five years</div>
       </div>
     </div>
 
@@ -583,7 +594,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 
   <!-- SECTION 8: PRESENT PERFECT -->
   <section class="section" id="sec8">
-    <h2 class="section-title"> 8. Present Perfect</h2>
+    <h2 class="section-title">⏰ 8. Present Perfect</h2>
     <p class="section-desc">Complete the questions using the correct past participle form.</p>
     
     <div class="highlight">
@@ -607,7 +618,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">1. Play/golf → Have you ever ___?</label>
       <input type="text" class="exercise-input" id="ex8a" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx8a()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx8('ex8a','played golf','fb8a','ans8a')">Verificar</button>
       <div class="hidden-answer" id="ans8a">Have you ever played golf?</div>
       <div class="feedback" id="fb8a"></div>
     </div>
@@ -615,7 +626,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">2. Go/another country → Have you ever ___?</label>
       <input type="text" class="exercise-input" id="ex8b" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx8b()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx8('ex8b','gone to another country','fb8b','ans8b')">Verificar</button>
       <div class="hidden-answer" id="ans8b">Have you ever gone to another country?</div>
       <div class="feedback" id="fb8b"></div>
     </div>
@@ -623,7 +634,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">3. Eat/sushi → Have you ever ___?</label>
       <input type="text" class="exercise-input" id="ex8c" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx8c()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx8('ex8c','eaten sushi','fb8c','ans8c')">Verificar</button>
       <div class="hidden-answer" id="ans8c">Have you ever eaten sushi?</div>
       <div class="feedback" id="fb8c"></div>
     </div>
@@ -631,7 +642,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">4. Ride/an elephant → Have you ever ___?</label>
       <input type="text" class="exercise-input" id="ex8d" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx8d()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx8('ex8d','ridden an elephant','fb8d','ans8d')">Verificar</button>
       <div class="hidden-answer" id="ans8d">Have you ever ridden an elephant?</div>
       <div class="feedback" id="fb8d"></div>
     </div>
@@ -639,7 +650,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">5. See/a black and white movie → Have you ever ___?</label>
       <input type="text" class="exercise-input" id="ex8e" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx8e()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx8('ex8e','seen a black and white movie','fb8e','ans8e')">Verificar</button>
       <div class="hidden-answer" id="ans8e">Have you ever seen a black and white movie?</div>
       <div class="feedback" id="fb8e"></div>
     </div>
@@ -647,7 +658,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">6. Win/a competition → Have you ever ___?</label>
       <input type="text" class="exercise-input" id="ex8f" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx8f()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx8('ex8f','won a competition','fb8f','ans8f')">Verificar</button>
       <div class="hidden-answer" id="ans8f">Have you ever won a competition?</div>
       <div class="feedback" id="fb8f"></div>
     </div>
@@ -655,7 +666,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">7. Meet/a famous person → Have you ever ___?</label>
       <input type="text" class="exercise-input" id="ex8g" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx8g()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx8('ex8g','met a famous person','fb8g','ans8g')">Verificar</button>
       <div class="hidden-answer" id="ans8g">Have you ever met a famous person?</div>
       <div class="feedback" id="fb8g"></div>
     </div>
@@ -663,7 +674,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">8. Read/a book in English → Have you ever ___?</label>
       <input type="text" class="exercise-input" id="ex8h" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx8h()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx8('ex8h','read a book in english','fb8h','ans8h')">Verificar</button>
       <div class="hidden-answer" id="ans8h">Have you ever read a book in English?</div>
       <div class="feedback" id="fb8h"></div>
     </div>
@@ -671,7 +682,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">9. Fall/in love → Have you ever ___?</label>
       <input type="text" class="exercise-input" id="ex8i" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx8i()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx8('ex8i','fallen in love','fb8i','ans8i')">Verificar</button>
       <div class="hidden-answer" id="ans8i">Have you ever fallen in love?</div>
       <div class="feedback" id="fb8i"></div>
     </div>
@@ -679,7 +690,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">10. Buy/a computer → Have you ever ___?</label>
       <input type="text" class="exercise-input" id="ex8j" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx8j()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx8('ex8j','bought a computer','fb8j','ans8j')">Verificar</button>
       <div class="hidden-answer" id="ans8j">Have you ever bought a computer?</div>
       <div class="feedback" id="fb8j"></div>
     </div>
@@ -687,10 +698,10 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <button class="btn btn-next" onclick="scrollToSec(9)">Siguiente Sección →</button>
   </section>
 
-  <!-- SECTION 9: PRESENT PERFECT - 10 SENTENCES -->
+  <!-- SECTION 9: 10 SENTENCES -->
   <section class="section" id="sec9">
     <h2 class="section-title">✍️ 9. Present Perfect: True or False</h2>
-    <p class="section-desc">Write 10 sentences about things you have and haven't done in your life. Some should be TRUE and some FALSE. Your coach will guess which are which in the Live session.</p>
+    <p class="section-desc">Write 10 sentences about things you have and haven't done. Some TRUE, some FALSE. Your coach will guess in the Live session.</p>
     
     <div class="highlight">
       <strong>Words to use:</strong> meet • find • try • play • see • ride • take • visit • be • do • eat • make
@@ -775,7 +786,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <p class="section-desc">Review the grammar rules before the final exercises.</p>
     
     <div class="reading-card">
-      <h3> Present Perfect</h3>
+      <h3>⏰ Present Perfect</h3>
       <p><strong>Form:</strong> Subject + Have/Has + Verb (past participle) + Complement</p>
       <p><strong>Positive:</strong> I have worked</p>
       <p><strong>Negative:</strong> I have not worked (I haven't worked)</p>
@@ -814,7 +825,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <button class="btn btn-next" onclick="scrollToSec(11)">Siguiente Sección →</button>
   </section>
 
-  <!-- SECTION 11: PASSIVE VOICE - DIAMOND STORY -->
+  <!-- SECTION 11: PASSIVE VOICE - DIAMOND -->
   <section class="section" id="sec11">
     <h2 class="section-title">💎 11. Passive Voice: Diamond Story</h2>
     <p class="section-desc">Read the story and identify passive voice sentences, then rewrite them in active voice.</p>
@@ -840,7 +851,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">Rewrite in active voice: "The stone was found by Mr. Supakorn."</label>
       <input type="text" class="exercise-input" id="ex11b" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx11b()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx11('ex11b','supakorn found the stone','fb11b','ans11b')">Verificar</button>
       <div class="hidden-answer" id="ans11b">Mr. Supakorn found the stone.</div>
       <div class="feedback" id="fb11b"></div>
     </div>
@@ -848,7 +859,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">Rewrite in active voice: "A private jet was chartered to fly Mr. T back to Dubai."</label>
       <input type="text" class="exercise-input" id="ex11c" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx11c()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx11('ex11c','chartered a private jet','fb11c','ans11c')">Verificar</button>
       <div class="hidden-answer" id="ans11c">They chartered a private jet to fly Mr. T back to Dubai.</div>
       <div class="feedback" id="fb11c"></div>
     </div>
@@ -856,17 +867,17 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     <div class="exercise-item">
       <label class="exercise-label">Rewrite in active voice: "News stories are written by news reporters."</label>
       <input type="text" class="exercise-input" id="ex11d" placeholder="">
-      <button class="btn btn-verify" onclick="checkEx11d()">Verificar</button>
+      <button class="btn btn-verify" onclick="checkEx11('ex11d','reporters write news stories','fb11d','ans11d')">Verificar</button>
       <div class="hidden-answer" id="ans11d">News reporters write news stories.</div>
       <div class="feedback" id="fb11d"></div>
     </div>
 
-    <button class="btn btn-next" onclick="completeUnit()">🎉 Completar Unidad</button>
+    <button class="btn btn-next" onclick="completeUnit()"> Completar Unidad</button>
   </section>
 
-  <!-- FINAL MESSAGE -->
+  <!-- FINAL -->
   <div id="finalMsg" style="display:none; text-align:center; margin-top:30px; padding:40px; background:linear-gradient(135deg,rgba(0,255,157,0.1),rgba(157,78,221,0.1)); border:1px solid var(--emerald); border-radius:20px;">
-    <h2 style="font-family:'Orbitron',sans-serif; color:var(--emerald); margin-bottom:15px;">🎉 ¡Unidad Completada!</h2>
+    <h2 style="font-family:'Orbitron',sans-serif; color:var(--emerald); margin-bottom:15px;"> ¡Unidad Completada!</h2>
     <p style="color:var(--text); font-size:1.1rem; margin-bottom:20px;">Has dominado Unit 16: Home Again</p>
     <p style="color:var(--muted);">Present Perfect + Passive Voice + Business Expressions</p>
     <a href="indexmax.html" class="btn btn-next" style="display:inline-block; margin-top:20px; text-decoration:none;">Continuar a la Siguiente Unidad →</a>
@@ -880,7 +891,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 </footer>
 
 <script>
-// AUDIO FEEDBACK
 const synth = window.speechSynthesis;
 function speak(text) {
   if(synth.speaking) synth.cancel();
@@ -890,7 +900,7 @@ function speak(text) {
 }
 
 let completedCount = 0;
-const totalEx = 45;
+const totalEx = 46;
 
 function updateProgress() {
   document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
@@ -908,18 +918,23 @@ function scrollToSec(num) {
   speak('Next section unlocked');
 }
 
-// SECTION 1: READING
-function checkEx1a() {
-  const val = normalizeText(document.getElementById('ex1a').value);
-  const fb = document.getElementById('fb1a');
-  const ans = document.getElementById('ans1a');
+// SECTION 1
+function checkEx1a() { checkSimple('ex1a', ['alcazar','segovia'], 'fb1a', 'ans1a', 'Very Nice!'); }
+function checkEx1b() { checkSimple('ex1b', ['energy','waste'], 'fb1b', 'ans1b', 'Great!'); }
+function checkEx1c() { checkSimple('ex1c', ['incineration'], 'fb1c', 'ans1c', 'Excellent!'); }
+
+function checkSimple(inputId, keywords, fbId, ansId, msg) {
+  const val = normalizeText(document.getElementById(inputId).value);
+  const fb = document.getElementById(fbId);
+  const ans = document.getElementById(ansId);
+  const allFound = keywords.every(k => val.includes(k));
   
-  if(val.includes("alcazar") || val.includes("segovia")) {
+  if(allFound) {
     fb.className = 'feedback success';
     fb.textContent = '✅ Correcto';
     fb.style.display = 'block';
     ans.style.display = 'none';
-    speak('Very Nice!');
+    speak(msg);
     completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
@@ -930,134 +945,13 @@ function checkEx1a() {
   }
 }
 
-function checkEx1b() {
-  const val = normalizeText(document.getElementById('ex1b').value);
-  const fb = document.getElementById('fb1b');
-  const ans = document.getElementById('ans1b');
-  
-  if(val.includes("energy") && val.includes("waste")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Great!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
+// SECTION 2
+function checkEx2a() { checkSimple('ex2a', ['balance','happiness'], 'fb2a', 'ans2a', 'Very Nice!'); }
+function checkEx2b() { checkSimple('ex2b', ['high','salaried','us'], 'fb2b', 'ans2b', 'Great!'); }
+function checkEx2c() { checkSimple('ex2c', ['unhappy'], 'fb2c', 'ans2c', 'Excellent!'); }
+function checkEx2d() { checkSimple('ex2d', ['unhappiness'], 'fb2d', 'ans2d', 'Perfect!'); }
 
-function checkEx1c() {
-  const val = normalizeText(document.getElementById('ex1c').value);
-  const fb = document.getElementById('fb1c');
-  const ans = document.getElementById('ans1c');
-  
-  if(val.includes("incineration")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Excellent!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-// SECTION 2: CRITICAL THINKING
-function checkEx2a() {
-  const val = normalizeText(document.getElementById('ex2a').value);
-  const fb = document.getElementById('fb2a');
-  const ans = document.getElementById('ans2a');
-  
-  if(val.includes("balance") || val.includes("happiness")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Very Nice!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx2b() {
-  const val = normalizeText(document.getElementById('ex2b').value);
-  const fb = document.getElementById('fb2b');
-  const ans = document.getElementById('ans2b');
-  
-  if(val.includes("high") && val.includes("salaried") && val.includes("us")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Great!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx2c() {
-  const val = normalizeText(document.getElementById('ex2c').value);
-  const fb = document.getElementById('fb2c');
-  const ans = document.getElementById('ans2c');
-  
-  if(val.includes("unhappy")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Excellent!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx2d() {
-  const val = normalizeText(document.getElementById('ex2d').value);
-  const fb = document.getElementById('fb2d');
-  const ans = document.getElementById('ans2d');
-  
-  if(val.includes("unhappiness")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Perfect!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-// SECTION 3 & 4: DISCUSSION & PERSONAL QUESTIONS
+// SECTION 3 & 4
 function checkDiscussion(inputId, feedbackId) {
   const val = document.getElementById(inputId).value.trim();
   const fb = document.getElementById(feedbackId);
@@ -1070,15 +964,14 @@ function checkDiscussion(inputId, feedbackId) {
     completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = ' Escribe una respuesta más completa (mínimo 20 caracteres).';
+    fb.textContent = '⚠️ Escribe una respuesta más completa (mínimo 20 caracteres).';
     fb.style.display = 'block';
     speak('Try again');
   }
 }
 
-// SECTION 5: MULTIPLE CHOICE
+// SECTION 5
 let selectedOptions = {};
-
 function selectOption(btn, questionId, option) {
   const parent = btn.parentElement;
   parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
@@ -1113,189 +1006,61 @@ function checkMC(questionId, correctAnswer, feedbackId) {
   }
 }
 
+// SECTION 6: FILL IN BLANKS (NUEVO)
+function checkFillInBlanks() {
+  const answers = {
+    'fill1a': 'set up',
+    'fill1b': 'run',
+    'fill1c': 'build up',
+    'fill1d': 'fail',
+    'fill1e': 'go bankrupt',
+    'fill1f': 'fire',
+    'fill1g': 'take over',
+    'fill1h': 'resign'
+  };
+  
+  let correct = 0;
+  let total = Object.keys(answers).length;
+  
+  for (let [id, correctAnswer] of Object.entries(answers)) {
+    const input = document.getElementById(id);
+    const userVal = normalizeText(input.value);
+    
+    if (userVal.includes(normalizeText(correctAnswer))) {
+      input.style.borderColor = 'var(--emerald)';
+      input.style.background = 'rgba(0,255,157,0.1)';
+      correct++;
+    } else {
+      input.style.borderColor = 'var(--error)';
+      input.style.background = 'rgba(255,68,68,0.1)';
+    }
+  }
+  
+  const fb = document.getElementById('fbFillBlanks');
+  if (correct === total) {
+    fb.className = 'feedback success';
+    fb.textContent = `✅ ¡Perfecto! ${correct}/${total} correctas`;
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = `⚠️ ${correct}/${total} correctas. Revisa las marcadas en rojo`;
+    speak('Good try');
+  }
+  fb.style.display = 'block';
+}
+
 // SECTION 6: UNSCRAMBLE
-function checkEx6a() {
-  const val = normalizeText(document.getElementById('ex6a').value);
-  const fb = document.getElementById('fb6a');
-  const ans = document.getElementById('ans6a');
-  
-  if(val.includes("fire") && val.includes("employees") && val.includes("theft")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Great!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
+function checkEx6a() { checkSimple('ex6a', ['fire','employees','theft'], 'fb6a', 'ans6a', 'Great!'); }
+function checkEx6b() { checkSimple('ex6b', ['sure','restaurant','fail'], 'fb6b', 'ans6b', 'Excellent!'); }
+function checkEx6c() { checkSimple('ex6c', ['when','set up','company'], 'fb6c', 'ans6c', 'Perfect!'); }
+function checkEx6d() { checkSimple('ex6d', ['build up','business','year'], 'fb6d', 'ans6d', 'Very Nice!'); }
+function checkEx6e() { checkSimple('ex6e', ['resign','job'], 'fb6e', 'ans6e', 'Great!'); }
+function checkEx6f() { checkSimple('ex6f', ['looking forward','running','business'], 'fb6f', 'ans6f', 'Excellent!'); }
+function checkEx6g() { checkSimple('ex6g', ['taken over','uncle'], 'fb6g', 'ans6g', 'Perfect!'); }
+function checkEx6h() { checkSimple('ex6h', ['martin','bankrupt'], 'fb6h', 'ans6h', 'Very Nice!'); }
 
-function checkEx6b() {
-  const val = normalizeText(document.getElementById('ex6b').value);
-  const fb = document.getElementById('fb6b');
-  const ans = document.getElementById('ans6b');
-  
-  if(val.includes("sure") && val.includes("restaurant") && val.includes("fail")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Excellent!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = ' Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx6c() {
-  const val = normalizeText(document.getElementById('ex6c').value);
-  const fb = document.getElementById('fb6c');
-  const ans = document.getElementById('ans6c');
-  
-  if(val.includes("when") && val.includes("set up") && val.includes("company")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Perfect!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx6d() {
-  const val = normalizeText(document.getElementById('ex6d').value);
-  const fb = document.getElementById('fb6d');
-  const ans = document.getElementById('ans6d');
-  
-  if(val.includes("build up") && val.includes("business") && val.includes("year")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Very Nice!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx6e() {
-  const val = normalizeText(document.getElementById('ex6e').value);
-  const fb = document.getElementById('fb6e');
-  const ans = document.getElementById('ans6e');
-  
-  if(val.includes("resign") && val.includes("job")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Great!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx6f() {
-  const val = normalizeText(document.getElementById('ex6f').value);
-  const fb = document.getElementById('fb6f');
-  const ans = document.getElementById('ans6f');
-  
-  if(val.includes("looking forward") && val.includes("running") && val.includes("business")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Excellent!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = ' Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx6g() {
-  const val = normalizeText(document.getElementById('ex6g').value);
-  const fb = document.getElementById('fb6g');
-  const ans = document.getElementById('ans6g');
-  
-  if(val.includes("taken over") && val.includes("uncle")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Perfect!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx6h() {
-  const val = normalizeText(document.getElementById('ex6h').value);
-  const fb = document.getElementById('fb6h');
-  const ans = document.getElementById('ans6h');
-  
-  if(val.includes("martin") && val.includes("bankrupt")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Very Nice!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-// SECTION 7: MATCHING
-let selectedBegin = null;
-let selectedEnd = null;
-const correctMatches = {1:'d', 2:'f', 3:'e', 4:'b', 5:'g', 6:'h', 7:'a', 8:'c'};
-
-function selectMatch(el, type, value) {
-  const parent = el.parentElement;
-  parent.querySelectorAll('.match-item').forEach(i => i.classList.remove('selected'));
-  el.classList.add('selected');
-  
-  if (type === 'begin') selectedBegin = value;
-  else selectedEnd = value;
-}
-
+// SECTION 7
 function checkMatching() {
   const val = document.getElementById('ex7match').value.trim().toLowerCase();
   const fb = document.getElementById('fb7match');
@@ -1319,218 +1084,12 @@ function checkMatching() {
   }
 }
 
-// SECTION 8: PRESENT PERFECT
-function checkEx8a() {
-  const val = normalizeText(document.getElementById('ex8a').value);
-  const fb = document.getElementById('fb8a');
-  const ans = document.getElementById('ans8a');
-  
-  if(val.includes("played") && val.includes("golf")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Great!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = ' Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
+// SECTION 8
+function checkEx8(inputId, keywords, fbId, ansId) {
+  checkSimple(inputId, keywords.split(' '), fbId, ansId, 'Great!');
 }
 
-function checkEx8b() {
-  const val = normalizeText(document.getElementById('ex8b').value);
-  const fb = document.getElementById('fb8b');
-  const ans = document.getElementById('ans8b');
-  
-  if(val.includes("gone") && val.includes("country")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Excellent!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx8c() {
-  const val = normalizeText(document.getElementById('ex8c').value);
-  const fb = document.getElementById('fb8c');
-  const ans = document.getElementById('ans8c');
-  
-  if(val.includes("eaten") && val.includes("sushi")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Perfect!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = ' Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx8d() {
-  const val = normalizeText(document.getElementById('ex8d').value);
-  const fb = document.getElementById('fb8d');
-  const ans = document.getElementById('ans8d');
-  
-  if(val.includes("ridden") && val.includes("elephant")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Very Nice!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx8e() {
-  const val = normalizeText(document.getElementById('ex8e').value);
-  const fb = document.getElementById('fb8e');
-  const ans = document.getElementById('ans8e');
-  
-  if(val.includes("seen") && val.includes("black")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Great!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx8f() {
-  const val = normalizeText(document.getElementById('ex8f').value);
-  const fb = document.getElementById('fb8f');
-  const ans = document.getElementById('ans8f');
-  
-  if(val.includes("won") && val.includes("competition")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Excellent!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx8g() {
-  const val = normalizeText(document.getElementById('ex8g').value);
-  const fb = document.getElementById('fb8g');
-  const ans = document.getElementById('ans8g');
-  
-  if(val.includes("met") && val.includes("famous")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Perfect!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx8h() {
-  const val = normalizeText(document.getElementById('ex8h').value);
-  const fb = document.getElementById('fb8h');
-  const ans = document.getElementById('ans8h');
-  
-  if(val.includes("read") && val.includes("book")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Very Nice!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx8i() {
-  const val = normalizeText(document.getElementById('ex8i').value);
-  const fb = document.getElementById('fb8i');
-  const ans = document.getElementById('ans8i');
-  
-  if(val.includes("fallen") && val.includes("love")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Great!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = ' Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx8j() {
-  const val = normalizeText(document.getElementById('ex8j').value);
-  const fb = document.getElementById('fb8j');
-  const ans = document.getElementById('ans8j');
-  
-  if(val.includes("bought") && val.includes("computer")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Excellent!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-// SECTION 9: SENTENCES
+// SECTION 9
 function checkSentence(inputId, feedbackId) {
   const val = document.getElementById(inputId).value.trim();
   const fb = document.getElementById(feedbackId);
@@ -1549,7 +1108,7 @@ function checkSentence(inputId, feedbackId) {
   }
 }
 
-// SECTION 11: PASSIVE VOICE
+// SECTION 11
 function checkEx11a() {
   const val = document.getElementById('ex11a').value.trim();
   const fb = document.getElementById('fb11a');
@@ -1571,67 +1130,8 @@ function checkEx11a() {
   }
 }
 
-function checkEx11b() {
-  const val = normalizeText(document.getElementById('ex11b').value);
-  const fb = document.getElementById('fb11b');
-  const ans = document.getElementById('ans11b');
-  
-  if(val.includes("supakorn") && val.includes("found") && val.includes("stone")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Excellent!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx11c() {
-  const val = normalizeText(document.getElementById('ex11c').value);
-  const fb = document.getElementById('fb11c');
-  const ans = document.getElementById('ans11c');
-  
-  if(val.includes("charter") && val.includes("jet")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Perfect!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
-}
-
-function checkEx11d() {
-  const val = normalizeText(document.getElementById('ex11d').value);
-  const fb = document.getElementById('fb11d');
-  const ans = document.getElementById('ans11d');
-  
-  if(val.includes("reporter") && val.includes("write") && val.includes("stories")) {
-    fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
-    fb.style.display = 'block';
-    ans.style.display = 'none';
-    speak('Very Nice!');
-    completedCount++; updateProgress();
-  } else {
-    fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
-    fb.style.display = 'block';
-    ans.style.display = 'block';
-    speak('Sorry, try again');
-  }
+function checkEx11(inputId, keywords, fbId, ansId) {
+  checkSimple(inputId, keywords.split(' '), fbId, ansId, 'Excellent!');
 }
 
 function completeUnit() {
@@ -1641,11 +1141,10 @@ function completeUnit() {
     document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
     speak('Congratulations! You completed Unit 16!');
   } else {
-    alert(`⚠️ Completa al menos 35 de 45 ejercicios.\nCompletados: ${completedCount}/45`);
+    alert(`️ Completa al menos 35 de 46 ejercicios.\nCompletados: ${completedCount}/46`);
   }
 }
 
-// INICIALIZAR
 window.addEventListener('DOMContentLoaded', () => {
   updateProgress();
 });
