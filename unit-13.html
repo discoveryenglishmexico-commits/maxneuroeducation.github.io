@@ -13,7 +13,7 @@
   --cream: #f9f7f2;
   --text-dark: #1a1a1a;
   --text-light: #ffffff;
-  --text-muted: #6b7280;
+  --text-muted: #4b5563;
 }
 * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
 body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--cream); }
@@ -25,10 +25,10 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
   display:flex; align-items:center; justify-content:center;
 }
 .hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(15,43,70,0.85), rgba(198,93,62,0.75)); }
-.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:800px; padding:40px; }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
 .hero-badge { display:inline-block; padding:10px 25px; background:var(--terracotta); color:var(--text-light); font-weight:700; font-size:0.9rem; letter-spacing:2px; margin-bottom:20px; border-radius:4px; }
 .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-.hero p { font-size:1.3rem; font-weight:300; max-width:600px; margin:0 auto; }
+.hero p { font-size:1.3rem; font-weight:300; max-width:700px; margin:0 auto; }
 
 /* PROGRESS */
 .progress-wrap { position:sticky; top:0; z-index:100; background:var(--navy); padding:12px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -37,12 +37,13 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
 
 /* SECTIONS */
 .section-image {
-  min-height:45vh; position:relative; background-size:cover; background-position:center;
+  min-height:50vh; position:relative; background-size:cover; background-position:center;
   display:flex; align-items:center; justify-content:center; padding:60px 20px;
 }
 .section-image::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(15,43,70,0.85), rgba(198,93,62,0.75)); }
-.section-image-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:800px; }
+.section-image-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; }
 .section-image-content h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; margin-bottom:15px; }
+.section-image-content p { font-size:1.2rem; font-weight:300; }
 
 .section-solid { padding:80px 40px; }
 .section-solid.navy { background:var(--navy); color:var(--text-light); }
@@ -59,25 +60,24 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
 .reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--navy); margin-bottom:20px; }
 .reading-block p { font-size:1.05rem; line-height:1.9; color:var(--text-dark); margin-bottom:15px; }
 
-.card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px; margin:40px 0; }
+.card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; margin:40px 0; }
 .card { background:var(--text-light); border-radius:8px; overflow:hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transition: transform 0.3s; }
 .card:hover { transform: translateY(-8px); }
-.card-image { height:200px; background-size:cover; background-position:center; }
 .card-content { padding:25px; }
-.card-content h3 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:10px; color:var(--navy); }
+.card-content h3 { font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:10px; color:var(--navy); }
 .card-content p { color:var(--text-muted); font-size:0.95rem; line-height:1.7; }
 
 /* EXERCISES */
 .exercise-box { background:var(--text-light); padding:30px; border-radius:8px; margin:30px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--navy); margin-bottom:20px; }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--navy); margin-bottom:20px; }
 .exercise-item { margin:20px 0; padding:20px; background:var(--cream); border-left:4px solid var(--terracotta); border-radius:4px; }
 .exercise-item label { font-weight:600; font-size:1.05rem; display:block; margin-bottom:12px; color:var(--text-dark); }
 .exercise-input, .exercise-textarea {
-  width:100%; padding:12px; border:2px solid #e5e7eb; border-radius:6px; font-size:1rem;
+  width:100%; padding:12px; border:2px solid #d1d5db; border-radius:6px; font-size:1rem;
   font-family:'Inter',sans-serif; background:var(--text-light); color:var(--text-dark); transition: border-color 0.3s;
 }
 .exercise-input:focus, .exercise-textarea:focus { outline:none; border-color:var(--terracotta); }
-.exercise-textarea { min-height:80px; resize:vertical; }
+.exercise-textarea { min-height:100px; resize:vertical; }
 
 .btn-verify {
   margin-top:12px; padding:10px 24px; background:var(--terracotta); color:var(--text-light);
@@ -90,16 +90,11 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
 .feedback.error { background:#fee2e2; color:#991b1b; border-left:4px solid #ef4444; }
 .hidden-answer { display:none; margin-top:12px; padding:12px; background:#fef3c7; border-left:4px solid #d4a574; border-radius:6px; color:#92400e; font-weight:600; }
 
-/* OPTIONS & MATCHING */
+/* OPTIONS */
 .options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:15px 0; }
-.option-btn { padding:14px; background:var(--text-light); border:2px solid #e5e7eb; border-radius:6px; cursor:pointer; transition:0.3s; color:var(--text-dark); text-align:left; font-size:0.95rem; }
+.option-btn { padding:14px; background:var(--text-light); border:2px solid #d1d5db; border-radius:6px; cursor:pointer; transition:0.3s; color:var(--text-dark); text-align:left; font-size:0.95rem; font-family:'Inter',sans-serif; }
 .option-btn:hover { border-color:var(--terracotta); background:rgba(198,93,62,0.1); }
 .option-btn.selected { background:var(--terracotta); color:var(--text-light); border-color:var(--terracotta); font-weight:600; }
-
-.matching-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:30px 0; }
-.match-column { background:var(--text-light); border-radius:8px; padding:25px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
-.match-column h4 { font-family:'Playfair Display',serif; color:var(--navy); margin-bottom:15px; font-size:1.3rem; }
-.match-item { padding:12px; background:var(--cream); border-radius:6px; margin-bottom:10px; font-size:0.95rem; }
 
 .nav-btn {
   display:inline-block; margin-top:30px; padding:15px 40px; background:var(--terracotta); color:var(--text-light);
@@ -107,14 +102,24 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
 }
 .nav-btn:hover { background:#a84a30; transform:translateY(-2px); }
 
-.highlight-box { background:rgba(212,165,116,0.2); border-left:4px solid #d4a574; padding:20px 25px; margin:20px 0; border-radius:0 8px 8px 0; font-style:italic; }
+.highlight-box { background:rgba(212,165,116,0.2); border-left:4px solid #d4a574; padding:20px 25px; margin:20px 0; border-radius:0 8px 8px 0; font-style:italic; color:var(--text-dark); }
+
+.vocab-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin:30px 0; }
+.vocab-item { padding:15px; background:var(--text-light); border-radius:6px; text-align:center; font-weight:600; color:var(--navy); box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s; }
+.vocab-item:hover { transform: translateY(-4px); background:var(--terracotta); color:var(--text-light); }
+
+.grammar-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--text-light); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.grammar-table th, .grammar-table td { padding:14px; text-align:left; border-bottom:1px solid #e5e7eb; }
+.grammar-table th { background:var(--navy); color:var(--text-light); font-family:'Playfair Display',serif; font-size:1rem; }
+.grammar-table td { color:var(--text-dark); font-size:0.95rem; }
 
 @media(max-width:768px) {
   .hero { height:75vh; }
-  .section-image { min-height:35vh; }
+  .section-image { min-height:40vh; }
   .section-solid { padding:60px 20px; }
-  .card-grid, .matching-grid { grid-template-columns:1fr; }
+  .card-grid { grid-template-columns:1fr; }
   .reading-block { padding:25px; }
+  .vocab-grid { grid-template-columns:repeat(2,1fr); }
 }
 </style>
 </head>
@@ -125,7 +130,7 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
   <div class="hero-content">
     <div class="hero-badge">UNIT 13</div>
     <h1>A Vacation Abroad</h1>
-    <p>Acompaña a la familia Williams mientras planifican, estructuran y codifican su viaje europeo. El cerebro ejecutivo no improvisa: prepara.</p>
+    <p>Acompaña a la familia Williams en su viaje por Europa. Domina phrasal verbs, condicionales y present perfect mientras exploras España, Francia, Italia y Alemania.</p>
   </div>
 </section>
 
@@ -181,46 +186,71 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
 </section>
 
 <!-- SECTION 2: PHRASAL VERBS -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Phrasal Verbs: Traveling</h2>
+    <p>Codificación léxica de alta frecuencia para desplazamientos</p>
+  </div>
+</section>
+
 <section class="section-solid navy">
   <div class="container">
-    <h2>🚀 Phrasal Verbs: Traveling</h2>
-    <p>Codificación lexical de alta frecuencia para desplazamientos reales.</p>
+    <h2>🚀 15 Phrasal Verbs Esenciales</h2>
     <div class="card-grid">
       <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Drop off</h3><p>To take someone to a place and leave them there.</p></div></div>
-      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Check in</h3><p>To register at a hotel or airport.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Check in</h3><p>To register at a hotel.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Check out</h3><p>To leave and pay for your stay at a hotel.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Pick up</h3><p>To go and fetch someone from a place and take them somewhere else.</p></div></div>
       <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Set out</h3><p>To start a journey.</p></div></div>
       <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Take off</h3><p>When a plane leaves and begins to fly.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Get in</h3><p>When a plane arrives at an airport.</p></div></div>
       <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Get away</h3><p>To leave to go somewhere for a break or holiday.</p></div></div>
-      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Look forward</h3><p>To wait for something anxiously that is going to happen.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Get on</h3><p>To get on board.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Speed up</h3><p>To increase speed.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Look around</h3><p>To explore what is near you, in your area.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Hurry up</h3><p>To rush and not waste time.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Go back</h3><p>To return to your place.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">See off</h3><p>To go to the place where someone is leaving from and say goodbye.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--terracotta);">Look forward</h3><p>To wait for something anxiously that is going to happen in the future.</p></div></div>
     </div>
     <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
   </div>
 </section>
 
 <!-- SECTION 3: FILL IN BLANKS -->
-<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80');">
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&q=80');">
   <div class="section-image-content">
-    <h2>Aplicación Contextual</h2>
-    <p>Summer break in the USA: Reconstrucción sintáctica</p>
+    <h2>Summer Break in the USA</h2>
+    <p>Aplicación contextual de los phrasal verbs</p>
   </div>
 </section>
 
 <section class="section-solid sand">
   <div class="container">
     <h2 style="color:var(--navy);">✍️ Fill in the Blanks</h2>
-    <div class="highlight-box">Usa: drop off, check in, check out, pick up, set out, take off, get in, get away, get on, speed up, look around, hurry up, go back, see off, look forward</div>
+    <div class="highlight-box">Usa los phrasal verbs de la sección anterior para completar los 15 espacios.</div>
     <div class="exercise-box">
       <div class="exercise-item"><label>1. "The day I left for the USA, my family _______ me _______."</label><input type="text" class="exercise-input" id="ex3a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3a',['see','off'],'fb3a','ans3a')">Validar</button><div class="hidden-answer" id="ans3a">saw off</div><div class="feedback" id="fb3a"></div></div>
       <div class="exercise-item"><label>2. "We had breakfast at the airport but we had to _______ so that I wouldn't miss my flight."</label><input type="text" class="exercise-input" id="ex3b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3b',['hurry','up'],'fb3b','ans3b')">Validar</button><div class="hidden-answer" id="ans3b">hurry up</div><div class="feedback" id="fb3b"></div></div>
       <div class="exercise-item"><label>3. "It was a teary goodbye, but I was _______ to new experiences in the USA."</label><input type="text" class="exercise-input" id="ex3c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3c',['looking','forward'],'fb3c','ans3c')">Validar</button><div class="hidden-answer" id="ans3c">looking forward</div><div class="feedback" id="fb3c"></div></div>
       <div class="exercise-item"><label>4. "After I _______ the plane I made myself comfortable..."</label><input type="text" class="exercise-input" id="ex3d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3d',['got','on'],'fb3d','ans3d')">Validar</button><div class="hidden-answer" id="ans3d">got on</div><div class="feedback" id="fb3d"></div></div>
       <div class="exercise-item"><label>5. "I thought of how much I wanted this holiday and that I just needed to _______ from it all."</label><input type="text" class="exercise-input" id="ex3e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3e',['get','away'],'fb3e','ans3e')">Validar</button><div class="hidden-answer" id="ans3e">get away</div><div class="feedback" id="fb3e"></div></div>
+      <div class="exercise-item"><label>6. "...we were preparing to _______."</label><input type="text" class="exercise-input" id="ex3f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3f',['take','off'],'fb3f','ans3f')">Validar</button><div class="hidden-answer" id="ans3f">take off</div><div class="feedback" id="fb3f"></div></div>
+      <div class="exercise-item"><label>7. "As the plane was _______ on the runway..."</label><input type="text" class="exercise-input" id="ex3g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3g',['speeding','up'],'fb3g','ans3g')">Validar</button><div class="hidden-answer" id="ans3g">speeding up</div><div class="feedback" id="fb3g"></div></div>
+      <div class="exercise-item"><label>8. "When our plane _______ at JFK Airport in New York..."</label><input type="text" class="exercise-input" id="ex3h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3h',['got','in'],'fb3h','ans3h')">Validar</button><div class="hidden-answer" id="ans3h">got in</div><div class="feedback" id="fb3h"></div></div>
+      <div class="exercise-item"><label>9. "...there was already a taxi waiting to _______ me _______."</label><input type="text" class="exercise-input" id="ex3i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3i',['pick','up'],'fb3i','ans3i')">Validar</button><div class="hidden-answer" id="ans3i">pick up</div><div class="feedback" id="fb3i"></div></div>
+      <div class="exercise-item"><label>10. "The taxi _______ me _______ at the Holiday Inn..."</label><input type="text" class="exercise-input" id="ex3j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3j',['dropped','off'],'fb3j','ans3j')">Validar</button><div class="hidden-answer" id="ans3j">dropped off</div><div class="feedback" id="fb3j"></div></div>
+      <div class="exercise-item"><label>11. "After I _______ to the hotel we all went to Time Square..."</label><input type="text" class="exercise-input" id="ex3k" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3k',['checked','in'],'fb3k','ans3k')">Validar</button><div class="hidden-answer" id="ans3k">checked in</div><div class="feedback" id="fb3k"></div></div>
+      <div class="exercise-item"><label>12. "...where we _______ for the rest of the day."</label><input type="text" class="exercise-input" id="ex3l" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3l',['looked','around'],'fb3l','ans3l')">Validar</button><div class="hidden-answer" id="ans3l">looked around</div><div class="feedback" id="fb3l"></div></div>
+      <div class="exercise-item"><label>13. "The next morning we _______ after breakfast..."</label><input type="text" class="exercise-input" id="ex3m" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3m',['checked','out'],'fb3m','ans3m')">Validar</button><div class="hidden-answer" id="ans3m">checked out</div><div class="feedback" id="fb3m"></div></div>
+      <div class="exercise-item"><label>14. "...rented a car and _______ on a cross-country road trip."</label><input type="text" class="exercise-input" id="ex3n" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3n',['set','out'],'fb3n','ans3n')">Validar</button><div class="hidden-answer" id="ans3n">set out</div><div class="feedback" id="fb3n"></div></div>
+      <div class="exercise-item"><label>15. "It would be another 3 months before I would _______ home."</label><input type="text" class="exercise-input" id="ex3o" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3o',['go','back'],'fb3o','ans3o')">Validar</button><div class="hidden-answer" id="ans3o">go back</div><div class="feedback" id="fb3o"></div></div>
     </div>
     <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
   </div>
 </section>
 
-<!-- SECTION 4: CRITICAL THINKING (EXIGENCIA COGNITIVA) -->
+<!-- SECTION 4: CRITICAL THINKING -->
 <section class="section-solid terracotta">
   <div class="container">
     <h2>🧠 Critical Thinking: Reflexión Ejecutiva</h2>
@@ -231,65 +261,317 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
       <div class="exercise-item"><label>3. If you had the possibility to travel anywhere in the world where would you go to?</label><textarea class="exercise-textarea" id="ex4c" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4c','fb4c')">Validar Esfuerzo</button><div class="feedback" id="fb4c"></div></div>
       <div class="exercise-item"><label>4. Why that place and what do you know about it?</label><textarea class="exercise-textarea" id="ex4d" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4d','fb4d')">Validar Esfuerzo</button><div class="feedback" id="fb4d"></div></div>
       <div class="exercise-item"><label>5. How many cities have you visited in your country?</label><textarea class="exercise-textarea" id="ex4e" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4e','fb4e')">Validar Esfuerzo</button><div class="feedback" id="fb4e"></div></div>
+      <div class="exercise-item"><label>6. Which do you consider the most interesting? Why?</label><textarea class="exercise-textarea" id="ex4f" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4f','fb4f')">Validar Esfuerzo</button><div class="feedback" id="fb4f"></div></div>
+      <div class="exercise-item"><label>7. Which do you consider the least interesting? Why?</label><textarea class="exercise-textarea" id="ex4g" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4g','fb4g')">Validar Esfuerzo</button><div class="feedback" id="fb4g"></div></div>
+      <div class="exercise-item"><label>8. Mention some means of transportation in your country?</label><textarea class="exercise-textarea" id="ex4h" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4h','fb4h')">Validar Esfuerzo</button><div class="feedback" id="fb4h"></div></div>
+      <div class="exercise-item"><label>9. Which of them do you prefer for traveling?</label><textarea class="exercise-textarea" id="ex4i" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4i','fb4i')">Validar Esfuerzo</button><div class="feedback" id="fb4i"></div></div>
+      <div class="exercise-item"><label>10. Do you consider that flying is dull and boring or glamorous and exciting? Why?</label><textarea class="exercise-textarea" id="ex4j" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4j','fb4j')">Validar Esfuerzo</button><div class="feedback" id="fb4j"></div></div>
     </div>
     <button class="nav-btn" onclick="scrollToNext()" style="background:var(--navy);">Continuar →</button>
   </div>
 </section>
 
 <!-- SECTION 5: MONEY VOCABULARY -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Vocabulary: Money</h2>
+    <p>Léxico financiero esencial para el viajero ejecutivo</p>
+  </div>
+</section>
+
 <section class="section-solid cream">
   <div class="container">
-    <h2 style="color:var(--navy);">💰 Vocabulary: Money & Finance</h2>
-    <div class="card-grid">
-      <div class="card"><div class="card-content"><h3>Wages</h3><p>Payment received for work.</p></div></div>
-      <div class="card"><div class="card-content"><h3>Currency</h3><p>Money system of a country.</p></div></div>
-      <div class="card"><div class="card-content"><h3>Interest</h3><p>Extra money earned on savings.</p></div></div>
-      <div class="card"><div class="card-content"><h3>Gift Voucher</h3><p>Alternative to cash for gifts.</p></div></div>
-      <div class="card"><div class="card-content"><h3>Deposit</h3><p>Initial payment to secure a rental.</p></div></div>
+    <h2 style="color:var(--navy);">💰 23 Términos Financieros</h2>
+    <div class="vocab-grid">
+      <div class="vocab-item">money</div>
+      <div class="vocab-item">wallet</div>
+      <div class="vocab-item">purse</div>
+      <div class="vocab-item">banknote</div>
+      <div class="vocab-item">coin</div>
+      <div class="vocab-item">credit card</div>
+      <div class="vocab-item">gift voucher</div>
+      <div class="vocab-item">change</div>
+      <div class="vocab-item">bills</div>
+      <div class="vocab-item">receipt</div>
+      <div class="vocab-item">currency</div>
+      <div class="vocab-item">bank account</div>
+      <div class="vocab-item">cash machine / ATM</div>
+      <div class="vocab-item">debt</div>
+      <div class="vocab-item">interest</div>
+      <div class="vocab-item">loan</div>
+      <div class="vocab-item">mortgage</div>
+      <div class="vocab-item">wages</div>
+      <div class="vocab-item">profit</div>
+      <div class="vocab-item">deposit</div>
+      <div class="vocab-item">poor</div>
+      <div class="vocab-item">valuable</div>
+      <div class="vocab-item">investment</div>
     </div>
     <div class="exercise-box">
       <h3>Aplicación Léxica</h3>
       <div class="exercise-item"><label>1. "_______________ are paid by your employer in exchange for your work."</label><input type="text" class="exercise-input" id="ex5a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5a',['wages'],'fb5a','ans5a')">Validar</button><div class="hidden-answer" id="ans5a">Wages</div><div class="feedback" id="fb5a"></div></div>
       <div class="exercise-item"><label>2. "The dollar is the _______________ of the USA."</label><input type="text" class="exercise-input" id="ex5b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5b',['currency'],'fb5b','ans5b')">Validar</button><div class="hidden-answer" id="ans5b">currency</div><div class="feedback" id="fb5b"></div></div>
       <div class="exercise-item"><label>3. "If you keep your money in a savings account you will receive _______________."</label><input type="text" class="exercise-input" id="ex5c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5c',['interest'],'fb5c','ans5c')">Validar</button><div class="hidden-answer" id="ans5c">interest</div><div class="feedback" id="fb5c"></div></div>
+      <div class="exercise-item"><label>4. "Instead of money, you might get a _______________ for your birthday."</label><input type="text" class="exercise-input" id="ex5d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5d',['gift','voucher'],'fb5d','ans5d')">Validar</button><div class="hidden-answer" id="ans5d">gift voucher</div><div class="feedback" id="fb5d"></div></div>
+      <div class="exercise-item"><label>5. "If you want to rent an apartment you have to put down a _______________ first."</label><input type="text" class="exercise-input" id="ex5e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5e',['deposit'],'fb5e','ans5e')">Validar</button><div class="hidden-answer" id="ans5e">deposit</div><div class="feedback" id="fb5e"></div></div>
     </div>
     <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
   </div>
 </section>
 
-<!-- SECTION 6: AIRPORT CONVERSATION & MATCHING -->
+<!-- SECTION 6: AIRPORT CONVERSATION -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>At the Airport</h2>
+    <p>Interacción real en el check-in desk</p>
+  </div>
+</section>
+
 <section class="section-solid navy">
   <div class="container">
-    <h2>✈️ Airport Interaction & Matching</h2>
+    <h2>✈️ Looking for the Check-in Desk</h2>
     <div class="exercise-box">
-      <h3>Dialogue: Buying a Ticket</h3>
-      <div class="exercise-item"><label>"I'd like to reserve two seats to New York. Will that be one way or round trip?"</label><textarea class="exercise-textarea" id="ex6a" placeholder="Practica la respuesta completa..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6a','fb6a')">Validar Esfuerzo</button><div class="feedback" id="fb6a"></div></div>
-    </div>
-    <h3 style="color:var(--text-light); margin-top:30px;">🔗 Match Questions & Answers</h3>
-    <div class="matching-grid">
-      <div class="match-column"><h4>QUESTIONS</h4><div class="match-item">1. Do you have a reservation?</div><div class="match-item">2. How many in your party?</div><div class="match-item">3. Smoking or non-smoking?</div><div class="match-item">4. Under what name?</div></div>
-      <div class="match-column"><h4>RESPONSES</h4><div class="match-item">a. Sure. I'll have a beer.</div><div class="match-item">b. Fine, thanks.</div><div class="match-item">c. Four.</div><div class="match-item">d. Yes, we do.</div><div class="match-item">e. Thank you.</div><div class="match-item">f. Smith.</div><div class="match-item">g. Non-smoking, please.</div></div>
-    </div>
-    <div class="exercise-box">
-      <div class="exercise-item"><label>Escribe tus matches (1-?, 2-?, etc.):</label><input type="text" class="exercise-input" id="ex6match" placeholder="1-?, 2-?, 3-?, 4-?"><button class="btn-verify" onclick="checkMatching()">Validar</button><div class="hidden-answer" id="ans6match">1-d, 2-c, 3-g, 4-f</div><div class="feedback" id="fb6match"></div></div>
+      <div class="exercise-item"><label>YOU: "Hi, where's the check-in ________________ for Runway Airlines?"</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6a','a')">counter</button><button class="option-btn" onclick="selectOption(this,'q6a','b')">control</button><button class="option-btn" onclick="selectOption(this,'q6a','c')">zone</button></div><button class="btn-verify" onclick="checkMC('q6a','a','fb6a')">Validar</button><div class="hidden-answer" id="ans6a">counter</div><div class="feedback" id="fb6a"></div></div>
+      <div class="exercise-item"><label>YOU: "Is there a ________________ that goes between terminals?"</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6b','a')">transportation</button><button class="option-btn" onclick="selectOption(this,'q6b','b')">shuttle bus</button><button class="option-btn" onclick="selectOption(this,'q6b','c')">vehicle</button></div><button class="btn-verify" onclick="checkMC('q6b','b','fb6b')">Validar</button><div class="hidden-answer" id="ans6b">shuttle bus</div><div class="feedback" id="fb6b"></div></div>
+      <div class="exercise-item"><label>YOU: "________________to the taxi stand?"</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6c','a')">Together</button><button class="option-btn" onclick="selectOption(this,'q6c','b')">With</button><button class="option-btn" onclick="selectOption(this,'q6c','c')">Next</button></div><button class="btn-verify" onclick="checkMC('q6c','c','fb6c')">Validar</button><div class="hidden-answer" id="ans6c">Next</div><div class="feedback" id="fb6c"></div></div>
+      <div class="exercise-item"><label>YOU: "Thanks. How much time ________________ to check in?"</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6d','a')">will I let</button><button class="option-btn" onclick="selectOption(this,'q6d','b')">should I allow</button><button class="option-btn" onclick="selectOption(this,'q6d','c')">can I take</button></div><button class="btn-verify" onclick="checkMC('q6d','b','fb6d')">Validar</button><div class="hidden-answer" id="ans6d">should I allow</div><div class="feedback" id="fb6d"></div></div>
+      <div class="exercise-item"><label>YOU: "And for ________________ flights?"</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6e','a')">local</button><button class="option-btn" onclick="selectOption(this,'q6e','b')">country</button><button class="option-btn" onclick="selectOption(this,'q6e','c')">near</button></div><button class="btn-verify" onclick="checkMC('q6e','a','fb6e')">Validar</button><div class="hidden-answer" id="ans6e">local</div><div class="feedback" id="fb6e"></div></div>
     </div>
     <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
   </div>
 </section>
 
-<!-- SECTION 7: GRAMMAR REVIEW -->
+<!-- SECTION 7: FLIGHT SAFETY -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1540339832862-474599807836?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Flight Safety Instructions</h2>
+    <p>Protocolos críticos de seguridad aérea</p>
+  </div>
+</section>
+
 <section class="section-solid sand">
   <div class="container">
-    <h2 style="color:var(--navy);">📚 Grammar Review: Conditionals & Present Perfect</h2>
+    <h2 style="color:var(--navy);">🛟 Safety Briefing</h2>
     <div class="reading-block">
-      <h3>Conditional Forms</h3>
-      <p>Used to imagine events in certain conditions. Real events (First), imaginary (Second), or imagined past (Third).</p>
-      <div class="highlight-box">If we finish early, we will go out for lunch. (Possible)<br>If we had time, we would visit our friends. (Imaginary)<br>If we had gone to New York, we would have visited the exhibition. (Past Imagined)</div>
+      <h3>Flight Attendant Announcement</h3>
+      <p>"We'll be taking off momentarily, so please make sure your carryon baggage is stowed securely, either in an overhead compartment or under the seat in front of you. Mobile phones and other electronic devices should be turned off.</p>
+      <p>There are six exits on this plane – 3 doors, on each side. All exits are clearly marked with an exit sign. Please take the time to find the exit nearest you. If you're seated in an exit row, please review the responsibilities for emergency exit seating. On the back of the safety information card which is in your seat pocket. If you are unable, or prefer not to do this, please let us know, and we will be happy to find you another seat.</p>
+      <p>If there is a loss of cabin pressure, the panels above your seat will open, and oxygen masks will drop down. If this happens, place the mask over your nose and mouth, and adjust it as necessary. Be sure to adjust your own mask before helping others.</p>
+      <p>In the event of a water landing, life vests are under your seat. Whenever the seat belt sign is on, please make sure your seat belt is fastened. Smoking is not allowed on our flights, and federal law prohibits tampering with, disabling, or destroying a smoke detector.</p>
+      <p>Thank you for your attention. We hope you enjoy your flight!"</p>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 8: SAFETY VOCABULARY DEFINITIONS -->
+<section class="section-solid terracotta">
+  <div class="container">
+    <h2>📚 Safety Vocabulary Definitions</h2>
+    <div class="card-grid">
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">momentarily</h3><p>soon; in a moment.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">stowed securely</h3><p>put away safely ("to stow" means to put something away, and "secure" means in a safe place).</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">overhead compartment</h3><p>a "compartment" is a small place where you can put things; the "overhead compartments" are the places above the seat where people put their bags.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">devices</h3><p>small machines, like games, mp3 players, DVD players, etc.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">exits</h3><p>where you leave (a plane, room, or building).</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">mark(ed)</h3><p>to show where something is (the exits are "marked" with an "exit sign" showing a person walking through a door).</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">responsibilities</h3><p>things that you should do or have to do.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">emergency</h3><p>when something very serious happens and you need to act quickly (like a car accident, an earthquake, or a fire).</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">seat pocket</h3><p>the "pocket" on the back of the seat in front of you, with magazines, safety instructions, etc.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">unable to</h3><p>cannot; not able to.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">loss of cabin pressure</h3><p>the air in the airplane gets lighter or heavier, and it becomes harder to breathe.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">panels</h3><p>small doors; flat pieces of wood, metal, plastic, etc.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">oxygen masks</h3><p>masks that help you breathe oxygen, for example, when there is a loss of cabin pressure.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">adjust</h3><p>to change the position of something.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">as necessary</h3><p>as you need to.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">fasten</h3><p>to tighten.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--navy);">federal law</h3><p>the law of a country.</p></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--navy);">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 9: SAFETY FILL IN BLANKS -->
+<section class="section-solid cream">
+  <div class="container">
+    <h2 style="color:var(--navy);">✍️ Safety Vocabulary Practice</h2>
+    <div class="highlight-box">Usa: emergency • momentarily • responsibilities • fasten • exit • devices • panels • unable • adjust • as necessary • federal • marked</div>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. "The questions that you got wrong are _______________ with an 'X'."</label><input type="text" class="exercise-input" id="ex9a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9a',['marked'],'fb9a','ans9a')">Validar</button><div class="hidden-answer" id="ans9a">marked</div><div class="feedback" id="fb9a"></div></div>
+      <div class="exercise-item"><label>2. "You can adjust the volume of the TV _______________."</label><input type="text" class="exercise-input" id="ex9b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9b',['as','necessary'],'fb9b','ans9b')">Validar</button><div class="hidden-answer" id="ans9b">as necessary</div><div class="feedback" id="fb9b"></div></div>
+      <div class="exercise-item"><label>3. "Oxygen masks will drop down from the _______________ above your seat..."</label><input type="text" class="exercise-input" id="ex9c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9c',['panels'],'fb9c','ans9c')">Validar</button><div class="hidden-answer" id="ans9c">panels</div><div class="feedback" id="fb9c"></div></div>
+      <div class="exercise-item"><label>4. "In the event of an _______________, call the police."</label><input type="text" class="exercise-input" id="ex9d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9d',['emergency'],'fb9d','ans9d')">Validar</button><div class="hidden-answer" id="ans9d">emergency</div><div class="feedback" id="fb9d"></div></div>
+      <div class="exercise-item"><label>5. "The flight will be landing _______________, so please fasten your seatbelts..."</label><input type="text" class="exercise-input" id="ex9e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9e',['momentarily'],'fb9e','ans9e')">Validar</button><div class="hidden-answer" id="ans9e">momentarily</div><div class="feedback" id="fb9e"></div></div>
+      <div class="exercise-item"><label>6. "The _______________ sign shows a man walking out of a room."</label><input type="text" class="exercise-input" id="ex9f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9f',['exit'],'fb9f','ans9f')">Validar</button><div class="hidden-answer" id="ans9f">exit</div><div class="feedback" id="fb9f"></div></div>
+      <div class="exercise-item"><label>7. "People who are _______________ to walk can use wheelchairs."</label><input type="text" class="exercise-input" id="ex9g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9g',['unable'],'fb9g','ans9g')">Validar</button><div class="hidden-answer" id="ans9g">unable</div><div class="feedback" id="fb9g"></div></div>
+      <div class="exercise-item"><label>8. "If you are too hot, you can _______________ the temperature on the air conditioner."</label><input type="text" class="exercise-input" id="ex9h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9h',['adjust'],'fb9h','ans9h')">Validar</button><div class="hidden-answer" id="ans9h">adjust</div><div class="feedback" id="fb9h"></div></div>
+      <div class="exercise-item"><label>9. "The Japanese have invented many interesting electronic ______________."</label><input type="text" class="exercise-input" id="ex9i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9i',['devices'],'fb9i','ans9i')">Validar</button><div class="hidden-answer" id="ans9i">devices</div><div class="feedback" id="fb9i"></div></div>
+      <div class="exercise-item"><label>10. "_______________ law prohibits tampering with smoke detectors."</label><input type="text" class="exercise-input" id="ex9j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9j',['federal'],'fb9j','ans9j')">Validar</button><div class="hidden-answer" id="ans9j">Federal</div><div class="feedback" id="fb9j"></div></div>
+      <div class="exercise-item"><label>11. "I have many _______________ at home, like taking out the trash and washing dishes."</label><input type="text" class="exercise-input" id="ex9k" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9k',['responsibilities'],'fb9k','ans9k')">Validar</button><div class="hidden-answer" id="ans9k">responsibilities</div><div class="feedback" id="fb9k"></div></div>
+      <div class="exercise-item"><label>12. "According to federal law, you must _______________ your seatbelt when you are in a car."</label><input type="text" class="exercise-input" id="ex9l" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9l',['fasten'],'fb9l','ans9l')">Validar</button><div class="hidden-answer" id="ans9l">fasten</div><div class="feedback" id="fb9l"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 10: CONDITIONALS TYPE I -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Conditional Sentences</h2>
+    <p>Types I, II, and III - Codificación de posibilidades</p>
+  </div>
+</section>
+
+<section class="section-solid navy">
+  <div class="container">
+    <h2>🔮 Conditional Type I (Real/Possible)</h2>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. "If you (go) _____________ out with your friends tonight, I (watch) _____________ the football game on TV."</label><input type="text" class="exercise-input" id="ex10a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10a',['go','will','watch'],'fb10a','ans10a')">Validar</button><div class="hidden-answer" id="ans10a">go, will watch</div><div class="feedback" id="fb10a"></div></div>
+      <div class="exercise-item"><label>2. "I (earn) _____________ a lot of money if I (get) _____________ that job."</label><input type="text" class="exercise-input" id="ex10b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10b',['will','earn','get'],'fb10b','ans10b')">Validar</button><div class="hidden-answer" id="ans10b">will earn, get</div><div class="feedback" id="fb10b"></div></div>
+      <div class="exercise-item"><label>3. "If she (hurry / not) _____________ , we (miss) _____________ the bus."</label><input type="text" class="exercise-input" id="ex10c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10c',["doesn't",'hurry','will','miss'],'fb10c','ans10c')">Validar</button><div class="hidden-answer" id="ans10c">doesn't hurry, will miss</div><div class="feedback" id="fb10c"></div></div>
+    </div>
+    <h2 style="margin-top:40px;">🔮 Conditional Type II (Imaginary)</h2>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>4. "If he (try) _____________ harder, he (reach) _____________ his goals."</label><input type="text" class="exercise-input" id="ex10d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10d',['tried','would','reach'],'fb10d','ans10d')">Validar</button><div class="hidden-answer" id="ans10d">tried, would reach</div><div class="feedback" id="fb10d"></div></div>
+      <div class="exercise-item"><label>5. "I (buy) _____________ these shoes if they (fit) _____________."</label><input type="text" class="exercise-input" id="ex10e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10e',['would','buy','fit'],'fb10e','ans10e')">Validar</button><div class="hidden-answer" id="ans10e">would buy, fit</div><div class="feedback" id="fb10e"></div></div>
+      <div class="exercise-item"><label>6. "It (surprise / not) _____________ me if he (know / not) _____________ the answer."</label><input type="text" class="exercise-input" id="ex10f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10f',["wouldn't",'surprise',"didn't",'know'],'fb10f','ans10f')">Validar</button><div class="hidden-answer" id="ans10f">wouldn't surprise, didn't know</div><div class="feedback" id="fb10f"></div></div>
+    </div>
+    <h2 style="margin-top:40px;">🔮 Conditional Type III (Imagined Past)</h2>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>7. "If we (listen) _____________ to the radio, we (hear) _____________ the news."</label><input type="text" class="exercise-input" id="ex10g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10g',['had','listened','would','have','heard'],'fb10g','ans10g')">Validar</button><div class="hidden-answer" id="ans10g">had listened, would have heard</div><div class="feedback" id="fb10g"></div></div>
+      <div class="exercise-item"><label>8. "If you (switch) _____________ on the lights, you (fall / not) _____________ over the chair."</label><input type="text" class="exercise-input" id="ex10h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10h',['had','switched',"wouldn't",'have','fallen'],'fb10h','ans10h')">Validar</button><div class="hidden-answer" id="ans10h">had switched, wouldn't have fallen</div><div class="feedback" id="fb10h"></div></div>
+      <div class="exercise-item"><label>9. "She (come) _____________ to our party if she (be / not) _____________ on holiday."</label><input type="text" class="exercise-input" id="ex10i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10i',['would','have','come',"hadn't",'been'],'fb10i','ans10i')">Validar</button><div class="hidden-answer" id="ans10i">would have come, hadn't been</div><div class="feedback" id="fb10i"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 11: CONDITIONALS MIXED -->
+<section class="section-solid sand">
+  <div class="container">
+    <h2 style="color:var(--navy);">🎯 Conditional Type I, II or III (Mixed)</h2>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. "If I _____________ stronger, I'd help you carry the piano."</label><input type="text" class="exercise-input" id="ex11a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11a',['were'],'fb11a','ans11a')">Validar</button><div class="hidden-answer" id="ans11a">were</div><div class="feedback" id="fb11a"></div></div>
+      <div class="exercise-item"><label>2. "If we _____________ him tomorrow, we'll say hello."</label><input type="text" class="exercise-input" id="ex11b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11b',['see'],'fb11b','ans11b')">Validar</button><div class="hidden-answer" id="ans11b">see</div><div class="feedback" id="fb11b"></div></div>
+      <div class="exercise-item"><label>3. "He would have repaired the car himself if he _____________ the tools."</label><input type="text" class="exercise-input" id="ex11c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11c',['had','had'],'fb11c','ans11c')">Validar</button><div class="hidden-answer" id="ans11c">had had</div><div class="feedback" id="fb11c"></div></div>
+      <div class="exercise-item"><label>4. "If you drop the vase, it _____________."</label><input type="text" class="exercise-input" id="ex11d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11d',['will','break'],'fb11d','ans11d')">Validar</button><div class="hidden-answer" id="ans11d">will break</div><div class="feedback" id="fb11d"></div></div>
+      <div class="exercise-item"><label>5. "If I hadn't studied, I _____________ the exam."</label><input type="text" class="exercise-input" id="ex11e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11e',['would','have','failed'],'fb11e','ans11e')">Validar</button><div class="hidden-answer" id="ans11e">would have failed</div><div class="feedback" id="fb11e"></div></div>
+      <div class="exercise-item"><label>6. "I wouldn't go to school by bus if I _____________ a driving licence."</label><input type="text" class="exercise-input" id="ex11f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11f',['had'],'fb11f','ans11f')">Validar</button><div class="hidden-answer" id="ans11f">had</div><div class="feedback" id="fb11f"></div></div>
+      <div class="exercise-item"><label>7. "I _____________ to London if I don't get a cheap flight."</label><input type="text" class="exercise-input" id="ex11g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11g',["won't",'go'],'fb11g','ans11g')">Validar</button><div class="hidden-answer" id="ans11g">won't go</div><div class="feedback" id="fb11g"></div></div>
+      <div class="exercise-item"><label>8. "We'd be stupid if we _____________ him about our secret."</label><input type="text" class="exercise-input" id="ex11h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11h',['told'],'fb11h','ans11h')">Validar</button><div class="hidden-answer" id="ans11h">told</div><div class="feedback" id="fb11h"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 12: PRESENT PERFECT -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1501139083538-0139583c060f?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Present Perfect</h2>
+    <p>Conexión entre pasado y presente</p>
+  </div>
+</section>
+
+<section class="section-solid terracotta">
+  <div class="container">
+    <h2>⏰ Participle Forms</h2>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. Shut: ____________</label><input type="text" class="exercise-input" id="ex12a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12a',['shut'],'fb12a','ans12a')">Validar</button><div class="hidden-answer" id="ans12a">shut</div><div class="feedback" id="fb12a"></div></div>
+      <div class="exercise-item"><label>2. Spend: ____________</label><input type="text" class="exercise-input" id="ex12b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12b',['spent'],'fb12b','ans12b')">Validar</button><div class="hidden-answer" id="ans12b">spent</div><div class="feedback" id="fb12b"></div></div>
+      <div class="exercise-item"><label>3. Give: ____________</label><input type="text" class="exercise-input" id="ex12c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12c',['given'],'fb12c','ans12c')">Validar</button><div class="hidden-answer" id="ans12c">given</div><div class="feedback" id="fb12c"></div></div>
+      <div class="exercise-item"><label>4. Teach: ____________</label><input type="text" class="exercise-input" id="ex12d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12d',['taught'],'fb12d','ans12d')">Validar</button><div class="hidden-answer" id="ans12d">taught</div><div class="feedback" id="fb12d"></div></div>
+      <div class="exercise-item"><label>5. Sell: ____________</label><input type="text" class="exercise-input" id="ex12e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12e',['sold'],'fb12e','ans12e')">Validar</button><div class="hidden-answer" id="ans12e">sold</div><div class="feedback" id="fb12e"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--navy);">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 13: PRESENT PERFECT SENTENCES -->
+<section class="section-solid cream">
+  <div class="container">
+    <h2 style="color:var(--navy);">✍️ Write Sentences in Present Perfect</h2>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. we / reach / our goal</label><input type="text" class="exercise-input" id="ex13a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex13a',['have','reached','goal'],'fb13a','ans13a')">Validar</button><div class="hidden-answer" id="ans13a">We have reached our goal.</div><div class="feedback" id="fb13a"></div></div>
+      <div class="exercise-item"><label>2. our team / lose / the match</label><input type="text" class="exercise-input" id="ex13b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex13b',['has','lost','match'],'fb13b','ans13b')">Validar</button><div class="hidden-answer" id="ans13b">Our team has lost the match.</div><div class="feedback" id="fb13b"></div></div>
+      <div class="exercise-item"><label>3. she / underline / the word</label><input type="text" class="exercise-input" id="ex13c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex13c',['has','underlined','word'],'fb13c','ans13c')">Validar</button><div class="hidden-answer" id="ans13c">She has underlined the word.</div><div class="feedback" id="fb13c"></div></div>
+      <div class="exercise-item"><label>4. they / not / discover / the treasure</label><input type="text" class="exercise-input" id="ex13d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex13d',['have','not','discovered','treasure'],'fb13d','ans13d')">Validar</button><div class="hidden-answer" id="ans13d">They have not discovered the treasure.</div><div class="feedback" id="fb13d"></div></div>
+      <div class="exercise-item"><label>5. Ron / not / talk / about the problem</label><input type="text" class="exercise-input" id="ex13e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex13e',['has','not','talked','problem'],'fb13e','ans13e')">Validar</button><div class="hidden-answer" id="ans13e">Ron has not talked about the problem.</div><div class="feedback" id="fb13e"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 14: PRESENT PERFECT QUESTIONS -->
+<section class="section-solid navy">
+  <div class="container">
+    <h2>❓ Write Questions in Present Perfect</h2>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. you / knock / at the door</label><input type="text" class="exercise-input" id="ex14a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex14a',['have','you','knocked','door'],'fb14a','ans14a')">Validar</button><div class="hidden-answer" id="ans14a">Have you knocked at the door?</div><div class="feedback" id="fb14a"></div></div>
+      <div class="exercise-item"><label>2. the teacher / mark / the tests</label><input type="text" class="exercise-input" id="ex14b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex14b',['has','teacher','marked','tests'],'fb14b','ans14b')">Validar</button><div class="hidden-answer" id="ans14b">Has the teacher marked the tests?</div><div class="feedback" id="fb14b"></div></div>
+      <div class="exercise-item"><label>3. she / buy / a new computer</label><input type="text" class="exercise-input" id="ex14c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex14c',['has','she','bought','computer'],'fb14c','ans14c')">Validar</button><div class="hidden-answer" id="ans14c">Has she bought a new computer?</div><div class="feedback" id="fb14c"></div></div>
+      <div class="exercise-item"><label>4. they / rescue / the girl</label><input type="text" class="exercise-input" id="ex14d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex14d',['have','they','rescued','girl'],'fb14d','ans14d')">Validar</button><div class="hidden-answer" id="ans14d">Have they rescued the girl?</div><div class="feedback" id="fb14d"></div></div>
+      <div class="exercise-item"><label>5. Brad / wear / a blue shirt</label><input type="text" class="exercise-input" id="ex14e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex14e',['has','Brad','worn','blue','shirt'],'fb14e','ans14e')">Validar</button><div class="hidden-answer" id="ans14e">Has Brad worn a blue shirt?</div><div class="feedback" id="fb14e"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 15: ASK FOR INFORMATION -->
+<section class="section-solid sand">
+  <div class="container">
+    <h2 style="color:var(--navy);">🔍 Ask for the Information</h2>
+    <p>Forma preguntas para obtener la información destacada.</p>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. "They have seen him <strong>at the library</strong>." → Ask where</label><input type="text" class="exercise-input" id="ex15a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex15a',['where','have','they','seen','him'],'fb15a','ans15a')">Validar</button><div class="hidden-answer" id="ans15a">Where have they seen him?</div><div class="feedback" id="fb15a"></div></div>
+      <div class="exercise-item"><label>2. "Robby Robber has robbed <strong>another bank</strong>." → Ask what</label><input type="text" class="exercise-input" id="ex15b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex15b',['what','has','Robby','Robber','robbed'],'fb15b','ans15b')">Validar</button><div class="hidden-answer" id="ans15b">What has Robby Robber robbed?</div><div class="feedback" id="fb15b"></div></div>
+      <div class="exercise-item"><label>3. "Bill has ordered <strong>three desserts</strong>." → Ask how many</label><input type="text" class="exercise-input" id="ex15c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex15c',['how','many','desserts','has','Bill','ordered'],'fb15c','ans15c')">Validar</button><div class="hidden-answer" id="ans15c">How many desserts has Bill ordered?</div><div class="feedback" id="fb15c"></div></div>
+      <div class="exercise-item"><label>4. "Clara has repeated the sentence <strong>five times</strong>." → Ask how many times</label><input type="text" class="exercise-input" id="ex15d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex15d',['how','many','times','has','Clara','repeated'],'fb15d','ans15d')">Validar</button><div class="hidden-answer" id="ans15d">How many times has Clara repeated the sentence?</div><div class="feedback" id="fb15d"></div></div>
+      <div class="exercise-item"><label>5. "Jane has asked <strong>a question</strong>." → Ask what</label><input type="text" class="exercise-input" id="ex15e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex15e',['what','has','Jane','asked'],'fb15e','ans15e')">Validar</button><div class="hidden-answer" id="ans15e">What has Jane asked?</div><div class="feedback" id="fb15e"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 16: GRAMMAR REVIEW -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Grammar Review</h2>
+    <p>Consolidación de estructuras clave</p>
+  </div>
+</section>
+
+<section class="section-solid cream">
+  <div class="container">
+    <h2 style="color:var(--navy);">📚 Conditional Forms</h2>
+    <div class="reading-block">
+      <h3>Three Types of Conditionals</h3>
+      <p>Conditional forms are used to imagine events in certain conditions. The conditional can be used to speak about real events that always happen (first conditional), imaginary events (second conditional), or imagined past events (third conditional). Conditional sentences are also known as 'if' sentences.</p>
+      <div class="highlight-box">
+        <strong>First conditional (possible situation):</strong> If we finish early, we will go out for lunch.<br><br>
+        <strong>Second conditional (imaginary situation):</strong> If we had time, we would visit our friends.<br><br>
+        <strong>Third conditional (past imagined situation):</strong> If we had gone to New York, we would have visited the exhibition.
+      </div>
     </div>
     <div class="reading-block">
-      <h3>Present Perfect</h3>
-      <p>Connects a past moment to the present. Covers duration from past until now, life experience, or recent past events influencing the present.</p>
-      <div class="highlight-box">I've lived in New York for twenty years.<br>I've visited every state in the country.<br>I've just had lunch.</div>
+      <h3>⏰ Present Perfect</h3>
+      <p>The present perfect effectively involves making sure you understand that is always connected in some way to the present moment in time. The present perfect in English covers what happens from a past moment to the present moment in time. It helps to divide usage into three major areas:</p>
+      <div class="highlight-box">
+        <strong>From the past until now:</strong> I've lived in New York for twenty years.<br><br>
+        <strong>Life experience:</strong> I've visited every state in the country.<br><br>
+        <strong>Recent past events that influence the present moment:</strong> I've just had lunch.
+      </div>
+    </div>
+    <div class="reading-block">
+      <h3>🚀 Phrasal-Verbs with "Look"</h3>
+      <p>A phrasal verb is a phrase composed of two or more words, usually a verb and a preposition. A combination of a regular verb and a preposition has two meanings, while a phrasal verb has only one.</p>
+      <div class="highlight-box">
+        <strong>Look after</strong> = take care of<br>
+        <strong>Look down on</strong> = think less of<br>
+        <strong>Look into</strong> = investigate<br>
+        <strong>Look out</strong> = be careful<br>
+        <strong>Look over</strong> = examine<br>
+        <strong>Look up to</strong> = admire
+      </div>
     </div>
     <button class="nav-btn" onclick="completeUnit()">🎉 Completar Unidad</button>
   </div>
@@ -299,7 +581,7 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
 <div id="finalMsg" style="display:none; padding:80px 40px; background:var(--navy); color:var(--text-light); text-align:center;">
   <div class="container">
     <h2 style="font-family:'Playfair Display',serif; font-size:3rem; margin-bottom:20px;">🎉 Unit 13 Completed</h2>
-    <p style="font-size:1.3rem; margin-bottom:30px;">Has codificado patrones de viaje, phrasal verbs y estructuras condicionales con precisión ejecutiva.</p>
+    <p style="font-size:1.3rem; margin-bottom:30px;">Has codificado phrasal verbs, condicionales, present perfect y vocabulario financiero con precisión ejecutiva.</p>
     <p style="font-size:1.1rem; margin-bottom:30px; opacity:0.8;">El cerebro no traduce. El cerebro ensambla.</p>
     <a href="indexmax.html" class="nav-btn" style="background:var(--terracotta);">Continuar a Unit 14 →</a>
   </div>
@@ -312,7 +594,7 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
 
 <script>
 let completedCount = 0;
-const totalEx = 40;
+const totalEx = 100;
 
 function updateProgress() {
   document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
@@ -351,7 +633,6 @@ function checkDiscussion(inputId, feedbackId) {
   const val = document.getElementById(inputId).value.trim();
   const fb = document.getElementById(feedbackId);
   
-  // EXIGENCIA COGNITIVA: Mínimo 20 caracteres para evitar respuestas superficiales
   if(val.length >= 20) {
     fb.className = 'feedback success';
     fb.textContent = '✅ Reflexión registrada. Excelente esfuerzo cognitivo.';
@@ -359,7 +640,7 @@ function checkDiscussion(inputId, feedbackId) {
     completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '️ El cerebro ejecutivo requiere reflexión profunda. Por favor, elabora tu respuesta (mínimo 20 caracteres).';
+    fb.textContent = '⚠️ El cerebro ejecutivo requiere reflexión profunda. Por favor, elabora tu respuesta (mínimo 20 caracteres).';
     fb.style.display = 'block';
   }
 }
@@ -375,7 +656,7 @@ function selectOption(btn, questionId, option) {
 function checkMC(questionId, correctAnswer, feedbackId) {
   const fb = document.getElementById(feedbackId);
   const ans = document.getElementById(feedbackId.replace('fb', 'ans'));
-  if (!selectedOptions[questionId]) { fb.className='feedback error'; fb.textContent='️ Selecciona una opción'; fb.style.display='block'; return; }
+  if (!selectedOptions[questionId]) { fb.className='feedback error'; fb.textContent='⚠️ Selecciona una opción'; fb.style.display='block'; return; }
   if (selectedOptions[questionId] === correctAnswer) {
     fb.className='feedback success'; fb.textContent='✅ Correcto'; fb.style.display='block'; ans.style.display='none';
     completedCount++; updateProgress();
@@ -384,25 +665,12 @@ function checkMC(questionId, correctAnswer, feedbackId) {
   }
 }
 
-function checkMatching() {
-  const val = document.getElementById('ex6match').value.trim().toLowerCase();
-  const fb = document.getElementById('fb6match');
-  const ans = document.getElementById('ans6match');
-  const correct = "1-d, 2-c, 3-g, 4-f";
-  if (val.replace(/\s/g, '') === correct.replace(/\s/g, '')) {
-    fb.className='feedback success'; fb.textContent='✅ Matches correctos'; fb.style.display='block'; ans.style.display='none';
-    completedCount++; updateProgress();
-  } else {
-    fb.className='feedback error'; fb.textContent='❌ Revisa la correspondencia'; fb.style.display='block'; ans.style.display='block';
-  }
-}
-
 function completeUnit() {
-  if(completedCount >= 30) {
+  if(completedCount >= 75) {
     document.getElementById('finalMsg').style.display = 'block';
     document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
   } else {
-    alert(`⚠️ Completa al menos 30 de 40 ejercicios.\nCompletados: ${completedCount}/40`);
+    alert(`⚠️ Completa al menos 75 de 100 ejercicios.\nCompletados: ${completedCount}/100`);
   }
 }
 
