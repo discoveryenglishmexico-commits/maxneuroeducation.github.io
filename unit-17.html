@@ -7,108 +7,107 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --purple: #6B4E71;
-  --turquoise: #4ECDC4;
-  --pink: #FF6B9D;
-  --navy: #1A1A2E;
-  --white: #F7F7F7;
+  --teal: #3D7A7A;
+  --teal-dark: #2D5A5A;
+  --coral: #E06B59;
+  --coral-dark: #C85545;
+  --white: #FFFFFF;
+  --light-gray: #F5F5F5;
   --text-dark: #1a1a1a;
   --text-light: #ffffff;
-  --text-muted: #4b5563;
 }
 * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
-body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--white); }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--light-gray); }
 
 .hero {
   height:90vh; position:relative;
   background: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=80') center/cover;
   display:flex; align-items:center; justify-content:center;
 }
-.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(26,26,46,0.85), rgba(107,78,113,0.75)); }
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(45,90,90,0.85), rgba(224,107,89,0.75)); }
 .hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
-.hero-badge { display:inline-block; padding:10px 25px; background:var(--pink); color:var(--text-light); font-weight:700; font-size:0.9rem; letter-spacing:2px; margin-bottom:20px; border-radius:4px; }
+.hero-badge { display:inline-block; padding:10px 25px; background:var(--coral); color:var(--text-light); font-weight:700; font-size:0.9rem; letter-spacing:2px; margin-bottom:20px; border-radius:4px; }
 .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
 .hero p { font-size:1.3rem; font-weight:300; max-width:700px; margin:0 auto; }
 
-.progress-wrap { position:sticky; top:0; z-index:100; background:var(--navy); padding:12px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--teal-dark); padding:12px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 .progress-bar { height:6px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden; }
-.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--pink),var(--turquoise)); transition: width 0.5s ease; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--coral),var(--teal)); transition: width 0.5s ease; }
 
 .section-image {
   min-height:50vh; position:relative; background-size:cover; background-position:center;
   display:flex; align-items:center; justify-content:center; padding:60px 20px;
 }
-.section-image::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(26,26,46,0.85), rgba(107,78,113,0.75)); }
+.section-image::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(45,90,90,0.85), rgba(224,107,89,0.75)); }
 .section-image-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; }
 .section-image-content h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; margin-bottom:15px; }
 
 .section-solid { padding:80px 40px; }
-.section-solid.navy { background:var(--navy); color:var(--text-light); }
-.section-solid.purple { background:var(--purple); color:var(--text-light); }
-.section-solid.turquoise { background:var(--turquoise); color:var(--text-dark); }
-.section-solid.pink { background:var(--pink); color:var(--text-light); }
+.section-solid.teal { background:var(--teal); color:var(--text-light); }
+.section-solid.teal-dark { background:var(--teal-dark); color:var(--text-light); }
+.section-solid.coral { background:var(--coral); color:var(--text-light); }
 .section-solid.white { background:var(--white); color:var(--text-dark); }
 
 .container { max-width:1100px; margin:0 auto; }
 .section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
 
-.reading-block { background:var(--text-light); padding:40px; border-radius:8px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-left:6px solid var(--pink); }
-.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--navy); margin-bottom:20px; }
+.reading-block { background:var(--white); padding:40px; border-radius:8px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-left:6px solid var(--coral); }
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--teal-dark); margin-bottom:20px; }
 .reading-block p { font-size:1.05rem; line-height:1.9; color:var(--text-dark); margin-bottom:15px; }
 
 .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; margin:40px 0; }
-.card { background:var(--text-light); border-radius:8px; overflow:hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transition: transform 0.3s; }
+.card { background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transition: transform 0.3s; }
 .card:hover { transform: translateY(-8px); }
 .card-content { padding:25px; }
-.card-content h3 { font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:10px; color:var(--navy); }
-.card-content p { color:var(--text-muted); font-size:0.95rem; line-height:1.7; }
+.card-content h3 { font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:10px; color:var(--teal-dark); }
+.card-content p { color:#4b5563; font-size:0.95rem; line-height:1.7; }
 
-.exercise-box { background:var(--text-light); padding:30px; border-radius:8px; margin:30px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--navy); margin-bottom:20px; }
-.exercise-item { margin:20px 0; padding:20px; background:var(--white); border-left:4px solid var(--pink); border-radius:4px; }
+.exercise-box { background:var(--white); padding:30px; border-radius:8px; margin:30px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--teal-dark); margin-bottom:20px; }
+.exercise-item { margin:20px 0; padding:20px; background:var(--light-gray); border-left:4px solid var(--coral); border-radius:4px; }
 .exercise-item label { font-weight:600; font-size:1.05rem; display:block; margin-bottom:12px; color:var(--text-dark); }
 .exercise-input, .exercise-textarea {
   width:100%; padding:12px; border:2px solid #d1d5db; border-radius:6px; font-size:1rem;
-  font-family:'Inter',sans-serif; background:var(--text-light); color:var(--text-dark); transition: border-color 0.3s;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s;
 }
-.exercise-input:focus, .exercise-textarea:focus { outline:none; border-color:var(--pink); }
+.exercise-input:focus, .exercise-textarea:focus { outline:none; border-color:var(--coral); }
 .exercise-textarea { min-height:100px; resize:vertical; }
 
 .btn-verify {
-  margin-top:12px; padding:10px 24px; background:var(--pink); color:var(--text-light);
+  margin-top:12px; padding:10px 24px; background:var(--coral); color:var(--text-light);
   border:none; border-radius:6px; font-weight:600; cursor:pointer; transition: background 0.3s;
 }
-.btn-verify:hover { background:#e5558a; }
+.btn-verify:hover { background:var(--coral-dark); }
 
 .feedback { margin-top:12px; padding:12px; border-radius:6px; font-weight:600; display:none; }
 .feedback.success { background:#d1fae5; color:#065f46; border-left:4px solid #10b981; }
 .feedback.error { background:#fee2e2; color:#991b1b; border-left:4px solid #ef4444; }
-.hidden-answer { display:none; margin-top:12px; padding:12px; background:#fef3c7; border-left:4px solid var(--turquoise); border-radius:6px; color:#92400e; font-weight:600; }
+.hidden-answer { display:none; margin-top:12px; padding:12px; background:#fef3c7; border-left:4px solid var(--teal); border-radius:6px; color:#92400e; font-weight:600; }
 
 .options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:15px 0; }
-.option-btn { padding:14px; background:var(--text-light); border:2px solid #d1d5db; border-radius:6px; cursor:pointer; transition:0.3s; color:var(--text-dark); text-align:left; font-size:0.95rem; font-family:'Inter',sans-serif; }
-.option-btn:hover { border-color:var(--pink); background:rgba(255,107,157,0.1); }
-.option-btn.selected { background:var(--pink); color:var(--text-light); border-color:var(--pink); font-weight:600; }
+.option-btn { padding:14px; background:var(--white); border:2px solid #d1d5db; border-radius:6px; cursor:pointer; transition:0.3s; color:var(--text-dark); text-align:left; font-size:0.95rem; font-family:'Inter',sans-serif; }
+.option-btn:hover { border-color:var(--coral); background:rgba(224,107,89,0.1); }
+.option-btn.selected { background:var(--coral); color:var(--text-light); border-color:var(--coral); font-weight:600; }
 
 .nav-btn {
-  display:inline-block; margin-top:30px; padding:15px 40px; background:var(--pink); color:var(--text-light);
+  display:inline-block; margin-top:30px; padding:15px 40px; background:var(--coral); color:var(--text-light);
   text-decoration:none; border-radius:6px; font-weight:700; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer;
 }
-.nav-btn:hover { background:#e5558a; transform:translateY(-2px); }
+.nav-btn:hover { background:var(--coral-dark); transform:translateY(-2px); }
 
-.highlight-box { background:rgba(78,205,196,0.15); border-left:4px solid var(--turquoise); padding:20px 25px; margin:20px 0; border-radius:0 8px 8px 0; font-style:italic; color:var(--text-dark); }
+.highlight-box { background:rgba(224,107,89,0.15); border-left:4px solid var(--coral); padding:20px 25px; margin:20px 0; border-radius:0 8px 8px 0; font-style:italic; color:var(--text-dark); }
 
-.grammar-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--text-light); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.grammar-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 .grammar-table th, .grammar-table td { padding:14px; text-align:left; border-bottom:1px solid #e5e7eb; }
-.grammar-table th { background:var(--navy); color:var(--text-light); font-family:'Playfair Display',serif; font-size:1rem; }
+.grammar-table th { background:var(--teal-dark); color:var(--text-light); font-family:'Playfair Display',serif; font-size:1rem; }
 .grammar-table td { color:var(--text-dark); font-size:0.95rem; }
 
 .scale-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; margin:20px 0; }
-.scale-item { padding:15px; background:var(--text-light); border-radius:6px; text-align:center; font-weight:600; color:var(--navy); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.scale-item.positive { border-top:4px solid var(--turquoise); }
-.scale-item.negative { border-top:4px solid var(--pink); }
+.scale-item { padding:15px; background:var(--white); border-radius:6px; text-align:center; font-weight:600; color:var(--teal-dark); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.scale-item.positive { border-top:4px solid var(--teal); }
+.scale-item.negative { border-top:4px solid var(--coral); }
 
-.idiom-card { background:var(--text-light); padding:20px; border-radius:8px; margin:15px 0; border-left:4px solid var(--turquoise); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.idiom-card { background:var(--white); padding:20px; border-radius:8px; margin:15px 0; border-left:4px solid var(--teal); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 .idiom-card p { color:var(--text-dark); font-size:1rem; line-height:1.7; }
 
 @media(max-width:768px) {
@@ -142,7 +141,7 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
   </div>
 </section>
 
-<section class="section-solid navy">
+<section class="section-solid teal">
   <div class="container">
     <h2>📖 Eddy's Debate Class</h2>
     <div class="reading-block">
@@ -186,42 +185,42 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
   </div>
 </section>
 
-<section class="section-solid purple">
+<section class="section-solid teal-dark">
   <div class="container">
     <h2>🧠 Issues & Solutions</h2>
     
     <div class="card-grid">
       <div class="card">
         <div class="card-content">
-          <h3 style="color:var(--pink);">Attitude Problems</h3>
+          <h3 style="color:var(--coral);">Attitude Problems</h3>
           <p>Teens think parents disapprove because it looks wrong. Some parents express disapproval rather than respecting teens as their own person with their own preferences.</p>
           <p><strong>Solution:</strong> Declare a truce and start off again with better communication.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-content">
-          <h3 style="color:var(--pink);">Peer Pressure</h3>
+          <h3 style="color:var(--coral);">Peer Pressure</h3>
           <p>Common causes: wanting to fit in, vying for leadership, or exerting dominance.</p>
           <p><strong>Solution:</strong> Have higher self-esteem.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-content">
-          <h3 style="color:var(--pink);">Bullying</h3>
+          <h3 style="color:var(--coral);">Bullying</h3>
           <p>Often caused by social factors. Many bullies come from dysfunctional families, are disciplined with violence, or exposed to violence. Violent video games and TV shows also contribute.</p>
           <p><strong>Solutions:</strong> Identify and respond to bullying, create anti-bullying forums, encourage bystanders to become "upstanders".</p>
         </div>
       </div>
       <div class="card">
         <div class="card-content">
-          <h3 style="color:var(--pink);">Smoking</h3>
+          <h3 style="color:var(--coral);">Smoking</h3>
           <p>Reasons: fit in, peer influence, cope with stress, control weight, social habit, combat boredom. Tobacco industries used to target children in marketing.</p>
           <p><strong>Solutions:</strong> Parents' relationship with children, parental influence, knowing who kids hang out with, high expectations, listen and treat with respect.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-content">
-          <h3 style="color:var(--pink);">Drugs & Alcohol</h3>
+          <h3 style="color:var(--coral);">Drugs & Alcohol</h3>
           <p>Reasons: change something about their lives, fit in with the in-crowd, escape reality, feel like a grown up, curiosity. Some do drugs as a solution but end up with a bigger problem.</p>
           <p><strong>Solutions:</strong> Schools should communicate how destructive drugs are physically, mentally, emotionally and financially.</p>
         </div>
@@ -237,7 +236,7 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
         <div class="feedback" id="fb2a"></div>
       </div>
     </div>
-    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--turquoise); color:var(--text-dark);">Continuar →</button>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
   </div>
 </section>
 
@@ -251,7 +250,7 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
 
 <section class="section-solid white">
   <div class="container">
-    <h2 style="color:var(--navy);">🧠 Ethics & Honesty</h2>
+    <h2 style="color:var(--teal-dark);">🧠 Ethics & Honesty</h2>
     <p>El cerebro ejecutivo reflexiona sobre valores reales. Responde con profundidad mínima (20+ caracteres).</p>
     <div class="exercise-box">
       <div class="exercise-item"><label>1. Are you an ethical person? Why do you think so?</label><textarea class="exercise-textarea" id="ex3a" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3a','fb3a')">Validar Esfuerzo</button><div class="feedback" id="fb3a"></div></div>
@@ -267,4 +266,427 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
       <div class="exercise-item"><label>11. Would you lie on a job resume? Why/not?</label><textarea class="exercise-textarea" id="ex3k" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3k','fb3k')">Validar Esfuerzo</button><div class="feedback" id="fb3k"></div></div>
       <div class="exercise-item"><label>12. Do you trust people easily? Why/not?</label><textarea class="exercise-textarea" id="ex3l" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3l','fb3l')">Validar Esfuerzo</button><div class="feedback" id="fb3l"></div></div>
       <div class="exercise-item"><label>13. What would you do if you saw a classmate cheating on a test?</label><textarea class="exercise-textarea" id="ex3m" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3m','fb3m')">Validar Esfuerzo</button><div class="feedback" id="fb3m"></div></div>
-      <div class="exercise-item"><label>14. Are there any jobs that require you to be an ethical person? Which ones? Why?</label><textarea class="exercise-textarea" id="ex3n" placeholder="Desarrolla tu respuesta..."
+      <div class="exercise-item"><label>14. Are there any jobs that require you to be an ethical person? Which ones? Why?</label><textarea class="exercise-textarea" id="ex3n" placeholder="Desarrolla tu respuesta..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3n','fb3n')">Validar Esfuerzo</button><div class="feedback" id="fb3n"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 4: LIKES & DISLIKES -->
+<section class="section-solid coral">
+  <div class="container">
+    <h2>👍 Likes & Dislikes</h2>
+    <p>Expresa preferencias con precisión usando estas escalas:</p>
+    
+    <div class="scale-grid">
+      <div class="scale-item positive">Yes, I love… (100%)</div>
+      <div class="scale-item positive">Yes, I really like… (90%)</div>
+      <div class="scale-item positive">Yes, I like… (75%)</div>
+      <div class="scale-item positive">Yes, I kind of like… (60%)</div>
+      <div class="scale-item negative">No, I don't really like… (40%)</div>
+      <div class="scale-item negative">No, I don't like … very much (30%)</div>
+      <div class="scale-item negative">No, I don't like … (25%)</div>
+      <div class="scale-item negative">No, I hate … (0%)</div>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Interview Practice</h3>
+      <p style="margin-bottom:20px;">Responde usando las escalas de preferencia:</p>
+      <div class="exercise-item"><label>1. Do you like surfing the Internet?</label><textarea class="exercise-textarea" id="ex4a" placeholder="Responde con la escala adecuada..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4a','fb4a')">Validar Esfuerzo</button><div class="feedback" id="fb4a"></div></div>
+      <div class="exercise-item"><label>2. Do you like people who smoke?</label><textarea class="exercise-textarea" id="ex4b" placeholder="Responde con la escala adecuada..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4b','fb4b')">Validar Esfuerzo</button><div class="feedback" id="fb4b"></div></div>
+      <div class="exercise-item"><label>3. Do you like bad drinkers?</label><textarea class="exercise-textarea" id="ex4c" placeholder="Responde con la escala adecuada..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4c','fb4c')">Validar Esfuerzo</button><div class="feedback" id="fb4c"></div></div>
+      <div class="exercise-item"><label>4. Do you like studying English?</label><textarea class="exercise-textarea" id="ex4d" placeholder="Responde con la escala adecuada..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4d','fb4d')">Validar Esfuerzo</button><div class="feedback" id="fb4d"></div></div>
+      <div class="exercise-item"><label>5. Do you like going to bars?</label><textarea class="exercise-textarea" id="ex4e" placeholder="Responde con la escala adecuada..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4e','fb4e')">Validar Esfuerzo</button><div class="feedback" id="fb4e"></div></div>
+      <div class="exercise-item"><label>6. Do you like visiting relatives?</label><textarea class="exercise-textarea" id="ex4f" placeholder="Responde con la escala adecuada..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4f','fb4f')">Validar Esfuerzo</button><div class="feedback" id="fb4f"></div></div>
+      <div class="exercise-item"><label>7. Do you like shopping?</label><textarea class="exercise-textarea" id="ex4g" placeholder="Responde con la escala adecuada..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4g','fb4g')">Validar Esfuerzo</button><div class="feedback" id="fb4g"></div></div>
+      <div class="exercise-item"><label>8. Do you like listening to dubstep music?</label><textarea class="exercise-textarea" id="ex4h" placeholder="Responde con la escala adecuada..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4h','fb4h')">Validar Esfuerzo</button><div class="feedback" id="fb4h"></div></div>
+      <div class="exercise-item"><label>9. Do you like meeting new people?</label><textarea class="exercise-textarea" id="ex4i" placeholder="Responde con la escala adecuada..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4i','fb4i')">Validar Esfuerzo</button><div class="feedback" id="fb4i"></div></div>
+      <div class="exercise-item"><label>10. Do you like going to the dentist?</label><textarea class="exercise-textarea" id="ex4j" placeholder="Responde con la escala adecuada..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex4j','fb4j')">Validar Esfuerzo</button><div class="feedback" id="fb4j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--teal-dark);">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 5: STOP BUGGING ME -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Stop Bugging Me!</h2>
+    <p>Expresiones de molestia e intolerancia</p>
+  </div>
+</section>
+
+<section class="section-solid teal">
+  <div class="container">
+    <h2>😤 Expressions of Annoyance</h2>
+    <div class="reading-block">
+      <h3>Ways to Express What Bother You</h3>
+      <p>1. I hate it when people …</p>
+      <p>2. I can't stand it when people …</p>
+      <p>3. I could scream when people …</p>
+      <p>4. It really bugs me when people …</p>
+      <p>5. It drives me up the wall when people …</p>
+      <p>6. It gets on my nerves when people …</p>
+      <p>7. It makes me crazy when people …</p>
+      <p>8. It doesn't bother me when people …</p>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Does it bother you when people…?</h3>
+      <p style="margin-bottom:20px;">Responde usando las expresiones de molestia. Desarrolla tu respuesta (mínimo 20 caracteres):</p>
+      <div class="exercise-item"><label>1. interrupt me when I'm speaking?</label><textarea class="exercise-textarea" id="ex5a" placeholder="Responde con una expresión de molestia..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex5a','fb5a')">Validar Esfuerzo</button><div class="feedback" id="fb5a"></div></div>
+      <div class="exercise-item"><label>2. kiss in public?</label><textarea class="exercise-textarea" id="ex5b" placeholder="Responde con una expresión de molestia..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex5b','fb5b')">Validar Esfuerzo</button><div class="feedback" id="fb5b"></div></div>
+      <div class="exercise-item"><label>3. forget your name?</label><textarea class="exercise-textarea" id="ex5c" placeholder="Responde con una expresión de molestia..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex5c','fb5c')">Validar Esfuerzo</button><div class="feedback" id="fb5c"></div></div>
+      <div class="exercise-item"><label>4. talk too loudly?</label><textarea class="exercise-textarea" id="ex5d" placeholder="Responde con una expresión de molestia..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex5d','fb5d')">Validar Esfuerzo</button><div class="feedback" id="fb5d"></div></div>
+      <div class="exercise-item"><label>5. jump the queue?</label><textarea class="exercise-textarea" id="ex5e" placeholder="Responde con una expresión de molestia..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex5e','fb5e')">Validar Esfuerzo</button><div class="feedback" id="fb5e"></div></div>
+      <div class="exercise-item"><label>6. call me early in the morning?</label><textarea class="exercise-textarea" id="ex5f" placeholder="Responde con una expresión de molestia..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex5f','fb5f')">Validar Esfuerzo</button><div class="feedback" id="fb5f"></div></div>
+      <div class="exercise-item"><label>7. use my things without asking?</label><textarea class="exercise-textarea" id="ex5g" placeholder="Responde con una expresión de molestia..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex5g','fb5g')">Validar Esfuerzo</button><div class="feedback" id="fb5g"></div></div>
+      <div class="exercise-item"><label>8. give out my phone number?</label><textarea class="exercise-textarea" id="ex5h" placeholder="Responde con una expresión de molestia..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex5h','fb5h')">Validar Esfuerzo</button><div class="feedback" id="fb5h"></div></div>
+      <div class="exercise-item"><label>9. sniffle?</label><textarea class="exercise-textarea" id="ex5i" placeholder="Responde con una expresión de molestia..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex5i','fb5i')">Validar Esfuerzo</button><div class="feedback" id="fb5i"></div></div>
+      <div class="exercise-item"><label>10. look at the time when I'm talking?</label><textarea class="exercise-textarea" id="ex5j" placeholder="Responde con una expresión de molestia..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex5j','fb5j')">Validar Esfuerzo</button><div class="feedback" id="fb5j"></div></div>
+      <div class="exercise-item"><label>11. are late?</label><textarea class="exercise-textarea" id="ex5k" placeholder="Responde con una expresión de molestia..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex5k','fb5k')">Validar Esfuerzo</button><div class="feedback" id="fb5k"></div></div>
+      <div class="exercise-item"><label>12. cancel on me?</label><textarea class="exercise-textarea" id="ex5l" placeholder="Responde con una expresión de molestia..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex5l','fb5l')">Validar Esfuerzo</button><div class="feedback" id="fb5l"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--teal-dark);">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 6: IDIOMS -->
+<section class="section-solid teal-dark">
+  <div class="container">
+    <h2>📚 English Idioms</h2>
+    <p>Match each idiom with its definition:</p>
+    
+    <div class="idiom-card"><p><strong>1.</strong> After he was cut by the team, he turned over a new leaf and started working out.</p></div>
+    <div class="idiom-card"><p><strong>2.</strong> I couldn't believe he actually passed himself off as a native speaker.</p></div>
+    <div class="idiom-card"><p><strong>3.</strong> If you don't get there early, all the bargains will be snapped up.</p></div>
+    <div class="idiom-card"><p><strong>4.</strong> Everybody has at least one skeleton in their closet.</p></div>
+    <div class="idiom-card"><p><strong>5.</strong> I went over everything with a fine-tooth comb, and still couldn't find the mistake.</p></div>
+    <div class="idiom-card"><p><strong>6.</strong> She really didn't enjoy going out with me. She called me a cold fish.</p></div>
+    <div class="idiom-card"><p><strong>7.</strong> My wife stays home, and it's my job to bring home the bacon.</p></div>
+    <div class="idiom-card"><p><strong>8.</strong> The bank was robbed to the tune of $500,000.00.</p></div>
+    <div class="idiom-card"><p><strong>9.</strong> Those types of problems are just swept under the rug.</p></div>
+    <div class="idiom-card"><p><strong>10.</strong> His idea went over like a lead balloon.</p></div>
+
+    <div class="exercise-box">
+      <h3>Match Meanings</h3>
+      <div class="highlight-box" style="background:rgba(224,107,89,0.15); color:var(--text-light);">
+        <p><strong>Meanings:</strong><br>
+        a. take quickly • b. in the amount of • c. careful attention • d. to meet with disapproval • e. improve conduct • f. to dismiss casually • g. a boring person • h. to pretend to be • i. to support one's family • j. a shameful secret</p>
+      </div>
+      <div class="exercise-item"><label>1. turned over a new leaf = _____</label><input type="text" class="exercise-input" id="ex6a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex6a',['e'],'fb6a','ans6a')">Validar</button><div class="hidden-answer" id="ans6a">e. improve conduct</div><div class="feedback" id="fb6a"></div></div>
+      <div class="exercise-item"><label>2. passed himself off = _____</label><input type="text" class="exercise-input" id="ex6b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex6b',['h'],'fb6b','ans6b')">Validar</button><div class="hidden-answer" id="ans6b">h. to pretend to be</div><div class="feedback" id="fb6b"></div></div>
+      <div class="exercise-item"><label>3. snapped up = _____</label><input type="text" class="exercise-input" id="ex6c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex6c',['a'],'fb6c','ans6c')">Validar</button><div class="hidden-answer" id="ans6c">a. take quickly</div><div class="feedback" id="fb6c"></div></div>
+      <div class="exercise-item"><label>4. skeleton in their closet = _____</label><input type="text" class="exercise-input" id="ex6d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex6d',['j'],'fb6d','ans6d')">Validar</button><div class="hidden-answer" id="ans6d">j. a shameful secret</div><div class="feedback" id="fb6d"></div></div>
+      <div class="exercise-item"><label>5. fine-tooth comb = _____</label><input type="text" class="exercise-input" id="ex6e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex6e',['c'],'fb6e','ans6e')">Validar</button><div class="hidden-answer" id="ans6e">c. careful attention</div><div class="feedback" id="fb6e"></div></div>
+      <div class="exercise-item"><label>6. cold fish = _____</label><input type="text" class="exercise-input" id="ex6f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex6f',['g'],'fb6f','ans6f')">Validar</button><div class="hidden-answer" id="ans6f">g. a boring person</div><div class="feedback" id="fb6f"></div></div>
+      <div class="exercise-item"><label>7. bring home the bacon = _____</label><input type="text" class="exercise-input" id="ex6g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex6g',['i'],'fb6g','ans6g')">Validar</button><div class="hidden-answer" id="ans6g">i. to support one's family</div><div class="feedback" id="fb6g"></div></div>
+      <div class="exercise-item"><label>8. to the tune of = _____</label><input type="text" class="exercise-input" id="ex6h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex6h',['b'],'fb6h','ans6h')">Validar</button><div class="hidden-answer" id="ans6h">b. in the amount of</div><div class="feedback" id="fb6h"></div></div>
+      <div class="exercise-item"><label>9. swept under the rug = _____</label><input type="text" class="exercise-input" id="ex6i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex6i',['f'],'fb6i','ans6i')">Validar</button><div class="hidden-answer" id="ans6i">f. to dismiss casually</div><div class="feedback" id="fb6i"></div></div>
+      <div class="exercise-item"><label>10. went over like a lead balloon = _____</label><input type="text" class="exercise-input" id="ex6j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex6j',['d'],'fb6j','ans6j')">Validar</button><div class="hidden-answer" id="ans6j">d. to meet with disapproval</div><div class="feedback" id="fb6j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 7: FOR AND AGAINST -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>For and Against</h2>
+    <p>Debate sobre temas sociales</p>
+  </div>
+</section>
+
+<section class="section-solid coral">
+  <div class="container">
+    <h2>⚖️ Social Issues Debate</h2>
+    <div class="highlight-box">
+      <p><strong>I'm for it / I'm in favor of it</strong> • <strong>I don't really care / It doesn't concern me</strong> • <strong>I'm against it / I'm opposed to it</strong></p>
+    </div>
+    <div class="exercise-box">
+      <p style="margin-bottom:20px;">Expresa tu opinión sobre cada tema y justifica (mínimo 20 caracteres):</p>
+      <div class="exercise-item"><label>1. Smoking in public places</label><textarea class="exercise-textarea" id="ex7a" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7a','fb7a')">Validar Esfuerzo</button><div class="feedback" id="fb7a"></div></div>
+      <div class="exercise-item"><label>2. Drinking in public places</label><textarea class="exercise-textarea" id="ex7b" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7b','fb7b')">Validar Esfuerzo</button><div class="feedback" id="fb7b"></div></div>
+      <div class="exercise-item"><label>3. Free university education</label><textarea class="exercise-textarea" id="ex7c" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7c','fb7c')">Validar Esfuerzo</button><div class="feedback" id="fb7c"></div></div>
+      <div class="exercise-item"><label>4. High taxes on tobacco</label><textarea class="exercise-textarea" id="ex7d" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7d','fb7d')">Validar Esfuerzo</button><div class="feedback" id="fb7d"></div></div>
+      <div class="exercise-item"><label>5. High taxes on alcohol</label><textarea class="exercise-textarea" id="ex7e" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7e','fb7e')">Validar Esfuerzo</button><div class="feedback" id="fb7e"></div></div>
+      <div class="exercise-item"><label>6. High taxes on imports</label><textarea class="exercise-textarea" id="ex7f" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7f','fb7f')">Validar Esfuerzo</button><div class="feedback" id="fb7f"></div></div>
+      <div class="exercise-item"><label>7. Students electing teachers</label><textarea class="exercise-textarea" id="ex7g" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7g','fb7g')">Validar Esfuerzo</button><div class="feedback" id="fb7g"></div></div>
+      <div class="exercise-item"><label>8. Paying teachers more</label><textarea class="exercise-textarea" id="ex7h" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7h','fb7h')">Validar Esfuerzo</button><div class="feedback" id="fb7h"></div></div>
+      <div class="exercise-item"><label>9. Paying politicians more</label><textarea class="exercise-textarea" id="ex7i" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7i','fb7i')">Validar Esfuerzo</button><div class="feedback" id="fb7i"></div></div>
+      <div class="exercise-item"><label>10. Giving money to the poor</label><textarea class="exercise-textarea" id="ex7j" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7j','fb7j')">Validar Esfuerzo</button><div class="feedback" id="fb7j"></div></div>
+      <div class="exercise-item"><label>11. Giving food to the poor</label><textarea class="exercise-textarea" id="ex7k" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7k','fb7k')">Validar Esfuerzo</button><div class="feedback" id="fb7k"></div></div>
+      <div class="exercise-item"><label>12. Free Medicine</label><textarea class="exercise-textarea" id="ex7l" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7l','fb7l')">Validar Esfuerzo</button><div class="feedback" id="fb7l"></div></div>
+      <div class="exercise-item"><label>13. Free Public Transportation</label><textarea class="exercise-textarea" id="ex7m" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7m','fb7m')">Validar Esfuerzo</button><div class="feedback" id="fb7m"></div></div>
+      <div class="exercise-item"><label>14. Increase the drinking age to 25</label><textarea class="exercise-textarea" id="ex7n" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7n','fb7n')">Validar Esfuerzo</button><div class="feedback" id="fb7n"></div></div>
+      <div class="exercise-item"><label>15. Increase the driving age to 25</label><textarea class="exercise-textarea" id="ex7o" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7o','fb7o')">Validar Esfuerzo</button><div class="feedback" id="fb7o"></div></div>
+      <div class="exercise-item"><label>16. Lowering the smoking age to 15</label><textarea class="exercise-textarea" id="ex7p" placeholder="Opinión y razón..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7p','fb7p')">Validar Esfuerzo</button><div class="feedback" id="fb7p"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--teal-dark);">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 8: BULLYING VOCABULARY -->
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--teal-dark);">✍️ Bullying Vocabulary</h2>
+    <div class="highlight-box">Usa: eventually • deal • helpful • always • helpless • do • opinion • resort</div>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>Have you ever been bullied before? If you have, then you will know how _______________ and small someone who is being bullied feels.</label><input type="text" class="exercise-input" id="ex8a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8a',['helpless'],'fb8a','ans8a')">Validar</button><div class="hidden-answer" id="ans8a">helpless</div><div class="feedback" id="fb8a"></div></div>
+      <div class="exercise-item"><label>However, most of the times, bullies are people who themselves feel small. They actually have a very low _______________ of themselves.</label><input type="text" class="exercise-input" id="ex8b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8b',['opinion'],'fb8b','ans8b')">Validar</button><div class="hidden-answer" id="ans8b">opinion</div><div class="feedback" id="fb8b"></div></div>
+      <div class="exercise-item"><label>So they _______________ to bullying to feel big and powerful.</label><input type="text" class="exercise-input" id="ex8c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8c',['resort'],'fb8c','ans8c')">Validar</button><div class="hidden-answer" id="ans8c">resort</div><div class="feedback" id="fb8c"></div></div>
+      <div class="exercise-item"><label>One of the best ways to _______________ with bullies is to stand up firmly to them.</label><input type="text" class="exercise-input" id="ex8d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8d',['deal'],'fb8d','ans8d')">Validar</button><div class="hidden-answer" id="ans8d">deal</div><div class="feedback" id="fb8d"></div></div>
+      <div class="exercise-item"><label>If you can show a bully that you are not scared of him, he will no longer feel big and will _______________ stop bullying you.</label><input type="text" class="exercise-input" id="ex8e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8e',['eventually'],'fb8e','ans8e')">Validar</button><div class="hidden-answer" id="ans8e">eventually</div><div class="feedback" id="fb8e"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 9: TEENS & DRUGS -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1559752455-1e12884e1906?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Teens & Drugs: What to Know</h2>
+    <p>Información crítica sobre sustancias</p>
+  </div>
+</section>
+
+<section class="section-solid teal">
+  <div class="container">
+    <h2>💊 Drug & Alcohol Facts</h2>
+    <div class="reading-block">
+      <h3>What Teens Abuse</h3>
+      <p>Teenagers abuse a variety of drugs, both legal and illegal. Legally available drugs include alcohol, prescribed medications, inhalants and over-the-counter cough, cold, sleep, and diet medications.</p>
+      <p>The most commonly used illegal drugs are marijuana (pot), stimulants and designer drugs. The use of illegal drugs is increasing, especially among young teens. The average age of first marijuana use is at 14 and alcohol use can start before age 12.</p>
+      <p>Drug use is associated with a variety of negative consequences, including increased risk of serious drug use later in life, school failure, and poor judgment which may put teens at risk for accidents, violence, unplanned and unsafe sex, and suicide.</p>
+    </div>
+    <div class="reading-block">
+      <h3>Warning Signs</h3>
+      <p><strong>Physical:</strong> Fatigue, repeated health complaints, red and glazed eyes, and a lasting cough.</p>
+      <p><strong>Emotional:</strong> personality change, sudden mood changes, irritability, irresponsible behavior, low self-esteem, poor judgment, depression, and a general lack of interest.</p>
+      <p><strong>Family:</strong> starting arguments, breaking rules, or withdrawing from the family.</p>
+      <p><strong>School:</strong> decreased interest, negative attitude, and drop in grades, many absences, truancy, and discipline problems.</p>
+      <p><strong>Social problems:</strong> new friends who are less interested in standard home and school activities, problems with the law, and changes to less conventional styles in dress and music.</p>
+    </div>
+    <div class="exercise-box">
+      <h3>Reflexión</h3>
+      <div class="exercise-item">
+        <label>¿Por qué crees que la edad promedio de inicio de consumo de drogas está bajando?</label>
+        <textarea class="exercise-textarea" id="ex9a" placeholder="Desarrolla tu respuesta..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex9a','fb9a')">Validar Esfuerzo</button>
+        <div class="feedback" id="fb9a"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 10: ALCOHOL & BODY -->
+<section class="section-solid teal-dark">
+  <div class="container">
+    <h2>🫀 Alcohol and Your Body</h2>
+    <div class="card-grid">
+      <div class="card"><div class="card-content"><h3 style="color:var(--coral);">Heart</h3><p>Alcohol causes the heart rate to slow down. Heavy drinking over a long period of time can also increase the risk of heart disease, stroke, and high blood pressure.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--coral);">Stomach</h3><p>Alcohol can give you an upset stomach because it makes you produce more stomach acid. Drinking a lot over a long period can damage the lining, causing ulcers or stomach cancer.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--coral);">Kidneys</h3><p>Drinking alcohol causes your body to produce more urine, making your kidneys work overtime. Heavy drinking over a long period may lead to kidney failure.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--coral);">Skin</h3><p>Alcohol can give your skin a red appearance. Drinking a lot over a long period can cause acne to become worse and makes your skin look puffy.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--coral);">Eyes</h3><p>Alcohol can blur your eyesight. Your pupils may get small, making it difficult for your eyes to adjust to light.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--coral);">Bones</h3><p>Drinking a lot over a long period makes it more difficult for the body to soak up bone-building calcium. Eventually, that makes the bones thinner and easier to break.</p></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--coral);">Liver</h3><p>Your liver breaks down alcohol so that your body can get rid of it. Heavy drinking over a long period can permanently damage your liver, causing cirrhosis.</p></div></div>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Comprehension Check</h3>
+      <div class="exercise-item"><label>1. Which organ breaks down alcohol?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10a','a')">Liver</button><button class="option-btn" onclick="selectOption(this,'q10a','b')">Heart</button><button class="option-btn" onclick="selectOption(this,'q10a','c')">Kidneys</button><button class="option-btn" onclick="selectOption(this,'q10a','d')">Lungs</button></div><button class="btn-verify" onclick="checkMC('q10a','a','fb10a')">Validar</button><div class="hidden-answer" id="ans10a">Liver</div><div class="feedback" id="fb10a"></div></div>
+      <div class="exercise-item"><label>2. Over time, alcohol can make it difficult for the body to soak up bone-building ____.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10b','a')">calcium</button><button class="option-btn" onclick="selectOption(this,'q10b','b')">enamel</button><button class="option-btn" onclick="selectOption(this,'q10b','c')">oxygen</button><button class="option-btn" onclick="selectOption(this,'q10b','d')">carbon</button></div><button class="btn-verify" onclick="checkMC('q10b','a','fb10b')">Validar</button><div class="hidden-answer" id="ans10b">calcium</div><div class="feedback" id="fb10b"></div></div>
+      <div class="exercise-item"><label>3. Alcohol causes your ____.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10c','a')">liver to produce more urine</button><button class="option-btn" onclick="selectOption(this,'q10c','b')">heart to produce more blood</button><button class="option-btn" onclick="selectOption(this,'q10c','c')">stomach to produce more acid</button><button class="option-btn" onclick="selectOption(this,'q10c','d')">stomach to produce more urine</button></div><button class="btn-verify" onclick="checkMC('q10c','c','fb10c')">Validar</button><div class="hidden-answer" id="ans10c">stomach to produce more acid</div><div class="feedback" id="fb10c"></div></div>
+      <div class="exercise-item"><label>4. Which of the following statements is FALSE?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10d','a')">Long-term alcohol abuse may lead to cancer</button><button class="option-btn" onclick="selectOption(this,'q10d','b')">Drinking alcohol over a long period of time decreases blood pressure</button><button class="option-btn" onclick="selectOption(this,'q10d','c')">Alcohol affects nearly every organ system in the body</button><button class="option-btn" onclick="selectOption(this,'q10d','d')">Abusing alcohol over a long period of time can make acne worse</button></div><button class="btn-verify" onclick="checkMC('q10d','b','fb10d')">Validar</button><div class="hidden-answer" id="ans10d">Drinking alcohol over a long period of time decreases blood pressure</div><div class="feedback" id="fb10d"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 11: IRREGULAR VERBS -->
+<section class="section-solid coral">
+  <div class="container">
+    <h2>📝 Irregular Verbs</h2>
+    <div class="grammar-table">
+      <tr><th>Infinitive</th><th>Simple Past</th><th>Past Participle</th></tr>
+      <tr><td>spend</td><td>spent</td><td>spent</td></tr>
+      <tr><td>come</td><td>came</td><td>come</td></tr>
+      <tr><td>read</td><td>read</td><td>read</td></tr>
+      <tr><td>stride</td><td>strode</td><td>stridden</td></tr>
+      <tr><td>bid</td><td>bid</td><td>bid</td></tr>
+      <tr><td>blow</td><td>blew</td><td>blown</td></tr>
+      <tr><td>keep</td><td>kept</td><td>kept</td></tr>
+      <tr><td>forsake</td><td>forsook</td><td>forsaken</td></tr>
+      <tr><td>lend</td><td>lent</td><td>lent</td></tr>
+      <tr><td>grind</td><td>ground</td><td>ground</td></tr>
+    </div>
+    <div class="exercise-box">
+      <h3>Practice</h3>
+      <div class="exercise-item"><label>1. spend - spent - ____________</label><input type="text" class="exercise-input" id="ex11a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11a',['spent'],'fb11a','ans11a')">Validar</button><div class="hidden-answer" id="ans11a">spent</div><div class="feedback" id="fb11a"></div></div>
+      <div class="exercise-item"><label>2. come - ____________ - come</label><input type="text" class="exercise-input" id="ex11b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11b',['came'],'fb11b','ans11b')">Validar</button><div class="hidden-answer" id="ans11b">came</div><div class="feedback" id="fb11b"></div></div>
+      <div class="exercise-item"><label>3. blow - ____________ - blown</label><input type="text" class="exercise-input" id="ex11c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11c',['blew'],'fb11c','ans11c')">Validar</button><div class="hidden-answer" id="ans11c">blew</div><div class="feedback" id="fb11c"></div></div>
+      <div class="exercise-item"><label>4. keep - kept - ____________</label><input type="text" class="exercise-input" id="ex11d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11d',['kept'],'fb11d','ans11d')">Validar</button><div class="hidden-answer" id="ans11d">kept</div><div class="feedback" id="fb11d"></div></div>
+      <div class="exercise-item"><label>5. lend - ____________ - lent</label><input type="text" class="exercise-input" id="ex11e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11e',['lent'],'fb11e','ans11e')">Validar</button><div class="hidden-answer" id="ans11e">lent</div><div class="feedback" id="fb11e"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--teal-dark);">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 12: LOCH NESS -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Loch Ness</h2>
+    <p>Reading Comprehension</p>
+  </div>
+</section>
+
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--teal-dark);">📖 Reading: Loch Ness</h2>
+    <div class="reading-block">
+      <h3>The Famous Monster</h3>
+      <p>Loch Ness is a lake between the Scottish towns of Inverness and Fort Augustus. The word loch is Scottish for lake. Loch Ness is about 37 km long and extremely deep, the deepest part is 226 m.</p>
+      <p>Loch Ness is famous for its friendly monster, Nessie. Most people think that this is only a legend, but every year tourists from all over the world come to Loch Ness and hope that they will see the monster.</p>
+    </div>
+    <div class="exercise-box">
+      <h3>Present Perfect Simple</h3>
+      <div class="exercise-item"><label>1. Tourists from all over the world (be) _________________ to Loch Ness.</label><input type="text" class="exercise-input" id="ex12a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12a',['have','been'],'fb12a','ans12a')">Validar</button><div class="hidden-answer" id="ans12a">have been</div><div class="feedback" id="fb12a"></div></div>
+      <div class="exercise-item"><label>2. Most of them (see / not) __________________ Nessie, however.</label><input type="text" class="exercise-input" id="ex12b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12b',['have','not','seen'],'fb12b','ans12b')">Validar</button><div class="hidden-answer" id="ans12b">have not seen</div><div class="feedback" id="fb12b"></div></div>
+      <div class="exercise-item"><label>3. Only very few people say that the Loch Ness Monster (appear) _________________ in front of them.</label><input type="text" class="exercise-input" id="ex12c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12c',['has','appeared'],'fb12c','ans12c')">Validar</button><div class="hidden-answer" id="ans12c">has appeared</div><div class="feedback" id="fb12c"></div></div>
+      <div class="exercise-item"><label>4. Even scientists (come) __________________ to Loch Ness to find the monster.</label><input type="text" class="exercise-input" id="ex12d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12d',['have','come'],'fb12d','ans12d')">Validar</button><div class="hidden-answer" id="ans12d">have come</div><div class="feedback" id="fb12d"></div></div>
+      <div class="exercise-item"><label>5. And the boss of the Guinness brewery (promise) _________________ to pay 500,000 Pounds to the person who catches Nessie.</label><input type="text" class="exercise-input" id="ex12e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12e',['has','promised'],'fb12e','ans12e')">Validar</button><div class="hidden-answer" id="ans12e">has promised</div><div class="feedback" id="fb12e"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continuar →</button>
+  </div>
+</section>
+
+<!-- SECTION 13: GRAMMAR REVIEW -->
+<section class="section-solid teal">
+  <div class="container">
+    <h2>📚 Grammar Review: Present Perfect Simple</h2>
+    <div class="reading-block">
+      <h3>Form of Present Perfect</h3>
+      <p>The present perfect simple expresses an action that is still going on or that stopped recently, but has an influence on the present. It puts emphasis on the result.</p>
+      <div class="grammar-table">
+        <tr><th></th><th>Positive</th><th>Negative</th><th>Question</th></tr>
+        <tr><td>I / you / we / they</td><td>I have spoken.</td><td>I have not spoken.</td><td>Have I spoken?</td></tr>
+        <tr><td>he / she / it</td><td>He has spoken.</td><td>He has not spoken.</td><td>Has he spoken?</td></tr>
+      </div>
+      <p style="margin-top:20px;">For irregular verbs, use the participle form. For regular verbs, just add "ed".</p>
+    </div>
+    <div class="reading-block">
+      <h3>Exceptions in Spelling when Adding 'ed'</h3>
+      <div class="grammar-table">
+        <tr><th>Rule</th><th>Example</th></tr>
+        <tr><td>after a final e only add d</td><td>love – loved</td></tr>
+        <tr><td>final consonant after a short, stressed vowel</td><td>admit – admitted</td></tr>
+        <tr><td>or / as final consonant after a vowel is doubled</td><td>travel – travelled</td></tr>
+        <tr><td>final y after a consonant becomes i</td><td>hurry – hurried</td></tr>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="completeUnit()" style="background:var(--coral);"> Completar Unidad</button>
+  </div>
+</section>
+
+<!-- FINAL -->
+<div id="finalMsg" style="display:none; padding:80px 40px; background:var(--teal-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3rem; margin-bottom:20px;">🎉 Unit 17 Completed</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px;">Has reflexionado sobre ética, expresado preferencias, dominado idioms y analizado problemas adolescentes con precisión ejecutiva.</p>
+    <p style="font-size:1.1rem; margin-bottom:30px; opacity:0.8;">El cerebro no traduce. El cerebro ensambla.</p>
+    <a href="indexmax.html" class="nav-btn" style="background:var(--coral);">Continuar a Unit 18 →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:var(--teal-dark); color:var(--text-light);">
+  <p><strong>Discovery MAX Neuroeducation</strong></p>
+  <p>Unit 17: Teenage Life | Método NBF | Toño Vicas</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 120;
+
+function updateProgress() {
+  document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
+}
+
+function normalizeText(text) {
+  if (!text) return "";
+  return text.toLowerCase().replace(/[?!.,']/g, "").replace(/\s+/g, " ").trim();
+}
+
+function scrollToNext() {
+  window.scrollBy({ top: window.innerHeight * 0.9, behavior: 'smooth' });
+}
+
+function checkSimple(inputId, keywords, fbId, ansId) {
+  const val = normalizeText(document.getElementById(inputId).value);
+  const fb = document.getElementById(fbId);
+  const ans = document.getElementById(ansId);
+  const allFound = keywords.every(k => val.includes(k));
+  
+  if(allFound) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correcto. Estructura validada.';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = ' Revisa los elementos clave.';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+  }
+}
+
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Reflexión registrada. Excelente esfuerzo cognitivo.';
+    fb.style.display = 'block';
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ El cerebro ejecutivo requiere reflexión profunda. Por favor, elabora tu respuesta (mínimo 20 caracteres).';
+    fb.style.display = 'block';
+  }
+}
+
+let selectedOptions = {};
+function selectOption(btn, questionId, option) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedOptions[questionId] = option;
+}
+
+function checkMC(questionId, correctAnswer, feedbackId) {
+  const fb = document.getElementById(feedbackId);
+  const ans = document.getElementById(feedbackId.replace('fb', 'ans'));
+  if (!selectedOptions[questionId]) { fb.className='feedback error'; fb.textContent='️ Selecciona una opción'; fb.style.display='block'; return; }
+  if (selectedOptions[questionId] === correctAnswer) {
+    fb.className='feedback success'; fb.textContent='✅ Correcto'; fb.style.display='block'; ans.style.display='none';
+    completedCount++; updateProgress();
+  } else {
+    fb.className='feedback error'; fb.textContent='❌ Incorrecto'; fb.style.display='block'; ans.style.display='block';
+  }
+}
+
+function completeUnit() {
+  if(completedCount >= 90) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+  } else {
+    alert(`⚠️ Completa al menos 90 de 120 ejercicios.\nCompletados: ${completedCount}/120`);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
