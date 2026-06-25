@@ -4,345 +4,793 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Unit 15: At the Inn | Discovery MAX Neuroeducation</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0A0E1A;
-  --glass: rgba(255,255,255,0.05);
-  --border: rgba(255,255,255,0.12);
-  --orange: #FF8500;
-  --blue: #0077B6;
-  --gold: #FFD700;
-  --emerald: #00FF9D;
-  --text: #F5F2ED;
-  --muted: #8A94A6;
-  --error: #FF4444;
+  --navy: #1e3a5f;
+  --navy-light: #2d5a87;
+  --coral: #e8655a;
+  --cream: #f5f1e8;
+  --gold: #d4a574;
+  --text-dark: #1a1a1a;
+  --text-light: #ffffff;
+  --text-muted: #6b7280;
 }
 * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
-body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.7; overflow-x:hidden; }
-.container { max-width:1100px; margin:0 auto; padding:0 20px; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--cream); }
 
+/* HERO */
 .hero {
-  min-height:80vh; display:flex; align-items:center; justify-content:center;
-  text-align:center; padding:100px 20px 60px; position:relative; overflow:hidden;
-  background: linear-gradient(135deg, rgba(255,133,0,0.2), rgba(0,119,182,0.2)),
-              url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80') center/cover;
+  height:100vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
 }
-.hero::before { content:''; position:absolute; inset:0; background: rgba(10,14,26,0.75); backdrop-filter: blur(3px); }
-.hero-content { position:relative; z-index:2; max-width:800px; }
+.hero::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg, rgba(30,58,95,0.85), rgba(232,101,90,0.7));
+}
+.hero-content {
+  position:relative; z-index:2; text-align:center;
+  color:var(--text-light); max-width:800px; padding:40px;
+}
+.hero-badge {
+  display:inline-block; padding:10px 30px;
+  background:var(--coral); color:var(--text-light);
+  font-family:'Inter',sans-serif; font-weight:700;
+  font-size:0.9rem; letter-spacing:2px;
+  margin-bottom:20px; border-radius:4px;
+}
 .hero h1 {
-  font-family:'Orbitron',sans-serif; font-size:clamp(2.5rem,6vw,4.5rem);
-  background:linear-gradient(90deg,var(--orange),var(--gold),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  margin-bottom:15px; text-shadow: 0 0 30px rgba(255,133,0,0.5);
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,8vw,5rem);
+  font-weight:900; margin-bottom:20px;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
-.hero .unit-badge {
-  display:inline-block; padding:10px 25px; background:rgba(255,133,0,0.2);
-  border:2px solid var(--orange); border-radius:25px; color:var(--orange);
-  font-size:1rem; margin-bottom:20px; font-family:'Orbitron',sans-serif;
-  box-shadow: 0 0 20px rgba(255,133,0,0.3);
+.hero p {
+  font-size:1.3rem; font-weight:300;
+  max-width:600px; margin:0 auto;
 }
-.hero p { color:var(--text); font-size:1.2rem; max-width:600px; margin:0 auto; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
+/* PROGRESS BAR */
 .progress-wrap {
-  height:8px; background:rgba(255,255,255,0.1); border-radius:10px;
-  overflow:hidden; margin:20px 0; position:sticky; top:0; z-index:50;
-  background:rgba(10,14,26,0.95); backdrop-filter:blur(12px); padding:10px 0;
+  position:sticky; top:0; z-index:100;
+  background:var(--navy); padding:15px 40px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.progress-bar {
+  height:6px; background:rgba(255,255,255,0.2);
+  border-radius:10px; overflow:hidden;
 }
 .progress-fill {
-  height:100%; width:0%; background:linear-gradient(90deg,var(--orange),var(--gold));
-  transition:width 0.5s ease; box-shadow: 0 0 10px var(--orange);
+  height:100%; width:0%;
+  background:linear-gradient(90deg,var(--coral),var(--gold));
+  transition: width 0.5s ease;
 }
 
-.section {
-  background:var(--glass); backdrop-filter:blur(16px);
-  border:1px solid var(--border); border-radius:20px;
-  padding:30px; margin-bottom:30px; position:relative; overflow:hidden;
-  opacity:0.6; pointer-events:none; filter:grayscale(0.5);
-  transition:all 0.4s ease;
+/* SECTION IMAGE */
+.section-image {
+  min-height:50vh; position:relative;
+  background-size: cover; background-position: center;
+  display:flex; align-items:center; justify-content:center;
+  padding:60px 20px;
 }
-.section.active { opacity:1; pointer-events:all; filter:none; border-color:var(--orange); box-shadow:0 0 30px rgba(255,133,0,0.2); }
-.section::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:4px;
-  background:linear-gradient(90deg,var(--orange),var(--gold),var(--blue));
+.section-image::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg, rgba(30,58,95,0.85), rgba(232,101,90,0.75));
 }
-.section-title {
-  font-family:'Orbitron',sans-serif; font-size:1.5rem;
-  color:var(--gold); margin-bottom:15px; display:flex; align-items:center; gap:12px;
+.section-image-content {
+  position:relative; z-index:2; text-align:center;
+  color:var(--text-light); max-width:800px;
 }
-.section-desc { color:var(--muted); margin-bottom:25px; font-size:1rem; }
+.section-image-content h2 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,5vw,3.5rem);
+  font-weight:900; margin-bottom:15px;
+}
+.section-image-content p { font-size:1.2rem; font-weight:300; }
 
-.reading-card {
-  background:rgba(0,0,0,0.4); border-left:4px solid var(--orange);
-  border-radius:12px; padding:25px; margin-bottom:20px; position: relative;
+/* SECTION SOLID */
+.section-solid {
+  padding:80px 40px;
 }
-.reading-card h3 { color:var(--orange); margin-bottom:15px; font-family:'Orbitron',sans-serif; font-size:1.2rem; }
-.reading-card p { margin-bottom:12px; color:var(--text); font-size:1rem; line-height:1.8; }
+.section-solid.navy { background:var(--navy); color:var(--text-light); }
+.section-solid.coral { background:var(--coral); color:var(--text-light); }
+.section-solid.cream { background:var(--cream); color:var(--text-dark); }
+.section-solid.gold { background:var(--gold); color:var(--text-dark); }
 
-.attraction-card {
-  background:rgba(0,0,0,0.3); border-radius:12px; padding:20px; margin:15px 0;
-  border-left:4px solid var(--blue);
-}
-.attraction-card h4 { color:var(--blue); margin-bottom:10px; font-family:'Orbitron',sans-serif; font-size:1rem; }
-.attraction-card p { color:var(--text); font-size:0.95rem; }
+.container { max-width:1100px; margin:0 auto; }
 
-.phrasal-box {
-  background:linear-gradient(135deg, rgba(255,133,0,0.1), rgba(0,119,182,0.1));
-  border:2px solid var(--orange); border-radius:16px; padding:25px; margin:20px 0;
+.section-solid h2 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,2.8rem); font-weight:900;
+  margin-bottom:30px;
 }
-.phrasal-box h3 { color:var(--orange); margin-bottom:15px; font-family:'Orbitron',sans-serif; }
-.phrasal-item {
-  padding:10px; margin:8px 0; background:rgba(0,0,0,0.3);
-  border-radius:8px; border-left:3px solid var(--gold);
+.section-solid p {
+  font-size:1.1rem; line-height:1.9;
+  margin-bottom:20px;
 }
-.phrasal-item strong { color:var(--emerald); }
 
+/* READING CARD */
+.reading-block {
+  background:var(--text-light);
+  padding:40px; border-radius:8px;
+  margin:30px 0;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  border-left:6px solid var(--coral);
+}
+.reading-block h3 {
+  font-family:'Playfair Display',serif;
+  font-size:1.8rem; color:var(--navy);
+  margin-bottom:20px;
+}
+.reading-block p {
+  font-size:1.05rem; line-height:1.9;
+  color:var(--text-dark); margin-bottom:15px;
+}
+
+/* CARDS */
+.card-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px; margin:40px 0;
+}
+.card {
+  background:var(--text-light);
+  border-radius:8px; overflow:hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+}
+.card:hover { transform: translateY(-10px); }
+.card-image {
+  height:220px;
+  background-size: cover;
+  background-position: center;
+  position:relative;
+}
+.card-image::after {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(30,58,95,0.6));
+}
+.card-content { padding:25px; }
+.card-content h3 {
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem; margin-bottom:10px;
+  color:var(--navy);
+}
+.card-content p { color:var(--text-muted); font-size:0.95rem; line-height:1.7; }
+
+/* COUNTRY HEADER */
+.country-header {
+  display:flex; align-items:center; gap:20px;
+  margin-bottom:30px; padding-bottom:20px;
+  border-bottom:3px solid var(--coral);
+}
+.country-flag {
+  font-size:4rem;
+}
+.country-header h3 {
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem; color:var(--navy);
+}
+
+/* EXERCISE BOX */
+.exercise-box {
+  background:var(--text-light);
+  padding:30px; border-radius:8px;
+  margin:30px 0;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+.exercise-box h3 {
+  font-family:'Playfair Display',serif;
+  font-size:1.8rem; color:var(--navy);
+  margin-bottom:20px;
+}
 .exercise-item {
-  background:rgba(0,0,0,0.3); border-radius:12px;
-  padding:20px; margin-bottom:20px; border-left:4px solid var(--blue);
+  margin:20px 0; padding:20px;
+  background:var(--cream);
+  border-left:4px solid var(--coral);
+  border-radius:4px;
 }
-.exercise-label { 
-  font-weight:600; margin-bottom:12px; display:block; color:var(--text);
-  word-wrap: break-word; overflow-wrap: break-word; word-break: break-word;
-  font-size:1rem; line-height: 1.6;
+.exercise-item label {
+  font-weight:600; font-size:1.05rem;
+  display:block; margin-bottom:12px;
+  color:var(--text-dark);
 }
 .exercise-input {
-  width:100%; padding:12px; background:rgba(255,255,255,0.05);
-  border:1px solid var(--border); border-radius:8px; color:var(--text);
-  font-size:1rem; margin-bottom:12px;
-}
-.exercise-input:focus { outline:none; border-color:var(--orange); box-shadow: 0 0 10px rgba(255,133,0,0.3); }
-.exercise-textarea {
-  width:100%; padding:12px; background:rgba(255,255,255,0.05);
-  border:1px solid var(--border); border-radius:8px; color:var(--text);
-  font-size:1rem; margin-bottom:12px; resize:vertical; min-height:80px;
+  width:100%; padding:12px;
+  border:2px solid #e5e7eb;
+  border-radius:6px; font-size:1rem;
   font-family:'Inter',sans-serif;
+  background:var(--text-light);
+  color:var(--text-dark);
+  transition: border-color 0.3s;
 }
-.exercise-textarea:focus { outline:none; border-color:var(--orange); }
-
-.btn {
-  padding:12px 24px; border:none; border-radius:10px; font-weight:600; cursor:pointer;
-  transition:0.3s; font-size:0.95rem; margin:5px;
+.exercise-input:focus {
+  outline:none; border-color:var(--coral);
 }
-.btn-verify { background:var(--glass); border:1px solid var(--border); color:var(--text); border-color: var(--orange); }
-.btn-verify:hover { background:rgba(255,133,0,0.2); box-shadow: 0 0 15px rgba(255,133,0,0.4); }
-.btn-next {
-  background:linear-gradient(135deg,var(--orange),var(--gold));
-  color:#000; padding:15px 35px; font-size:1rem; margin-top:20px; font-weight:700;
+.exercise-textarea {
+  width:100%; padding:12px;
+  border:2px solid #e5e7eb;
+  border-radius:6px; font-size:1rem;
+  font-family:'Inter',sans-serif;
+  background:var(--text-light);
+  color:var(--text-dark);
+  min-height:80px; resize:vertical;
 }
-.btn-next:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(255,133,0,0.5); }
+.exercise-textarea:focus {
+  outline:none; border-color:var(--coral);
+}
+.btn-verify {
+  margin-top:12px; padding:10px 24px;
+  background:var(--coral); color:var(--text-light);
+  border:none; border-radius:6px;
+  font-weight:600; cursor:pointer;
+  transition: background 0.3s;
+}
+.btn-verify:hover { background:#d4554a; }
 
 .feedback {
-  margin-top:10px; padding:12px; border-radius:8px; font-size:0.95rem; display:none;
-  border-left:4px solid; font-weight:600;
+  margin-top:12px; padding:12px;
+  border-radius:6px; font-weight:600;
+  display:none;
 }
-.feedback.success { background:rgba(0,255,157,0.15); border-left-color:var(--emerald); color:var(--emerald); }
-.feedback.error { background:rgba(255,68,68,0.15); border-left-color:var(--error); color:var(--error); }
+.feedback.success {
+  background:#d1fae5; color:#065f46;
+  border-left:4px solid #10b981;
+}
+.feedback.error {
+  background:#fee2e2; color:#991b1b;
+  border-left:4px solid #ef4444;
+}
+
 .hidden-answer {
-  display:none; margin-top:10px; padding:12px; background:rgba(255,51,102,0.2);
-  border-left:3px solid #ff3366; border-radius:8px; color:#ff6699;
-  font-family:'Orbitron',sans-serif; font-size:0.95rem;
+  display:none; margin-top:12px; padding:12px;
+  background:#fef3c7; border-left:4px solid var(--gold);
+  border-radius:6px; color:#92400e;
+  font-weight:600;
 }
 
-.options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:15px 0; }
+/* OPTIONS */
+.options-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:12px; margin:15px 0;
+}
 .option-btn {
-  padding:14px; background:rgba(255,255,255,0.05); border:1px solid var(--border);
-  border-radius:10px; cursor:pointer; transition:0.3s; color:var(--text);
+  padding:14px; background:var(--text-light);
+  border:2px solid #e5e7eb;
+  border-radius:6px; cursor:pointer;
+  transition:0.3s; color:var(--text-dark);
   text-align:left; font-size:0.95rem;
+  font-family:'Inter',sans-serif;
 }
-.option-btn:hover { border-color:var(--orange); background:rgba(255,133,0,0.1); }
-.option-btn.selected { background:rgba(255,133,0,0.2); border-color:var(--orange); color:var(--orange); font-weight:600; }
-
-.highlight {
-  background:rgba(255,215,0,0.15); border-left:4px solid var(--gold);
-  padding:18px 20px; margin:20px 0; border-radius:0 10px 10px 0;
-  color:var(--text); font-style:italic; font-size:1.05rem;
+.option-btn:hover {
+  border-color:var(--coral);
+  background:rgba(232,101,90,0.1);
 }
-
-.image-break {
-  margin:30px 0; border-radius:16px; overflow:hidden; height:300px; position:relative;
-  background-image: url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&q=80');
-  background-size: cover; background-position: center;
-  box-shadow: 0 10px 40px rgba(255,133,0,0.3);
-}
-.image-break::after {
-  content:''; position:absolute; inset:0;
-  background: linear-gradient(to bottom, transparent, rgba(10,14,26,0.8));
+.option-btn.selected {
+  background:var(--coral); color:var(--text-light);
+  border-color:var(--coral); font-weight:600;
 }
 
+/* PHRASAL VERBS */
+.phrasal-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px; margin:30px 0;
+}
+.phrasal-card {
+  background:var(--text-light);
+  padding:25px; border-radius:8px;
+  border-top:4px solid var(--coral);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+.phrasal-card h4 {
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem; color:var(--navy);
+  margin-bottom:10px;
+}
+.phrasal-card p { color:var(--text-muted); font-size:0.95rem; }
+
+/* MATCHING */
 .matching-grid {
-  display:grid; grid-template-columns:1fr 1fr; gap:15px; margin:20px 0;
+  display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:30px 0;
 }
-@media(max-width:768px) { .matching-grid { grid-template-columns:1fr; } }
 .match-column {
-  background:rgba(0,0,0,0.3); border-radius:12px; padding:20px;
+  background:var(--text-light); border-radius:8px; padding:25px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
 }
-.match-column h4 { color:var(--blue); margin-bottom:15px; font-family:'Orbitron',sans-serif; }
+.match-column h4 {
+  font-family:'Playfair Display',serif;
+  color:var(--navy); margin-bottom:15px;
+  font-size:1.3rem;
+}
 .match-item {
-  padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border);
-  border-radius:8px; margin-bottom:8px; font-size:0.9rem;
+  padding:12px; background:var(--cream);
+  border-radius:6px; margin-bottom:10px;
+  font-size:0.95rem;
 }
+
+/* NAV BUTTON */
+.nav-btn {
+  display:inline-block; margin-top:30px;
+  padding:15px 40px;
+  background:var(--coral); color:var(--text-light);
+  text-decoration:none; border-radius:6px;
+  font-weight:700; font-size:1.1rem;
+  transition: background 0.3s;
+  border:none; cursor:pointer;
+}
+.nav-btn:hover { background:#d4554a; transform:translateY(-2px); }
+
+/* HIGHLIGHT */
+.highlight-box {
+  background:rgba(212,165,116,0.2);
+  border-left:4px solid var(--gold);
+  padding:20px 25px; margin:20px 0;
+  border-radius:0 8px 8px 0;
+  font-style:italic;
+}
+
+/* FOOTER */
+footer {
+  padding:40px 20px; text-align:center;
+  background:var(--navy); color:var(--text-light);
+}
+footer p { margin-bottom:10px; }
 
 @media(max-width:768px) {
-  .section { padding:20px 15px; }
-  .hero h1 { font-size:2rem; }
-  .options-grid { grid-template-columns:1fr; }
+  .hero { height:80vh; }
+  .section-image { min-height:40vh; }
+  .section-solid { padding:60px 20px; }
+  .card-grid { grid-template-columns:1fr; }
+  .matching-grid { grid-template-columns:1fr; }
+  .reading-block { padding:25px; }
+  .country-header { flex-direction:column; text-align:center; }
 }
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
-    <span class="unit-badge">🏨 UNIT 15</span>
+    <div class="hero-badge">UNIT 15</div>
     <h1>At the Inn</h1>
-    <p>Check in to your European adventure. Master hotel vocabulary, phrasal verbs, and travel expressions while exploring Spain, France, Italy, and Germany.</p>
+    <p>Join the Williams family as they check into their European adventure and explore the most breathtaking destinations across four incredible countries.</p>
   </div>
 </section>
 
-<div class="container">
-  <div class="progress-wrap"><div class="progress-fill" id="progressBar"></div></div>
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressBar"></div>
+  </div>
+</div>
 
-  <!-- SECTION 1: READING - THE INN -->
-  <section class="section active" id="sec1">
-    <h2 class="section-title">📖 1. Reading: The Williams at the Catalann Inn</h2>
-    <p class="section-desc">Read about the Williams family checking into their hotel in Spain.</p>
-    <div class="reading-card">
-      <h3>🏨 At the Inn</h3>
+<!-- SECTION 1: READING - CHECKING IN -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Checking In at the Catalann Inn</h2>
+    <p>The Williams begin their Spanish adventure</p>
+  </div>
+</section>
+
+<section class="section-solid cream">
+  <div class="container">
+    <h2 style="color:var(--navy);">📖 The Story Begins</h2>
+    <div class="reading-block">
+      <h3>Welcome to Spain</h3>
       <p>The day before The Williams Family was at Runway's airport, today they are checking in at the place where they had planned to stay on their visit to Spain. The "Catalann Inn" is a nice hotel where you can enjoy a beautiful contour. They booked a reservation for a triple room because they're a family of four, so they need a big space for all.</p>
       <p>The hotel desk clerk is handing them their room access card. The bell hop hauled their luggage away up to the fifth floor, to the Williams' hotel room. They want to have a break for the rest of the eve, due to the fact that the next day they are going to check out some noteworthy tourist attractions.</p>
     </div>
-    <div class="exercise-item"><label class="exercise-label">What is the name of the hotel?</label><input type="text" class="exercise-input" id="ex1a" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex1a',['catalann','inn'],'fb1a','ans1a','Great!')">Verificar</button><div class="hidden-answer" id="ans1a">The Catalann Inn</div><div class="feedback" id="fb1a"></div></div>
-    <div class="exercise-item"><label class="exercise-label">What type of room did they book?</label><input type="text" class="exercise-input" id="ex1b" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex1b',['triple','room'],'fb1b','ans1b','Perfect!')">Verificar</button><div class="hidden-answer" id="ans1b">A triple room</div><div class="feedback" id="fb1b"></div></div>
-    <div class="exercise-item"><label class="exercise-label">What floor is their room on?</label><input type="text" class="exercise-input" id="ex1c" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex1c',['fifth','floor'],'fb1c','ans1c','Excellent!')">Verificar</button><div class="hidden-answer" id="ans1c">The fifth floor</div><div class="feedback" id="fb1c"></div></div>
-    <button class="btn btn-next" onclick="scrollToSec(2)">Siguiente Sección →</button>
-  </section>
 
-  <!-- SECTION 2: SPAIN ATTRACTIONS -->
-  <section class="section" id="sec2">
-    <h2 class="section-title">🇪🇸 2. Tourist Attractions in Spain</h2>
-    <p class="section-desc">Explore the noteworthy attractions the Williams visited in Spain.</p>
-    <div class="attraction-card">
-      <h4>🏰 The Alcázar of Segovia</h4>
-      <p>A stone fortification located in the old city of Segovia, Spain. The Alcázar was originally built as a fortress but has served as a royal palace, a state prison, a Royal Artillery College and a military academy since then. The castle is one of the inspirations for Walt Disney's Cinderella Castle.</p>
+    <div class="exercise-box">
+      <h3>Comprehension Check</h3>
+      <div class="exercise-item">
+        <label>1. What is the name of the hotel where the Williams are staying?</label>
+        <input type="text" class="exercise-input" id="ex1a" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex1a',['catalann','inn'],'fb1a','ans1a')">Check Answer</button>
+        <div class="hidden-answer" id="ans1a">The Catalann Inn</div>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. What type of room did they book and why?</label>
+        <input type="text" class="exercise-input" id="ex1b" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex1b',['triple','room','family'],'fb1b','ans1b')">Check Answer</button>
+        <div class="hidden-answer" id="ans1b">A triple room because they're a family of four</div>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. What floor is their room on?</label>
+        <input type="text" class="exercise-input" id="ex1c" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex1c',['fifth','floor'],'fb1c','ans1c')">Check Answer</button>
+        <div class="hidden-answer" id="ans1c">The fifth floor</div>
+        <div class="feedback" id="fb1c"></div>
+      </div>
     </div>
-    <div class="attraction-card">
-      <h4>🏖️ The Costa del Sol</h4>
-      <p>A region in the south of Spain, in the autonomous community of Andalusia Province of Malaga. Today the region is a tourist destination of world renown.</p>
-    </div>
-    <div class="attraction-card">
-      <h4>🎨 The Prado</h4>
-      <p>Spain's national museum and one of the best in Europe. Remarkable collection of European paintings.</p>
-    </div>
-    <div class="attraction-card">
-      <h4>🌳 Park of the Pleasant Retreat (El Retiro)</h4>
-      <p>One of the largest parks of the city of Madrid, Spain. The park belonged to the Spanish Monarchy until the late 19th century, when it became a public park. It's a magnificent park, filled with beautiful sculptures and monuments, galleries, a peaceful lake and host to a variety of events. The park is entirely surrounded by the present-day city.</p>
-    </div>
-    <div class="exercise-item"><label class="exercise-label">Which castle inspired Walt Disney's Cinderella Castle?</label><input type="text" class="exercise-input" id="ex2a" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex2a',['alcazar','segovia'],'fb2a','ans2a','Great!')">Verificar</button><div class="hidden-answer" id="ans2a">The Alcázar of Segovia</div><div class="feedback" id="fb2a"></div></div>
-    <div class="exercise-item"><label class="exercise-label">What is the Costa del Sol known for?</label><input type="text" class="exercise-input" id="ex2b" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex2b',['tourist','destination'],'fb2b','ans2b','Perfect!')">Verificar</button><div class="hidden-answer" id="ans2b">A tourist destination of world renown</div><div class="feedback" id="fb2b"></div></div>
-    <div class="exercise-item"><label class="exercise-label">What type of art can you see at The Prado?</label><input type="text" class="exercise-input" id="ex2c" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex2c',['european','paintings'],'fb2c','ans2c','Excellent!')">Verificar</button><div class="hidden-answer" id="ans2c">European paintings</div><div class="feedback" id="fb2c"></div></div>
-    <button class="btn btn-next" onclick="scrollToSec(3)">Siguiente Sección →</button>
-  </section>
+    <button class="nav-btn" onclick="scrollToNext()">Continue the Journey →</button>
+  </div>
+</section>
 
-  <!-- SECTION 3: FRANCE ATTRACTIONS -->
-  <section class="section" id="sec3">
-    <h2 class="section-title">🇫🇷 3. Tourist Attractions in France</h2>
-    <p class="section-desc">Discover the attractions the Williams visited in the "city of lights".</p>
-    <div class="reading-card">
-      <h3>🗼 Paris, France</h3>
+<!-- SPAIN -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>🇪🇸 Exploring Spain</h2>
+    <p>From medieval castles to sun-drenched coasts</p>
+  </div>
+</section>
+
+<section class="section-solid navy">
+  <div class="container">
+    <div class="country-header">
+      <div class="country-flag">🇪🇸</div>
+      <h3 style="color:var(--text-light);">Spain</h3>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1564544321317-29246aa7f0b2?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>The Alcázar of Segovia</h3>
+          <p>A stone fortification located in the old city of Segovia, Spain. The Alcázar was originally built as a fortress but has served as a royal palace, a state prison, a Royal Artillery College and a military academy since then. The castle is one of the inspirations for Walt Disney's Cinderella Castle.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>The Costa del Sol</h3>
+          <p>A region in the south of Spain, in the autonomous community of Andalusia Province of Malaga. Today the region is a tourist destination of world renown.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1583242807441-31e8a3b60817?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>The Prado</h3>
+          <p>Spain's national museum and one of the best in Europe. Remarkable collection of European paintings.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1569587112025-0d460e81a126?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>Park of the Pleasant Retreat</h3>
+          <p>One of the largest parks of the city of Madrid, Spain. The park belonged to the Spanish Monarchy until the late 19th century, when it became a public park. It's a magnificent park, filled with beautiful sculptures and monuments, galleries, a peaceful lake and host to a variety of events.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="background:rgba(255,255,255,0.1); color:var(--text-light);">
+      <p>There are so many noteworthy tourist attractions to visit in Madrid, too bad that the Williams don't have enough time to get to know more about this exciting place, they have to continue with their journey to France, Italy and to wrap it up in Dutchland.</p>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Spain Comprehension</h3>
+      <div class="exercise-item">
+        <label>1. Which castle inspired Walt Disney's Cinderella Castle?</label>
+        <input type="text" class="exercise-input" id="ex2a" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex2a',['alcazar','segovia'],'fb2a','ans2a')">Check Answer</button>
+        <div class="hidden-answer" id="ans2a">The Alcázar of Segovia</div>
+        <div class="feedback" id="fb2a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. What was the Alcázar originally built as?</label>
+        <input type="text" class="exercise-input" id="ex2b" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex2b',['fortress'],'fb2b','ans2b')">Check Answer</button>
+        <div class="hidden-answer" id="ans2b">A fortress</div>
+        <div class="feedback" id="fb2b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. What can you see at The Prado?</label>
+        <input type="text" class="exercise-input" id="ex2c" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex2c',['european','paintings'],'fb2c','ans2c')">Check Answer</button>
+        <div class="hidden-answer" id="ans2c">A remarkable collection of European paintings</div>
+        <div class="feedback" id="fb2c"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue to France →</button>
+  </div>
+</section>
+
+<!-- FRANCE -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>🇫🇷 The City of Lights</h2>
+    <p>Paris awaits the Williams family</p>
+  </div>
+</section>
+
+<section class="section-solid coral">
+  <div class="container">
+    <div class="country-header" style="border-bottom-color:var(--text-light);">
+      <div class="country-flag">🇫🇷</div>
+      <h3 style="color:var(--text-light);">France</h3>
+    </div>
+
+    <div class="reading-block">
+      <h3>Paris, France</h3>
       <p>In France they visited "The Louvre", also they took some splendid pics at "Arc de Triomphe", had the opportunity to stroll across "Alexandre III Bridge", hung around at "Place de la Concorde", but of course nosed around "Centre Pompidou", enjoyed a pleasing day at "Jardin du Luxembourg" and last but not least Notre Dame cathedral. Of course that if you stop over at the "city of lights" it's a must to drop by the boutiques and some attractive restaurants.</p>
     </div>
-    <div class="exercise-item"><label class="exercise-label">Name three attractions they visited in Paris:</label><input type="text" class="exercise-input" id="ex3a" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex3a',['louvre','arc','triomphe'],'fb3a','ans3a','Great!')">Verificar</button><div class="hidden-answer" id="ans3a">The Louvre, Arc de Triomphe, Alexandre III Bridge, Place de la Concorde, Centre Pompidou, Jardin du Luxembourg, Notre Dame cathedral</div><div class="feedback" id="fb3a"></div></div>
-    <div class="exercise-item"><label class="exercise-label">What is Paris known as?</label><input type="text" class="exercise-input" id="ex3b" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex3b',['city','lights'],'fb3b','ans3b','Perfect!')">Verificar</button><div class="hidden-answer" id="ans3b">The city of lights</div><div class="feedback" id="fb3b"></div></div>
-    <button class="btn btn-next" onclick="scrollToSec(4)">Siguiente Sección →</button>
-  </section>
 
-  <div class="image-break"></div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>The Louvre</h3>
+          <p>The world's largest art museum and a historic monument in Paris.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1509439581779-6298f75bf6e5?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>Arc de Triomphe</h3>
+          <p>One of the most famous monuments in Paris, standing at the western end of the Champs-Élysées.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1471623320832-752e8bbf8413?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>Notre Dame Cathedral</h3>
+          <p>A medieval Catholic cathedral on the Île de la Cité, considered a fine example of French Gothic architecture.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1551634979-2b11f8c946fe?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>Jardin du Luxembourg</h3>
+          <p>A peaceful garden in the heart of Paris, perfect for a relaxing stroll.</p>
+        </div>
+      </div>
+    </div>
 
-  <!-- SECTION 4: ITALY ATTRACTIONS -->
-  <section class="section" id="sec4">
-    <h2 class="section-title">🇮🇹 4. Tourist Attractions in Italy</h2>
-    <p class="section-desc">Explore the ancient wonders of Rome.</p>
-    <div class="attraction-card">
-      <h4>🏛️ Ostia Antica</h4>
-      <p>One of Rome's underrated gems but one of the best tourist attractions. It contains the strikingly well safeguarded remains of Rome's ancient port. It's fascinating and just dazzling to explore.</p>
+    <div class="exercise-box">
+      <h3>France Comprehension</h3>
+      <div class="exercise-item">
+        <label>1. Name three attractions the Williams visited in Paris:</label>
+        <input type="text" class="exercise-input" id="ex3a" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex3a',['louvre','arc','triomphe'],'fb3a','ans3a')">Check Answer</button>
+        <div class="hidden-answer" id="ans3a">The Louvre, Arc de Triomphe, Alexandre III Bridge, Place de la Concorde, Centre Pompidou, Jardin du Luxembourg, Notre Dame cathedral</div>
+        <div class="feedback" id="fb3a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. What is Paris known as?</label>
+        <input type="text" class="exercise-input" id="ex3b" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex3b',['city','lights'],'fb3b','ans3b')">Check Answer</button>
+        <div class="hidden-answer" id="ans3b">The city of lights</div>
+        <div class="feedback" id="fb3b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. What is a must when visiting Paris?</label>
+        <input type="text" class="exercise-input" id="ex3c" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex3c',['boutiques','restaurants'],'fb3c','ans3c')">Check Answer</button>
+        <div class="hidden-answer" id="ans3c">Drop by the boutiques and attractive restaurants</div>
+        <div class="feedback" id="fb3c"></div>
+      </div>
     </div>
-    <div class="attraction-card">
-      <h4>🏟️ The Colosseum</h4>
-      <p>An absolute must for any tour of Rome. In its time it was the largest amphitheatre of the Roman Empire, where gladiators, criminals and lions alike fought for their lives.</p>
-    </div>
-    <div class="attraction-card">
-      <h4>⛲ The Trevi Fountain</h4>
-      <p>An iconic monument in the city. It was designed and completed in the 18th century. Tourists come to the fountain in order to throw a coin, which is, according to a local legend, supposed to bring good luck.</p>
-    </div>
-    <div class="attraction-card">
-      <h4>🪜 The Spanish Steps</h4>
-      <p>One of the city's top attractions, the flight of 138 stairs is the biggest in Europe. They are topped by the "Trinita dei Monti" church, and below there is the large "Piazza di Spagna", which is also a major shopping destination in the city, and hosts several designer boutiques.</p>
-    </div>
-    <div class="exercise-item"><label class="exercise-label">What was Ostia Antica in ancient Rome?</label><input type="text" class="exercise-input" id="ex4a" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex4a',['port'],'fb4a','ans4a','Great!')">Verificar</button><div class="hidden-answer" id="ans4a">Rome's ancient port</div><div class="feedback" id="fb4a"></div></div>
-    <div class="exercise-item"><label class="exercise-label">What do tourists throw into the Trevi Fountain?</label><input type="text" class="exercise-input" id="ex4b" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex4b',['coin'],'fb4b','ans4b','Perfect!')">Verificar</button><div class="hidden-answer" id="ans4b">A coin</div><div class="feedback" id="fb4b"></div></div>
-    <div class="exercise-item"><label class="exercise-label">How many stairs do the Spanish Steps have?</label><input type="text" class="exercise-input" id="ex4c" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex4c',['138'],'fb4c','ans4c','Excellent!')">Verificar</button><div class="hidden-answer" id="ans4c">138 stairs</div><div class="feedback" id="fb4c"></div></div>
-    <button class="btn btn-next" onclick="scrollToSec(5)">Siguiente Sección →</button>
-  </section>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--navy);">Continue to Italy →</button>
+  </div>
+</section>
 
-  <!-- SECTION 5: GERMANY ATTRACTIONS -->
-  <section class="section" id="sec5">
-    <h2 class="section-title">🇩🇪 5. Tourist Attractions in Germany</h2>
-    <p class="section-desc">Discover Berlin's most impressive landmarks.</p>
-    <div class="attraction-card">
-      <h4>🏛️ The Reichstag</h4>
-      <p>A place in which one can look out from the building's glass dome to get a bird's eye view of the hustle and bustle in the city.</p>
+<!-- ITALY -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>🇮🇹 Ancient Rome Awaits</h2>
+    <p>Gladiators, fountains, and timeless wonders</p>
+  </div>
+</section>
+
+<section class="section-solid cream">
+  <div class="container">
+    <div class="country-header">
+      <div class="country-flag">🇮🇹</div>
+      <h3>Italy</h3>
     </div>
-    <div class="attraction-card">
-      <h4>🏛️ The Gendarmenmarkt</h4>
-      <p>One of the most spectacular squares in Berlin, located close to Friedrichstraße, Berlin's exclusive shopping street in the central Mitte district. Three of the most impressive examples of architecture in the capital city are to be found here: the (Konzerthaus) Concert House and the German and French Cathedrals.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>Ostia Antica</h3>
+          <p>One of Rome's underrated gems but one of the best tourist attractions. It contains the strikingly well safeguarded remains of Rome's ancient port. It's fascinating and just dazzling to explore.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>The Colosseum</h3>
+          <p>An absolute must for any tour of Rome. In its time it was the largest amphitheatre of the Roman Empire, where gladiators, criminals and lions alike fought for their lives.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1525874684015-58379d421a52?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>The Trevi Fountain</h3>
+          <p>An iconic monument in the city. It was designed and completed in the 18th century. Tourists come to the fountain in order to throw a coin, which is, according to a local legend, supposed to bring good luck.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>The Spanish Steps</h3>
+          <p>One of the city's top attractions, the flight of 138 stairs is the biggest in Europe. They are topped by the "Trinita dei Monti" church, and below there is the large "Piazza di Spagna", which is also a major shopping destination in the city, and hosts several designer boutiques, where Mrs. Mary and Kimberly Williams had no trouble doing some good old shopping.</p>
+        </div>
+      </div>
     </div>
-    <div class="attraction-card">
-      <h4>🛍️ The Friedrichstraße</h4>
-      <p>The main point for culture and shopping as a street in central Berlin. This downtown area is known for its stylish landholdings. Place where the Williams relished a lot due to its wide array of emporiums and restaurants. (Shop, shop, shop/chow, chow, chow)</p>
+
+    <div class="exercise-box">
+      <h3>Italy Comprehension</h3>
+      <div class="exercise-item">
+        <label>1. What was Ostia Antica in ancient Rome?</label>
+        <input type="text" class="exercise-input" id="ex4a" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex4a',['port'],'fb4a','ans4a')">Check Answer</button>
+        <div class="hidden-answer" id="ans4a">Rome's ancient port</div>
+        <div class="feedback" id="fb4a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. What do tourists throw into the Trevi Fountain and why?</label>
+        <input type="text" class="exercise-input" id="ex4b" placeholder="Type your answer...">
+        <button class="btn btn-verify" onclick="checkSimple('ex4b',['coin','luck'],'fb4b','ans4b')">Check Answer</button>
+        <div class="hidden-answer" id="ans4b">A coin, to bring good luck</div>
+        <div class="feedback" id="fb4b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. How many stairs do the Spanish Steps have?</label>
+        <input type="text" class="exercise-input" id="ex4c" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex4c',['138'],'fb4c','ans4c')">Check Answer</button>
+        <div class="hidden-answer" id="ans4c">138 stairs</div>
+        <div class="feedback" id="fb4c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. What did Mrs. Mary and Kimberly Williams do at Piazza di Spagna?</label>
+        <input type="text" class="exercise-input" id="ex4d" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex4d',['shopping','boutiques'],'fb4d','ans4d')">Check Answer</button>
+        <div class="hidden-answer" id="ans4d">They did some good old shopping at the designer boutiques</div>
+        <div class="feedback" id="fb4d"></div>
+      </div>
     </div>
-    <div class="attraction-card">
-      <h4>🏰 Charlottenburg Palace</h4>
-      <p>The largest palace in Berlin, and the only surviving royal residence in the city. Its gorgeous gardens are a major blast as a tourist attraction.</p>
+    <button class="nav-btn" onclick="scrollToNext()">Continue to Germany →</button>
+  </div>
+</section>
+
+<!-- GERMANY -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1560969184-10fe8719e047?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>🇩🇪 Berlin's Grandeur</h2>
+    <p>The final stop of the Williams' European tour</p>
+  </div>
+</section>
+
+<section class="section-solid navy">
+  <div class="container">
+    <div class="country-header">
+      <div class="country-flag">🇩🇪</div>
+      <h3 style="color:var(--text-light);">Germany</h3>
     </div>
-    <div class="attraction-card">
-      <h4>🧱 Berlin Wall Memorial & Brandenburg Gate</h4>
+
+    <div class="reading-block">
+      <h3>The Williams in Berlin</h3>
+      <p>Their visit to Dutchland was as exhilarating as the other countries. They started off at the "Reichstag" building, a place in which one can look out from the building's glass dome to get a bird's eye view of the hustle and bustle in the city.</p>
+      <p>"The Gendarmenmarkt" is one of the most spectacular squares in Berlin, located close to Friedrichstraße, Berlin's exclusive shopping street in the central Mitte district. Three of the most impressive examples of architecture in the capital city are to be found here: the (Konzerthaus) Concert House and the German and French Cathedrals.</p>
+      <p>The Friedrichstraße is the main point for culture and shopping as a street in central Berlin. This downtown area is known for its stylish landholdings. Place where the Williams relished a lot due to its wide array of emporiums and restaurants. (Shop, shop, shop/chow, chow, chow)</p>
+      <p>They couldn't pass out on the largest palace in Berlin, and the only surviving royal residence in the city. "Charlottenburg Palace" and its gorgeous gardens are a major blast as a tourist attraction.</p>
       <p>To wrap up their trip to the old continent, they had a slight walk through the Berlin's wall memorial and a stroll through the "Brandenburg Gate", Berlin's signature attraction.</p>
     </div>
-    <div class="exercise-item"><label class="exercise-label">What can you see from the Reichstag's glass dome?</label><input type="text" class="exercise-input" id="ex5a" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex5a',['bird','eye','view'],'fb5a','ans5a','Great!')">Verificar</button><div class="hidden-answer" id="ans5a">A bird's eye view of the city</div><div class="feedback" id="fb5a"></div></div>
-    <div class="exercise-item"><label class="exercise-label">Name three buildings at the Gendarmenmarkt:</label><input type="text" class="exercise-input" id="ex5b" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex5b',['konzerthaus','cathedrals'],'fb5b','ans5b','Perfect!')">Verificar</button><div class="hidden-answer" id="ans5b">Concert House (Konzerthaus), German Cathedral, French Cathedral</div><div class="feedback" id="fb5b"></div></div>
-    <div class="exercise-item"><label class="exercise-label">What is the Friedrichstraße known for?</label><input type="text" class="exercise-input" id="ex5c" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex5c',['culture','shopping'],'fb5c','ans5c','Excellent!')">Verificar</button><div class="hidden-answer" id="ans5c">Culture and shopping</div><div class="feedback" id="fb5c"></div></div>
-    <button class="btn btn-next" onclick="scrollToSec(6)">Siguiente Sección →</button>
-  </section>
 
-  <!-- SECTION 6: HOTEL BOOKING FAQ -->
-  <section class="section" id="sec6">
-    <h2 class="section-title">📋 6. Hotel Booking - Commonly Asked Questions</h2>
-    <p class="section-desc">Review the most common questions about hotel reservations.</p>
-    <div class="reading-card">
-      <h3>🎫 Making a Reservation</h3>
-      <p>• How do I reserve my room?<br>• Is it safe to use my credit card?<br>• What credit card types are accepted for guarantee/deposit?<br>• My credit card number is correct, but the hotel is not accepting it. Why?<br>• Can I specify where I would like my room to be located (preferred floor, next to pool, etc.)?<br>• Is the room rate per person or per night?</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>The Reichstag</h3>
+          <p>Look out from the building's glass dome to get a bird's eye view of the city.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1560969184-10fe8719e047?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>The Gendarmenmarkt</h3>
+          <p>One of the most spectacular squares in Berlin with the Concert House and German and French Cathedrals.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1587330979470-3595ac045ab0?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>Charlottenburg Palace</h3>
+          <p>The largest palace in Berlin and the only surviving royal residence, with gorgeous gardens.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1551861687-87e4b11515a8?w=800&q=80');"></div>
+        <div class="card-content">
+          <h3>Brandenburg Gate</h3>
+          <p>Berlin's signature attraction, where the Williams wrapped up their European tour.</p>
+        </div>
+      </div>
     </div>
-    <div class="reading-card">
-      <h3>✅ Confirming a Reservation</h3>
-      <p>• What happens when I make a reservation?<br>• How long will it take Interactive Affiliate Network to respond to my reservation request?<br>• How do I check on my request for lodging?<br>• When will my reservation be at the hotel?<br>• Once I have made my reservation, will I receive any written confirmation from the hotel?</p>
+
+    <div class="exercise-box">
+      <h3>Germany Comprehension</h3>
+      <div class="exercise-item">
+        <label>1. What can you see from the Reichstag's glass dome?</label>
+        <input type="text" class="exercise-input" id="ex5a" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex5a',['bird','eye','view'],'fb5a','ans5a')">Check Answer</button>
+        <div class="hidden-answer" id="ans5a">A bird's eye view of the city</div>
+        <div class="feedback" id="fb5a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Name three buildings at the Gendarmenmarkt:</label>
+        <input type="text" class="exercise-input" id="ex5b" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex5b',['konzerthaus','cathedrals'],'fb5b','ans5b')">Check Answer</button>
+        <div class="hidden-answer" id="ans5b">Concert House (Konzerthaus), German Cathedral, French Cathedral</div>
+        <div class="feedback" id="fb5b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. What is the Friedrichstraße known for?</label>
+        <input type="text" class="exercise-input" id="ex5c" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex5c',['culture','shopping'],'fb5c','ans5c')">Check Answer</button>
+        <div class="hidden-answer" id="ans5c">Culture and shopping</div>
+        <div class="feedback" id="fb5c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. How did the Williams wrap up their trip to the old continent?</label>
+        <input type="text" class="exercise-input" id="ex5d" placeholder="Type your answer...">
+        <button class="btn-verify" onclick="checkSimple('ex5d',['berlin','wall','brandenburg'],'fb5d','ans5d')">Check Answer</button>
+        <div class="hidden-answer" id="ans5d">They walked through the Berlin Wall memorial and the Brandenburg Gate</div>
+        <div class="feedback" id="fb5d"></div>
+      </div>
     </div>
-    <div class="reading-card">
-      <h3>❌ Canceling a Reservation</h3>
+    <button class="nav-btn" onclick="scrollToNext()">Continue to Exercises →</button>
+  </div>
+</section>
+
+<!-- HOTEL BOOKING FAQ -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Hotel Booking FAQ</h2>
+    <p>Commonly asked questions about reservations</p>
+  </div>
+</section>
+
+<section class="section-solid gold">
+  <div class="container">
+    <h2>📋 Frequently Asked Questions</h2>
+    
+    <div class="reading-block">
+      <h3>Making a Reservation</h3>
+      <p>• How do I reserve my room?<br>• Is it safe to use my credit card?<br>• What credit card types are accepted for guarantee/deposit?<br>• My credit card number is correct, but the hotel is not accepting it. Why?<br>• Can I specify where I would like my room to be located?<br>• Is the room rate per person or per night?</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>Confirming a Reservation</h3>
+      <p>• What happens when I make a reservation?<br>• How long will it take to respond to my reservation request?<br>• How do I check on my request for lodging?<br>• When will my reservation be at the hotel?<br>• Once I have made my reservation, will I receive any written confirmation?</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>Canceling a Reservation</h3>
       <p>• What is the cancellation policy on my reservation?<br>• How do I cancel a reservation?</p>
     </div>
-    <div class="reading-card">
-      <h3>🔧 Miscellaneous</h3>
+
+    <div class="reading-block">
+      <h3>Miscellaneous</h3>
       <p>• What type of customer service is offered?<br>• Is there a hotel shuttle service to/from the airport?<br>• What if there will be more than two adults in the room?<br>• Our children will be with us… do they stay free?<br>• Are roll away beds/cribs available?<br>• Is breakfast included?<br>• Do hotels have minimum age requirements?<br>• What if I find a lower price after booking?</p>
     </div>
-    <div class="exercise-item"><label class="exercise-label">Write 3 questions you would ask when making a hotel reservation:</label><textarea class="exercise-textarea" id="ex6a" placeholder="Write your questions..."></textarea><button class="btn btn-verify" onclick="checkDiscussion('ex6a','fb6a')">Verificar</button><div class="feedback" id="fb6a"></div></div>
-    <button class="btn btn-next" onclick="scrollToSec(7)">Siguiente Sección →</button>
-  </section>
 
-  <!-- SECTION 7: MATCHING EXERCISE -->
-  <section class="section" id="sec7">
-    <h2 class="section-title">🔗 7. Matching Exercise: Complete the Dialogs</h2>
-    <p class="section-desc">Match the questions with the correct responses.</p>
+    <div class="exercise-box">
+      <h3>Your Turn</h3>
+      <div class="exercise-item">
+        <label>Write 3 questions you would ask when making a hotel reservation:</label>
+        <textarea class="exercise-textarea" id="ex6a" placeholder="Write your questions..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex6a','fb6a')">Check Answer</button>
+        <div class="feedback" id="fb6a"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue to Matching →</button>
+  </div>
+</section>
+
+<!-- MATCHING EXERCISE -->
+<section class="section-solid cream">
+  <div class="container">
+    <h2 style="color:var(--navy);">🔗 Matching Exercise: Complete the Dialogs</h2>
+    
     <div class="matching-grid">
       <div class="match-column">
         <h4>QUESTIONS</h4>
@@ -367,165 +815,449 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
         <div class="match-item">h. Non-smoking, please.</div>
       </div>
     </div>
-    <div class="exercise-item"><label class="exercise-label">Write your matches (e.g., 1-d, 2-c, etc.):</label><input type="text" class="exercise-input" id="ex7match" placeholder="1-?, 2-?, 3-?, 4-?, 5-?, 6-?, 7-?, 8-?"><button class="btn btn-verify" onclick="checkMatching()">Verificar</button><div class="hidden-answer" id="ans7match">1-d, 2-c, 3-h, 4-f, 5-g, 6-b, 7-e, 8-a</div><div class="feedback" id="fb7match"></div></div>
-    <button class="btn btn-next" onclick="scrollToSec(8)">Siguiente Sección →</button>
-  </section>
 
-  <!-- SECTION 8: PHRASAL VERBS "OFF" -->
-  <section class="section" id="sec8">
-    <h2 class="section-title">🚀 8. Phrasal Verbs: "Off" meaning "Departing"</h2>
-    <p class="section-desc">Guess the meanings from context.</p>
-    <div class="phrasal-box">
-      <h3>Phrasal Verbs with "Off"</h3>
-      <div class="phrasal-item"><strong>Drop off</strong> - to take someone to a place and leave them there</div>
-      <div class="phrasal-item"><strong>Get off</strong> - to depart for a journey or leave a place</div>
-      <div class="phrasal-item"><strong>Head off</strong> - to start a journey</div>
-      <div class="phrasal-item"><strong>See off</strong> - to go to the airport/station to say goodbye to someone</div>
-      <div class="phrasal-item"><strong>Take off</strong> - when a plane begins to fly</div>
-    </div>
-    <div class="exercise-item"><label class="exercise-label">"I can drop you off at the station. It's on the way." → "Drop off" means:</label><textarea class="exercise-textarea" id="ex8a" placeholder="Write the meaning..."></textarea><button class="btn btn-verify" onclick="checkDiscussion('ex8a','fb8a')">Verificar</button><div class="feedback" id="fb8a"></div></div>
-    <div class="exercise-item"><label class="exercise-label">"When shall we get off to the airport tomorrow?" → "Get off" means:</label><textarea class="exercise-textarea" id="ex8b" placeholder="Write the meaning..."></textarea><button class="btn btn-verify" onclick="checkDiscussion('ex8b','fb8b')">Verificar</button><div class="feedback" id="fb8b"></div></div>
-    <div class="exercise-item"><label class="exercise-label">"John is heading off to Hokkaido for 2 weeks." → "Heading off" means:</label><textarea class="exercise-textarea" id="ex8c" placeholder="Write the meaning..."></textarea><button class="btn btn-verify" onclick="checkDiscussion('ex8c','fb8c')">Verificar</button><div class="feedback" id="fb8c"></div></div>
-    <div class="exercise-item"><label class="exercise-label">"Jim is leaving tomorrow. Are you going to the airport to see him off?" → "See off" means:</label><textarea class="exercise-textarea" id="ex8d" placeholder="Write the meaning..."></textarea><button class="btn btn-verify" onclick="checkDiscussion('ex8d','fb8d')">Verificar</button><div class="feedback" id="fb8d"></div></div>
-    <div class="exercise-item"><label class="exercise-label">"The plane can't take off because of the bad weather." → "Take off" means:</label><textarea class="exercise-textarea" id="ex8e" placeholder="Write the meaning..."></textarea><button class="btn btn-verify" onclick="checkDiscussion('ex8e','fb8e')">Verificar</button><div class="feedback" id="fb8e"></div></div>
-    <button class="btn btn-next" onclick="scrollToSec(9)">Siguiente Sección →</button>
-  </section>
-
-  <!-- SECTION 9: FILL IN CONVERSATION -->
-  <section class="section" id="sec9">
-    <h2 class="section-title">💬 9. Complete the Conversation</h2>
-    <p class="section-desc">Use the phrasal verbs to complete the dialog.</p>
-    <div class="highlight">Use: drop off, get off, head off, see off, take off</div>
-    <div class="exercise-item"><label class="exercise-label">Bill: "Where are you ____________________ to this summer?"</label><input type="text" class="exercise-input" id="ex9a" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex9a',['heading','off'],'fb9a','ans9a','Great!')">Verificar</button><div class="hidden-answer" id="ans9a">heading off</div><div class="feedback" id="fb9a"></div></div>
-    <div class="exercise-item"><label class="exercise-label">Bill: "Do you want me to _________ you _________ at the airport?"</label><input type="text" class="exercise-input" id="ex9b" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex9b',['drop','off'],'fb9b','ans9b','Perfect!')">Verificar</button><div class="hidden-answer" id="ans9b">drop you off</div><div class="feedback" id="fb9b"></div></div>
-    <div class="exercise-item"><label class="exercise-label">Bill: "Well then, at least let me __________ you __________ at the train station."</label><input type="text" class="exercise-input" id="ex9c" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex9c',['drop','off'],'fb9c','ans9c','Excellent!')">Verificar</button><div class="hidden-answer" id="ans9c">drop you off</div><div class="feedback" id="fb9c"></div></div>
-    <div class="exercise-item"><label class="exercise-label">Bill: "So what time are you __________ tomorrow?"</label><input type="text" class="exercise-input" id="ex9d" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex9d',['getting','off'],'fb9d','ans9d','Great!')">Verificar</button><div class="hidden-answer" id="ans9d">getting off</div><div class="feedback" id="fb9d"></div></div>
-    <div class="exercise-item"><label class="exercise-label">Jan: "Well, the plane will _________ at 8 a.m..."</label><input type="text" class="exercise-input" id="ex9e" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex9e',['take','off'],'fb9e','ans9e','Perfect!')">Verificar</button><div class="hidden-answer" id="ans9e">take off</div><div class="feedback" id="fb9e"></div></div>
-    <div class="exercise-item"><label class="exercise-label">Jan: "...so I have to __________ at around 4 from here."</label><input type="text" class="exercise-input" id="ex9f" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex9f',['get','off'],'fb9f','ans9f','Excellent!')">Verificar</button><div class="hidden-answer" id="ans9f">get off</div><div class="feedback" id="fb9f"></div></div>
-    <button class="btn btn-next" onclick="scrollToSec(10)">Siguiente Sección →</button>
-  </section>
-
-  <!-- SECTION 10: WEATHER AND CLIMATE -->
-  <section class="section" id="sec10">
-    <h2 class="section-title">🌤️ 10. Weather and Climate Terms</h2>
-    <p class="section-desc">Choose the correct word for each weather expression.</p>
-    <div class="exercise-item"><label class="exercise-label">1. It is very cold = It's ____________________</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10a','a')">frozen</button><button class="option-btn" onclick="selectOption(this,'q10a','b')">freezing</button></div><button class="btn btn-verify" onclick="checkMC('q10a','b','fb10a')">Verificar</button><div class="hidden-answer" id="ans10a">freezing</div><div class="feedback" id="fb10a"></div></div>
-    <div class="exercise-item"><label class="exercise-label">2. It was cold in the morning, but it ____________________ up by the afternoon.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10b','a')">warmed</button><button class="option-btn" onclick="selectOption(this,'q10b','b')">heated</button></div><button class="btn btn-verify" onclick="checkMC('q10b','a','fb10b')">Verificar</button><div class="hidden-answer" id="ans10b">warmed</div><div class="feedback" id="fb10b"></div></div>
-    <div class="exercise-item"><label class="exercise-label">3. Many homes were ____________________ by the hurricane.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10c','a')">destructed</button><button class="option-btn" onclick="selectOption(this,'q10c','b')">destroyed</button></div><button class="btn btn-verify" onclick="checkMC('q10c','b','fb10c')">Verificar</button><div class="hidden-answer" id="ans10c">destroyed</div><div class="feedback" id="fb10c"></div></div>
-    <div class="exercise-item"><label class="exercise-label">4. Small pellets of ice that fall from the sky during a storm are called ____________________</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10d','a')">rain</button><button class="option-btn" onclick="selectOption(this,'q10d','b')">hail</button></div><button class="btn btn-verify" onclick="checkMC('q10d','b','fb10d')">Verificar</button><div class="hidden-answer" id="ans10d">hail</div><div class="feedback" id="fb10d"></div></div>
-    <div class="exercise-item"><label class="exercise-label">5. Don't go outside! You could get ____________________ by lightning!</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10e','a')">struck</button><button class="option-btn" onclick="selectOption(this,'q10e','b')">stroked</button></div><button class="btn btn-verify" onclick="checkMC('q10e','a','fb10e')">Verificar</button><div class="hidden-answer" id="ans10e">struck</div><div class="feedback" id="fb10e"></div></div>
-    <div class="exercise-item"><label class="exercise-label">6. The ____________________ was very loud.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10f','a')">thunder</button><button class="option-btn" onclick="selectOption(this,'q10f','b')">lightning</button></div><button class="btn btn-verify" onclick="checkMC('q10f','a','fb10f')">Verificar</button><div class="hidden-answer" id="ans10f">thunder</div><div class="feedback" id="fb10f"></div></div>
-    <div class="exercise-item"><label class="exercise-label">7. It was so ____________________ outside that my hat was blown off my head.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10g','a')">wind</button><button class="option-btn" onclick="selectOption(this,'q10g','b')">windy</button></div><button class="btn btn-verify" onclick="checkMC('q10g','b','fb10g')">Verificar</button><div class="hidden-answer" id="ans10g">windy</div><div class="feedback" id="fb10g"></div></div>
-    <div class="exercise-item"><label class="exercise-label">8. A ____________________ wind = A very strong wind</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10h','a')">gutsy</button><button class="option-btn" onclick="selectOption(this,'q10h','b')">gusty</button></div><button class="btn btn-verify" onclick="checkMC('q10h','b','fb10h')">Verificar</button><div class="hidden-answer" id="ans10h">gusty</div><div class="feedback" id="fb10h"></div></div>
-    <div class="exercise-item"><label class="exercise-label">9. A snowstorm is called a ____________________</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10i','a')">blizzard</button><button class="option-btn" onclick="selectOption(this,'q10i','b')">buzzard</button></div><button class="btn btn-verify" onclick="checkMC('q10i','a','fb10i')">Verificar</button><div class="hidden-answer" id="ans10i">blizzard</div><div class="feedback" id="fb10i"></div></div>
-    <div class="exercise-item"><label class="exercise-label">10. If the weather is mild and pleasant, you can say it's ____________________</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q10j','a')">balmy</button><button class="option-btn" onclick="selectOption(this,'q10j','b')">calming</button></div><button class="btn btn-verify" onclick="checkMC('q10j','a','fb10j')">Verificar</button><div class="hidden-answer" id="ans10j">balmy</div><div class="feedback" id="fb10j"></div></div>
-    <button class="btn btn-next" onclick="scrollToSec(11)">Siguiente Sección →</button>
-  </section>
-
-  <!-- SECTION 11: GIVING DIRECTIONS -->
-  <section class="section" id="sec11">
-    <h2 class="section-title">🗺️ 11. Giving Directions</h2>
-    <p class="section-desc">Fill in the blanks with the correct words from the box.</p>
-    <div class="highlight">Words: across • your • corner • down • exit • far • front • how • left • looking • lost • miss • moment • next • off • on • take • to • transfer • way • where</div>
-    
-    <h3 style="color:var(--orange); margin:20px 0 15px; font-family:'Orbitron',sans-serif;">Directions by Street Name and Nearby Landmarks:</h3>
-    <div class="exercise-item"><label class="exercise-label">A: "You look _________________. Can I help you?"</label><input type="text" class="exercise-input" id="ex11a" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex11a',['lost'],'fb11a','ans11a','Great!')">Verificar</button><div class="hidden-answer" id="ans11a">lost</div><div class="feedback" id="fb11a"></div></div>
-    <div class="exercise-item"><label class="exercise-label">B: "Yeah. I'm __________________ for the Caprice Theater. Do you know ______________ it is?"</label><input type="text" class="exercise-input" id="ex11b" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex11b',['looking','where'],'fb11b','ans11b','Perfect!')">Verificar</button><div class="hidden-answer" id="ans11b">looking, where</div><div class="feedback" id="fb11b"></div></div>
-    <div class="exercise-item"><label class="exercise-label">A: "It's on the _________________ of Elm Street and 22nd Avenue. It's ______________ to the Art Gallery. You can't _________________ it."</label><input type="text" class="exercise-input" id="ex11c" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex11c',['corner','next','miss'],'fb11c','ans11c','Excellent!')">Verificar</button><div class="hidden-answer" id="ans11c">corner, next, miss</div><div class="feedback" id="fb11c"></div></div>
-
-    <h3 style="color:var(--orange); margin:20px 0 15px; font-family:'Orbitron',sans-serif;">Directions by Subway or Bus:</h3>
-    <div class="exercise-item"><label class="exercise-label">A: "Excuse me. Can I trouble you for a _____________?"</label><input type="text" class="exercise-input" id="ex11d" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex11d',['moment'],'fb11d','ans11d','Great!')">Verificar</button><div class="hidden-answer" id="ans11d">moment</div><div class="feedback" id="fb11d"></div></div>
-    <div class="exercise-item"><label class="exercise-label">A: "I'm lost. Do you know _________ to get ________ the Stadium?"</label><input type="text" class="exercise-input" id="ex11e" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex11e',['how','to'],'fb11e','ans11e','Perfect!')">Verificar</button><div class="hidden-answer" id="ans11e">how, to</div><div class="feedback" id="fb11e"></div></div>
-    <div class="exercise-item"><label class="exercise-label">B: "The easiest _________ to get there is probably by subway. Just ___________ the Central Line to Broadway Station."</label><input type="text" class="exercise-input" id="ex11f" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex11f',['way','take'],'fb11f','ans11f','Excellent!')">Verificar</button><div class="hidden-answer" id="ans11f">way, take</div><div class="feedback" id="fb11f"></div></div>
-    <div class="exercise-item"><label class="exercise-label">B: "______________ to the Green Line and get __________ at Harbour Station."</label><input type="text" class="exercise-input" id="ex11g" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex11g',['transfer','off'],'fb11g','ans11g','Great!')">Verificar</button><div class="hidden-answer" id="ans11g">Transfer, off</div><div class="feedback" id="fb11g"></div></div>
-    <div class="exercise-item"><label class="exercise-label">B: "If you go out ___________ number four it should be right in ____________ of you."</label><input type="text" class="exercise-input" id="ex11h" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex11h',['exit','front'],'fb11h','ans11h','Perfect!')">Verificar</button><div class="hidden-answer" id="ans11h">exit, front</div><div class="feedback" id="fb11h"></div></div>
-
-    <h3 style="color:var(--orange); margin:20px 0 15px; font-family:'Orbitron',sans-serif;">Directions by Foot or Car:</h3>
-    <div class="exercise-item"><label class="exercise-label">A: "Can I get to the Harlton Hotel from here _____________ foot?"</label><input type="text" class="exercise-input" id="ex11i" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex11i',['on'],'fb11i','ans11i','Great!')">Verificar</button><div class="hidden-answer" id="ans11i">on</div><div class="feedback" id="fb11i"></div></div>
-    <div class="exercise-item"><label class="exercise-label">B: "Sure. It's not that ______________. Just go ______________ 4th Avenue to Main Street."</label><input type="text" class="exercise-input" id="ex11j" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex11j',['far','down'],'fb11j','ans11j','Perfect!')">Verificar</button><div class="hidden-answer" id="ans11j">far, down</div><div class="feedback" id="fb11j"></div></div>
-    <div class="exercise-item"><label class="exercise-label">B: "Turn ______________ on Main. It should be on ______________ right."</label><input type="text" class="exercise-input" id="ex11k" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex11k',['left','your'],'fb11k','ans11k','Excellent!')">Verificar</button><div class="hidden-answer" id="ans11k">left, your</div><div class="feedback" id="fb11k"></div></div>
-    <div class="exercise-item"><label class="exercise-label">B: "It's ______________ from the park."</label><input type="text" class="exercise-input" id="ex11l" placeholder=""><button class="btn btn-verify" onclick="checkSimple('ex11l',['across'],'fb11l','ans11l','Great!')">Verificar</button><div class="hidden-answer" id="ans11l">across</div><div class="feedback" id="fb11l"></div></div>
-    <button class="btn btn-next" onclick="scrollToSec(12)">Siguiente Sección →</button>
-  </section>
-
-  <!-- SECTION 12: GRAMMAR REVIEW -->
-  <section class="section" id="sec12">
-    <h2 class="section-title">📚 12. Grammar Review: Phrasal Verbs with "Off"</h2>
-    <p class="section-desc">Review the key phrasal verbs meaning "departing".</p>
-    <div class="reading-card">
-      <h3>🚀 Drop off (Separable)</h3>
-      <p>To take someone, or to deliver something, to a place (usually in a car)</p>
-      <div class="highlight">
-        <strong>Examples:</strong><br>
-        On your way to work, could you drop off the books at the library?<br>
-        I'm going in the direction of your office, so I can drop you off on the way.
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>Write your matches (e.g., 1-d, 2-c, etc.):</label>
+        <input type="text" class="exercise-input" id="ex7match" placeholder="1-?, 2-?, 3-?, 4-?, 5-?, 6-?, 7-?, 8-?">
+        <button class="btn-verify" onclick="checkMatching()">Check Answer</button>
+        <div class="hidden-answer" id="ans7match">1-d, 2-c, 3-h, 4-f, 5-g, 6-b, 7-e, 8-a</div>
+        <div class="feedback" id="fb7match"></div>
       </div>
     </div>
-    <div class="reading-card">
-      <h3>🚪 Get off (Inseparable)</h3>
-      <p>To depart for a journey or to leave a place to go somewhere</p>
-      <div class="highlight">
-        <strong>Examples:</strong><br>
-        I want to get off early tomorrow morning so we can get to our destination in the afternoon.<br>
-        I have to get off to the office now.
-      </div>
-    </div>
-    <div class="reading-card">
-      <h3>🛣️ Head off / Set off (Inseparable)</h3>
-      <p>To start a journey</p>
-      <div class="highlight">
-        <strong>Examples:</strong><br>
-        Every year in August, we head off to the mountains in Vancouver.<br>
-        Where are you heading off this summer?
-      </div>
-    </div>
-    <div class="reading-card">
-      <h3>👋 See off (Separable)</h3>
-      <p>To go to the airport, etc. in order to say goodbye to someone<br>To force someone to leave a place</p>
-      <div class="highlight">
-        <strong>Examples:</strong><br>
-        I am going to the airport to see my husband off.<br>
-        Don't try to force your way into my house, or I will ask my dogs to see you off.
-      </div>
-    </div>
-    <div class="reading-card">
-      <h3>✈️ Take off (Inseparable)</h3>
-      <p>(For airplanes, birds, or insects) To begin to fly</p>
-      <div class="highlight">
-        <strong>Examples:</strong><br>
-        I like watching airplanes take off.<br>
-        Look at that baby eagle trying to take off!
-      </div>
-    </div>
-    <button class="btn btn-next" onclick="completeUnit()">🎉 Completar Unidad</button>
-  </section>
-
-  <!-- FINAL -->
-  <div id="finalMsg" style="display:none; text-align:center; margin-top:30px; padding:40px; background:linear-gradient(135deg,rgba(255,133,0,0.15),rgba(0,119,182,0.15)); border:2px solid var(--orange); border-radius:20px;">
-    <h2 style="font-family:'Orbitron',sans-serif; color:var(--orange); margin-bottom:15px; font-size:2rem;">🎉 ¡Unit 15 Completed!</h2>
-    <p style="color:var(--text); font-size:1.2rem; margin-bottom:20px;">You've mastered hotel vocabulary, tourist attractions, phrasal verbs, and giving directions!</p>
-    <p style="color:var(--muted); margin-bottom:25px;">Safe travels on your European adventure! 🏨✈️</p>
-    <a href="indexmax.html" class="btn btn-next" style="display:inline-block; margin-top:20px; text-decoration:none;">Continue to Next Unit →</a>
+    <button class="nav-btn" onclick="scrollToNext()">Continue to Phrasal Verbs →</button>
   </div>
+</section>
 
+<!-- PHRASAL VERBS -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Phrasal Verbs: "Off"</h2>
+    <p>Meaning "Departing"</p>
+  </div>
+</section>
+
+<section class="section-solid navy">
+  <div class="container">
+    <h2>🚀 Phrasal Verbs with "Off"</h2>
+    
+    <div class="phrasal-grid">
+      <div class="phrasal-card">
+        <h4>Drop off</h4>
+        <p>To take someone to a place and leave them there.</p>
+      </div>
+      <div class="phrasal-card">
+        <h4>Get off</h4>
+        <p>To depart for a journey or leave a place.</p>
+      </div>
+      <div class="phrasal-card">
+        <h4>Head off</h4>
+        <p>To start a journey.</p>
+      </div>
+      <div class="phrasal-card">
+        <h4>See off</h4>
+        <p>To go to the airport/station to say goodbye to someone.</p>
+      </div>
+      <div class="phrasal-card">
+        <h4>Take off</h4>
+        <p>When a plane begins to fly.</p>
+      </div>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Guess the Meanings</h3>
+      <div class="exercise-item">
+        <label>"I can drop you off at the station. It's on the way." → "Drop off" means:</label>
+        <textarea class="exercise-textarea" id="ex8a" placeholder="Write the meaning..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex8a','fb8a')">Check Answer</button>
+        <div class="feedback" id="fb8a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>"When shall we get off to the airport tomorrow?" → "Get off" means:</label>
+        <textarea class="exercise-textarea" id="ex8b" placeholder="Write the meaning..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex8b','fb8b')">Check Answer</button>
+        <div class="feedback" id="fb8b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>"John is heading off to Hokkaido for 2 weeks." → "Heading off" means:</label>
+        <textarea class="exercise-textarea" id="ex8c" placeholder="Write the meaning..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex8c','fb8c')">Check Answer</button>
+        <div class="feedback" id="fb8c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>"Jim is leaving tomorrow. Are you going to the airport to see him off?" → "See off" means:</label>
+        <textarea class="exercise-textarea" id="ex8d" placeholder="Write the meaning..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex8d','fb8d')">Check Answer</button>
+        <div class="feedback" id="fb8d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>"The plane can't take off because of the bad weather." → "Take off" means:</label>
+        <textarea class="exercise-textarea" id="ex8e" placeholder="Write the meaning..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex8e','fb8e')">Check Answer</button>
+        <div class="feedback" id="fb8e"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue to Conversation →</button>
+  </div>
+</section>
+
+<!-- FILL IN CONVERSATION -->
+<section class="section-solid coral">
+  <div class="container">
+    <h2>💬 Complete the Conversation</h2>
+    <div class="highlight-box" style="background:rgba(255,255,255,0.15); color:var(--text-light);">
+      <p><strong>Use:</strong> drop off • get off • head off • see off • take off</p>
+    </div>
+
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>Bill: "Where are you ____________________ to this summer?"</label>
+        <input type="text" class="exercise-input" id="ex9a" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9a',['heading','off'],'fb9a','ans9a')">Check Answer</button>
+        <div class="hidden-answer" id="ans9a">heading off</div>
+        <div class="feedback" id="fb9a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>Bill: "Do you want me to _________ you _________ at the airport?"</label>
+        <input type="text" class="exercise-input" id="ex9b" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9b',['drop','off'],'fb9b','ans9b')">Check Answer</button>
+        <div class="hidden-answer" id="ans9b">drop you off</div>
+        <div class="feedback" id="fb9b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>Bill: "Well then, at least let me __________ you __________ at the train station."</label>
+        <input type="text" class="exercise-input" id="ex9c" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9c',['drop','off'],'fb9c','ans9c')">Check Answer</button>
+        <div class="hidden-answer" id="ans9c">drop you off</div>
+        <div class="feedback" id="fb9c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>Bill: "So what time are you __________ tomorrow?"</label>
+        <input type="text" class="exercise-input" id="ex9d" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9d',['getting','off'],'fb9d','ans9d')">Check Answer</button>
+        <div class="hidden-answer" id="ans9d">getting off</div>
+        <div class="feedback" id="fb9d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>Jan: "Well, the plane will _________ at 8 a.m..."</label>
+        <input type="text" class="exercise-input" id="ex9e" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9e',['take','off'],'fb9e','ans9e')">Check Answer</button>
+        <div class="hidden-answer" id="ans9e">take off</div>
+        <div class="feedback" id="fb9e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>Jan: "...so I have to __________ at around 4 from here."</label>
+        <input type="text" class="exercise-input" id="ex9f" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9f',['get','off'],'fb9f','ans9f')">Check Answer</button>
+        <div class="hidden-answer" id="ans9f">get off</div>
+        <div class="feedback" id="fb9f"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--navy);">Continue to Weather →</button>
+  </div>
+</section>
+
+<!-- WEATHER -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Weather and Climate</h2>
+    <p>Terms and expressions for every condition</p>
+  </div>
+</section>
+
+<section class="section-solid cream">
+  <div class="container">
+    <h2 style="color:var(--navy);">🌤️ Weather Vocabulary</h2>
+
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. It is very cold = It's ____________________</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q10a','a')">frozen</button>
+          <button class="option-btn" onclick="selectOption(this,'q10a','b')">freezing</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q10a','b','fb10a')">Check Answer</button>
+        <div class="hidden-answer" id="ans10a">freezing</div>
+        <div class="feedback" id="fb10a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. It was cold in the morning, but it ____________________ up by the afternoon.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q10b','a')">warmed</button>
+          <button class="option-btn" onclick="selectOption(this,'q10b','b')">heated</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q10b','a','fb10b')">Check Answer</button>
+        <div class="hidden-answer" id="ans10b">warmed</div>
+        <div class="feedback" id="fb10b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Many homes were ____________________ by the hurricane.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q10c','a')">destructed</button>
+          <button class="option-btn" onclick="selectOption(this,'q10c','b')">destroyed</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q10c','b','fb10c')">Check Answer</button>
+        <div class="hidden-answer" id="ans10c">destroyed</div>
+        <div class="feedback" id="fb10c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. Small pellets of ice that fall from the sky during a storm are called ____________________</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q10d','a')">rain</button>
+          <button class="option-btn" onclick="selectOption(this,'q10d','b')">hail</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q10d','b','fb10d')">Check Answer</button>
+        <div class="hidden-answer" id="ans10d">hail</div>
+        <div class="feedback" id="fb10d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. Don't go outside! You could get ____________________ by lightning!</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q10e','a')">struck</button>
+          <button class="option-btn" onclick="selectOption(this,'q10e','b')">stroked</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q10e','a','fb10e')">Check Answer</button>
+        <div class="hidden-answer" id="ans10e">struck</div>
+        <div class="feedback" id="fb10e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. The ____________________ was very loud.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q10f','a')">thunder</button>
+          <button class="option-btn" onclick="selectOption(this,'q10f','b')">lightning</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q10f','a','fb10f')">Check Answer</button>
+        <div class="hidden-answer" id="ans10f">thunder</div>
+        <div class="feedback" id="fb10f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. It was so ____________________ outside that my hat was blown off my head.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q10g','a')">wind</button>
+          <button class="option-btn" onclick="selectOption(this,'q10g','b')">windy</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q10g','b','fb10g')">Check Answer</button>
+        <div class="hidden-answer" id="ans10g">windy</div>
+        <div class="feedback" id="fb10g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. A ____________________ wind = A very strong wind</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q10h','a')">gutsy</button>
+          <button class="option-btn" onclick="selectOption(this,'q10h','b')">gusty</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q10h','b','fb10h')">Check Answer</button>
+        <div class="hidden-answer" id="ans10h">gusty</div>
+        <div class="feedback" id="fb10h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. A snowstorm is called a ____________________</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q10i','a')">blizzard</button>
+          <button class="option-btn" onclick="selectOption(this,'q10i','b')">buzzard</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q10i','a','fb10i')">Check Answer</button>
+        <div class="hidden-answer" id="ans10i">blizzard</div>
+        <div class="feedback" id="fb10i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. If the weather is mild and pleasant, you can say it's ____________________</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q10j','a')">balmy</button>
+          <button class="option-btn" onclick="selectOption(this,'q10j','b')">calming</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q10j','a','fb10j')">Check Answer</button>
+        <div class="hidden-answer" id="ans10j">balmy</div>
+        <div class="feedback" id="fb10j"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue to Directions →</button>
+  </div>
+</section>
+
+<!-- GIVING DIRECTIONS -->
+<section class="section-solid navy">
+  <div class="container">
+    <h2>🗺️ Giving Directions</h2>
+    <div class="highlight-box" style="background:rgba(255,255,255,0.1); color:var(--text-light);">
+      <p><strong>Words:</strong> across • your • corner • down • exit • far • front • how • left • looking • lost • miss • moment • next • off • on • take • to • transfer • way • where</p>
+    </div>
+
+    <div class="exercise-box">
+      <h3>By Street Name and Nearby Landmarks</h3>
+      <div class="exercise-item">
+        <label>A: "You look _________________. Can I help you?"</label>
+        <input type="text" class="exercise-input" id="ex11a" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex11a',['lost'],'fb11a','ans11a')">Check Answer</button>
+        <div class="hidden-answer" id="ans11a">lost</div>
+        <div class="feedback" id="fb11a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>B: "Yeah. I'm __________________ for the Caprice Theater. Do you know ______________ it is?"</label>
+        <input type="text" class="exercise-input" id="ex11b" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex11b',['looking','where'],'fb11b','ans11b')">Check Answer</button>
+        <div class="hidden-answer" id="ans11b">looking, where</div>
+        <div class="feedback" id="fb11b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>A: "It's on the _________________ of Elm Street and 22nd Avenue. It's ______________ to the Art Gallery. You can't _________________ it."</label>
+        <input type="text" class="exercise-input" id="ex11c" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex11c',['corner','next','miss'],'fb11c','ans11c')">Check Answer</button>
+        <div class="hidden-answer" id="ans11c">corner, next, miss</div>
+        <div class="feedback" id="fb11c"></div>
+      </div>
+    </div>
+
+    <div class="exercise-box">
+      <h3>By Subway or Bus</h3>
+      <div class="exercise-item">
+        <label>A: "Excuse me. Can I trouble you for a _____________?"</label>
+        <input type="text" class="exercise-input" id="ex11d" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex11d',['moment'],'fb11d','ans11d')">Check Answer</button>
+        <div class="hidden-answer" id="ans11d">moment</div>
+        <div class="feedback" id="fb11d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>A: "I'm lost. Do you know _________ to get ________ the Stadium?"</label>
+        <input type="text" class="exercise-input" id="ex11e" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex11e',['how','to'],'fb11e','ans11e')">Check Answer</button>
+        <div class="hidden-answer" id="ans11e">how, to</div>
+        <div class="feedback" id="fb11e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>B: "The easiest _________ to get there is probably by subway. Just ___________ the Central Line to Broadway Station."</label>
+        <input type="text" class="exercise-input" id="ex11f" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex11f',['way','take'],'fb11f','ans11f')">Check Answer</button>
+        <div class="hidden-answer" id="ans11f">way, take</div>
+        <div class="feedback" id="fb11f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>B: "______________ to the Green Line and get __________ at Harbour Station."</label>
+        <input type="text" class="exercise-input" id="ex11g" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex11g',['transfer','off'],'fb11g','ans11g')">Check Answer</button>
+        <div class="hidden-answer" id="ans11g">Transfer, off</div>
+        <div class="feedback" id="fb11g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>B: "If you go out ___________ number four it should be right in ____________ of you."</label>
+        <input type="text" class="exercise-input" id="ex11h" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex11h',['exit','front'],'fb11h','ans11h')">Check Answer</button>
+        <div class="hidden-answer" id="ans11h">exit, front</div>
+        <div class="feedback" id="fb11h"></div>
+      </div>
+    </div>
+
+    <div class="exercise-box">
+      <h3>By Foot or Car</h3>
+      <div class="exercise-item">
+        <label>A: "Can I get to the Harlton Hotel from here _____________ foot?"</label>
+        <input type="text" class="exercise-input" id="ex11i" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex11i',['on'],'fb11i','ans11i')">Check Answer</button>
+        <div class="hidden-answer" id="ans11i">on</div>
+        <div class="feedback" id="fb11i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>B: "Sure. It's not that ______________. Just go ______________ 4th Avenue to Main Street."</label>
+        <input type="text" class="exercise-input" id="ex11j" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex11j',['far','down'],'fb11j','ans11j')">Check Answer</button>
+        <div class="hidden-answer" id="ans11j">far, down</div>
+        <div class="feedback" id="fb11j"></div>
+      </div>
+      <div class="exercise-item">
+        <label>B: "Turn ______________ on Main. It should be on ______________ right."</label>
+        <input type="text" class="exercise-input" id="ex11k" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex11k',['left','your'],'fb11k','ans11k')">Check Answer</button>
+        <div class="hidden-answer" id="ans11k">left, your</div>
+        <div class="feedback" id="fb11k"></div>
+      </div>
+      <div class="exercise-item">
+        <label>B: "It's ______________ from the park."</label>
+        <input type="text" class="exercise-input" id="ex11l" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex11l',['across'],'fb11l','ans11l')">Check Answer</button>
+        <div class="hidden-answer" id="ans11l">across</div>
+        <div class="feedback" id="fb11l"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue to Grammar Review →</button>
+  </div>
+</section>
+
+<!-- GRAMMAR REVIEW -->
+<section class="section-solid gold">
+  <div class="container">
+    <h2>📚 Grammar Review: Phrasal Verbs with "Off"</h2>
+
+    <div class="reading-block">
+      <h3>Drop off (Separable)</h3>
+      <p>To take someone, or to deliver something, to a place (usually in a car)</p>
+      <div class="highlight-box">
+        <p>On your way to work, could you drop off the books at the library?<br>
+        I'm going in the direction of your office, so I can drop you off on the way.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>Get off (Inseparable)</h3>
+      <p>To depart for a journey or to leave a place to go somewhere</p>
+      <div class="highlight-box">
+        <p>I want to get off early tomorrow morning so we can get to our destination in the afternoon.<br>
+        I have to get off to the office now.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>Head off / Set off (Inseparable)</h3>
+      <p>To start a journey</p>
+      <div class="highlight-box">
+        <p>Every year in August, we head off to the mountains in Vancouver.<br>
+        Where are you heading off this summer?</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>See off (Separable)</h3>
+      <p>To go to the airport, etc. in order to say goodbye to someone<br>
+      To force someone to leave a place</p>
+      <div class="highlight-box">
+        <p>I am going to the airport to see my husband off.<br>
+        Don't try to force your way into my house, or I will ask my dogs to see you off.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>Take off (Inseparable)</h3>
+      <p>(For airplanes, birds, or insects) To begin to fly</p>
+      <div class="highlight-box">
+        <p>I like watching airplanes take off.<br>
+        Look at that baby eagle trying to take off!</p>
+      </div>
+    </div>
+
+    <button class="nav-btn" onclick="completeUnit()" style="background:var(--navy);">🎉 Complete Unit</button>
+  </div>
+</section>
+
+<!-- FINAL MESSAGE -->
+<div id="finalMsg" style="display:none; padding:80px 40px; background:var(--navy); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3rem; margin-bottom:20px;">🎉 Unit 15 Completed!</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px;">You've journeyed with the Williams through Spain, France, Italy, and Germany!</p>
+    <p style="font-size:1.1rem; margin-bottom:30px; opacity:0.8;">You've mastered hotel vocabulary, tourist attractions, phrasal verbs, and giving directions.</p>
+    <a href="indexmax.html" class="nav-btn" style="background:var(--coral);">Continue to Next Unit →</a>
+  </div>
 </div>
 
-<footer style="text-align:center; margin-top:50px; color:var(--muted); font-size:0.85rem; padding:30px 20px; border-top:1px solid var(--border);">
-  <p>© 2026 Discovery MAX Neuroeducation | Método NBF | Toño Vicas</p>
-  <p style="margin-top:10px; font-size:0.75rem; opacity:0.6;">Unit 15: At the Inn - Hotels & Tourism</p>
+<footer>
+  <div class="container">
+    <p><strong>Discovery MAX Neuroeducation</strong></p>
+    <p>Unit 15: At the Inn - Hotels & Tourism</p>
+    <p style="margin-top:10px; opacity:0.7; font-size:0.85rem;">© 2026 Método NBF | Toño Vicas</p>
+  </div>
 </footer>
 
 <script>
-const synth = window.speechSynthesis;
-function speak(text) {
-  if(synth.speaking) synth.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-US'; u.rate = 1.1; u.pitch = 1;
-  synth.speak(u);
-}
-
 let completedCount = 0;
-const totalEx = 75;
+const totalEx = 55;
 
 function updateProgress() {
   document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
@@ -536,14 +1268,11 @@ function normalizeText(text) {
   return text.toLowerCase().replace(/[?!.,']/g, "").replace(/\s+/g, " ").trim();
 }
 
-function scrollToSec(num) {
-  document.getElementById(`sec${num-1}`).classList.remove('active');
-  document.getElementById(`sec${num}`).classList.add('active');
-  document.getElementById(`sec${num}`).scrollIntoView({behavior:'smooth'});
-  speak('Next section unlocked');
+function scrollToNext() {
+  window.scrollBy({ top: window.innerHeight * 0.9, behavior: 'smooth' });
 }
 
-function checkSimple(inputId, keywords, fbId, ansId, msg) {
+function checkSimple(inputId, keywords, fbId, ansId) {
   const val = normalizeText(document.getElementById(inputId).value);
   const fb = document.getElementById(fbId);
   const ans = document.getElementById(ansId);
@@ -551,17 +1280,15 @@ function checkSimple(inputId, keywords, fbId, ansId, msg) {
   
   if(allFound) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
+    fb.textContent = '✅ Correct! Well done!';
     fb.style.display = 'block';
     ans.style.display = 'none';
-    speak(msg);
     completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
+    fb.textContent = '❌ Not quite. Try again!';
     fb.style.display = 'block';
     ans.style.display = 'block';
-    speak('Sorry, try again');
   }
 }
 
@@ -571,15 +1298,13 @@ function checkDiscussion(inputId, feedbackId) {
   
   if(val.length > 15) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Respuesta registrada. ¡Excelente!';
+    fb.textContent = '✅ Great answer! Recorded.';
     fb.style.display = 'block';
-    speak('Great answer!');
     completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '⚠️ Escribe una respuesta más completa.';
+    fb.textContent = '⚠️ Write a more complete answer.';
     fb.style.display = 'block';
-    speak('Try again');
   }
 }
 
@@ -597,24 +1322,22 @@ function checkMC(questionId, correctAnswer, feedbackId) {
   
   if (!selectedOptions[questionId]) {
     fb.className = 'feedback error';
-    fb.textContent = '⚠️ Selecciona una opción';
+    fb.textContent = '⚠️ Select an option';
     fb.style.display = 'block';
     return;
   }
   
   if (selectedOptions[questionId] === correctAnswer) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ Correcto';
+    fb.textContent = '✅ Correct!';
     fb.style.display = 'block';
     ans.style.display = 'none';
-    speak('Excellent!');
     completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Incorrecto';
+    fb.textContent = '❌ Incorrect';
     fb.style.display = 'block';
     ans.style.display = 'block';
-    speak('Try again');
   }
 }
 
@@ -627,28 +1350,24 @@ function checkMatching() {
   
   if (val.replace(/\s/g, '') === correct.replace(/\s/g, '')) {
     fb.className = 'feedback success';
-    fb.textContent = '✅ ¡Todos correctos!';
+    fb.textContent = '✅ All correct!';
     fb.style.display = 'block';
     ans.style.display = 'none';
-    speak('Perfect!');
     completedCount++; updateProgress();
   } else {
     fb.className = 'feedback error';
-    fb.textContent = '❌ Revisa tus matches';
+    fb.textContent = '❌ Review your matches';
     fb.style.display = 'block';
     ans.style.display = 'block';
-    speak('Sorry, try again');
   }
 }
 
 function completeUnit() {
-  if(completedCount >= 55) {
-    document.getElementById('sec12').classList.remove('active');
+  if(completedCount >= 40) {
     document.getElementById('finalMsg').style.display = 'block';
     document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
-    speak('Congratulations! You completed Unit 15!');
   } else {
-    alert(`⚠️ Completa al menos 55 de 75 ejercicios.\nCompletados: ${completedCount}/75`);
+    alert(`Complete at least 40 of 55 exercises.\nCompleted: ${completedCount}/55`);
   }
 }
 
