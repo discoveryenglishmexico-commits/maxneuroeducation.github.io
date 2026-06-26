@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 18: Creativity and Imagination | Discovery MAX Neuroeducation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #F2994A;
+  --orange-dark: #E67E22;
+  --green: #27AE60;
+  --green-dark: #1E8449;
+  --white: #FFFFFF;
+  --light-orange: #FEF5E7;
+  --text-dark: #1a1a1a;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--light-orange); }
+
+.hero {
+  height:90vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(230,126,34,0.85), rgba(39,174,96,0.75)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:10px 25px; background:var(--green); color:var(--text-light); font-weight:700; font-size:0.9rem; letter-spacing:2px; margin-bottom:20px; border-radius:4px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.hero p { font-size:1.3rem; font-weight:300; max-width:700px; margin:0 auto; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--green-dark); padding:12px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--orange),var(--green)); transition: width 0.5s ease; }
+
+.section-image {
+  min-height:50vh; position:relative; background-size:cover; background-position:center;
+  display:flex; align-items:center; justify-content:center; padding:60px 20px;
+}
+.section-image::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(230,126,34,0.85), rgba(39,174,96,0.75)); }
+.section-image-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; }
+.section-image-content h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; margin-bottom:15px; }
+
+.section-solid { padding:80px 40px; }
+.section-solid.orange { background:var(--orange); color:var(--text-light); }
+.section-solid.green { background:var(--green); color:var(--text-light); }
+.section-solid.green-dark { background:var(--green-dark); color:var(--text-light); }
+.section-solid.light-orange { background:var(--light-orange); color:var(--text-dark); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:1100px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { background:var(--white); padding:40px; border-radius:8px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-left:6px solid var(--orange); }
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--green-dark); margin-bottom:20px; }
+.reading-block p { font-size:1.05rem; line-height:1.9; color:var(--text-dark); margin-bottom:15px; }
+
+.card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; margin:40px 0; }
+.card { background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transition: transform 0.3s; }
+.card:hover { transform: translateY(-8px); }
+.card-content { padding:25px; }
+.card-content h3 { font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:10px; color:var(--green-dark); }
+.card-content p { color:#4b5563; font-size:0.95rem; line-height:1.7; }
+
+.exercise-box { background:var(--white); padding:30px; border-radius:8px; margin:30px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--green-dark); margin-bottom:20px; }
+.exercise-item { margin:20px 0; padding:20px; background:var(--light-orange); border-left:4px solid var(--orange); border-radius:4px; }
+.exercise-item label { font-weight:600; font-size:1.05rem; display:block; margin-bottom:12px; color:var(--text-dark); }
+.exercise-input, .exercise-textarea {
+  width:100%; padding:12px; border:2px solid #d1d5db; border-radius:6px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s;
+}
+.exercise-input:focus, .exercise-textarea:focus { outline:none; border-color:var(--orange); }
+.exercise-textarea { min-height:100px; resize:vertical; }
+
+.btn-verify {
+  margin-top:12px; padding:10px 24px; background:var(--orange); color:var(--text-light);
+  border:none; border-radius:6px; font-weight:600; cursor:pointer; transition: background 0.3s;
+}
+.btn-verify:hover { background:var(--orange-dark); }
+
+.feedback { margin-top:12px; padding:12px; border-radius:6px; font-weight:600; display:none; }
+.feedback.success { background:#d1fae5; color:#065f46; border-left:4px solid #10b981; }
+.feedback.error { background:#fee2e2; color:#991b1b; border-left:4px solid #ef4444; }
+.hidden-answer { display:none; margin-top:12px; padding:12px; background:#fef3c7; border-left:4px solid var(--green); border-radius:6px; color:#92400e; font-weight:600; }
+
+.options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:15px 0; }
+.option-btn { padding:14px; background:var(--white); border:2px solid #d1d5db; border-radius:6px; cursor:pointer; transition:0.3s; color:var(--text-dark); text-align:left; font-size:0.95rem; font-family:'Inter',sans-serif; }
+.option-btn:hover { border-color:var(--orange); background:rgba(242,153,74,0.1); }
+.option-btn.selected { background:var(--orange); color:var(--text-light); border-color:var(--orange); font-weight:600; }
+
+.nav-btn {
+  display:inline-block; margin-top:30px; padding:15px 40px; background:var(--orange); color:var(--text-light);
+  text-decoration:none; border-radius:6px; font-weight:700; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer;
+}
+.nav-btn:hover { background:var(--orange-dark); transform:translateY(-2px); }
+
+.highlight-box { background:rgba(242,153,74,0.15); border-left:4px solid var(--orange); padding:20px 25px; margin:20px 0; border-radius:0 8px 8px 0; font-style:italic; color:var(--text-dark); }
+
+.grammar-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.grammar-table th, .grammar-table td { padding:14px; text-align:left; border-bottom:1px solid #e5e7eb; }
+.grammar-table th { background:var(--green-dark); color:var(--text-light); font-family:'Playfair Display',serif; font-size:1rem; }
+.grammar-table td { color:var(--text-dark); font-size:0.95rem; }
+
+@media(max-width:768px) {
+  .hero { height:75vh; }
+  .section-image { min-height:40vh; }
+  .section-solid { padding:60px 20px; }
+  .card-grid { grid-template-columns:1fr; }
+  .reading-block { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">UNIT 18</div>
+    <h1>Creativity and Imagination</h1>
+    <p>Exploring the debate: video games vs reading, technology's impact on creativity, and the digital age.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<!-- SECTION 1: READING -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Mrs. Rose Mary Williams Reading</h2>
+    <p>Technology vs Creativity Debate</p>
+  </div>
+</section>
+
+<section class="section-solid orange">
+  <div class="container">
+    <h2>📖 The Article</h2>
+    <div class="reading-block">
+      <h3>Creativity in the Digital Age</h3>
+      <p>Mrs. Rose Mary Williams was reading a newspaper article about how and why children nowadays prefer technology over creativity and imagination. After more than three decades of technological evolution, creativity isn't what it used to be. The article was about some comments made by famous playwright Lucy Prebble, in which she was quoted saying "parents should not be afraid of letting their children play computer games because the experience is more creative than reading".</p>
+      <p>She attacked the popular stereotype of teenage gamers as "chubby automatons" who spend their days shooting virtual enemies and eating chips, due to the fact that playing video games requires more involvement and creative input than reading a book and it also offers more opportunities to be active and sociable.</p>
+      <p>Video games should be recognized as an art form appreciated for the way they tugged at our emotions and stimulated creativity. She said that a "middle-class terror" of raising fat and idle children has led to an unfair perception of gamers as sedentary, adding that fears about the violent content of some games are overbearing and misguided.</p>
+    </div>
+    <div class="exercise-box">
+      <h3>Strategic Comprehension</h3>
+      <div class="exercise-item">
+        <label>1. What does Lucy Prebble say about video games vs reading?</label>
+        <input type="text" class="exercise-input" id="ex1a" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1a',['creative','reading'],'fb1a','ans1a')">Check Answer</button>
+        <div class="hidden-answer" id="ans1a">Video games are more creative than reading</div>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. What stereotype does she attack?</label>
+        <input type="text" class="exercise-input" id="ex1b" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1b',['chubby','automatons','gamers'],'fb1b','ans1b')">Check Answer</button>
+        <div class="hidden-answer" id="ans1b">Teenage gamers as chubby automatons</div>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Why should video games be recognized as art?</label>
+        <input type="text" class="exercise-input" id="ex1c" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1c',['emotions','creativity'],'fb1c','ans1c')">Check Answer</button>
+        <div class="hidden-answer" id="ans1c">They tug at emotions and stimulate creativity</div>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 2: CRITICAL THINKING QUESTIONS -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Critical Thinking</h2>
+    <p>Video Games Debate</p>
+  </div>
+</section>
+
+<section class="section-solid green">
+  <div class="container">
+    <h2>🧠 Video Games Discussion</h2>
+    <p>Answer the questions below. Remember to support your answers (minimum 20 characters):</p>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. Are video games fun? Why or why not?</label><textarea class="exercise-textarea" id="ex2a" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2a','fb2a')">Check Answer</button><div class="feedback" id="fb2a"></div></div>
+      <div class="exercise-item"><label>2. Do video games make people violent? Why or why not?</label><textarea class="exercise-textarea" id="ex2b" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2b','fb2b')">Check Answer</button><div class="feedback" id="fb2b"></div></div>
+      <div class="exercise-item"><label>3. Do video games make people anti-social? Why or why not?</label><textarea class="exercise-textarea" id="ex2c" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2c','fb2c')">Check Answer</button><div class="feedback" id="fb2c"></div></div>
+      <div class="exercise-item"><label>4. Do video games cause physical or mental health problems? Why or why not?</label><textarea class="exercise-textarea" id="ex2d" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2d','fb2d')">Check Answer</button><div class="feedback" id="fb2d"></div></div>
+      <div class="exercise-item"><label>5. What is your favorite video game these days? Why do you like it?</label><textarea class="exercise-textarea" id="ex2e" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2e','fb2e')">Check Answer</button><div class="feedback" id="fb2e"></div></div>
+      <div class="exercise-item"><label>6. What is your favorite video game ever? Why do you still like it so much?</label><textarea class="exercise-textarea" id="ex2f" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2f','fb2f')">Check Answer</button><div class="feedback" id="fb2f"></div></div>
+      <div class="exercise-item"><label>7. What upcoming video game are you excited about? Why?</label><textarea class="exercise-textarea" id="ex2g" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2g','fb2g')">Check Answer</button><div class="feedback" id="fb2g"></div></div>
+      <div class="exercise-item"><label>8. What was the first video game you ever played? How old were you?</label><textarea class="exercise-textarea" id="ex2h" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2h','fb2h')">Check Answer</button><div class="feedback" id="fb2h"></div></div>
+      <div class="exercise-item"><label>9. Who makes the best video games? Why do you think so?</label><textarea class="exercise-textarea" id="ex2i" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2i','fb2i')">Check Answer</button><div class="feedback" id="fb2i"></div></div>
+      <div class="exercise-item"><label>10. Which genre of games do you prefer? Why is that?</label><textarea class="exercise-textarea" id="ex2j" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2j','fb2j')">Check Answer</button><div class="feedback" id="fb2j"></div></div>
+      <div class="exercise-item"><label>11. What will video games be like in the future?</label><textarea class="exercise-textarea" id="ex2k" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2k','fb2k')">Check Answer</button><div class="feedback" id="fb2k"></div></div>
+      <div class="exercise-item"><label>12. Are you addicted to video games? Do you know anyone who is addicted?</label><textarea class="exercise-textarea" id="ex2l" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2l','fb2l')">Check Answer</button><div class="feedback" id="fb2l"></div></div>
+      <div class="exercise-item"><label>13. Are video games a waste of time? Why or why not?</label><textarea class="exercise-textarea" id="ex2m" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2m','fb2m')">Check Answer</button><div class="feedback" id="fb2m"></div></div>
+      <div class="exercise-item"><label>14. Should video games be used as an educational tool? Why or why not?</label><textarea class="exercise-textarea" id="ex2n" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2n','fb2n')">Check Answer</button><div class="feedback" id="fb2n"></div></div>
+      <div class="exercise-item"><label>15. What are some positive points of playing video games? Please explain.</label><textarea class="exercise-textarea" id="ex2o" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2o','fb2o')">Check Answer</button><div class="feedback" id="fb2o"></div></div>
+      <div class="exercise-item"><label>16. What are some negative points of playing video games? Please explain.</label><textarea class="exercise-textarea" id="ex2p" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2p','fb2p')">Check Answer</button><div class="feedback" id="fb2p"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--green-dark);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 3: VOCABULARY IDIOMS -->
+<section class="section-solid light-orange">
+  <div class="container">
+    <h2 style="color:var(--green-dark);">📚 Vocabulary: Idioms</h2>
+    <p>Write the letter of the vocabulary words that best fits the sentence.</p>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. To "take charge" is to ___.<br>a) follow  b) lead  c) misunderstand</label><input type="text" class="exercise-input" id="ex3a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3a',['b'],'fb3a','ans3a')">Check Answer</button><div class="hidden-answer" id="ans3a">b) lead</div><div class="feedback" id="fb3a"></div></div>
+      <div class="exercise-item"><label>2. To "talk back" is to ___.<br>a) ask a question  b) shout  c) answer rudely</label><input type="text" class="exercise-input" id="ex3b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3b',['c'],'fb3b','ans3b')">Check Answer</button><div class="hidden-answer" id="ans3b">c) answer rudely</div><div class="feedback" id="fb3b"></div></div>
+      <div class="exercise-item"><label>3. To "tell something apart" is to ___.<br>a) put it aside for later use  b) correct someone  c) find the differences</label><input type="text" class="exercise-input" id="ex3c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3c',['c'],'fb3c','ans3c')">Check Answer</button><div class="hidden-answer" id="ans3c">c) find the differences</div><div class="feedback" id="fb3c"></div></div>
+      <div class="exercise-item"><label>4. "The works" is ___.<br>a) the boss  b) everything  c) movement</label><input type="text" class="exercise-input" id="ex3d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3d',['b'],'fb3d','ans3d')">Check Answer</button><div class="hidden-answer" id="ans3d">b) everything</div><div class="feedback" id="fb3d"></div></div>
+      <div class="exercise-item"><label>5. To "think up" is to ___ something.<br>a) aim for  b) improve  c) invent</label><input type="text" class="exercise-input" id="ex3e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3e',['c'],'fb3e','ans3e')">Check Answer</button><div class="hidden-answer" id="ans3e">c) invent</div><div class="feedback" id="fb3e"></div></div>
+      <div class="exercise-item"><label>6. To "think twice" is to ___.<br>a) create something  b) tell a lie  c) hesitate</label><input type="text" class="exercise-input" id="ex3f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3f',['c'],'fb3f','ans3f')">Check Answer</button><div class="hidden-answer" id="ans3f">c) hesitate</div><div class="feedback" id="fb3f"></div></div>
+     
