@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 19: Melancholy | Discovery MAX Neuroeducation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark-gray: #2D2D2D;
+  --medium-gray: #4A4A4A;
+  --light-gray: #F5F5F5;
+  --pink: #E8A0B0;
+  --pink-dark: #D48595;
+  --white: #FFFFFF;
+  --text-dark: #1a1a1a;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--light-gray); }
+
+.hero {
+  height:90vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(45,45,45,0.85), rgba(232,160,176,0.75)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:10px 25px; background:var(--pink); color:var(--text-dark); font-weight:700; font-size:0.9rem; letter-spacing:2px; margin-bottom:20px; border-radius:4px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.hero p { font-size:1.3rem; font-weight:300; max-width:700px; margin:0 auto; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--dark-gray); padding:12px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--pink),#9B59B6); transition: width 0.5s ease; }
+
+.section-image {
+  min-height:50vh; position:relative; background-size:cover; background-position:center;
+  display:flex; align-items:center; justify-content:center; padding:60px 20px;
+}
+.section-image::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(45,45,45,0.85), rgba(232,160,176,0.75)); }
+.section-image-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; }
+.section-image-content h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; margin-bottom:15px; }
+
+.section-solid { padding:80px 40px; }
+.section-solid.dark { background:var(--dark-gray); color:var(--text-light); }
+.section-solid.medium-gray { background:var(--medium-gray); color:var(--text-light); }
+.section-solid.pink { background:var(--pink); color:var(--text-dark); }
+.section-solid.light { background:var(--light-gray); color:var(--text-dark); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:1100px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { background:var(--white); padding:40px; border-radius:8px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-left:6px solid var(--pink); }
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--medium-gray); margin-bottom:20px; }
+.reading-block p { font-size:1.05rem; line-height:1.9; color:var(--text-dark); margin-bottom:15px; }
+
+.card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; margin:40px 0; }
+.card { background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transition: transform 0.3s; }
+.card:hover { transform: translateY(-8px); }
+.card-content { padding:25px; }
+.card-content h3 { font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:10px; color:var(--medium-gray); }
+.card-content p { color:#4b5563; font-size:0.95rem; line-height:1.7; }
+
+.exercise-box { background:var(--white); padding:30px; border-radius:8px; margin:30px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--medium-gray); margin-bottom:20px; }
+.exercise-item { margin:20px 0; padding:20px; background:var(--light-gray); border-left:4px solid var(--pink); border-radius:4px; }
+.exercise-item label { font-weight:600; font-size:1.05rem; display:block; margin-bottom:12px; color:var(--text-dark); }
+.exercise-input, .exercise-textarea {
+  width:100%; padding:12px; border:2px solid #d1d5db; border-radius:6px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s;
+}
+.exercise-input:focus, .exercise-textarea:focus { outline:none; border-color:var(--pink); }
+.exercise-textarea { min-height:100px; resize:vertical; }
+
+.btn-verify {
+  margin-top:12px; padding:10px 24px; background:var(--pink); color:var(--text-dark);
+  border:none; border-radius:6px; font-weight:600; cursor:pointer; transition: background 0.3s;
+}
+.btn-verify:hover { background:var(--pink-dark); }
+
+.feedback { margin-top:12px; padding:12px; border-radius:6px; font-weight:600; display:none; }
+.feedback.success { background:#d1fae5; color:#065f46; border-left:4px solid #10b981; }
+.feedback.error { background:#fee2e2; color:#991b1b; border-left:4px solid #ef4444; }
+.hidden-answer { display:none; margin-top:12px; padding:12px; background:#fef3c7; border-left:4px solid var(--pink); border-radius:6px; color:#92400e; font-weight:600; }
+
+.options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:15px 0; }
+.option-btn { padding:14px; background:var(--white); border:2px solid #d1d5db; border-radius:6px; cursor:pointer; transition:0.3s; color:var(--text-dark); text-align:left; font-size:0.95rem; font-family:'Inter',sans-serif; }
+.option-btn:hover { border-color:var(--pink); background:rgba(232,160,176,0.1); }
+.option-btn.selected { background:var(--pink); color:var(--text-dark); border-color:var(--pink); font-weight:600; }
+
+.nav-btn {
+  display:inline-block; margin-top:30px; padding:15px 40px; background:var(--pink); color:var(--text-dark);
+  text-decoration:none; border-radius:6px; font-weight:700; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer;
+}
+.nav-btn:hover { background:var(--pink-dark); transform:translateY(-2px); }
+
+.highlight-box { background:rgba(232,160,176,0.15); border-left:4px solid var(--pink); padding:20px 25px; margin:20px 0; border-radius:0 8px 8px 0; font-style:italic; color:var(--text-dark); }
+
+.grammar-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.grammar-table th, .grammar-table td { padding:14px; text-align:left; border-bottom:1px solid #e5e7eb; color:var(--text-dark); }
+.grammar-table th { background:var(--medium-gray); color:var(--text-light); font-family:'Playfair Display',serif; font-size:1rem; }
+.grammar-table td { font-size:0.95rem; }
+
+.phrase-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; margin:20px 0; }
+.phrase-item { padding:15px; background:var(--light-gray); border-radius:6px; text-align:center; font-weight:600; color:var(--medium-gray); border:2px solid var(--pink); }
+
+@media(max-width:768px) {
+  .hero { height:75vh; }
+  .section-image { min-height:40vh; }
+  .section-solid { padding:60px 20px; }
+  .card-grid { grid-template-columns:1fr; }
+  .reading-block { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">UNIT 19</div>
+    <h1>Melancholy</h1>
+    <p>Understanding emotions, giving advice, and mastering present perfect continuous tense.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<!-- SECTION 1: READING -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Sarah's Story</h2>
+    <p>A friend's transfer and new beginnings</p>
+  </div>
+</section>
+
+<section class="section-solid medium-gray">
+  <div class="container">
+    <h2 style="color:var(--pink);">📖 Reading: Melancholy</h2>
+    <div class="reading-block">
+      <h3>Sarah and Evan's Transfer</h3>
+      <p>Hello there, is me Rose Mary. Well I'm here to tell you about certain situation that a friend of our family has, her name is Sarah. Sarah's husband Evan works with James in the same office and that's why we met and became acquaintances.</p>
+      <p>The thing is that Evan has received the transfer order and was given 5 days to do so, and has everything ready to travel to Louisville in Colorado. Louisville is a small town close to Denver. The actual problem is that they are newlyweds, both have lived in the city all their lives but with the transfer everything is going to change for them. First most of their relatives and friends live nearby, so Sarah feels a little more down than Evan due to the fact that she had gotten used to the idea of being a housewife for a while till she had the opportunity open up a flower shop which has been her objective all along since she got married. She knows a lot of people and she thought that she could use their recommendation to gain clientele.</p>
+      <p>Now she feels dismal because she thinks that she won't be able to fulfill her goal or that once they get there it would be difficult for her to do so due to the fact that they have to start all over again from scratch. They have to find a house where she could feel comfortable, get some furniture, get to know people, etc.</p>
+      <p>Evan has told her that everything is going to be fine, which in my opinion is easy for him to say because he is going to be working there so he would have more opportunities to socialize and mingle with his co-workers in the office.</p>
+      <p>Deep inside she knows they're gonna break through the change and go on.</p>
+    </div>
+    <div class="exercise-box">
+      <h3>Strategic Comprehension</h3>
+      <div class="exercise-item">
+        <label>1. Where are Sarah and Evan moving to?</label>
+        <input type="text" class="exercise-input" id="ex1a" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1a',['louisville','colorado'],'fb1a','ans1a')">Check Answer</button>
+        <div class="hidden-answer" id="ans1a">Louisville in Colorado</div>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. What is Sarah's dream?</label>
+        <input type="text" class="exercise-input" id="ex1b" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1b',['flower','shop'],'fb1b','ans1b')">Check Answer</button>
+        <div class="hidden-answer" id="ans1b">To open up a flower shop</div>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Why does Sarah feel more down than Evan?</label>
+        <input type="text" class="exercise-input" id="ex1c" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1c',['relatives','friends','housewife'],'fb1c','ans1c')">Check Answer</button>
+        <div class="hidden-answer" id="ans1c">Most relatives and friends live nearby, and she was used to being a housewife</div>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 2: ADVICE SITUATIONS -->
+<section class="section-solid pink">
+  <div class="container">
+    <h2>💡 Practice Giving Advice</h2>
+    <p>Use these phrases to help with different situations:</p>
+    
+    <div class="phrase-grid">
+      <div class="phrase-item">You ought to...</div>
+      <div class="phrase-item">You could try...</div>
+      <div class="phrase-item">You'd better...</div>
+      <div class="phrase-item">You need to...</div>
+      <div class="phrase-item">I would advise that...</div>
+      <div class="phrase-item">If I was/were in your place, I'd...</div>
+      <div class="phrase-item">My advice is to...</div>
+      <div class="phrase-item">If I were you, I'd...</div>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Possible Situations - Give Your Advice</h3>
+      <div class="exercise-item"><label>1. I broke up with my boyfriend/girlfriend.</label><textarea class="exercise-textarea" id="ex2a" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2a','fb2a')">Check Answer</button><div class="feedback" id="fb2a"></div></div>
+      <div class="exercise-item"><label>2. My dog (pet) passed away.</label><textarea class="exercise-textarea" id="ex2b" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2b','fb2b')">Check Answer</button><div class="feedback" id="fb2b"></div></div>
+      <div class="exercise-item"><label>3. I flunked my final exam and I'm not going to pass to the next grade.</label><textarea class="exercise-textarea" id="ex2c" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2c','fb2c')">Check Answer</button><div class="feedback" id="fb2c"></div></div>
+      <div class="exercise-item"><label>4. I broke my dad's new iPad.</label><textarea class="exercise-textarea" id="ex2d" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2d','fb2d')">Check Answer</button><div class="feedback" id="fb2d"></div></div>
+      <div class="exercise-item"><label>5. I think my girlfriend/boyfriend is cheating on me.</label><textarea class="exercise-textarea" id="ex2e" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2e','fb2e')">Check Answer</button><div class="feedback" id="fb2e"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--dark-gray); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 3: PAST PARTICIPLE -->
+<section class="section-solid dark">
+  <div class="container">
+    <h2 style="color:var(--pink);">📝 Past Participle Practice</h2>
+    <div class="exercise-box">
+      <h3 style="color:var(--pink);">Write the verbs in the blanks using the Past Participle</h3>
+      <div class="exercise-item"><label>1. _______________ watches (repair)</label><input type="text" class="exercise-input" id="ex3a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3a',['repaired'],'fb3a','ans3a')">Check Answer</button><div class="hidden-answer" id="ans3a">repaired</div><div class="feedback" id="fb3a"></div></div>
+      <div class="exercise-item"><label>2. _______________ computers (steal)</label><input type="text" class="exercise-input" id="ex3b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3b',['stolen'],'fb3b','ans3b')">Check Answer</button><div class="hidden-answer" id="ans3b">stolen</div><div class="feedback" id="fb3b"></div></div>
+      <div class="exercise-item"><label>3. _______________ fans (fascinate)</label><input type="text" class="exercise-input" id="ex3c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3c',['fascinated'],'fb3c','ans3c')">Check Answer</button><div class="hidden-answer" id="ans3c">fascinated</div><div class="feedback" id="fb3c"></div></div>
+      <div class="exercise-item"><label>4. _______________ students (bore)</label><input type="text" class="exercise-input" id="ex3d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3d',['bored'],'fb3d','ans3d')">Check Answer</button><div class="hidden-answer" id="ans3d">bored</div><div class="feedback" id="fb3d"></div></div>
+      <div class="exercise-item"><label>5. _______________ boys (confuse)</label><input type="text" class="exercise-input" id="ex3e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3e',['confused'],'fb3e','ans3e')">Check Answer</button><div class="hidden-answer" id="ans3e">confused</div><div class="feedback" id="fb3e"></div></div>
+      <div class="exercise-item"><label>6. _______________ umbrellas (forget)</label><input type="text" class="exercise-input" id="ex3f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3f',['forgotten'],'fb3f','ans3f')">Check Answer</button><div class="hidden-answer" id="ans3f">forgotten</div><div class="feedback" id="fb3f"></div></div>
+      <div class="exercise-item"><label>7. _______________ girls (disappoint)</label><input type="text" class="exercise-input" id="ex3g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3g',['disappointed'],'fb3g','ans3g')">Check Answer</button><div class="hidden-answer" id="ans3g">disappointed</div><div class="feedback" id="fb3g"></div></div>
+      <div class="exercise-item"><label>8. _______________ comics (swap)</label><input type="text" class="exercise-input" id="ex3h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3h',['swapped'],'fb3h','ans3h')">Check Answer</button><div class="hidden-answer" id="ans3h">swapped</div><div class="feedback" id="fb3h"></div></div>
+      <div class="exercise-item"><label>9. _______________ doctors (worry)</label><input type="text" class="exercise-input" id="ex3i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3i',['worried'],'fb3i','ans3i')">Check Answer</button><div class="hidden-answer" id="ans3i">worried</div><div class="feedback" id="fb3i"></div></div>
+      <div class="exercise-item"><label>10. _______________ queens (amuse)</label><input type="text" class="exercise-input" id="ex3j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3j',['amused'],'fb3j','ans3j')">Check Answer</button><div class="hidden-answer" id="ans3j">amused</div><div class="feedback" id="fb3j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 4: PRESENT PERFECT CONTINUOUS -->
+<section class="section-solid light">
+  <div class="container">
+    <h2 style="color:var(--medium-gray);">⏰ Present Perfect Continuous</h2>
+    <div class="exercise-box">
+      <h3 style="color:var(--medium-gray);">Put the verbs into the correct form</h3>
+      <div class="exercise-item"><label>1. He (work) _______________ in this company since 1985.</label><input type="text" class="exercise-input" id="ex4a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex4a',['has','been','working'],'fb4a','ans4a')">Check Answer</button><div class="hidden-answer" id="ans4a">has been working</div><div class="feedback" id="fb4a"></div></div>
+      <div class="exercise-item"><label>2. I (wait) _______________ for you since two o'clock.</label><input type="text" class="exercise-input" id="ex4b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex4b',['have','been','waiting'],'fb4b','ans4b')">Check Answer</button><div class="hidden-answer" id="ans4b">have been waiting</div><div class="feedback" id="fb4b"></div></div>
+      <div class="exercise-item"><label>3. Mary (live) _______________ in Germany since 1992.</label><input type="text" class="exercise-input" id="ex4c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex4c',['has','been','living'],'fb4c','ans4c')">Check Answer</button><div class="hidden-answer" id="ans4c">has been living</div><div class="feedback" id="fb
