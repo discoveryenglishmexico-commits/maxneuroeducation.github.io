@@ -106,6 +106,11 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
 .phrase-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; margin:20px 0; }
 .phrase-item { padding:15px; background:var(--light-gray); border-radius:6px; text-align:center; font-weight:600; color:var(--medium-gray); border:2px solid var(--pink); }
 
+.instruction-box { background:var(--light-gray); padding:20px; border-radius:8px; margin:20px 0; border-left:4px solid var(--pink); }
+.instruction-box h4 { color:var(--medium-gray); margin-bottom:10px; }
+.instruction-box p { color:var(--text-dark); margin-bottom:10px; }
+.instruction-box em { color:var(--pink-dark); font-style:italic; }
+
 @media(max-width:768px) {
   .hero { height:75vh; }
   .section-image { min-height:40vh; }
@@ -144,7 +149,7 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
       <h3>Sarah and Evan's Transfer</h3>
       <p>Hello there, is me Rose Mary. Well I'm here to tell you about certain situation that a friend of our family has, her name is Sarah. Sarah's husband Evan works with James in the same office and that's why we met and became acquaintances.</p>
       <p>The thing is that Evan has received the transfer order and was given 5 days to do so, and has everything ready to travel to Louisville in Colorado. Louisville is a small town close to Denver. The actual problem is that they are newlyweds, both have lived in the city all their lives but with the transfer everything is going to change for them. First most of their relatives and friends live nearby, so Sarah feels a little more down than Evan due to the fact that she had gotten used to the idea of being a housewife for a while till she had the opportunity open up a flower shop which has been her objective all along since she got married. She knows a lot of people and she thought that she could use their recommendation to gain clientele.</p>
-      <p>Now she feels dismal because she thinks that she won't be able to fulfill her goal or that once they get there it would be difficult for her to do so due to the fact that they have to start all over again from scratch. They have to find a house where she could feel comfortable, get some furniture, get to know people, etc.</p>
+      <p>Now she feels dismal because she thinks that she won't be able to fulfill her goal or that once they get there it would be difficult for her to do so due to the fact that they have to start all over again from scratch. They have to find a house where she could feel comfortable, get some new furniture, get to know people, etc.</p>
       <p>Evan has told her that everything is going to be fine, which in my opinion is easy for him to say because he is going to be working there so he would have more opportunities to socialize and mingle with his co-workers in the office.</p>
       <p>Deep inside she knows they're gonna break through the change and go on.</p>
     </div>
@@ -176,62 +181,490 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
   </div>
 </section>
 
-<!-- SECTION 2: ADVICE SITUATIONS -->
+<!-- SECTION 2: ADVICE PRACTICE -->
 <section class="section-solid pink">
   <div class="container">
     <h2>💡 Practice Giving Advice</h2>
-    <p>Use these phrases to help with different situations:</p>
     
-    <div class="phrase-grid">
-      <div class="phrase-item">You ought to...</div>
-      <div class="phrase-item">You could try...</div>
-      <div class="phrase-item">You'd better...</div>
-      <div class="phrase-item">You need to...</div>
-      <div class="phrase-item">I would advise that...</div>
-      <div class="phrase-item">If I was/were in your place, I'd...</div>
-      <div class="phrase-item">My advice is to...</div>
-      <div class="phrase-item">If I were you, I'd...</div>
+    <div class="instruction-box">
+      <h4>Practice writing down different advice situations.</h4>
+      <p><strong>Example:</strong> I had an accident in my car.<br>
+      <em>You should call the police.</em></p>
+      <p><strong>Don't write same things in different ways.</strong></p>
+      <p><strong>Example:</strong> You should check for damage to your car.<br>
+      <em>You should look to see if your car has any dents.</em></p>
     </div>
 
+    <h3 style="margin-top:30px; color:var(--medium-gray);">Some phrases to help with this activity:</h3>
+    <div class="phrase-grid">
+      <div class="phrase-item">You ought to...</div>
+      <div class="phrase-item">You need to...</div>
+      <div class="phrase-item">My advice is to...</div>
+      <div class="phrase-item">You could try...</div>
+      <div class="phrase-item">I would advise that...</div>
+      <div class="phrase-item">If I were you, I'd...</div>
+      <div class="phrase-item">You'd better...</div>
+      <div class="phrase-item">If I was/were in your place, I'd...</div>
+    </div>
+
+    <h3 style="margin-top:30px; color:var(--medium-gray);">Possible situations:</h3>
     <div class="exercise-box">
-      <h3>Possible Situations - Give Your Advice</h3>
       <div class="exercise-item"><label>1. I broke up with my boyfriend/girlfriend.</label><textarea class="exercise-textarea" id="ex2a" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2a','fb2a')">Check Answer</button><div class="feedback" id="fb2a"></div></div>
       <div class="exercise-item"><label>2. My dog (pet) passed away.</label><textarea class="exercise-textarea" id="ex2b" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2b','fb2b')">Check Answer</button><div class="feedback" id="fb2b"></div></div>
       <div class="exercise-item"><label>3. I flunked my final exam and I'm not going to pass to the next grade.</label><textarea class="exercise-textarea" id="ex2c" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2c','fb2c')">Check Answer</button><div class="feedback" id="fb2c"></div></div>
       <div class="exercise-item"><label>4. I broke my dad's new iPad.</label><textarea class="exercise-textarea" id="ex2d" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2d','fb2d')">Check Answer</button><div class="feedback" id="fb2d"></div></div>
       <div class="exercise-item"><label>5. I think my girlfriend/boyfriend is cheating on me.</label><textarea class="exercise-textarea" id="ex2e" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2e','fb2e')">Check Answer</button><div class="feedback" id="fb2e"></div></div>
+      <div class="exercise-item"><label>6. I feel depressed because I lost my job.</label><textarea class="exercise-textarea" id="ex2f" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2f','fb2f')">Check Answer</button><div class="feedback" id="fb2f"></div></div>
+      <div class="exercise-item"><label>7. My parents are gonna separate.</label><textarea class="exercise-textarea" id="ex2g" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2g','fb2g')">Check Answer</button><div class="feedback" id="fb2g"></div></div>
+      <div class="exercise-item"><label>8. I feel stressed out because I have to move out of my house.</label><textarea class="exercise-textarea" id="ex2h" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2h','fb2h')">Check Answer</button><div class="feedback" id="fb2h"></div></div>
+      <div class="exercise-item"><label>9. I lost my wallet with all of my bank cards and I.D.'s.</label><textarea class="exercise-textarea" id="ex2i" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2i','fb2i')">Check Answer</button><div class="feedback" id="fb2i"></div></div>
+      <div class="exercise-item"><label>10. I'm sad because I wasn't accepted in the university I applied for.</label><textarea class="exercise-textarea" id="ex2j" placeholder="Write your advice (minimum 20 characters)..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2j','fb2j')">Check Answer</button><div class="feedback" id="fb2j"></div></div>
     </div>
     <button class="nav-btn" onclick="scrollToNext()" style="background:var(--dark-gray); color:var(--text-light);">Continue →</button>
   </div>
 </section>
 
-<!-- SECTION 3: PAST PARTICIPLE -->
+<!-- SECTION 3: FIND THE MISTAKE -->
 <section class="section-solid dark">
   <div class="container">
-    <h2 style="color:var(--pink);">📝 Past Participle Practice</h2>
+    <h2 style="color:var(--pink);">🔍 Find the Mistake</h2>
+    <p style="margin-bottom:20px;">Find one mistake in each conversation and correct it.</p>
     <div class="exercise-box">
-      <h3 style="color:var(--pink);">Write the verbs in the blanks using the Past Participle</h3>
-      <div class="exercise-item"><label>1. _______________ watches (repair)</label><input type="text" class="exercise-input" id="ex3a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3a',['repaired'],'fb3a','ans3a')">Check Answer</button><div class="hidden-answer" id="ans3a">repaired</div><div class="feedback" id="fb3a"></div></div>
-      <div class="exercise-item"><label>2. _______________ computers (steal)</label><input type="text" class="exercise-input" id="ex3b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3b',['stolen'],'fb3b','ans3b')">Check Answer</button><div class="hidden-answer" id="ans3b">stolen</div><div class="feedback" id="fb3b"></div></div>
-      <div class="exercise-item"><label>3. _______________ fans (fascinate)</label><input type="text" class="exercise-input" id="ex3c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3c',['fascinated'],'fb3c','ans3c')">Check Answer</button><div class="hidden-answer" id="ans3c">fascinated</div><div class="feedback" id="fb3c"></div></div>
-      <div class="exercise-item"><label>4. _______________ students (bore)</label><input type="text" class="exercise-input" id="ex3d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3d',['bored'],'fb3d','ans3d')">Check Answer</button><div class="hidden-answer" id="ans3d">bored</div><div class="feedback" id="fb3d"></div></div>
-      <div class="exercise-item"><label>5. _______________ boys (confuse)</label><input type="text" class="exercise-input" id="ex3e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3e',['confused'],'fb3e','ans3e')">Check Answer</button><div class="hidden-answer" id="ans3e">confused</div><div class="feedback" id="fb3e"></div></div>
-      <div class="exercise-item"><label>6. _______________ umbrellas (forget)</label><input type="text" class="exercise-input" id="ex3f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3f',['forgotten'],'fb3f','ans3f')">Check Answer</button><div class="hidden-answer" id="ans3f">forgotten</div><div class="feedback" id="fb3f"></div></div>
-      <div class="exercise-item"><label>7. _______________ girls (disappoint)</label><input type="text" class="exercise-input" id="ex3g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3g',['disappointed'],'fb3g','ans3g')">Check Answer</button><div class="hidden-answer" id="ans3g">disappointed</div><div class="feedback" id="fb3g"></div></div>
-      <div class="exercise-item"><label>8. _______________ comics (swap)</label><input type="text" class="exercise-input" id="ex3h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3h',['swapped'],'fb3h','ans3h')">Check Answer</button><div class="hidden-answer" id="ans3h">swapped</div><div class="feedback" id="fb3h"></div></div>
-      <div class="exercise-item"><label>9. _______________ doctors (worry)</label><input type="text" class="exercise-input" id="ex3i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3i',['worried'],'fb3i','ans3i')">Check Answer</button><div class="hidden-answer" id="ans3i">worried</div><div class="feedback" id="fb3i"></div></div>
-      <div class="exercise-item"><label>10. _______________ queens (amuse)</label><input type="text" class="exercise-input" id="ex3j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3j',['amused'],'fb3j','ans3j')">Check Answer</button><div class="hidden-answer" id="ans3j">amused</div><div class="feedback" id="fb3j"></div></div>
+      <div class="exercise-item"><label>1. A: What do you mean? I don't understand.<br>B: Just hang up a minute and I'll explain.<br><strong>Mistake:</strong> _______________</label><input type="text" class="exercise-input" id="ex3a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3a',['hang','on'],'fb3a','ans3a')">Check Answer</button><div class="hidden-answer" id="ans3a">hang up → hang on</div><div class="feedback" id="fb3a"></div></div>
+      <div class="exercise-item"><label>2. A: I really feel that television is too violent these days.<br>B: OK, I agree that.<br><strong>Mistake:</strong> _______________</label><input type="text" class="exercise-input" id="ex3b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3b',['agree'],'fb3b','ans3b')">Check Answer</button><div class="hidden-answer" id="ans3b">agree that → agree</div><div class="feedback" id="fb3b"></div></div>
+      <div class="exercise-item"><label>3. A: Just a second. Are you serious?<br>B: I'm not finish. I'll give you some examples. First...<br><strong>Mistake:</strong> _______________</label><input type="text" class="exercise-input" id="ex3c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3c',['finished'],'fb3c','ans3c')">Check Answer</button><div class="hidden-answer" id="ans3c">not finish → not finished</div><div class="feedback" id="fb3c"></div></div>
+      <div class="exercise-item"><label>4. A: People don't need university degrees these days.<br>B: I don't believe with that. I think it's important to have one.<br><strong>Mistake:</strong> _______________</label><input type="text" class="exercise-input" id="ex3d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3d',['believe','in'],'fb3d','ans3d')">Check Answer</button><div class="hidden-answer" id="ans3d">believe with → believe in</div><div class="feedback" id="fb3d"></div></div>
+      <div class="exercise-item"><label>5. A: That's why I think we should all pay our taxes.<br>B: That's all right. I think so, too.<br><strong>Mistake:</strong> _______________</label><input type="text" class="exercise-input" id="ex3e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex3e',['right'],'fb3e','ans3e')">Check Answer</button><div class="hidden-answer" id="ans3e">That's all right → That's right / You're right</div><div class="feedback" id="fb3e"></div></div>
     </div>
     <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
   </div>
 </section>
 
-<!-- SECTION 4: PRESENT PERFECT CONTINUOUS -->
+<!-- SECTION 4: VOCABULARY EXERCISES -->
+<section class="section-solid light">
+  <div class="container">
+    <h2 style="color:var(--medium-gray);">📚 Vocabulary Exercises</h2>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. When she found out that her son failed a school test, she felt __.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q4a','a')">confused</button><button class="option-btn" onclick="selectOption(this,'q4a','b')">annoyed</button><button class="option-btn" onclick="selectOption(this,'q4a','c')">bewildered</button></div><button class="btn-verify" onclick="checkMC('q4a','b','fb4a')">Check Answer</button><div class="hidden-answer" id="ans4a">annoyed</div><div class="feedback" id="fb4a"></div></div>
+      <div class="exercise-item"><label>2. He was a little __ before his first date with Lucy.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q4b','a')">appalled</button><button class="option-btn" onclick="selectOption(this,'q4b','b')">apprehensive</button><button class="option-btn" onclick="selectOption(this,'q4b','c')">ashamed</button></div><button class="btn-verify" onclick="checkMC('q4b','b','fb4b')">Check Answer</button><div class="hidden-answer" id="ans4b">apprehensive</div><div class="feedback" id="fb4b"></div></div>
+      <div class="exercise-item"><label>3. He's __ because nobody told him about the party. He spent the whole evening at home alone.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q4c','a')">cheated</button><button class="option-btn" onclick="selectOption(this,'q4c','b')">cross</button><button class="option-btn" onclick="selectOption(this,'q4c','c')">depressed</button></div><button class="btn-verify" onclick="checkMC('q4c','b','fb4c')">Check Answer</button><div class="hidden-answer" id="ans4c">cross</div><div class="feedback" id="fb4c"></div></div>
+      <div class="exercise-item"><label>4. Are you __ that you'll pass the exam?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q4d','a')">confident</button><button class="option-btn" onclick="selectOption(this,'q4d','b')">confused</button><button class="option-btn" onclick="selectOption(this,'q4d','c')">delighted</button></div><button class="btn-verify" onclick="checkMC('q4d','a','fb4d')">Check Answer</button><div class="hidden-answer" id="ans4d">confident</div><div class="feedback" id="fb4d"></div></div>
+      <div class="exercise-item"><label>5. He was __ when he heard he got the job.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q4e','a')">depressed</button><button class="option-btn" onclick="selectOption(this,'q4e','b')">delighted</button><button class="option-btn" onclick="selectOption(this,'q4e','c')">down in the dumps</button></div><button class="btn-verify" onclick="checkMC('q4e','b','fb4e')">Check Answer</button><div class="hidden-answer" id="ans4e">delighted</div><div class="feedback" id="fb4e"></div></div>
+      <div class="exercise-item"><label>6. She felt a bit __ that she couldn't go to the theatre with the others.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q4f','a')">depressed</button><button class="option-btn" onclick="selectOption(this,'q4f','b')">down in the dumps</button><button class="option-btn" onclick="selectOption(this,'q4f','c')">disappointed</button></div><button class="btn-verify" onclick="checkMC('q4f','c','fb4f')">Check Answer</button><div class="hidden-answer" id="ans4f">disappointed</div><div class="feedback" id="fb4f"></div></div>
+      <div class="exercise-item"><label>7. I'm not the __ type. I'm happy with what I've got.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q4g','a')">emotional</button><button class="option-btn" onclick="selectOption(this,'q4g','b')">envious</button><button class="option-btn" onclick="selectOption(this,'q4g','c')">embarrassed</button></div><button class="btn-verify" onclick="checkMC('q4g','b','fb4g')">Check Answer</button><div class="hidden-answer" id="ans4g">envious</div><div class="feedback" id="fb4g"></div></div>
+      <div class="exercise-item"><label>8. He was really __ when he saw those terrible photos of himself. He hoped his parents wouldn't see them.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q4h','a')">excited</button><button class="option-btn" onclick="selectOption(this,'q4h','b')">emotional</button><button class="option-btn" onclick="selectOption(this,'q4h','c')">embarrassed</button></div><button class="btn-verify" onclick="checkMC('q4h','c','fb4h')">Check Answer</button><div class="hidden-answer" id="ans4h">embarrassed</div><div class="feedback" id="fb4h"></div></div>
+      <div class="exercise-item"><label>9. She was __ with her son for stealing money.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q4i','a')">furious</button><button class="option-btn" onclick="selectOption(this,'q4i','b')">happy</button><button class="option-btn" onclick="selectOption(this,'q4i','c')">horrified</button></div><button class="btn-verify" onclick="checkMC('q4i','a','fb4i')">Check Answer</button><div class="hidden-answer" id="ans4i">furious</div><div class="feedback" id="fb4i"></div></div>
+      <div class="exercise-item"><label>10. Andrew always gets a bit __ when he sees politicians talking on the TV.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q4j','a')">furious</button><button class="option-btn" onclick="selectOption(this,'q4j','b')">horrified</button><button class="option-btn" onclick="selectOption(this,'q4j','c')">irritated</button></div><button class="btn-verify" onclick="checkMC('q4j','c','fb4j')">Check Answer</button><div class="hidden-answer" id="ans4j">irritated</div><div class="feedback" id="fb4j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 5: VOCABULARY EMOTIONS -->
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--medium-gray);">😊 Vocabulary: Emotions</h2>
+    <p style="margin-bottom:20px;">Fill out the blanks with the correct vocabulary word:</p>
+    <div class="highlight-box">grossed out • fervent • enrage • guilt • somber • bliss • startled • freaked out • love • baffled • disappointed • bummed out</div>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. She felt a deep sense of _______________ after lying to her friend.</label><input type="text" class="exercise-input" id="ex5a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5a',['guilt'],'fb5a','ans5a')">Check Answer</button><div class="hidden-answer" id="ans5a">guilt</div><div class="feedback" id="fb5a"></div></div>
+      <div class="exercise-item"><label>2. The news of the accident left everyone feeling _______________.</label><input type="text" class="exercise-input" id="ex5b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5b',['somber'],'fb5b','ans5b')">Check Answer</button><div class="hidden-answer" id="ans5b">somber</div><div class="feedback" id="fb5b"></div></div>
+      <div class="exercise-item"><label>3. I was completely _______________ when I saw the surprise party.</label><input type="text" class="exercise-input" id="ex5c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5c',['startled'],'fb5c','ans5c')">Check Answer</button><div class="hidden-answer" id="ans5c">startled</div><div class="feedback" id="fb5c"></div></div>
+      <div class="exercise-item"><label>4. The children were _______________ by the complex math problem.</label><input type="text" class="exercise-input" id="ex5d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5d',['baffled'],'fb5d','ans5d')">Check Answer</button><div class="hidden-answer" id="ans5d">baffled</div><div class="feedback" id="fb5d"></div></div>
+      <div class="exercise-item"><label>5. He was _______________ when he didn't get the job he wanted.</label><input type="text" class="exercise-input" id="ex5e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5e',['disappointed'],'fb5e','ans5e')">Check Answer</button><div class="hidden-answer" id="ans5e">disappointed</div><div class="feedback" id="fb5e"></div></div>
+      <div class="exercise-item"><label>6. I'm feeling really _______________ about canceling the vacation.</label><input type="text" class="exercise-input" id="ex5f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5f',['bummed','out'],'fb5f','ans5f')">Check Answer</button><div class="hidden-answer" id="ans5f">bummed out</div><div class="feedback" id="fb5f"></div></div>
+      <div class="exercise-item"><label>7. The horror movie really _______________ me out.</label><input type="text" class="exercise-input" id="ex5g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5g',['grossed','out'],'fb5g','ans5g')">Check Answer</button><div class="hidden-answer" id="ans5g">grossed out</div><div class="feedback" id="fb5g"></div></div>
+      <div class="exercise-item"><label>8. She has a _______________ love for classical music.</label><input type="text" class="exercise-input" id="ex5h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5h',['fervent'],'fb5h','ans5h')">Check Answer</button><div class="hidden-answer" id="ans5h">fervent</div><div class="feedback" id="fb5h"></div></div>
+      <div class="exercise-item"><label>9. The unfair decision will _______________ the employees.</label><input type="text" class="exercise-input" id="ex5i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5i',['enrage'],'fb5i','ans5i')">Check Answer</button><div class="hidden-answer" id="ans5i">enrage</div><div class="feedback" id="fb5i"></div></div>
+      <div class="exercise-item"><label>10. They lived in _______________ for many years.</label><input type="text" class="exercise-input" id="ex5j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5j',['bliss'],'fb5j','ans5j')">Check Answer</button><div class="hidden-answer" id="ans5j">bliss</div><div class="feedback" id="fb5j"></div></div>
+      <div class="exercise-item"><label>11. I was _______________ when I heard the strange noise.</label><input type="text" class="exercise-input" id="ex5k" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5k',['freaked','out'],'fb5k','ans5k')">Check Answer</button><div class="hidden-answer" id="ans5k">freaked out</div><div class="feedback" id="fb5k"></div></div>
+      <div class="exercise-item"><label>12. She felt pure _______________ for her children.</label><input type="text" class="exercise-input" id="ex5l" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5l',['love'],'fb5l','ans5l')">Check Answer</button><div class="hidden-answer" id="ans5l">love</div><div class="feedback" id="fb5l"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--dark-gray); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 6: EMOTIONS AND FEELINGS -->
+<section class="section-solid pink">
+  <div class="container">
+    <h2>😊 Emotions and Feelings</h2>
+    <p style="margin-bottom:20px;">Choose the correct emotion or feeling:</p>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. I used to be so ________, but now I worry about everything.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6a','a')">carefree</button><button class="option-btn" onclick="selectOption(this,'q6a','b')">nervous</button><button class="option-btn" onclick="selectOption(this,'q6a','c')">sleepy</button></div><button class="btn-verify" onclick="checkMC('q6a','a','fb6a')">Check Answer</button><div class="hidden-answer" id="ans6a">carefree</div><div class="feedback" id="fb6a"></div></div>
+      <div class="exercise-item"><label>2. I am so ________ about starting university this year! I can't wait!</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6b','a')">depressed</button><button class="option-btn" onclick="selectOption(this,'q6b','b')">enthusiastic</button><button class="option-btn" onclick="selectOption(this,'q6b','c')">smart</button></div><button class="btn-verify" onclick="checkMC('q6b','b','fb6b')">Check Answer</button><div class="hidden-answer" id="ans6b">enthusiastic</div><div class="feedback" id="fb6b"></div></div>
+      <div class="exercise-item"><label>3. I've been pretty ________ with my job, so I'm looking for a new one.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6c','a')">unhappy</button><button class="option-btn" onclick="selectOption(this,'q6c','b')">satisfied</button><button class="option-btn" onclick="selectOption(this,'q6c','c')">happy</button></div><button class="btn-verify" onclick="checkMC('q6c','a','fb6c')">Check Answer</button><div class="hidden-answer" id="ans6c">unhappy</div><div class="feedback" id="fb6c"></div></div>
+      <div class="exercise-item"><label>4. I was ________ with the architecture in Tokyo. It was amazing.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6d','a')">content</button><button class="option-btn" onclick="selectOption(this,'q6d','b')">excited</button><button class="option-btn" onclick="selectOption(this,'q6d','c')">impressed</button></div><button class="btn-verify" onclick="checkMC('q6d','c','fb6d')">Check Answer</button><div class="hidden-answer" id="ans6d">impressed</div><div class="feedback" id="fb6d"></div></div>
+      <div class="exercise-item"><label>5. Katie is very ________ for all the help you have given her.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6e','a')">unhappy</button><button class="option-btn" onclick="selectOption(this,'q6e','b')">great</button><button class="option-btn" onclick="selectOption(this,'q6e','c')">grateful</button></div><button class="btn-verify" onclick="checkMC('q6e','c','fb6e')">Check Answer</button><div class="hidden-answer" id="ans6e">grateful</div><div class="feedback" id="fb6e"></div></div>
+      <div class="exercise-item"><label>6. After we saw that horror movie, I felt ________ all night.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6f','a')">frightened</button><button class="option-btn" onclick="selectOption(this,'q6f','b')">sympathetic</button><button class="option-btn" onclick="selectOption(this,'q6f','c')">convinced</button></div><button class="btn-verify" onclick="checkMC('q6f','a','fb6f')">Check Answer</button><div class="hidden-answer" id="ans6f">frightened</div><div class="feedback" id="fb6f"></div></div>
+      <div class="exercise-item"><label>7. Hey, stop yelling! Why are you so ________?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6g','a')">convinced</button><button class="option-btn" onclick="selectOption(this,'q6g','b')">upset</button><button class="option-btn" onclick="selectOption(this,'q6g','c')">flattered</button></div><button class="btn-verify" onclick="checkMC('q6g','b','fb6g')">Check Answer</button><div class="hidden-answer" id="ans6g">upset</div><div class="feedback" id="fb6g"></div></div>
+      <div class="exercise-item"><label>8. I was so ________ watching that movie that I fell asleep twice.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6h','a')">excited</button><button class="option-btn" onclick="selectOption(this,'q6h','b')">bored</button><button class="option-btn" onclick="selectOption(this,'q6h','c')">impressed</button></div><button class="btn-verify" onclick="checkMC('q6h','b','fb6h')">Check Answer</button><div class="hidden-answer" id="ans6h">bored</div><div class="feedback" id="fb6h"></div></div>
+      <div class="exercise-item"><label>9. When John saw his ex-girlfriend talking to another boy, he became very ________.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6i','a')">afraid</button><button class="option-btn" onclick="selectOption(this,'q6i','b')">exhausted</button><button class="option-btn" onclick="selectOption(this,'q6i','c')">jealous</button></div><button class="btn-verify" onclick="checkMC('q6i','c','fb6i')">Check Answer</button><div class="hidden-answer" id="ans6i">jealous</div><div class="feedback" id="fb6i"></div></div>
+      <div class="exercise-item"><label>10. I got drunk and made a fool of myself at the party. Now I feel ________.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6j','a')">surprised</button><button class="option-btn" onclick="selectOption(this,'q6j','b')">embarrassed</button><button class="option-btn" onclick="selectOption(this,'q6j','c')">insulted</button></div><button class="btn-verify" onclick="checkMC('q6j','b','fb6j')">Check Answer</button><div class="hidden-answer" id="ans6j">embarrassed</div><div class="feedback" id="fb6j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--dark-gray); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 7: PAST PARTICIPLE -->
+<section class="section-solid dark">
+  <div class="container">
+    <h2 style="color:var(--pink);">📝 Past Participle</h2>
+    <div class="exercise-box">
+      <h3 style="color:var(--pink);">Write the words in the blanks using the Past Participle</h3>
+      <div class="exercise-item"><label>1. _______________ watches (repair)</label><input type="text" class="exercise-input" id="ex7a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex7a',['repaired'],'fb7a','ans7a')">Check Answer</button><div class="hidden-answer" id="ans7a">repaired</div><div class="feedback" id="fb7a"></div></div>
+      <div class="exercise-item"><label>2. _______________ computers (steal)</label><input type="text" class="exercise-input" id="ex7b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex7b',['stolen'],'fb7b','ans7b')">Check Answer</button><div class="hidden-answer" id="ans7b">stolen</div><div class="feedback" id="fb7b"></div></div>
+      <div class="exercise-item"><label>3. _______________ fans (fascinate)</label><input type="text" class="exercise-input" id="ex7c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex7c',['fascinated'],'fb7c','ans7c')">Check Answer</button><div class="hidden-answer" id="ans7c">fascinated</div><div class="feedback" id="fb7c"></div></div>
+      <div class="exercise-item"><label>4. _______________ students (bore)</label><input type="text" class="exercise-input" id="ex7d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex7d',['bored'],'fb7d','ans7d')">Check Answer</button><div class="hidden-answer" id="ans7d">bored</div><div class="feedback" id="fb7d"></div></div>
+      <div class="exercise-item"><label>5. _______________ boys (confuse)</label><input type="text" class="exercise-input" id="ex7e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex7e',['confused'],'fb7e','ans7e')">Check Answer</button><div class="hidden-answer" id="ans7e">confused</div><div class="feedback" id="fb7e"></div></div>
+      <div class="exercise-item"><label>6. _______________ umbrellas (forget)</label><input type="text" class="exercise-input" id="ex7f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex7f',['forgotten'],'fb7f','ans7f')">Check Answer</button><div class="hidden-answer" id="ans7f">forgotten</div><div class="feedback" id="fb7f"></div></div>
+      <div class="exercise-item"><label>7. _______________ girls (disappoint)</label><input type="text" class="exercise-input" id="ex7g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex7g',['disappointed'],'fb7g','ans7g')">Check Answer</button><div class="hidden-answer" id="ans7g">disappointed</div><div class="feedback" id="fb7g"></div></div>
+      <div class="exercise-item"><label>8. _______________ comics (swap)</label><input type="text" class="exercise-input" id="ex7h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex7h',['swapped'],'fb7h','ans7h')">Check Answer</button><div class="hidden-answer" id="ans7h">swapped</div><div class="feedback" id="fb7h"></div></div>
+      <div class="exercise-item"><label>9. _______________ doctors (worry)</label><input type="text" class="exercise-input" id="ex7i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex7i',['worried'],'fb7i','ans7i')">Check Answer</button><div class="hidden-answer" id="ans7i">worried</div><div class="feedback" id="fb7i"></div></div>
+      <div class="exercise-item"><label>10. _______________ queens (amuse)</label><input type="text" class="exercise-input" id="ex7j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex7j',['amused'],'fb7j','ans7j')">Check Answer</button><div class="hidden-answer" id="ans7j">amused</div><div class="feedback" id="fb7j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 8: PAST PARTICIPLE WITH VERBS -->
+<section class="section-solid medium-gray">
+  <div class="container">
+    <h2 style="color:var(--pink);">📝 Past Participle with Verbs</h2>
+    <div class="exercise-box">
+      <h3 style="color:var(--pink);">Make the past participle using the words in the brackets</h3>
+      <div class="exercise-item"><label>1. We've already _______________ (have) lunch.</label><input type="text" class="exercise-input" id="ex8a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8a',['had'],'fb8a','ans8a')">Check Answer</button><div class="hidden-answer" id="ans8a">had</div><div class="feedback" id="fb8a"></div></div>
+      <div class="exercise-item"><label>2. This was the first time she had _______________ (do) her homework.</label><input type="text" class="exercise-input" id="ex8b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8b',['done'],'fb8b','ans8b')">Check Answer</button><div class="hidden-answer" id="ans8b">done</div><div class="feedback" id="fb8b"></div></div>
+      <div class="exercise-item"><label>3. They have _______________ (begin) painting the living room.</label><input type="text" class="exercise-input" id="ex8c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8c',['begun'],'fb8c','ans8c')">Check Answer</button><div class="hidden-answer" id="ans8c">begun</div><div class="feedback" id="fb8c"></div></div>
+      <div class="exercise-item"><label>4. We have _______________ (keep) this secret for three years.</label><input type="text" class="exercise-input" id="ex8d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8d',['kept'],'fb8d','ans8d')">Check Answer</button><div class="hidden-answer" id="ans8d">kept</div><div class="feedback" id="fb8d"></div></div>
+      <div class="exercise-item"><label>5. He has never _______________ (drive) a motorbike before.</label><input type="text" class="exercise-input" id="ex8e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8e',['driven'],'fb8e','ans8e')">Check Answer</button><div class="hidden-answer" id="ans8e">driven</div><div class="feedback" id="fb8e"></div></div>
+      <div class="exercise-item"><label>6. I have _______________ (be) sick all week.</label><input type="text" class="exercise-input" id="ex8f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8f',['been'],'fb8f','ans8f')">Check Answer</button><div class="hidden-answer" id="ans8f">been</div><div class="feedback" id="fb8f"></div></div>
+      <div class="exercise-item"><label>7. By the time we arrived, the children had _______________ (eat) all the chocolate.</label><input type="text" class="exercise-input" id="ex8g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8g',['eaten'],'fb8g','ans8g')">Check Answer</button><div class="hidden-answer" id="ans8g">eaten</div><div class="feedback" id="fb8g"></div></div>
+      <div class="exercise-item"><label>8. The books had _______________ (fall) off the table and were all over the floor.</label><input type="text" class="exercise-input" id="ex8h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8h',['fallen'],'fb8h','ans8h')">Check Answer</button><div class="hidden-answer" id="ans8h">fallen</div><div class="feedback" id="fb8h"></div></div>
+      <div class="exercise-item"><label>9. "Are you okay?" "I've _______________ (feel) better".</label><input type="text" class="exercise-input" id="ex8i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex8i',['felt'],'fb8i','ans8i')">Check Answer</button><div class="hidden-answer" id="ans8i">felt</div><div class="feedback" id="fb8i"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--pink);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 9: PRESENT PERFECT CONTINUOUS -->
 <section class="section-solid light">
   <div class="container">
     <h2 style="color:var(--medium-gray);">⏰ Present Perfect Continuous</h2>
     <div class="exercise-box">
       <h3 style="color:var(--medium-gray);">Put the verbs into the correct form</h3>
-      <div class="exercise-item"><label>1. He (work) _______________ in this company since 1985.</label><input type="text" class="exercise-input" id="ex4a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex4a',['has','been','working'],'fb4a','ans4a')">Check Answer</button><div class="hidden-answer" id="ans4a">has been working</div><div class="feedback" id="fb4a"></div></div>
-      <div class="exercise-item"><label>2. I (wait) _______________ for you since two o'clock.</label><input type="text" class="exercise-input" id="ex4b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex4b',['have','been','waiting'],'fb4b','ans4b')">Check Answer</button><div class="hidden-answer" id="ans4b">have been waiting</div><div class="feedback" id="fb4b"></div></div>
-      <div class="exercise-item"><label>3. Mary (live) _______________ in Germany since 1992.</label><input type="text" class="exercise-input" id="ex4c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex4c',['has','been','living'],'fb4c','ans4c')">Check Answer</button><div class="hidden-answer" id="ans4c">has been living</div><div class="feedback" id="fb
+      <div class="exercise-item"><label>1. He (work) _______________ in this company since 1985.</label><input type="text" class="exercise-input" id="ex9a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9a',['has','been','working'],'fb9a','ans9a')">Check Answer</button><div class="hidden-answer" id="ans9a">has been working</div><div class="feedback" id="fb9a"></div></div>
+      <div class="exercise-item"><label>2. I (wait) _______________ for you since two o'clock.</label><input type="text" class="exercise-input" id="ex9b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9b',['have','been','waiting'],'fb9b','ans9b')">Check Answer</button><div class="hidden-answer" id="ans9b">have been waiting</div><div class="feedback" id="fb9b"></div></div>
+      <div class="exercise-item"><label>3. Mary (live) _______________ in Germany since 1992.</label><input type="text" class="exercise-input" id="ex9c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9c',['has','been','living'],'fb9c','ans9c')">Check Answer</button><div class="hidden-answer" id="ans9c">has been living</div><div class="feedback" id="fb9c"></div></div>
+      <div class="exercise-item"><label>4. Why is he so tired? He (play) _______________ tennis for five hours.</label><input type="text" class="exercise-input" id="ex9d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9d',['has','been','playing'],'fb9d','ans9d')">Check Answer</button><div class="hidden-answer" id="ans9d">has been playing</div><div class="feedback" id="fb9d"></div></div>
+      <div class="exercise-item"><label>5. How long (learn / you) _______________ English?</label><input type="text" class="exercise-input" id="ex9e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9e',['have','you','been','learning'],'fb9e','ans9e')">Check Answer</button><div class="hidden-answer" id="ans9e">have you been learning</div><div class="feedback" id="fb9e"></div></div>
+      <div class="exercise-item"><label>6. We (look for) _______________ the motorway for more than an hour.</label><input type="text" class="exercise-input" id="ex9f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9f',['have','been','looking','for'],'fb9f','ans9f')">Check Answer</button><div class="hidden-answer" id="ans9f">have been looking for</div><div class="feedback" id="fb9f"></div></div>
+      <div class="exercise-item"><label>7. I (live) _______________ without electricity for two weeks.</label><input type="text" class="exercise-input" id="ex9g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9g',['have','been','living'],'fb9g','ans9g')">Check Answer</button><div class="hidden-answer" id="ans9g">have been living</div><div class="feedback" id="fb9g"></div></div>
+      <div class="exercise-item"><label>8. The film (run / not) _______________ for ten minutes yet, but there's a commercial break already.</label><input type="text" class="exercise-input" id="ex9h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9h',['has','not','been','running'],'fb9h','ans9h')">Check Answer</button><div class="hidden-answer" id="ans9h">has not been running</div><div class="feedback" id="fb9h"></div></div>
+      <div class="exercise-item"><label>9. How long (work / she) _______________ in the garden?</label><input type="text" class="exercise-input" id="ex9i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9i',['has','she','been','working'],'fb9i','ans9i')">Check Answer</button><div class="hidden-answer" id="ans9i">has she been working</div><div class="feedback" id="fb9i"></div></div>
+      <div class="exercise-item"><label>10. She (not / be) _______________ in the garden for more than an hour.</label><input type="text" class="exercise-input" id="ex9j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9j',['has','not','been'],'fb9j','ans9j')">Check Answer</button><div class="hidden-answer" id="ans9j">has not been</div><div class="feedback" id="fb9j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 10: PRESENT PERFECT CONTINUOUS QUESTIONS -->
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--medium-gray);">⏰ Present Perfect Continuous Questions</h2>
+    <div class="exercise-box">
+      <h3 style="color:var(--medium-gray);">Watch the punctuation and form sentences or questions</h3>
+      <div class="exercise-item"><label>1. Who _______________ in the garden? (to dig)</label><input type="text" class="exercise-input" id="ex10a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10a',['has','been','digging'],'fb10a','ans10a')">Check Answer</button><div class="hidden-answer" id="ans10a">has been digging</div><div class="feedback" id="fb10a"></div></div>
+      <div class="exercise-item"><label>2. How long _______________ this earring? (you/to wear)</label><input type="text" class="exercise-input" id="ex10b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10b',['have','you','been','wearing'],'fb10b','ans10b')">Check Answer</button><div class="hidden-answer" id="ans10b">have you been wearing</div><div class="feedback" id="fb10b"></div></div>
+      <div class="exercise-item"><label>3. What _______________? (we/to do)</label><input type="text" class="exercise-input" id="ex10c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10c',['have','we','been','doing'],'fb10c','ans10c')">Check Answer</button><div class="hidden-answer" id="ans10c">have we been doing</div><div class="feedback" id="fb10c"></div></div>
+      <div class="exercise-item"><label>4. _______________ matchstick figures the whole lesson? (he/to draw)</label><input type="text" class="exercise-input" id="ex10d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10d',['has','he','been','drawing'],'fb10d','ans10d')">Check Answer</button><div class="hidden-answer" id="ans10d">has he been drawing</div><div class="feedback" id="fb10d"></div></div>
+      <div class="exercise-item"><label>5. Max _______________ this comic book. (not/to read)</label><input type="text" class="exercise-input" id="ex10e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10e',['has','not','been','reading'],'fb10e','ans10e')">Check Answer</button><div class="hidden-answer" id="ans10e">has not been reading</div><div class="feedback" id="fb10e"></div></div>
+      <div class="exercise-item"><label>6. _______________ the whole morning? (she/to walk)</label><input type="text" class="exercise-input" id="ex10f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10f',['has','she','been','walking'],'fb10f','ans10f')">Check Answer</button><div class="hidden-answer" id="ans10f">has she been walking</div><div class="feedback" id="fb10f"></div></div>
+      <div class="exercise-item"><label>7. It _______________ much in this area. (not/to rain)</label><input type="text" class="exercise-input" id="ex10g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10g',['has','not','been','raining'],'fb10g','ans10g')">Check Answer</button><div class="hidden-answer" id="ans10g">has not been raining</div><div class="feedback" id="fb10g"></div></div>
+      <div class="exercise-item"><label>8. How long _______________ French? (they/to learn)</label><input type="text" class="exercise-input" id="ex10h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10h',['have','they','been','learning'],'fb10h','ans10h')">Check Answer</button><div class="hidden-answer" id="ans10h">have they been learning</div><div class="feedback" id="fb10h"></div></div>
+      <div class="exercise-item"><label>9. Mary _______________ in her diary. (not/to write)</label><input type="text" class="exercise-input" id="ex10i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10i',['has','not','been','writing'],'fb10i','ans10i')">Check Answer</button><div class="hidden-answer" id="ans10i">has not been writing</div><div class="feedback" id="fb10i"></div></div>
+      <div class="exercise-item"><label>10. I _______________ for two months now. (not/to drive)</label><input type="text" class="exercise-input" id="ex10j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10j',['have','not','been','driving'],'fb10j','ans10j')">Check Answer</button><div class="hidden-answer" id="ans10j">have not been driving</div><div class="feedback" id="fb10j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--dark-gray); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 11: FOR OR SINCE -->
+<section class="section-solid pink">
+  <div class="container">
+    <h2>⏱️ For or Since</h2>
+    <div class="highlight-box">
+      <p><strong>We use FOR with a period of time:</strong> a few days, half an hour, two years<br>
+      <strong>We use SINCE with the time when the action started:</strong> last year, June 8, I met you</p>
+    </div>
+    <div class="exercise-box">
+      <h3>Complete using for or since</h3>
+      <div class="exercise-item"><label>1. I haven't phoned home _______________ Christmas.</label><input type="text" class="exercise-input" id="ex11a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11a',['since'],'fb11a','ans11a')">Check Answer</button><div class="hidden-answer" id="ans11a">since</div><div class="feedback" id="fb11a"></div></div>
+      <div class="exercise-item"><label>2. We've been here _______________ nine o'clock.</label><input type="text" class="exercise-input" id="ex11b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11b',['since'],'fb11b','ans11b')">Check Answer</button><div class="hidden-answer" id="ans11b">since</div><div class="feedback" id="fb11b"></div></div>
+      <div class="exercise-item"><label>3. I have worked for International House _______________ more than eight years.</label><input type="text" class="exercise-input" id="ex11c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11c',['for'],'fb11c','ans11c')">Check Answer</button><div class="hidden-answer" id="ans11c">for</div><div class="feedback" id="fb11c"></div></div>
+      <div class="exercise-item"><label>4. I haven't visited my home town _______________ I left school.</label><input type="text" class="exercise-input" id="ex11d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11d',['since'],'fb11d','ans11d')">Check Answer</button><div class="hidden-answer" id="ans11d">since</div><div class="feedback" id="fb11d"></div></div>
+      <div class="exercise-item"><label>5. I haven't been to the cinema _______________ ages.</label><input type="text" class="exercise-input" id="ex11e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11e',['for'],'fb11e','ans11e')">Check Answer</button><div class="hidden-answer" id="ans11e">for</div><div class="feedback" id="fb11e"></div></div>
+      <div class="exercise-item"><label>6. I have studied non-stop _______________ 9.15.</label><input type="text" class="exercise-input" id="ex11f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11f',['since'],'fb11f','ans11f')">Check Answer</button><div class="hidden-answer" id="ans11f">since</div><div class="feedback" id="fb11f"></div></div>
+      <div class="exercise-item"><label>7. I have had a driving license _______________ I was eighteen.</label><input type="text" class="exercise-input" id="ex11g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11g',['since'],'fb11g','ans11g')">Check Answer</button><div class="hidden-answer" id="ans11g">since</div><div class="feedback" id="fb11g"></div></div>
+      <div class="exercise-item"><label>8. She hasn't had a day off _______________ 1999.</label><input type="text" class="exercise-input" id="ex11h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11h',['since'],'fb11h','ans11h')">Check Answer</button><div class="hidden-answer" id="ans11h">since</div><div class="feedback" id="fb11h"></div></div>
+      <div class="exercise-item"><label>9. Johan has been in England _______________ more than two weeks now.</label><input type="text" class="exercise-input" id="ex11i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11i',['for'],'fb11i','ans11i')">Check Answer</button><div class="hidden-answer" id="ans11i">for</div><div class="feedback" id="fb11i"></div></div>
+      <div class="exercise-item"><label>10. Peter has been my best friend _______________ we were nine.</label><input type="text" class="exercise-input" id="ex11j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11j',['since'],'fb11j','ans11j')">Check Answer</button><div class="hidden-answer" id="ans11j">since</div><div class="feedback" id="fb11j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--dark-gray); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 12: FOR OR SINCE MORE PRACTICE -->
+<section class="section-solid dark">
+  <div class="container">
+    <h2 style="color:var(--pink);">⏱️ For or Since - More Practice</h2>
+    <div class="exercise-box">
+      <h3 style="color:var(--pink);">Decide if you need for or since with these time expressions</h3>
+      <div class="exercise-item"><label>1. _______________ last weekend</label><input type="text" class="exercise-input" id="ex12a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12a',['since'],'fb12a','ans12a')">Check Answer</button><div class="hidden-answer" id="ans12a">since</div><div class="feedback" id="fb12a"></div></div>
+      <div class="exercise-item"><label>2. _______________ ten seconds</label><input type="text" class="exercise-input" id="ex12b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12b',['for'],'fb12b','ans12b')">Check Answer</button><div class="hidden-answer" id="ans12b">for</div><div class="feedback" id="fb12b"></div></div>
+      <div class="exercise-item"><label>3. _______________ Christmas Eve</label><input type="text" class="exercise-input" id="ex12c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12c',['since'],'fb12c','ans12c')">Check Answer</button><div class="hidden-answer" id="ans12c">since</div><div class="feedback" id="fb12c"></div></div>
+      <div class="exercise-item"><label>4. _______________ a decade</label><input type="text" class="exercise-input" id="ex12d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12d',['for'],'fb12d','ans12d')">Check Answer</button><div class="hidden-answer" id="ans12d">for</div><div class="feedback" id="fb12d"></div></div>
+      <div class="exercise-item"><label>5. _______________ I finished school</label><input type="text" class="exercise-input" id="ex12e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12e',['since'],'fb12e','ans12e')">Check Answer</button><div class="hidden-answer" id="ans12e">since</div><div class="feedback" id="fb12e"></div></div>
+      <div class="exercise-item"><label>6. _______________ a couple of days</label><input type="text" class="exercise-input" id="ex12f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12f',['for'],'fb12f','ans12f')">Check Answer</button><div class="hidden-answer" id="ans12f">for</div><div class="feedback" id="fb12f"></div></div>
+      <div class="exercise-item"><label>7. _______________ my birthday</label><input type="text" class="exercise-input" id="ex12g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12g',['since'],'fb12g','ans12g')">Check Answer</button><div class="hidden-answer" id="ans12g">since</div><div class="feedback" id="fb12g"></div></div>
+      <div class="exercise-item"><label>8. _______________ a long time</label><input type="text" class="exercise-input" id="ex12h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12h',['for'],'fb12h','ans12h')">Check Answer</button><div class="hidden-answer" id="ans12h">for</div><div class="feedback" id="fb12h"></div></div>
+      <div class="exercise-item"><label>9. _______________ ten centuries</label><input type="text" class="exercise-input" id="ex12i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12i',['for'],'fb12i','ans12i')">Check Answer</button><div class="hidden-answer" id="ans12i">for</div><div class="feedback" id="fb12i"></div></div>
+      <div class="exercise-item"><label>10. _______________ the 70s</label><input type="text" class="exercise-input" id="ex12j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12j',['since'],'fb12j','ans12j')">Check Answer</button><div class="hidden-answer" id="ans12j">since</div><div class="feedback" id="fb12j"></div></div>
+      <div class="exercise-item"><label>11. _______________ I was a boy</label><input type="text" class="exercise-input" id="ex12k" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12k',['since'],'fb12k','ans12k')">Check Answer</button><div class="hidden-answer" id="ans12k">since</div><div class="feedback" id="fb12k"></div></div>
+      <div class="exercise-item"><label>12. _______________ August</label><input type="text" class="exercise-input" id="ex12l" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12l',['since'],'fb12l','ans12l')">Check Answer</button><div class="hidden-answer" id="ans12l">since</div><div class="feedback" id="fb12l"></div></div>
+      <div class="exercise-item"><label>13. _______________ the last month</label><input type="text" class="exercise-input" id="ex12m" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12m',['for'],'fb12m','ans12m')">Check Answer</button><div class="hidden-answer" id="ans12m">for</div><div class="feedback" id="fb12m"></div></div>
+      <div class="exercise-item"><label>14. _______________ fifteen years</label><input type="text" class="exercise-input" id="ex12n" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12n',['for'],'fb12n','ans12n')">Check Answer</button><div class="hidden-answer" id="ans12n">for</div><div class="feedback" id="fb12n"></div></div>
+      <div class="exercise-item"><label>15. _______________ the accident</label><input type="text" class="exercise-input" id="ex12o" placeholder=""><button class="btn-verify" onclick="checkSimple('ex12o',['since'],'fb12o','ans12o')">Check Answer</button><div class="hidden-answer" id="ans12o">since</div><div class="feedback" id="fb12o"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 13: TEENAGE DEPRESSION -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Teenage Depression</h2>
+    <p>Understanding and helping teenagers</p>
+  </div>
+</section>
+
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--medium-gray);">📖 Reading: Teenage Depression</h2>
+    <div class="reading-block">
+      <h3>A Difficult Time</h3>
+      <p>According to Young Minds, in a school of 1,000 students aged 14-18, 50 of them might be seriously depressed. As many as 1 in 5 could be affected at some time. We investigate why more and more teenagers are suffering from mental illness.</p>
+      <p>Being a teenager has always been difficult. Emotions and moods change rapidly. Many teenagers feel confused and afraid when the safety of childhood is left behind.</p>
+      <p>These days, experts say that things are even harder. Peter Wilson, the Director of Young Minds, says, "We live in particularly difficult times for a growing youngster. There are huge cultural pressures and a lot of broken homes. Kids may have difficult relationships with parents, or in other cases, have no one to support them."</p>
+      <h3 style="margin-top:20px;">No one is happy all the time</h3>
+      <p>Everyone feels unhappy, lonely or misunderstood from time to time. But a small number of teenagers become depressed for weeks or months without change, and they begin to find that they can't continue with their normal lives. Many teenagers don't want to ask, or don't know how to ask for help. Perhaps they don't even realize they are depressed. It is usually other people – friends, parents and teachers, who identify the symptoms of depression and offer help.</p>
+      <h3 style="margin-top:20px;">How to help yourself or someone else</h3>
+      <p>If you are worried about a friend, listen to their problems and try to be sympathetic, and be patient. Most importantly, try and help them find help. If you're feeling blue yourself, don't panic – you need to try and understand your emotions. You are not the first person to feel like this. Try writing things down in a diary or talking to a friend. Perhaps writing a poem or song, drawing a picture or listening to music will help you express and understand your emotions. But most importantly of all, do something you enjoy, whether it's watching TV, playing sport or just going for a walk.</p>
+      <h3 style="margin-top:20px;">Talk to someone</h3>
+      <p>It is a good idea for teenagers who feel depressed to try and talk to someone they like and feel comfortable with. But if they don't want to talk to friends and family, there are lots of people who are there to help. They could talk to their teacher or school nurse or maybe their doctor. Alternatively, there are telephone help lines which give confidential help to anyone with a problem.</p>
+      <h3 style="margin-top:20px;">There is someone who can help</h3>
+      <p>Sometimes, depression can become a very serious problem, and teenagers think about trying to escape their feelings, they might consider suicide or self injury. When the problem has got so bad, professional help from qualified specialist counselors is vital. Counselors are trained to talk to people about their worries and problems. It is important to remember that everyone feels sad and unhappy sometimes, it is natural. Remember that, no matter how bad you feel, the feelings of sadness and happiness will come to an end.</p>
+    </div>
+    <div class="exercise-box">
+      <h3>Comprehension Check - True or False</h3>
+      <div class="exercise-item"><label>1. Teenagers don't want to become adults. _____</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q13a','a')">True</button><button class="option-btn" onclick="selectOption(this,'q13a','b')">False</button></div><button class="btn-verify" onclick="checkMC('q13a','b','fb13a')">Check Answer</button><div class="hidden-answer" id="ans13a">False</div><div class="feedback" id="fb13a"></div></div>
+      <div class="exercise-item"><label>2. Teenagers often don't know how to get help with their depression. _____</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q13b','a')">True</button><button class="option-btn" onclick="selectOption(this,'q13b','b')">False</button></div><button class="btn-verify" onclick="checkMC('q13b','a','fb13b')">Check Answer</button><div class="hidden-answer" id="ans13b">True</div><div class="feedback" id="fb13b"></div></div>
+      <div class="exercise-item"><label>3. Other people are usually the first to see you are depressed. _____</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q13c','a')">True</button><button class="option-btn" onclick="selectOption(this,'q13c','b')">False</button></div><button class="btn-verify" onclick="checkMC('q13c','a','fb13c')">Check Answer</button><div class="hidden-answer" id="ans13c">True</div><div class="feedback" id="fb13c"></div></div>
+      <div class="exercise-item"><label>4. A common symptom of teenage behavior is moody behavior. _____</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q13d','a')">True</button><button class="option-btn" onclick="selectOption(this,'q13d','b')">False</button></div><button class="btn-verify" onclick="checkMC('q13d','a','fb13d')">Check Answer</button><div class="hidden-answer" id="ans13d">True</div><div class="feedback" id="fb13d"></div></div>
+      <div class="exercise-item"><label>5. It is easy to recover quickly from serious depression. _____</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q13e','a')">True</button><button class="option-btn" onclick="selectOption(this,'q13e','b')">False</button></div><button class="btn-verify" onclick="checkMC('q13e','b','fb13e')">Check Answer</button><div class="hidden-answer" id="ans13e">False</div><div class="feedback" id="fb13e"></div></div>
+      <div class="exercise-item"><label>6. Talking to a person who is depressed is a good way to help. _____</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q13f','a')">True</button><button class="option-btn" onclick="selectOption(this,'q13f','b')">False</button></div><button class="btn-verify" onclick="checkMC('q13f','a','fb13f')">Check Answer</button><div class="hidden-answer" id="ans13f">True</div><div class="feedback" id="fb13f"></div></div>
+      <div class="exercise-item"><label>7. Telephone help lines are a private way to talk about your problems. _____</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q13g','a')">True</button><button class="option-btn" onclick="selectOption(this,'q13g','b')">False</button></div><button class="btn-verify" onclick="checkMC('q13g','a','fb13g')">Check Answer</button><div class="hidden-answer" id="ans13g">True</div><div class="feedback" id="fb13g"></div></div>
+      <div class="exercise-item"><label>8. Anyone can be a counselor. _____</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q13h','a')">True</button><button class="option-btn" onclick="selectOption(this,'q13h','b')">False</button></div><button class="btn-verify" onclick="checkMC('q13h','b','fb13h')">Check Answer</button><div class="hidden-answer" id="ans13h">False</div><div class="feedback" id="fb13h"></div></div>
+      <div class="exercise-item"><label>9. Everyone feels miserable sometimes. _____</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q13i','a')">True</button><button class="option-btn" onclick="selectOption(this,'q13i','b')">False</button></div><button class="btn-verify" onclick="checkMC('q13i','a','fb13i')">Check Answer</button><div class="hidden-answer" id="ans13i">True</div><div class="feedback" id="fb13i"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--pink);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 14: GRAMMAR REVIEW -->
+<section class="section-solid dark">
+  <div class="container">
+    <h2 style="color:var(--pink);">📚 Grammar Review</h2>
+    
+    <div class="reading-block">
+      <h3 style="color:var(--pink);">Past Participles</h3>
+      <p>The past participles for regular verbs are the same as their past forms (look-looked-looked and study-studied-studied), for example. For irregular verbs, the past and past participle forms are different (for example, be- was/were-been and go-went-gone).</p>
+      <p><strong>The past participle is commonly used in several situations:</strong></p>
+      <ol style="margin-left:20px; margin-top:10px;">
+        <li>Past participles are used as part of the present and past perfect tenses (both "regular" and continuous).</li>
+      </ol>
+      <p style="margin-top:15px;">The non-continuous present perfect tense uses has or have + the past participle; the present perfect continuous tense uses has or have + been (the past participle of BE) + the -ing form of the main verb.</p>
+      <div class="highlight-box" style="background:rgba(232,160,176,0.2); color:var(--text-light); margin-top:15px;">
+        <strong>Examples:</strong><br>
+        He has (He's) taken a vacation. / He has (He's) been taking a vacation.<br>
+        I have (I've) taken my medicine. / I have (I've) been taking that medicine for three days.
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3 style="color:var(--pink);">Present Perfect Continuous</h3>
+      <p><strong>FORM:</strong> [has/have + been + present participle]</p>
+      <div class="highlight-box" style="background:rgba(232,160,176,0.2); color:var(--text-light);">
+        <strong>Examples:</strong><br>
+        You have been waiting here for two hours.<br>
+        Have you been waiting here for two hours?<br>
+        You have not been waiting here for two hours.
+      </div>
+      
+      <h4 style="margin-top:20px; color:var(--pink);">USE 1: Duration from the Past Until Now</h4>
+      <p>We use the Present Perfect Continuous to show that something started in the past and has continued up until now. "For five minutes," "for two weeks," and "since Tuesday" are all durations which can be used with the Present Perfect Continuous.</p>
+      <div class="highlight-box" style="background:rgba(232,160,176,0.2); color:var(--text-light);">
+        <strong>Examples:</strong><br>
+        They have been talking for the last hour.<br>
+        She has been working at that company for three years.<br>
+        What have you been doing for the last 30 minutes?
+      </div>
+
+      <h4 style="margin-top:20px; color:var(--pink);">USE 2: Recently, Lately</h4>
+      <p>You can also use the Present Perfect Continuous WITHOUT a duration such as "for two weeks." Without the duration, the tense has a more general meaning of "lately." We often use the words "lately" or "recently" to emphasize this meaning.</p>
+      <div class="highlight-box" style="background:rgba(232,160,176,0.2); color:var(--text-light);">
+        <strong>Examples:</strong><br>
+        Recently, I have been feeling really tired.<br>
+        She has been watching too much television lately.<br>
+        Have you been exercising lately?
+      </div>
+
+      <div class="highlight-box" style="background:rgba(232,160,176,0.2); color:var(--text-light); margin-top:15px;">
+        <strong>IMPORTANT:</strong><br>
+        Remember that the Present Perfect Continuous has the meaning of "lately" or "recently." If you use the Present Perfect Continuous in a question such as "Have you been feeling alright?", it can suggest that the person looks sick or unhealthy. A question such as "Have you been smoking?" can suggest that you smell the smoke on the person. Using this tense in a question suggests you can see, smell, hear or feel the results of the action. It is possible to insult someone by using this tense incorrectly.
+      </div>
+    </div>
+
+    <button class="nav-btn" onclick="completeUnit()" style="background:var(--pink);">Complete Unit</button>
+  </div>
+</section>
+
+<!-- FINAL -->
+<div id="finalMsg" style="display:none; padding:80px 40px; background:var(--dark-gray); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3rem; margin-bottom:20px;">🎉 Unit 19 Completed</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px;">You have explored emotions, mastered giving advice, and perfected present perfect continuous tense.</p>
+    <p style="font-size:1.1rem; margin-bottom:30px; opacity:0.8;">The brain doesn't translate. The brain assembles.</p>
+    <a href="indexmax.html" class="nav-btn" style="background:var(--pink); color:var(--text-dark);">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:var(--dark-gray); color:var(--text-light);">
+  <p><strong>Discovery MAX Neuroeducation</strong></p>
+  <p>Unit 19: Melancholy | Método NBF | Toño Vicas</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 150;
+
+// AUDIO FEEDBACK
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.1; u.pitch = 1;
+  synth.speak(u);
+}
+
+function updateProgress() {
+  document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
+}
+
+function normalizeText(text) {
+  if (!text) return "";
+  return text.toLowerCase().replace(/[?!.,']/g, "").replace(/\s+/g, " ").trim();
+}
+
+function scrollToNext() {
+  speak('Next section unlocked');
+  window.scrollBy({ top: window.innerHeight * 0.9, behavior: 'smooth' });
+}
+
+function checkSimple(inputId, keywords, fbId, ansId) {
+  const val = normalizeText(document.getElementById(inputId).value);
+  const fb = document.getElementById(fbId);
+  const ans = document.getElementById(ansId);
+  const allFound = keywords.every(k => val.includes(k));
+  
+  if(allFound) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correct. Structure validated.';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Review the key elements.';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Reflection recorded. Excellent cognitive effort.';
+    fb.style.display = 'block';
+    speak('Great answer!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep reflection. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Try again');
+  }
+}
+
+let selectedOptions = {};
+function selectOption(btn, questionId, option) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedOptions[questionId] = option;
+}
+
+function checkMC(questionId, correctAnswer, feedbackId) {
+  const fb = document.getElementById(feedbackId);
+  const ans = document.getElementById(feedbackId.replace('fb', 'ans'));
+  if (!selectedOptions[questionId]) { 
+    fb.className='feedback error'; 
+    fb.textContent='⚠️ Select an option'; 
+    fb.style.display='block'; 
+    speak('Select an option');
+    return; 
+  }
+  if (selectedOptions[questionId] === correctAnswer) {
+    fb.className='feedback success'; 
+    fb.textContent='✅ Correct'; 
+    fb.style.display='block'; 
+    ans.style.display='none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className='feedback error'; 
+    fb.textContent='❌ Incorrect'; 
+    fb.style.display='block'; 
+    ans.style.display='block';
+    speak('Sorry, try again');
+  }
+}
+
+function completeUnit() {
+  if(completedCount >= 120) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! You completed Unit 19!');
+  } else {
+    alert(`⚠️ Complete at least 120 of 150 exercises.\nCompleted: ${completedCount}/150`);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
