@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 20: Nutrition and Health | Discovery MAX Neuroeducation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #2E86AB;
+  --blue-dark: #1A5276;
+  --yellow: #F2C94C;
+  --yellow-dark: #D4AC0D;
+  --green: #27AE60;
+  --orange: #FF6B35;
+  --white: #FFFFFF;
+  --light-blue: #EBF5FB;
+  --text-dark: #1a1a1a;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--light-blue); }
+
+.hero {
+  height:90vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(26,82,118,0.9), rgba(242,201,76,0.8)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:10px 25px; background:var(--yellow); color:var(--text-dark); font-weight:700; font-size:0.9rem; letter-spacing:2px; margin-bottom:20px; border-radius:4px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.hero p { font-size:1.3rem; font-weight:300; max-width:700px; margin:0 auto; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--blue-dark); padding:12px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--yellow),var(--green)); transition: width 0.5s ease; }
+
+.section-image {
+  min-height:50vh; position:relative; background-size:cover; background-position:center;
+  display:flex; align-items:center; justify-content:center; padding:60px 20px;
+}
+.section-image::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(26,82,118,0.85), rgba(242,201,76,0.75)); }
+.section-image-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; }
+.section-image-content h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; margin-bottom:15px; }
+
+.section-solid { padding:80px 40px; }
+.section-solid.blue { background:var(--blue); color:var(--text-light); }
+.section-solid.blue-dark { background:var(--blue-dark); color:var(--text-light); }
+.section-solid.yellow { background:var(--yellow); color:var(--text-dark); }
+.section-solid.light-blue { background:var(--light-blue); color:var(--text-dark); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:1100px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { background:var(--white); padding:40px; border-radius:8px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-left:6px solid var(--yellow); }
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--blue-dark); margin-bottom:20px; }
+.reading-block p { font-size:1.05rem; line-height:1.9; color:var(--text-dark); margin-bottom:15px; }
+
+.card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; margin:40px 0; }
+.card { background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transition: transform 0.3s; }
+.card:hover { transform: translateY(-8px); }
+.card-content { padding:25px; }
+.card-content h3 { font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:10px; color:var(--blue-dark); }
+.card-content p { color:#4b5563; font-size:0.95rem; line-height:1.7; }
+
+.exercise-box { background:var(--white); padding:30px; border-radius:8px; margin:30px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--blue-dark); margin-bottom:20px; }
+.exercise-item { margin:20px 0; padding:20px; background:var(--light-blue); border-left:4px solid var(--yellow); border-radius:4px; }
+.exercise-item label { font-weight:600; font-size:1.05rem; display:block; margin-bottom:12px; color:var(--text-dark); }
+.exercise-input, .exercise-textarea {
+  width:100%; padding:12px; border:2px solid #d1d5db; border-radius:6px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s;
+}
+.exercise-input:focus, .exercise-textarea:focus { outline:none; border-color:var(--yellow); }
+.exercise-textarea { min-height:100px; resize:vertical; }
+
+.btn-verify {
+  margin-top:12px; padding:10px 24px; background:var(--yellow); color:var(--text-dark);
+  border:none; border-radius:6px; font-weight:600; cursor:pointer; transition: background 0.3s;
+}
+.btn-verify:hover { background:var(--yellow-dark); }
+
+.feedback { margin-top:12px; padding:12px; border-radius:6px; font-weight:600; display:none; }
+.feedback.success { background:#d1fae5; color:#065f46; border-left:4px solid #10b981; }
+.feedback.error { background:#fee2e2; color:#991b1b; border-left:4px solid #ef4444; }
+.hidden-answer { display:none; margin-top:12px; padding:12px; background:#fef3c7; border-left:4px solid var(--yellow); border-radius:6px; color:#92400e; font-weight:600; }
+
+.options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:15px 0; }
+.option-btn { padding:14px; background:var(--white); border:2px solid #d1d5db; border-radius:6px; cursor:pointer; transition:0.3s; color:var(--text-dark); text-align:left; font-size:0.95rem; font-family:'Inter',sans-serif; }
+.option-btn:hover { border-color:var(--yellow); background:rgba(242,201,76,0.1); }
+.option-btn.selected { background:var(--yellow); color:var(--text-dark); border-color:var(--yellow); font-weight:600; }
+
+.nav-btn {
+  display:inline-block; margin-top:30px; padding:15px 40px; background:var(--yellow); color:var(--text-dark);
+  text-decoration:none; border-radius:6px; font-weight:700; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer;
+}
+.nav-btn:hover { background:var(--yellow-dark); transform:translateY(-2px); }
+
+.highlight-box { background:rgba(242,201,76,0.15); border-left:4px solid var(--yellow); padding:20px 25px; margin:20px 0; border-radius:0 8px 8px 0; font-style:italic; color:var(--text-dark); }
+
+.grammar-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.grammar-table th, .grammar-table td { padding:14px; text-align:left; border-bottom:1px solid #e5e7eb; color:var(--text-dark); }
+.grammar-table th { background:var(--blue-dark); color:var(--text-light); font-family:'Playfair Display',serif; font-size:1rem; }
+.grammar-table td { font-size:0.95rem; }
+
+.vocab-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.vocab-table th { background:var(--blue); color:var(--text-light); padding:14px; text-align:left; font-weight:700; }
+.vocab-table td { padding:12px; border-bottom:1px solid #e5e7eb; color:var(--text-dark); }
+.vocab-table tr:hover { background:var(--light-blue); }
+
+.food-pyramid {
+  background:linear-gradient(to bottom, 
+    #F2C94C 0%, 
+    #FF6B35 20%, 
+    #27AE60 40%, 
+    #2E86AB 60%, 
+    #1A5276 100%);
+  padding:40px; border-radius:12px; margin:30px 0; text-align:center; color:var(--text-light);
+}
+.food-pyramid h3 { font-family:'Playfair Display',serif; font-size:2rem; margin-bottom:20px; }
+
+@media(max-width:768px) {
+  .hero { height:75vh; }
+  .section-image { min-height:40vh; }
+  .section-solid { padding:60px 20px; }
+  .card-grid { grid-template-columns:1fr; }
+  .reading-block { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">UNIT 20</div>
+    <h1>Nutrition and Health</h1>
+    <p>Fuel your body like a finely-tuned racing car. Learn about healthy eating, food pyramid, and nutrition essentials.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<!-- SECTION 1: READING -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Nutrition and Health</h2>
+    <p>By James Williams</p>
+  </div>
+</section>
+
+<section class="section-solid blue">
+  <div class="container">
+    <h2>📖 Reading: Nutrition and Health</h2>
+    <div class="reading-block">
+      <h3>Hello fellas, it's me James Williams</h3>
+      <p>Hello fellas it's me James Williams, nice talking to you once again. Well my intention is to comment about a seminar that Rose Mary and I attended to, the day before yesterday, so let me share some of the information we received at the seminar and why a good nutrition is so important for all of us and you.</p>
+      <p>Let me ask you some: Are nutrition and health related? Is healthy eating important? Of course! As much as a finely-tuned drag racing car, your body needs the right fuel (food) and regular sustainment (exercise, lifestyle and mental attitude) to achieve its true health potential. Nothing is more important than healthy eating!</p>
+      <p>Put in the wrong fuel or let it go without regular use and there's no way it can deliver its full power and performance. Without healthy eating, your body's engine will cough, splutter and eventually stall.</p>
+      <p>Have you tried to lose weight after 30? Wasn't that more difficult than ever before? Guess what? It's even more difficult after 40! Have you ever wondered why your body reacts differently to the same regimes you apply in different stages of your life?</p>
+      <p>People that have never had a weight problem get flabbier after 30 without clear explanation. They start exercising and they don't see any improvement. They eat less, and they still don't achieve any significant change. What they don't take into consideration is the aging impact on their body. Reason why it's more important to take care of ourselves with a good nutrition.</p>
+    </div>
+    <div class="exercise-box">
+      <h3>Strategic Comprehension</h3>
+      <div class="exercise-item">
+        <label>1. What analogy does James use to describe the body's need for nutrition?</label>
+        <input type="text" class="exercise-input" id="ex1a" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1a',['racing','car','fuel'],'fb1a','ans1a')">Check Answer</button>
+        <div class="hidden-answer" id="ans1a">A finely-tuned drag racing car that needs the right fuel</div>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Why is it more difficult to lose weight after 30?</label>
+        <input type="text" class="exercise-input" id="ex1b" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1b',['aging','impact','body'],'fb1b','ans1b')">Check Answer</button>
+        <div class="hidden-answer" id="ans1b">Because of the aging impact on the body</div>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. What three things does the body need to achieve its true health potential?</label>
+        <input type="text" class="exercise-input" id="ex1c" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1c',['exercise','lifestyle','mental','attitude'],'fb1c','ans1c')">Check Answer</button>
+        <div class="hidden-answer" id="ans1c">Exercise, lifestyle and mental attitude</div>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 2: BASICS OF HEALTHY EATING -->
+<section class="section-solid yellow">
+  <div class="container">
+    <h2>🥗 Basics of Healthy Eating</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--blue-dark);">🍖 LOW FAT</h3>
+          <p>Cutting down on all fats from fatty and fried foods, butter, cream, margarine and oils is a way of making the modern diet healthier and reducing weight. Cutting down on saturated fat in particular is important for the heart.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--blue-dark);">🍞 LOTS OF STARCHY CARBOHYDRATES</h3>
+          <p>We have forgotten how important rice, pasta, potatoes, bread and cereals are to our health. Forget the stodgy image of starch from years gone by! Starch is in again and may turn out to be just as critical as fiber is now.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--blue-dark);">🌾 HIGH FIBER</h3>
+          <p>Not just bran! Fiber, that largely indigestible part of our food and often the part that really gets us chewing, is responsible for so much good. It not only keeps our insides moving smoothly but it helps to lower cholesterol and keep our weight in check.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--blue-dark);">🥦 VITAMINS, MINERALS, AND ANTI-OXIDANTS</h3>
+          <p>Vegetables, fruit and grains carry an abundance of vitamins, minerals and numerous other natural substances which scientists are only just beginning to discover. People who eat lots of veggies and fruit have lower rates of heart disease and cancer.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--blue-dark);">🍰 MODERATE SUGAR AND SWEETS</h3>
+          <p>Sugar in modest amounts adds flavor and is a useful fuel for athletes and other active people. In excess, however, sugar adds unwanted kilojoules (units of energy) and can displace other more important foods.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--blue-dark);">🧂 LIGHT ON SALT</h3>
+          <p>Our modern diet is laden with salt. It's not until you avoid salt for a few weeks that you notice how it masks the true flavor of foods. As 75 per cent of our total salt intake comes from everyday commercial foods.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--blue-dark);">💧 DRINK PLENTY OF WATER</h3>
+          <p>Two liters of water a day is needed to keep the body hydrated and the kidneys working efficiently. In hot weather, even more fluid is required.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3 style="color:var(--blue-dark);">😊 ENJOY MEALTIMES</h3>
+          <p>Stress, tension, rushing and eating on the run all take their toll on your digestion and health. Try to relax and take the time to really appreciate the food in front of you.</p>
+        </div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--blue-dark); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 3: VOCABULARY - TYPES OF FOOD -->
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--blue-dark);">🍎 Vocabulary: Types of Food</h2>
+    <div class="vocab-table">
+      <tr><th>BEVERAGES</th><td>soda • coffee • water • tea • wine • beer • juice</td></tr>
+      <tr><th>DAIRY</th><td>milk • cheese • butter • cream • yoghurt • quark • half and half</td></tr>
+      <tr><th>DESSERT</th><td>cake • cookies • chocolate • ice-cream • brownies • pie • creams</td></tr>
+      <tr><th>FRUIT</th><td>apple • orange • banana • grapes • pineapple • kiwi • lemon</td></tr>
+      <tr><th>GRAINS / STARCHES</th><td>wheat • rye • cereal • toast • breadroll • potato</td></tr>
+      <tr><th>MEAT / FISH</th><td>beef • chicken • pork • salmon • trout • lamb • buffalo</td></tr>
+      <tr><th>VEGETABLES</th><td>beans • lettuce • carrots • broccoli • cauliflower • peas • eggplant</td></tr>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 4: ADJECTIVES TO DESCRIBE FOOD -->
+<section class="section-solid blue-dark">
+  <div class="container">
+    <h2 style="color:var(--yellow);">🎨 Adjectives Used to Describe Food</h2>
+    <div class="card-grid">
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Acidic</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Bland</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Creamy</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Fatty</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Fruity</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Tough</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Healthy</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Nutty</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Oily</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Raw</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Salty</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Sharp</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Sour</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Spicy</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Sweet</h3></div></div>
+      <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">Tender</h3></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 5: HEALTH AND NUTRITION TEST -->
+<section class="section-solid light-blue">
+  <div class="container">
+    <h2 style="color:var(--blue-dark);">📝 Health and Nutrition Questions Test</h2>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. When people say they want a six pack, they want to work out their ......... muscles in order to tone their stomachs.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q5a','a')">abdominals</button><button class="option-btn" onclick="selectOption(this,'q5a','b')">legs</button><button class="option-btn" onclick="selectOption(this,'q5a','c')">biceps</button></div><button class="btn-verify" onclick="checkMC('q5a','a','fb5a')">Check Answer</button><div class="hidden-answer" id="ans5a">abdominals</div><div class="feedback" id="fb5a"></div></div>
+      <div class="exercise-item"><label>2. In addition to muscle building ex
