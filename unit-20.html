@@ -298,4 +298,403 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
     <h2 style="color:var(--blue-dark);">📝 Health and Nutrition Questions Test</h2>
     <div class="exercise-box">
       <div class="exercise-item"><label>1. When people say they want a six pack, they want to work out their ......... muscles in order to tone their stomachs.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q5a','a')">abdominals</button><button class="option-btn" onclick="selectOption(this,'q5a','b')">legs</button><button class="option-btn" onclick="selectOption(this,'q5a','c')">biceps</button></div><button class="btn-verify" onclick="checkMC('q5a','a','fb5a')">Check Answer</button><div class="hidden-answer" id="ans5a">abdominals</div><div class="feedback" id="fb5a"></div></div>
-      <div class="exercise-item"><label>2. In addition to muscle building ex
+      <div class="exercise-item"><label>2. In addition to muscle building ex<!-- SECTION 5: FOOD PYRAMID -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>The Food Pyramid</h2>
+    <p>Understanding balanced nutrition</p>
+  </div>
+</section>
+
+<section class="section-solid yellow">
+  <div class="container">
+    <h2 style="color:var(--blue-dark);">🔺 Food Pyramid Quiz</h2>
+    <div class="food-pyramid">
+      <h3>The Food Pyramid Guide</h3>
+      <p style="font-size:1.2rem; margin:20px 0;"><strong>Top (smallest):</strong> Food & drinks high in fats & sugar - only small amounts<br>
+      <strong>Level 2:</strong> Meat, fish, eggs, nuts & pulses - 2 to 3 servings per day<br>
+      <strong>Level 3:</strong> Milk, cheese & yoghurt - 3 servings per day<br>
+      <strong>Level 4:</strong> Fruit & vegetables - should be eaten at each mealtime & as some snacks<br>
+      <strong>Base (largest):</strong> Bread, rice, potatoes, pasta & other starchy foods - should be eaten at each mealtime & as some snacks</p>
+    </div>
+    <div class="exercise-box">
+      <h3>Questions:</h3>
+      <div class="exercise-item"><label>1. The food pyramid suggests that we eat a varied diet. Which type of food should you eat the most of each day?</label><input type="text" class="exercise-input" id="ex5a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5a',['bread','rice','potatoes','pasta','starchy'],'fb5a','ans5a')">Check Answer</button><div class="hidden-answer" id="ans5a">Bread, rice, potatoes, pasta and other starchy foods</div><div class="feedback" id="fb5a"></div></div>
+      <div class="exercise-item"><label>2. How many servings of breads, rice, pasta, and other starchy foods should you eat each day?</label><input type="text" class="exercise-input" id="ex5b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5b',['each','mealtime'],'fb5b','ans5b')">Check Answer</button><div class="hidden-answer" id="ans5b">Should be eaten at each mealtime and as some snacks</div><div class="feedback" id="fb5b"></div></div>
+      <div class="exercise-item"><label>3. How many servings of vegetables should you eat each day?</label><input type="text" class="exercise-input" id="ex5c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5c',['mealtime','snacks'],'fb5c','ans5c')">Check Answer</button><div class="hidden-answer" id="ans5c">Should be eaten at each mealtime and as some snacks</div><div class="feedback" id="fb5c"></div></div>
+      <div class="exercise-item"><label>4. How many servings of fruit should you eat each day?</label><input type="text" class="exercise-input" id="ex5d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5d',['mealtime','snacks'],'fb5d','ans5d')">Check Answer</button><div class="hidden-answer" id="ans5d">Should be eaten at each mealtime and as some snacks</div><div class="feedback" id="fb5d"></div></div>
+      <div class="exercise-item"><label>5. How many servings of milk, cheese, and yogurt should you eat each day?</label><input type="text" class="exercise-input" id="ex5e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5e',['3','three'],'fb5e','ans5e')">Check Answer</button><div class="hidden-answer" id="ans5e">3 servings per day</div><div class="feedback" id="fb5e"></div></div>
+      <div class="exercise-item"><label>6. How many servings of meat, fish, beans, and nuts should you eat each day?</label><input type="text" class="exercise-input" id="ex5f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5f',['2','3','two','three'],'fb5f','ans5f')">Check Answer</button><div class="hidden-answer" id="ans5f">2 to 3 servings per day</div><div class="feedback" id="fb5f"></div></div>
+      <div class="exercise-item"><label>7. What food group do raisins fit into in this pyramid?</label><input type="text" class="exercise-input" id="ex5g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5g',['fruit'],'fb5g','ans5g')">Check Answer</button><div class="hidden-answer" id="ans5g">Fruit</div><div class="feedback" id="fb5g"></div></div>
+      <div class="exercise-item"><label>8. What food group does peanut butter fit into in this pyramid?</label><input type="text" class="exercise-input" id="ex5h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5h',['meat','nuts','beans'],'fb5h','ans5h')">Check Answer</button><div class="hidden-answer" id="ans5h">Meat, fish, beans, and nuts (protein group)</div><div class="feedback" id="fb5h"></div></div>
+      <div class="exercise-item"><label>9. Name two foods that belong to the vegetable food group.</label><input type="text" class="exercise-input" id="ex5i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5i',['carrots','broccoli','lettuce'],'fb5i','ans5i')">Check Answer</button><div class="hidden-answer" id="ans5i">Any two: carrots, broccoli, lettuce, cauliflower, peas, beans, etc.</div><div class="feedback" id="fb5i"></div></div>
+      <div class="exercise-item"><label>10. What foods are the least nutritious and should be the smallest part of your diet?</label><input type="text" class="exercise-input" id="ex5j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex5j',['fats','sugar','sweets'],'fb5j','ans5j')">Check Answer</button><div class="hidden-answer" id="ans5j">Food and drinks high in fats and sugar</div><div class="feedback" id="fb5j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 6: CRITICAL THINKING - HABITS -->
+<section class="section-solid blue">
+  <div class="container">
+    <h2>🧠 Critical Thinking: Habits</h2>
+    <p style="margin-bottom:20px;">Answer the questions below. Remember to support your answers (minimum 20 characters):</p>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. Do you have any unusual habits? Give details.</label><textarea class="exercise-textarea" id="ex6a" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6a','fb6a')">Check Answer</button><div class="feedback" id="fb6a"></div></div>
+      <div class="exercise-item"><label>2. Do you have any bad habits? Please explain.</label><textarea class="exercise-textarea" id="ex6b" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6b','fb6b')">Check Answer</button><div class="feedback" id="fb6b"></div></div>
+      <div class="exercise-item"><label>3. Do you think bad habits lead to personal and professional problems? Why or why not?</label><textarea class="exercise-textarea" id="ex6c" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6c','fb6c')">Check Answer</button><div class="feedback" id="fb6c"></div></div>
+      <div class="exercise-item"><label>4. Do you think drinking coffee is a bad habit? Why or why not?</label><textarea class="exercise-textarea" id="ex6d" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6d','fb6d')">Check Answer</button><div class="feedback" id="fb6d"></div></div>
+      <div class="exercise-item"><label>5. Do you think smoking is a bad habit? Why or why not?</label><textarea class="exercise-textarea" id="ex6e" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6e','fb6e')">Check Answer</button><div class="feedback" id="fb6e"></div></div>
+      <div class="exercise-item"><label>6. Why does everyone have habits, both good ones and bad ones?</label><textarea class="exercise-textarea" id="ex6f" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6f','fb6f')">Check Answer</button><div class="feedback" id="fb6f"></div></div>
+      <div class="exercise-item"><label>7. Why are bad habits so hard to break? Why are good habits so hard to form?</label><textarea class="exercise-textarea" id="ex6g" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6g','fb6g')">Check Answer</button><div class="feedback" id="fb6g"></div></div>
+      <div class="exercise-item"><label>8. Finish this sentence: It drives me crazy when people...</label><textarea class="exercise-textarea" id="ex6h" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6h','fb6h')">Check Answer</button><div class="feedback" id="fb6h"></div></div>
+      <div class="exercise-item"><label>9. If you were on the bus and the person next to you had an irritating habit, would you say something, move to a different seat, or do nothing? Why is that?</label><textarea class="exercise-textarea" id="ex6i" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6i','fb6i')">Check Answer</button><div class="feedback" id="fb6i"></div></div>
+      <div class="exercise-item"><label>10. Would you break up with a boy/girl friend because of a bad habit?</label><textarea class="exercise-textarea" id="ex6j" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6j','fb6j')">Check Answer</button><div class="feedback" id="fb6j"></div></div>
+      <div class="exercise-item"><label>11. Many people have annoying habits. What habits drive you up the wall?</label><textarea class="exercise-textarea" id="ex6k" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6k','fb6k')">Check Answer</button><div class="feedback" id="fb6k"></div></div>
+      <div class="exercise-item"><label>12. If you could outlaw one habit, what would it be? What penalty would you give offenders?</label><textarea class="exercise-textarea" id="ex6l" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6l','fb6l')">Check Answer</button><div class="feedback" id="fb6l"></div></div>
+      <div class="exercise-item"><label>13. Which would you prefer, a routine life where you had many daily habits or an unpredictable life? Why?</label><textarea class="exercise-textarea" id="ex6m" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6m','fb6m')">Check Answer</button><div class="feedback" id="fb6m"></div></div>
+      <div class="exercise-item"><label>14. Do you often skip meals? If yes, why is that? Is this healthy?</label><textarea class="exercise-textarea" id="ex6n" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6n','fb6n')">Check Answer</button><div class="feedback" id="fb6n"></div></div>
+      <div class="exercise-item"><label>15. Do you often overeat? If yes, why is that? Is this healthy?</label><textarea class="exercise-textarea" id="ex6o" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6o','fb6o')">Check Answer</button><div class="feedback" id="fb6o"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--blue-dark);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 7: DOCTOR-PATIENT DIALOGUE -->
+<section class="section-solid light-blue">
+  <div class="container">
+    <h2 style="color:var(--blue-dark);">👨‍️ Doctor-Patient Dialogue</h2>
+    <p style="margin-bottom:20px;">Choose the correct, most natural-sounding responses according to the context:</p>
+    <div class="exercise-box">
+      <div class="exercise-item"><label><strong>Doctor:</strong> What seems to be the problem?<br><strong>You:</strong> I haven't been feeling well... I have been _____________ (vomiting) for the past 12 hours.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q7a','a')">throwing</button><button class="option-btn" onclick="selectOption(this,'q7a','b')">discharging</button><button class="option-btn" onclick="selectOption(this,'q7a','c')">throwing up</button></div><button class="btn-verify" onclick="checkMC('q7a','c','fb7a')">Check Answer</button><div class="hidden-answer" id="ans7a">throwing up</div><div class="feedback" id="fb7a"></div></div>
+      <div class="exercise-item"><label><strong>Doctor:</strong> I see... And do you have temperature?<br><strong>You:</strong> Yes, I checked my _____________ two hours ago. It was 101 (38.5 c.)</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q7b','a')">tab</button><button class="option-btn" onclick="selectOption(this,'q7b','b')">temperature</button><button class="option-btn" onclick="selectOption(this,'q7b','c')">payment</button></div><button class="btn-verify" onclick="checkMC('q7b','b','fb7b')">Check Answer</button><div class="hidden-answer" id="ans7b">temperature</div><div class="feedback" id="fb7b"></div></div>
+      <div class="exercise-item"><label><strong>Doctor:</strong> Hmmm.... Sounds like you have got food poisoning. Does your body feel sore?<br><strong>You:</strong> Yes, my body does ______________ a little.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q7c','a')">pain</button><button class="option-btn" onclick="selectOption(this,'q7c','b')">cash</button><button class="option-btn" onclick="selectOption(this,'q7c','c')">hurt</button></div><button class="btn-verify" onclick="checkMC('q7c','c','fb7c')">Check Answer</button><div class="hidden-answer" id="ans7c">hurt</div><div class="feedback" id="fb7c"></div></div>
+      <div class="exercise-item"><label><strong>Doctor:</strong> OK. I'm going to prescribe an antibiotic... Penicillin...<br><strong>You:</strong> I'm ____________ to Penicillin... Could you prescribe another one?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q7d','a')">allergic</button><button class="option-btn" onclick="selectOption(this,'q7d','b')">sick</button><button class="option-btn" onclick="selectOption(this,'q7d','c')">reacting</button></div><button class="btn-verify" onclick="checkMC('q7d','a','fb7d')">Check Answer</button><div class="hidden-answer" id="ans7d">allergic</div><div class="feedback" id="fb7d"></div></div>
+      <div class="exercise-item"><label><strong>Doctor:</strong> Oh, OK. I'll prescribe another one... Take one pill every six hours, drink plenty of water, and stay in bed for the next 24 hours.<br><strong>You:</strong> Thank you, doctor! Where can I buy _______________?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q7e','a')">this pill</button><button class="option-btn" onclick="selectOption(this,'q7e','b')">these pills</button><button class="option-btn" onclick="selectOption(this,'q7e','c')">some medication</button></div><button class="btn-verify" onclick="checkMC('q7e','c','fb7e')">Check Answer</button><div class="hidden-answer" id="ans7e">some medication</div><div class="feedback" id="fb7e"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 8: CAN AND COULD -->
+<section class="section-solid blue-dark">
+  <div class="container">
+    <h2 style="color:var(--yellow);">🔤 Can and Could</h2>
+    <div class="reading-block">
+      <h3 style="color:var(--yellow);">Uses of "Can"</h3>
+      <p><strong>Ability:</strong> I can cook dinner.<br>
+      <strong>Willingness:</strong> Can you pass me the ketchup?<br>
+      <strong>Permission:</strong> Can I use your pencil?<br>
+      <strong>Possibility:</strong> Intense light can hurt your eyes.</p>
+    </div>
+    <div class="exercise-box">
+      <h3 style="color:var(--yellow);">Exercise: Identify the use of "can"</h3>
+      <p style="margin-bottom:20px;">Circle "A" if it is used to express ability, "W" if it is used to express willingness, "Per" if it is used to express permission and "Pos" if it is used to express possibility.</p>
+      <div class="exercise-item"><label>1. I can tie my shoes.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q8a','a')">A (Ability)</button><button class="option-btn" onclick="selectOption(this,'q8a','b')">W (Willingness)</button><button class="option-btn" onclick="selectOption(this,'q8a','c')">Per (Permission)</button><button class="option-btn" onclick="selectOption(this,'q8a','d')">Pos (Possibility)</button></div><button class="btn-verify" onclick="checkMC('q8a','a','fb8a')">Check Answer</button><div class="hidden-answer" id="ans8a">A (Ability)</div><div class="feedback" id="fb8a"></div></div>
+      <div class="exercise-item"><label>2. Can I have a piece of gum?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q8b','a')">A (Ability)</button><button class="option-btn" onclick="selectOption(this,'q8b','b')">W (Willingness)</button><button class="option-btn" onclick="selectOption(this,'q8b','c')">Per (Permission)</button><button class="option-btn" onclick="selectOption(this,'q8b','d')">Pos (Possibility)</button></div><button class="btn-verify" onclick="checkMC('q8b','c','fb8b')">Check Answer</button><div class="hidden-answer" id="ans8b">Per (Permission)</div><div class="feedback" id="fb8b"></div></div>
+      <div class="exercise-item"><label>3. If you ride a motorcycle, you can fall.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q8c','a')">A (Ability)</button><button class="option-btn" onclick="selectOption(this,'q8c','b')">W (Willingness)</button><button class="option-btn" onclick="selectOption(this,'q8c','c')">Per (Permission)</button><button class="option-btn" onclick="selectOption(this,'q8c','d')">Pos (Possibility)</button></div><button class="btn-verify" onclick="checkMC('q8c','d','fb8c')">Check Answer</button><div class="hidden-answer" id="ans8c">Pos (Possibility)</div><div class="feedback" id="fb8c"></div></div>
+      <div class="exercise-item"><label>4. Can you get me a drink of water?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q8d','a')">A (Ability)</button><button class="option-btn" onclick="selectOption(this,'q8d','b')">W (Willingness)</button><button class="option-btn" onclick="selectOption(this,'q8d','c')">Per (Permission)</button><button class="option-btn" onclick="selectOption(this,'q8d','d')">Pos (Possibility)</button></div><button class="btn-verify" onclick="checkMC('q8d','b','fb8d')">Check Answer</button><div class="hidden-answer" id="ans8d">W (Willingness)</div><div class="feedback" id="fb8d"></div></div>
+      <div class="exercise-item"><label>5. I can speak English well.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q8e','a')">A (Ability)</button><button class="option-btn" onclick="selectOption(this,'q8e','b')">W (Willingness)</button><button class="option-btn" onclick="selectOption(this,'q8e','c')">Per (Permission)</button><button class="option-btn" onclick="selectOption(this,'q8e','d')">Pos (Possibility)</button></div><button class="btn-verify" onclick="checkMC('q8e','a','fb8e')">Check Answer</button><div class="hidden-answer" id="ans8e">A (Ability)</div><div class="feedback" id="fb8e"></div></div>
+      <div class="exercise-item"><label>6. He can use my basketball if he wants to.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q8f','a')">A (Ability)</button><button class="option-btn" onclick="selectOption(this,'q8f','b')">W (Willingness)</button><button class="option-btn" onclick="selectOption(this,'q8f','c')">Per (Permission)</button><button class="option-btn" onclick="selectOption(this,'q8f','d')">Pos (Possibility)</button></div><button class="btn-verify" onclick="checkMC('q8f','b','fb8f')">Check Answer</button><div class="hidden-answer" id="ans8f">W (Willingness)</div><div class="feedback" id="fb8f"></div></div>
+      <div class="exercise-item"><label>7. Can they clean my car while I am at work?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q8g','a')">A (Ability)</button><button class="option-btn" onclick="selectOption(this,'q8g','b')">W (Willingness)</button><button class="option-btn" onclick="selectOption(this,'q8g','c')">Per (Permission)</button><button class="option-btn" onclick="selectOption(this,'q8g','d')">Pos (Possibility)</button></div><button class="btn-verify" onclick="checkMC('q8g','c','fb8g')">Check Answer</button><div class="hidden-answer" id="ans8g">Per (Permission)</div><div class="feedback" id="fb8g"></div></div>
+      <div class="exercise-item"><label>8. Can squirrels fly?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q8h','a')">A (Ability)</button><button class="option-btn" onclick="selectOption(this,'q8h','b')">W (Willingness)</button><button class="option-btn" onclick="selectOption(this,'q8h','c')">Per (Permission)</button><button class="option-btn" onclick="selectOption(this,'q8h','d')">Pos (Possibility)</button></div><button class="btn-verify" onclick="checkMC('q8h','d','fb8h')">Check Answer</button><div class="hidden-answer" id="ans8h">Pos (Possibility)</div><div class="feedback" id="fb8h"></div></div>
+      <div class="exercise-item"><label>9. It can snow if it gets very cold.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q8i','a')">A (Ability)</button><button class="option-btn" onclick="selectOption(this,'q8i','b')">W (Willingness)</button><button class="option-btn" onclick="selectOption(this,'q8i','c')">Per (Permission)</button><button class="option-btn" onclick="selectOption(this,'q8i','d')">Pos (Possibility)</button></div><button class="btn-verify" onclick="checkMC('q8i','d','fb8i')">Check Answer</button><div class="hidden-answer" id="ans8i">Pos (Possibility)</div><div class="feedback" id="fb8i"></div></div>
+      <div class="exercise-item"><label>10. I can help you with your homework if you like.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q8j','a')">A (Ability)</button><button class="option-btn" onclick="selectOption(this,'q8j','b')">W (Willingness)</button><button class="option-btn" onclick="selectOption(this,'q8j','c')">Per (Permission)</button><button class="option-btn" onclick="selectOption(this,'q8j','d')">Pos (Possibility)</button></div><button class="btn-verify" onclick="checkMC('q8j','b','fb8j')">Check Answer</button><div class="hidden-answer" id="ans8j">W (Willingness)</div><div class="feedback" id="fb8j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 9: COULD EXERCISE -->
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--blue-dark);">🔤 Could - Exercise</h2>
+    <div class="reading-block">
+      <h3 style="color:var(--blue-dark);">Uses of "Could"</h3>
+      <p><strong>Conditional:</strong> You could have been an astronaut if you wanted to.<br>
+      <strong>Past of Can:</strong> He couldn't let me have his pencil because he needed it.<br>
+      <strong>Possibility:</strong> Jane could be at the store right now.</p>
+    </div>
+    <div class="exercise-box">
+      <h3 style="color:var(--blue-dark);">Circle the correct auxiliary modal word</h3>
+      <div class="exercise-item"><label>1. I (could, can) help you with your homework now.</label><input type="text" class="exercise-input" id="ex9a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9a',['can'],'fb9a','ans9a')">Check Answer</button><div class="hidden-answer" id="ans9a">can</div><div class="feedback" id="fb9a"></div></div>
+      <div class="exercise-item"><label>2. Five years ago, I (cannot, couldn't) play the piano.</label><input type="text" class="exercise-input" id="ex9b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9b',["couldn't"],'fb9b','ans9b')">Check Answer</button><div class="hidden-answer" id="ans9b">couldn't</div><div class="feedback" id="fb9b"></div></div>
+      <div class="exercise-item"><label>3. I (can, could) get an A on the test.</label><input type="text" class="exercise-input" id="ex9c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9c',['can'],'fb9c','ans9c')">Check Answer</button><div class="hidden-answer" id="ans9c">can</div><div class="feedback" id="fb9c"></div></div>
+      <div class="exercise-item"><label>4. I (can, could) run ten miles if I train hard enough.</label><input type="text" class="exercise-input" id="ex9d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9d',['could'],'fb9d','ans9d')">Check Answer</button><div class="hidden-answer" id="ans9d">could</div><div class="feedback" id="fb9d"></div></div>
+      <div class="exercise-item"><label>5. We (can, could) speak English well.</label><input type="text" class="exercise-input" id="ex9e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9e',['can'],'fb9e','ans9e')">Check Answer</button><div class="hidden-answer" id="ans9e">can</div><div class="feedback" id="fb9e"></div></div>
+      <div class="exercise-item"><label>6. Matt (could, can) be sick today.</label><input type="text" class="exercise-input" id="ex9f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9f',['could'],'fb9f','ans9f')">Check Answer</button><div class="hidden-answer" id="ans9f">could</div><div class="feedback" id="fb9f"></div></div>
+      <div class="exercise-item"><label>7. The volleyball team (can, could) go to the Olympics this year if they are lucky.</label><input type="text" class="exercise-input" id="ex9g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9g',['could'],'fb9g','ans9g')">Check Answer</button><div class="hidden-answer" id="ans9g">could</div><div class="feedback" id="fb9g"></div></div>
+      <div class="exercise-item"><label>8. I think I (can, could) help you learn math if you promise to study hard.</label><input type="text" class="exercise-input" id="ex9h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9h',['could'],'fb9h','ans9h')">Check Answer</button><div class="hidden-answer" id="ans9h">could</div><div class="feedback" id="fb9h"></div></div>
+      <div class="exercise-item"><label>9. (Can, Could) we go to the zoo tomorrow?</label><input type="text" class="exercise-input" id="ex9i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9i',['can','could'],'fb9i','ans9i')">Check Answer</button><div class="hidden-answer" id="ans9i">Can or Could (both acceptable)</div><div class="feedback" id="fb9i"></div></div>
+      <div class="exercise-item"><label>10. I (cannot, couldn't) run that fast when I was six years old.</label><input type="text" class="exercise-input" id="ex9j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex9j',["couldn't"],'fb9j','ans9j')">Check Answer</button><div class="hidden-answer" id="ans9j">couldn't</div><div class="feedback" id="fb9j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--yellow);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 10: 10 RULES FOR EVERYDAY ENGLISH -->
+<section class="section-solid yellow">
+  <div class="container">
+    <h2 style="color:var(--blue-dark);">📝 Critical Thinking: 10 Rules for Everyday English</h2>
+    <div class="highlight-box">
+      <p><strong>Make a list of ten rules for your daily English using modal words of obligation and prohibition.</strong></p>
+      <p>You must... / You mustn't...<br>
+      You should... / You shouldn't...<br>
+      You have to... / You don't have to...</p>
+      <p><strong>Example:</strong> You must arrive to class on time. So, you do not disturb everyone studying.</p>
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1.</label><textarea class="exercise-textarea" id="ex10a" placeholder="Write your rule and explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex10a','fb10a')">Check Answer</button><div class="feedback" id="fb10a"></div></div>
+      <div class="exercise-item"><label>2.</label><textarea class="exercise-textarea" id="ex10b" placeholder="Write your rule and explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex10b','fb10b')">Check Answer</button><div class="feedback" id="fb10b"></div></div>
+      <div class="exercise-item"><label>3.</label><textarea class="exercise-textarea" id="ex10c" placeholder="Write your rule and explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex10c','fb10c')">Check Answer</button><div class="feedback" id="fb10c"></div></div>
+      <div class="exercise-item"><label>4.</label><textarea class="exercise-textarea" id="ex10d" placeholder="Write your rule and explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex10d','fb10d')">Check Answer</button><div class="feedback" id="fb10d"></div></div>
+      <div class="exercise-item"><label>5.</label><textarea class="exercise-textarea" id="ex10e" placeholder="Write your rule and explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex10e','fb10e')">Check Answer</button><div class="feedback" id="fb10e"></div></div>
+      <div class="exercise-item"><label>6.</label><textarea class="exercise-textarea" id="ex10f" placeholder="Write your rule and explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex10f','fb10f')">Check Answer</button><div class="feedback" id="fb10f"></div></div>
+      <div class="exercise-item"><label>7.</label><textarea class="exercise-textarea" id="ex10g" placeholder="Write your rule and explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex10g','fb10g')">Check Answer</button><div class="feedback" id="fb10g"></div></div>
+      <div class="exercise-item"><label>8.</label><textarea class="exercise-textarea" id="ex10h" placeholder="Write your rule and explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex10h','fb10h')">Check Answer</button><div class="feedback" id="fb10h"></div></div>
+      <div class="exercise-item"><label>9.</label><textarea class="exercise-textarea" id="ex10i" placeholder="Write your rule and explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex10i','fb10i')">Check Answer</button><div class="feedback" id="fb10i"></div></div>
+      <div class="exercise-item"><label>10.</label><textarea class="exercise-textarea" id="ex10j" placeholder="Write your rule and explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex10j','fb10j')">Check Answer</button><div class="feedback" id="fb10j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--blue-dark); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 11: I WISH -->
+<section class="section-solid blue">
+  <div class="container">
+    <h2>💭 I wish... (Past Perfect for Regrets)</h2>
+    <div class="highlight-box" style="background:rgba(242,201,76,0.2); color:var(--text-light);">
+      <p><strong>Use I wish and If only + past perfect to express regrets about health problems.</strong></p>
+      <p><strong>Example:</strong> (Problem) I've got a toothache.<br>
+      <em>I wish I hadn't eaten so many sweets. Now I feel ill. If only I had gone to the dentist more often. My teeth would be healthy.</em></p>
+    </div>
+    <div class="exercise-box">
+      <h3>Write appropriate regrets using I wish and If only + past perfect</h3>
+      <div class="exercise-item"><label>1. I've got stomachache.</label><textarea class="exercise-textarea" id="ex11a" placeholder="Write your regret..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex11a','fb11a')">Check Answer</button><div class="feedback" id="fb11a"></div></div>
+      <div class="exercise-item"><label>2. I've got a cold.</label><textarea class="exercise-textarea" id="ex11b" placeholder="Write your regret..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex11b','fb11b')">Check Answer</button><div class="feedback" id="fb11b"></div></div>
+      <div class="exercise-item"><label>3. I've got a headache.</label><textarea class="exercise-textarea" id="ex11c" placeholder="Write your regret..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex11c','fb11c')">Check Answer</button><div class="feedback" id="fb11c"></div></div>
+      <div class="exercise-item"><label>4. I've got sunburn.</label><textarea class="exercise-textarea" id="ex11d" placeholder="Write your regret..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex11d','fb11d')">Check Answer</button><div class="feedback" id="fb11d"></div></div>
+      <div class="exercise-item"><label>5. I've got a twisted ankle.</label><textarea class="exercise-textarea" id="ex11e" placeholder="Write your regret..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex11e','fb11e')">Check Answer</button><div class="feedback" id="fb11e"></div></div>
+      <div class="exercise-item"><label>6. I've cut my finger.</label><textarea class="exercise-textarea" id="ex11f" placeholder="Write your regret..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex11f','fb11f')">Check Answer</button><div class="feedback" id="fb11f"></div></div>
+      <div class="exercise-item"><label>7. I've got a nosebleed.</label><textarea class="exercise-textarea" id="ex11g" placeholder="Write your regret..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex11g','fb11g')">Check Answer</button><div class="feedback" id="fb11g"></div></div>
+      <div class="exercise-item"><label>8. I've burnt myself.</label><textarea class="exercise-textarea" id="ex11h" placeholder="Write your regret..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex11h','fb11h')">Check Answer</button><div class="feedback" id="fb11h"></div></div>
+      <div class="exercise-item"><label>9. I've damaged my hearing.</label><textarea class="exercise-textarea" id="ex11i" placeholder="Write your regret..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex11i','fb11i')">Check Answer</button><div class="feedback" id="fb11i"></div></div>
+      <div class="exercise-item"><label>10. I've hurt my back.</label><textarea class="exercise-textarea" id="ex11j" placeholder="Write your regret..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex11j','fb11j')">Check Answer</button><div class="feedback" id="fb11j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 12: WHY DID YOU SAY THAT -->
+<section class="section-solid light-blue">
+  <div class="container">
+    <h2 style="color:var(--blue-dark);">❓ Why did you say that?</h2>
+    <div class="highlight-box">
+      <p><strong>Write an appropriate explanation for each situation below. Use the past perfect tense.</strong></p>
+      <p><strong>Example:</strong> Why did you say 'I'm sorry' to your friend?<br>
+      <em>I had forgotten her birthday.</em></p>
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. Why did you say 'I hope so' to your teacher?</label><textarea class="exercise-textarea" id="ex12a" placeholder="Write your explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex12a','fb12a')">Check Answer</button><div class="feedback" id="fb12a"></div></div>
+      <div class="exercise-item"><label>2. Why did you say 'I can't' to your classmate?</label><textarea class="exercise-textarea" id="ex12b" placeholder="Write your explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex12b','fb12b')">Check Answer</button><div class="feedback" id="fb12b"></div></div>
+      <div class="exercise-item"><label>3. Why did you say 'Thank you' to your mother?</label><textarea class="exercise-textarea" id="ex12c" placeholder="Write your explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex12c','fb12c')">Check Answer</button><div class="feedback" id="fb12c"></div></div>
+      <div class="exercise-item"><label>4. Why did you say 'Be careful' to an old man?</label><textarea class="exercise-textarea" id="ex12d" placeholder="Write your explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex12d','fb12d')">Check Answer</button><div class="feedback" id="fb12d"></div></div>
+      <div class="exercise-item"><label>5. Why did you say 'That's terrible' to your friend?</label><textarea class="exercise-textarea" id="ex12e" placeholder="Write your explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex12e','fb12e')">Check Answer</button><div class="feedback" id="fb12e"></div></div>
+      <div class="exercise-item"><label>6. Why did you say 'That's very nice of you' to your neighbor?</label><textarea class="exercise-textarea" id="ex12f" placeholder="Write your explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex12f','fb12f')">Check Answer</button><div class="feedback" id="fb12f"></div></div>
+      <div class="exercise-item"><label>7. Why did you say 'Don't be crazy' to your classmate?</label><textarea class="exercise-textarea" id="ex12g" placeholder="Write your explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex12g','fb12g')">Check Answer</button><div class="feedback" id="fb12g"></div></div>
+      <div class="exercise-item"><label>8. Why did you say 'No, thank you' to your friend?</label><textarea class="exercise-textarea" id="ex12h" placeholder="Write your explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex12h','fb12h')">Check Answer</button><div class="feedback" id="fb12h"></div></div>
+      <div class="exercise-item"><label>9. Why did you say 'Don't do that again' to your dog?</label><textarea class="exercise-textarea" id="ex12i" placeholder="Write your explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex12i','fb12i')">Check Answer</button><div class="feedback" id="fb12i"></div></div>
+      <div class="exercise-item"><label>10. Why did you say 'I promise' to your teacher?</label><textarea class="exercise-textarea" id="ex12j" placeholder="Write your explanation..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex12j','fb12j')">Check Answer</button><div class="feedback" id="fb12j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--blue-dark); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 13: GRAMMAR REVIEW -->
+<section class="section-solid green">
+  <div class="container">
+    <h2>📚 Grammar Review</h2>
+    
+    <div class="reading-block">
+      <h3 style="color:var(--blue-dark);">What are Modal Words?</h3>
+      <p>Modal words are special words which behave very differently from normal nouns. Here are some important differences:</p>
+      <ol style="margin-left:20px; margin-top:10px;">
+        <li>Modal words do not take "-s" in the third person.<br><strong>Examples:</strong> He can speak Chinese. / She should be here by 9:00.</li>
+        <li>You use "not" to make modal words negative, even in Simple Present and Simple Past.<br><strong>Examples:</strong> He should not be late. / They might not come to the party.</li>
+        <li>Many modal words cannot be used in the past tenses or the future tenses.<br><strong>Examples:</strong> He will can go with us. (Wrong) / She musted study very hard. (Wrong)</li>
+      </ol>
+    </div>
+
+    <div class="reading-block">
+      <h3 style="color:var(--blue-dark);">Common Modal Words</h3>
+      <div class="card-grid">
+        <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">CAN</h3></div></div>
+        <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">COULD</h3></div></div>
+        <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">MAY</h3></div></div>
+        <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">MIGHT</h3></div></div>
+        <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">MUST</h3></div></div>
+        <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">OUGHT TO</h3></div></div>
+        <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">SHALL</h3></div></div>
+        <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">SHOULD</h3></div></div>
+        <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">WILL</h3></div></div>
+        <div class="card"><div class="card-content"><h3 style="color:var(--blue-dark);">WOULD</h3></div></div>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3 style="color:var(--blue-dark);">Past Perfect</h3>
+      <p>The past perfect simple expresses an action taking place before a certain time in the past.</p>
+      <div class="grammar-table">
+        <tr><th>Positive</th><th>Negative</th><th>Question</th></tr>
+        <tr><td>I had spoken.</td><td>I had not spoken.</td><td>Had I spoken?</td></tr>
+      </div>
+      
+      <h4 style="margin-top:20px; color:var(--blue-dark);">Exceptions in Spelling when Adding "ed"</h4>
+      <div class="grammar-table">
+        <tr><th>Rule</th><th>Example</th></tr>
+        <tr><td>after final e, only add d</td><td>love – loved</td></tr>
+        <tr><td>final consonant after a short, stressed vowel</td><td>admit – admitted</td></tr>
+        <tr><td>or l as final consonant after a vowel is doubled</td><td>travel – travelled</td></tr>
+        <tr><td>final y after a consonant becomes i</td><td>hurry – hurried</td></tr>
+      </div>
+      
+      <div class="highlight-box" style="margin-top:20px;">
+        <strong>Use of Past Perfect:</strong> An action taking place before a certain time in the past (putting emphasis only on the fact, not the duration)<br><br>
+        <strong>Example:</strong> Before I came here, I had spoken to Jack.
+      </div>
+    </div>
+
+    <button class="nav-btn" onclick="completeUnit()" style="background:var(--yellow);">Complete Unit</button>
+  </div>
+</section>
+
+<!-- FINAL -->
+<div id="finalMsg" style="display:none; padding:80px 40px; background:var(--blue-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3rem; margin-bottom:20px;">🎉 Unit 20 Completed</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px;">You have mastered nutrition, healthy eating, modal words, and past perfect tense.</p>
+    <p style="font-size:1.1rem; margin-bottom:30px; opacity:0.8;">The brain doesn't translate. The brain assembles.</p>
+    <a href="indexmax.html" class="nav-btn" style="background:var(--yellow); color:var(--text-dark);">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:var(--blue-dark); color:var(--text-light);">
+  <p><strong>Discovery MAX Neuroeducation</strong></p>
+  <p>Unit 20: Nutrition and Health | Método NBF | Toño Vicas</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 150;
+
+// AUDIO FEEDBACK
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.1; u.pitch = 1;
+  synth.speak(u);
+}
+
+function updateProgress() {
+  document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
+}
+
+function normalizeText(text) {
+  if (!text) return "";
+  return text.toLowerCase().replace(/[?!.,']/g, "").replace(/\s+/g, " ").trim();
+}
+
+function scrollToNext() {
+  speak('Next section unlocked');
+  window.scrollBy({ top: window.innerHeight * 0.9, behavior: 'smooth' });
+}
+
+function checkSimple(inputId, keywords, fbId, ansId) {
+  const val = normalizeText(document.getElementById(inputId).value);
+  const fb = document.getElementById(fbId);
+  const ans = document.getElementById(ansId);
+  const allFound = keywords.every(k => val.includes(k));
+  
+  if(allFound) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correct. Structure validated.';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Review the key elements.';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Reflection recorded. Excellent cognitive effort.';
+    fb.style.display = 'block';
+    speak('Great answer!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep reflection. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Try again');
+  }
+}
+
+let selectedOptions = {};
+function selectOption(btn, questionId, option) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedOptions[questionId] = option;
+}
+
+function checkMC(questionId, correctAnswer, feedbackId) {
+  const fb = document.getElementById(feedbackId);
+  const ans = document.getElementById(feedbackId.replace('fb', 'ans'));
+  if (!selectedOptions[questionId]) { 
+    fb.className='feedback error'; 
+    fb.textContent='⚠️ Select an option'; 
+    fb.style.display='block'; 
+    speak('Select an option');
+    return; 
+  }
+  if (selectedOptions[questionId] === correctAnswer) {
+    fb.className='feedback success'; 
+    fb.textContent='✅ Correct'; 
+    fb.style.display='block'; 
+    ans.style.display='none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className='feedback error'; 
+    fb.textContent='❌ Incorrect'; 
+    fb.style.display='block'; 
+    ans.style.display='block';
+    speak('Sorry, try again');
+  }
+}
+
+function completeUnit() {
+  if(completedCount >= 120) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! You completed Unit 20!');
+  } else {
+    alert(`⚠️ Complete at least 120 of 150 exercises.\nCompleted: ${completedCount}/150`);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
