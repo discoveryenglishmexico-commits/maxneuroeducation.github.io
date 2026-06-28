@@ -229,86 +229,349 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
     <h3 style="margin-top:40px; color:var(--green-dark);">Match the vocabulary words with the correct picture</h3>
     <p style="margin-bottom:20px;">Memorize and then match:</p>
     <div class="card-grid">
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">1. gear stick</h3>
-        </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">1. gear stick</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">2. in the back</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">3. glove compartment</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">4. in (the) front</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">5. handbrake</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">6. visor</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">7. headrest</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">8. sunscreen</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">9. headroom</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">10. trunk</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">11. horn</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">12. ignition</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">13. steering wheel</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">14. instrument panel</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">15. seat belt</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">16. interior</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">17. rear-view mirror</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">18. speedometer</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">19. passenger seat</h3></div></div>
+      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">20. milometer</h3></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--green-dark); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+<!-- SECTION 3: CRITICAL THINKING - BUYING A CAR DIALOGUE -->
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--green-dark);">💬 Critical Thinking: Buying a Car Dialogue</h2>
+    <p style="margin-bottom:20px;">Complete the dialogue and then practice with your coach in your live session:</p>
+    <div class="exercise-box">
+      <div class="exercise-item"><label><strong>Man:</strong> Hi, I'm looking for a _______________ car in the $5000 to $10,000 price range.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q3a','a')">brand-new</button><button class="option-btn" onclick="selectOption(this,'q3a','b')">worn-out</button><button class="option-btn" onclick="selectOption(this,'q3a','c')">used</button><button class="option-btn" onclick="selectOption(this,'q3a','d')">troubled</button></div><button class="btn-verify" onclick="checkMC('q3a','c','fb3a')">Check Answer</button><div class="hidden-answer" id="ans3a">used</div><div class="feedback" id="fb3a"></div></div>
+      <div class="exercise-item"><label><strong>Saleswoman:</strong> Are you looking for a car, truck, or _______________?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q3b','a')">PBS</button><button class="option-btn" onclick="selectOption(this,'q3b','b')">SUV</button><button class="option-btn" onclick="selectOption(this,'q3b','c')">FBI</button><button class="option-btn" onclick="selectOption(this,'q3b','d')">INS</button></div><button class="btn-verify" onclick="checkMC('q3b','b','fb3b')">Check Answer</button><div class="hidden-answer" id="ans3b">SUV</div><div class="feedback" id="fb3b"></div></div>
+      <div class="exercise-item"><label><strong>Man:</strong> I'm looking for a 4-door _______________ I might even be interested in a station wagon.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q3c','a')">coupe</button><button class="option-btn" onclick="selectOption(this,'q3c','b')">trailer</button><button class="option-btn" onclick="selectOption(this,'q3c','c')">tractor</button><button class="option-btn" onclick="selectOption(this,'q3c','d')">sedan</button></div><button class="btn-verify" onclick="checkMC('q3c','d','fb3c')">Check Answer</button><div class="hidden-answer" id="ans3c">sedan</div><div class="feedback" id="fb3c"></div></div>
+      <div class="exercise-item"><label><strong>Man:</strong> Not really. I just want a safe, _______________ car. I want a car that I count on, one that runs well.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q3d','a')">fast</button><button class="option-btn" onclick="selectOption(this,'q3d','b')">reliable</button><button class="option-btn" onclick="selectOption(this,'q3d','c')">sporty</button><button class="option-btn" onclick="selectOption(this,'q3d','d')">electric</button></div><button class="btn-verify" onclick="checkMC('q3d','b','fb3d')">Check Answer</button><div class="hidden-answer" id="ans3d">reliable</div><div class="feedback" id="fb3d"></div></div>
+      <div class="exercise-item"><label><strong>Saleswoman:</strong> Sounds good. We have this really nice car over here. It's got low _______________ because the previous owner only used it as a town car.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q3e','a')">hybrid</button><button class="option-btn" onclick="selectOption(this,'q3e','b')">warranty</button><button class="option-btn" onclick="selectOption(this,'q3e','c')">mileage</button><button class="option-btn" onclick="selectOption(this,'q3e','d')">doors</button></div><button class="btn-verify" onclick="checkMC('q3e','c','fb3e')">Check Answer</button><div class="hidden-answer" id="ans3e">mileage</div><div class="feedback" id="fb3e"></div></div>
+      <div class="exercise-item"><label><strong>Man:</strong> Can I take it for a(n) _______________ drive?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q3f','a')">test</button><button class="option-btn" onclick="selectOption(this,'q3f','b')">ordeal</button><button class="option-btn" onclick="selectOption(this,'q3f','c')">turn</button><button class="option-btn" onclick="selectOption(this,'q3f','d')">convention</button></div><button class="btn-verify" onclick="checkMC('q3f','a','fb3f')">Check Answer</button><div class="hidden-answer" id="ans3f">test</div><div class="feedback" id="fb3f"></div></div>
+      <div class="exercise-item"><label><strong>Saleswoman:</strong> Oh, and it also has some factory _______________ left on it because it's not very old.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q3g','a')">economics</button><button class="option-btn" onclick="selectOption(this,'q3g','b')">changes</button><button class="option-btn" onclick="selectOption(this,'q3g','c')">wagons</button><button class="option-btn" onclick="selectOption(this,'q3g','d')">warranty</button></div><button class="btn-verify" onclick="checkMC('q3g','d','fb3g')">Check Answer</button><div class="hidden-answer" id="ans3g">warranty</div><div class="feedback" id="fb3g"></div></div>
+      <div class="exercise-item"><label><strong>Man:</strong> That's great! Is it _______________?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q3h','a')">linked</button><button class="option-btn" onclick="selectOption(this,'q3h','b')">loaded</button><button class="option-btn" onclick="selectOption(this,'q3h','c')">stashed</button><button class="option-btn" onclick="selectOption(this,'q3h','d')">supplied</button></div><button class="btn-verify" onclick="checkMC('q3h','b','fb3h')">Check Answer</button><div class="hidden-answer" id="ans3h">loaded</div><div class="feedback" id="fb3h"></div></div>
+      <div class="exercise-item"><label><strong>Saleswoman:</strong> It's also very economical. It's only a four-_______________ car, a V4, so it's cheap on gas.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q3i','a')">line</button><button class="option-btn" onclick="selectOption(this,'q3i','b')">pipe</button><button class="option-btn" onclick="selectOption(this,'q3i','c')">cylinder</button><button class="option-btn" onclick="selectOption(this,'q3i','d')">duct</button></div><button class="btn-verify" onclick="checkMC('q3i','c','fb3i')">Check Answer</button><div class="hidden-answer" id="ans3i">cylinder</div><div class="feedback" id="fb3i"></div></div>
+      <div class="exercise-item"><label><strong>Man:</strong> I'd also like to take a look at that _______________ car over there. I may want a car that is able to operate on more than one fuel source.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q3j','a')">half-breed</button><button class="option-btn" onclick="selectOption(this,'q3j','b')">semi</button><button class="option-btn" onclick="selectOption(this,'q3j','c')">partly</button><button class="option-btn" onclick="selectOption(this,'q3j','d')">hybrid</button></div><button class="btn-verify" onclick="checkMC('q3j','d','fb3j')">Check Answer</button><div class="hidden-answer" id="ans3j">hybrid</div><div class="feedback" id="fb3j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 4: VOCABULARY - COMMUTING -->
+<section class="section-solid green-dark">
+  <div class="container">
+    <h2 style="color:var(--pink);">🚆 Vocabulary: Commuting</h2>
+    <div class="reading-block">
+      <h3 style="color:var(--green-dark);">Commuting Terms</h3>
+      
+      <h4 style="color:var(--green-dark); margin-top:20px;">A commute (noun)</h4>
+      <p>your trip to work<br>
+      • the morning commute<br>
+      • the evening commute<br>
+      • have a [long / short] commute<br>
+      • How long is your commute?<br>
+      • I have a [30-minute] commute.</p>
+
+      <h4 style="color:var(--green-dark); margin-top:20px;">To commute (verb)</h4>
+      <p>travel to work<br>
+      • commute from<br>
+      • commute to<br>
+      • commute by (type of transportation)</p>
+
+      <h4 style="color:var(--green-dark); margin-top:20px;">A commuter (noun)</h4>
+      <p>person who travels to work every day</p>
+
+      <h4 style="color:var(--green-dark); margin-top:20px;">A commuter rail (noun)</h4>
+      <p>the system of passenger trains that take people to and from work<br>
+      • take the commuter rail<br>
+      • use the commuter rail<br>
+      • buy a commuter rail pass</p>
+
+      <h4 style="color:var(--green-dark); margin-top:20px;">Carpool (noun, verb)</h4>
+      <p>(the act of) sharing a car ride to and from work every day along with the travel costs<br>
+      • be in a carpool with (whom)<br>
+      • carpool with (whom)</p>
+
+      <h4 style="color:var(--green-dark); margin-top:20px;">To telecommute</h4>
+      <p>work for a company from a home office via phone and the Internet<br>
+      • have the option of telecommuting</p>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--pink);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 5: READING - JAMES WILLIAMS -->
+<section class="section-solid light-pink">
+  <div class="container">
+    <h2 style="color:var(--green-dark);">📖 Reading: James Williams on Commuting</h2>
+    <div class="reading-block">
+      <h3 style="color:var(--green-dark);">Hi, I'm James Williams</h3>
+      <p>Today I'm talking about work. We all have to get to work somehow. Some of us work through the Internet, at home...like I'm doing right now. Some people have to commute very far. I've had friends who have commuted over two hours each way to get to work. In my opinion, the commute should not matter as much as the job itself. Are you doing something that you're good at? That you enjoy? That you want to learn more about and become a master of? In my opinion, that's the most important thing about a career, a job, a work in pursuit.</p>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 6: VOCABULARY EXERCISE + WHAT'S YOUR OPINION -->
+<section class="section-solid pink">
+  <div class="container">
+    <h2 style="color:var(--green-dark);">📝 Vocabulary Exercise</h2>
+    <p style="margin-bottom:20px;">Choose the correct word to complete the idea of each sentence:</p>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. The train was full of morning __________.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6a','a')">commutes</button><button class="option-btn" onclick="selectOption(this,'q6a','b')">telecommuters</button><button class="option-btn" onclick="selectOption(this,'q6a','c')">commuters</button></div><button class="btn-verify" onclick="checkMC('q6a','c','fb6a')">Check Answer</button><div class="hidden-answer" id="ans6a">commuters</div><div class="feedback" id="fb6a"></div></div>
+      <div class="exercise-item"><label>2. How long does it take you to _________ to work?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6b','a')">commute</button><button class="option-btn" onclick="selectOption(this,'q6b','b')">telecommute</button><button class="option-btn" onclick="selectOption(this,'q6b','c')">commuter</button></div><button class="btn-verify" onclick="checkMC('q6b','a','fb6b')">Check Answer</button><div class="hidden-answer" id="ans6b">commute</div><div class="feedback" id="fb6b"></div></div>
+      <div class="exercise-item"><label>3. Jeffrey prefers the _________ because the trains have Wi-Fi, and he can use the Internet on his way to and from work.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6c','a')">carpool</button><button class="option-btn" onclick="selectOption(this,'q6c','b')">telecommute</button><button class="option-btn" onclick="selectOption(this,'q6c','c')">commuter rail</button></div><button class="btn-verify" onclick="checkMC('q6c','c','fb6c')">Check Answer</button><div class="hidden-answer" id="ans6c">commuter rail</div><div class="feedback" id="fb6c"></div></div>
+      <div class="exercise-item"><label>4. My company allows me to _________ up to three days a week, and I really appreciate the additional time that gives me with my family.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6d','a')">telecommute</button><button class="option-btn" onclick="selectOption(this,'q6d','b')">commute</button><button class="option-btn" onclick="selectOption(this,'q6d','c')">carpool</button></div><button class="btn-verify" onclick="checkMC('q6d','a','fb6d')">Check Answer</button><div class="hidden-answer" id="ans6d">telecommute</div><div class="feedback" id="fb6d"></div></div>
+      <div class="exercise-item"><label>5. If you buy a _________, you save a little money on each ride.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6e','a')">commuter rail</button><button class="option-btn" onclick="selectOption(this,'q6e','b')">commuter rail pass</button><button class="option-btn" onclick="selectOption(this,'q6e','c')">carpool</button></div><button class="btn-verify" onclick="checkMC('q6e','b','fb6e')">Check Answer</button><div class="hidden-answer" id="ans6e">commuter rail pass</div><div class="feedback" id="fb6e"></div></div>
+      <div class="exercise-item"><label>6. Being in a __________ with two of my co-workers saves on gas.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q6f','a')">telecommute</button><button class="option-btn" onclick="selectOption(this,'q6f','b')">commuter</button><button class="option-btn" onclick="selectOption(this,'q6f','c')">carpool</button></div><button class="btn-verify" onclick="checkMC('q6f','c','fb6f')">Check Answer</button><div class="hidden-answer" id="ans6f">carpool</div><div class="feedback" id="fb6f"></div></div>
+    </div>
+
+    <h2 style="color:var(--green-dark); margin-top:40px;">💭 What's your opinion?</h2>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. Do you agree or disagree with James' views on work? Why/why not?</label><textarea class="exercise-textarea" id="ex6g" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6g','fb6g')">Check Answer</button><div class="feedback" id="fb6g"></div></div>
+      <div class="exercise-item"><label>2. What's the most important thing about a job? Why?</label><textarea class="exercise-textarea" id="ex6h" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6h','fb6h')">Check Answer</button><div class="feedback" id="fb6h"></div></div>
+      <div class="exercise-item"><label>3. What do you value most in your work? Why?</label><textarea class="exercise-textarea" id="ex6i" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6i','fb6i')">Check Answer</button><div class="feedback" id="fb6i"></div></div>
+      <div class="exercise-item"><label>4. Do you agree or disagree with James regarding the importance of a commute?</label><textarea class="exercise-textarea" id="ex6j" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6j','fb6j')">Check Answer</button><div class="feedback" id="fb6j"></div></div>
+      <div class="exercise-item"><label>5. Is there any job worth a long commute in your opinion? Why?</label><textarea class="exercise-textarea" id="ex6k" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex6k','fb6k')">Check Answer</button><div class="feedback" id="fb6k"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--green-dark); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 7: WHAT WOULD YOU DO? -->
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--green-dark);">🤔 Critical Thinking: What would you do?</h2>
+    <div class="highlight-box">
+      <p><strong>What would you do if these things happened to you? Complete the sentences.</strong></p>
+      <p><strong>Example:</strong> If I lived to be a hundred and ten years old, I'd have a big birthday party.</p>
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. If I went to New York, _________________________________________________.</label><textarea class="exercise-textarea" id="ex7a" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7a','fb7a')">Check Answer</button><div class="feedback" id="fb7a"></div></div>
+      <div class="exercise-item"><label>2. If I found a rare animal, ________________________________________________.</label><textarea class="exercise-textarea" id="ex7b" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7b','fb7b')">Check Answer</button><div class="feedback" id="fb7b"></div></div>
+      <div class="exercise-item"><label>3. If I forgot to do my homework, __________________________________________.</label><textarea class="exercise-textarea" id="ex7c" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7c','fb7c')">Check Answer</button><div class="feedback" id="fb7c"></div></div>
+      <div class="exercise-item"><label>4. If I saw a bank robber, ________________________________________________.</label><textarea class="exercise-textarea" id="ex7d" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7d','fb7d')">Check Answer</button><div class="feedback" id="fb7d"></div></div>
+      <div class="exercise-item"><label>5. If I met somebody famous, _____________________________________________.</label><textarea class="exercise-textarea" id="ex7e" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7e','fb7e')">Check Answer</button><div class="feedback" id="fb7e"></div></div>
+      <div class="exercise-item"><label>6. If I found a dinosaur's egg, _____________________________________________.</label><textarea class="exercise-textarea" id="ex7f" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7f','fb7f')">Check Answer</button><div class="feedback" id="fb7f"></div></div>
+      <div class="exercise-item"><label>7. If I forgot my best friend's birthday, ______________________________________.</label><textarea class="exercise-textarea" id="ex7g" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7g','fb7g')">Check Answer</button><div class="feedback" id="fb7g"></div></div>
+      <div class="exercise-item"><label>8. If I won a lot of money, ________________________________________________.</label><textarea class="exercise-textarea" id="ex7h" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7h','fb7h')">Check Answer</button><div class="feedback" id="fb7h"></div></div>
+      <div class="exercise-item"><label>9. If I lost my friend's favorite book, ________________________________________.</label><textarea class="exercise-textarea" id="ex7i" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7i','fb7i')">Check Answer</button><div class="feedback" id="fb7i"></div></div>
+      <div class="exercise-item"><label>10. If I became President, ________________________________________________.</label><textarea class="exercise-textarea" id="ex7j" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussi<!-- SECTION 8: REWRITE SENTENCES -->
+<section class="section-solid green">
+  <div class="container">
+    <h2>✍️ Rewrite: What would your best friend do?</h2>
+    <div class="highlight-box" style="background:rgba(232,160,176,0.2); color:var(--text-light);">
+      <p><strong>Now, type or write the sentences again. This time, imagine what your best friend wouldn't do if these things happened.</strong></p>
+      <p><strong>Example:</strong> If Adam lived to be a hundred and ten, he wouldn't have a party.</p>
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. ___________________________________________________________________.</label><textarea class="exercise-textarea" id="ex8a" placeholder="Rewrite the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex8a','fb8a')">Check Answer</button><div class="feedback" id="fb8a"></div></div>
+      <div class="exercise-item"><label>2. ___________________________________________________________________.</label><textarea class="exercise-textarea" id="ex8b" placeholder="Rewrite the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex8b','fb8b')">Check Answer</button><div class="feedback" id="fb8b"></div></div>
+      <div class="exercise-item"><label>3. ___________________________________________________________________.</label><textarea class="exercise-textarea" id="ex8c" placeholder="Rewrite the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex8c','fb8c')">Check Answer</button><div class="feedback" id="fb8c"></div></div>
+      <div class="exercise-item"><label>4. ___________________________________________________________________.</label><textarea class="exercise-textarea" id="ex8d" placeholder="Rewrite the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex8d','fb8d')">Check Answer</button><div class="feedback" id="fb8d"></div></div>
+      <div class="exercise-item"><label>5. ___________________________________________________________________.</label><textarea class="exercise-textarea" id="ex8e" placeholder="Rewrite the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex8e','fb8e')">Check Answer</button><div class="feedback" id="fb8e"></div></div>
+      <div class="exercise-item"><label>6. ___________________________________________________________________.</label><textarea class="exercise-textarea" id="ex8f" placeholder="Rewrite the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex8f','fb8f')">Check Answer</button><div class="feedback" id="fb8f"></div></div>
+      <div class="exercise-item"><label>7. ___________________________________________________________________.</label><textarea class="exercise-textarea" id="ex8g" placeholder="Rewrite the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex8g','fb8g')">Check Answer</button><div class="feedback" id="fb8g"></div></div>
+      <div class="exercise-item"><label>8. ___________________________________________________________________.</label><textarea class="exercise-textarea" id="ex8h" placeholder="Rewrite the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex8h','fb8h')">Check Answer</button><div class="feedback" id="fb8h"></div></div>
+      <div class="exercise-item"><label>9. ___________________________________________________________________.</label><textarea class="exercise-textarea" id="ex8i" placeholder="Rewrite the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex8i','fb8i')">Check Answer</button><div class="feedback" id="fb8i"></div></div>
+      <div class="exercise-item"><label>10. __________________________________________________________________.</label><textarea class="exercise-textarea" id="ex8j" placeholder="Rewrite the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex8j','fb8j')">Check Answer</button><div class="feedback" id="fb8j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--pink);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 9: 180 MILLION DOLLARS LOTTERY -->
+<section class="section-solid light-pink">
+  <div class="container">
+    <h2 style="color:var(--green-dark);">💰 Conditional Text: 180 Million Dollars Lottery</h2>
+    <div class="highlight-box">
+      <p><strong>Using the words in parentheses, complete the text below with the appropriate conditional form.</strong></p>
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>Did you hear about that guy who won 180 million dollars in the lottery? If I (win) ____________________ that much money, I (quit) ____________________ my job the next day.</label><textarea class="exercise-textarea" id="ex9a" placeholder="Complete with conditional form..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex9a','fb9a')">Check Answer</button><div class="feedback" id="fb9a"></div></div>
+      <div class="exercise-item"><label>I (travel) ____________________ around the world and (stay) ____________________ in the most luxurious hotels.</label><textarea class="exercise-textarea" id="ex9b" placeholder="Complete with conditional form..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex9b','fb9b')">Check Answer</button><div class="feedback" id="fb9b"></div></div>
+      <div class="exercise-item"><label>If I (want) ____________________ anything, I (buy) ____________________ it.</label><textarea class="exercise-textarea" id="ex9c" placeholder="Complete with conditional form..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex9c','fb9c')">Check Answer</button><div class="feedback" id="fb9c"></div></div>
+      <div class="exercise-item"><label>If I (see) ____________________ a beautiful Mercedes that I wanted, I (buy) ____________________ it.</label><textarea class="exercise-textarea" id="ex9d" placeholder="Complete with conditional form..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex9d','fb9d')">Check Answer</button><div class="feedback" id="fb9d"></div></div>
+      <div class="exercise-item"><label>If I wanted to stay in a beautiful hotel and the hotel (be) ____________________ full, I (buy) ____________________ the hotel and make them give me a room.</label><textarea class="exercise-textarea" id="ex9e" placeholder="Complete with conditional form..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex9e','fb9e')">Check Answer</button><div class="feedback" id="fb9e"></div></div>
+      <div class="exercise-item"><label>I (can) ____________________ do anything in the world if I had 180 million dollars...</label><textarea class="exercise-textarea" id="ex9f" placeholder="Complete with conditional form..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex9f','fb9f')">Check Answer</button><div class="feedback" id="fb9f"></div></div>
+      <div class="exercise-item"><label>Well... I (do) ____________________ good things with the money as well.</label><textarea class="exercise-textarea" id="ex9g" placeholder="Complete with conditional form..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex9g','fb9g')">Check Answer</button><div class="feedback" id="fb9g"></div></div>
+      <div class="exercise-item"><label>If anybody (need) ____________________ help, I (give) ____________________ them some money to help them out.</label><textarea class="exercise-textarea" id="ex9h" placeholder="Complete with conditional form..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex9h','fb9h')">Check Answer</button><div class="feedback" id="fb9h"></div></div>
+      <div class="exercise-item"><label>I (donate) ____________________ money to charities. I (give) ____________________ money to help support the arts.</label><textarea class="exercise-textarea" id="ex9i" placeholder="Complete with conditional form..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex9i','fb9i')">Check Answer</button><div class="feedback" id="fb9i"></div></div>
+      <div class="exercise-item"><label>If I (win) ____________________ that much money, I wouldn't keep it all for myself. I (help) ____________________ as many people as possible.</label><textarea class="exercise-textarea" id="ex9j" placeholder="Complete with conditional form..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex9j','fb9j')">Check Answer</button><div class="feedback" id="fb9j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--green-dark); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 10: NEVERTHELESS / HOWEVER -->
+<section class="section-solid pink">
+  <div class="container">
+    <h2 style="color:var(--green-dark);">🔗 Nevertheless / However</h2>
+    <div class="highlight-box">
+      <p><strong>Do you know when you can use "nevertheless"?</strong></p>
+      <p>Fill in the blanks with "nevertheless." If you can't use "nevertheless," use "however."</p>
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. John is terrified of flying; ____________________, he flies to London at least once each month because of his work.</label><input type="text" class="exercise-input" id="ex10a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10a',['nevertheless'],'fb10a','ans10a')">Check Answer</button><div class="hidden-answer" id="ans10a">nevertheless</div><div class="feedback" id="fb10a"></div></div>
+      <div class="exercise-item"><label>2. Elaine is allergic to dogs. ____________________, she has four.</label><input type="text" class="exercise-input" id="ex10b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10b',['nevertheless'],'fb10b','ans10b')">Check Answer</button><div class="hidden-answer" id="ans10b">nevertheless</div><div class="feedback" id="fb10b"></div></div>
+      <div class="exercise-item"><label>3. Hiro lives in Japan. His girlfriend, ____________________, lives in Taiwan.</label><input type="text" class="exercise-input" id="ex10c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10c',['however'],'fb10c','ans10c')">Check Answer</button><div class="hidden-answer" id="ans10c">however</div><div class="feedback" id="fb10c"></div></div>
+      <div class="exercise-item"><label>4. Frank is very shy. ____________________, his sister is very outgoing.</label><input type="text" class="exercise-input" id="ex10d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10d',['however'],'fb10d','ans10d')">Check Answer</button><div class="hidden-answer" id="ans10d">however</div><div class="feedback" id="fb10d"></div></div>
+      <div class="exercise-item"><label>5. My husband enjoys watching baseball. ____________________, he doesn't like watching football.</label><input type="text" class="exercise-input" id="ex10e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10e',['however'],'fb10e','ans10e')">Check Answer</button><div class="hidden-answer" id="ans10e">however</div><div class="feedback" id="fb10e"></div></div>
+      <div class="exercise-item"><label>6. Gina said that she didn't have time for dating. ____________________, she went on four dates with Daniel just last week.</label><input type="text" class="exercise-input" id="ex10f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10f',['nevertheless'],'fb10f','ans10f')">Check Answer</button><div class="hidden-answer" id="ans10f">nevertheless</div><div class="feedback" id="fb10f"></div></div>
+      <div class="exercise-item"><label>7. Candace doesn't drink much tea. She drinks at least a pot of coffee each day, ____________________.</label><input type="text" class="exercise-input" id="ex10g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10g',['however'],'fb10g','ans10g')">Check Answer</button><div class="hidden-answer" id="ans10g">however</div><div class="feedback" id="fb10g"></div></div>
+      <div class="exercise-item"><label>8. Everyone was sure that the company would offer John a promotion. ____________________, John decided to go work for a new company.</label><input type="text" class="exercise-input" id="ex10h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10h',['nevertheless'],'fb10h','ans10h')">Check Answer</button><div class="hidden-answer" id="ans10h">nevertheless</div><div class="feedback" id="fb10h"></div></div>
+      <div class="exercise-item"><label>9. The coffee shop down the street is closed for remodeling. ____________________, the one around the corner is open.</label><input type="text" class="exercise-input" id="ex10i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10i',['however'],'fb10i','ans10i')">Check Answer</button><div class="hidden-answer" id="ans10i">however</div><div class="feedback" id="fb10i"></div></div>
+      <div class="exercise-item"><label>10. That new nightclub downtown, Carpe Diem, was always full of people. ____________________, it shut down last week because it kept losing money.</label><input type="text" class="exercise-input" id="ex10j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10j',['nevertheless'],'fb10j','ans10j')">Check Answer</button><div class="hidden-answer" id="ans10j">nevertheless</div><div class="feedback" id="fb10j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--green-dark); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 11: GRAMMAR REVIEW -->
+<section class="section-solid green-dark">
+  <div class="container">
+    <h2 style="color:var(--pink);">📚 Grammar Review</h2>
+    
+    <div class="reading-block">
+      <h3 style="color:var(--green-dark);">Conditionals</h3>
+      <p>What are conditionals in English grammar? Sometimes we call them 'if clauses'. They describe the result of something that might happen (in the present or future) or might have happened but didn't (in the past). They are made using different English verb tenses.</p>
+      <p>There are four kinds:</p>
+      
+      <div class="grammar-table">
+        <tr><th>Conditional Type</th><th>Structure</th><th>Example</th></tr>
+        <tr><td><strong>Zero Conditional</strong></td><td>if + present simple, ... present simple</td><td>If you heat water to 100 degrees, it boils.</td></tr>
+        <tr><td><strong>First Conditional</strong></td><td>if + present simple, ... will + infinitive</td><td>If it rains tomorrow, we'll go to the cinema.</td></tr>
+        <tr><td><strong>Second Conditional</strong></td><td>if + past simple, ... would + infinitive</td><td>If I had a lot of money, I would travel around the world.</td></tr>
+        <tr><td><strong>Third Conditional</strong></td><td>if + past perfect, ... would + have + past participle</td><td>If I had gone to bed early, I would have caught the train.</td></tr>
       </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">2. in the back</h3>
-        </div>
+      
+      <div class="highlight-box" style="margin-top:20px;">
+        <strong>Note:</strong> We can put 'if' at the beginning, or in the middle. It doesn't matter at all.
       </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">3. glove compartment</h3>
-        </div>
+    </div>
+
+    <div class="reading-block">
+      <h3 style="color:var(--green-dark);">Explanation of "Nevertheless"</h3>
+      <p>English learners are often confused by "nevertheless" and "however," and for good reason! You can always replace "nevertheless" with "however," but you cannot always replace "however" with "nevertheless."</p>
+      <p><strong>"Nevertheless" is a transition.</strong> Like all transitions, "nevertheless" links two clauses, showing a logical relationship between them. "Nevertheless" indicates <strong>concession</strong>. What is concession? Put simply, a concession is something that is unexpected or surprising.</p>
+      
+      <h4 style="color:var(--green-dark); margin-top:20px;">Consider this statement:</h4>
+      <p><em>Jane lived in Tokyo for ten years.</em></p>
+      <p>So, given that Jane lived in Japan for a long time, what would be unexpected or surprising?</p>
+      <ul style="margin-left:20px; margin-top:10px;">
+        <li>Jane has never been to Peru. (Not a surprise - Japan and Peru are not close together)</li>
+        <li>Jane can't speak any Japanese. (A SURPRISE! We would expect her to speak at least some Japanese)</li>
+      </ul>
+      
+      <div class="highlight-box" style="margin-top:20px;">
+        <strong>Example:</strong> Jane lived in Tokyo for ten years; nevertheless, she can't speak any Japanese.
       </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">4. in (the) front</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">5. handbrake</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">6. visor</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">7. headrest</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">8. sunscreen</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">9. headroom</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">10. trunk</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">11. horn</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">12. ignition</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">13. steering wheel</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">14. instrument panel</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">15. seat belt</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="color:var(--white);">16. interior</h3>
-        </div>
-      </div>
-      <div class="card" style="background:var(--green); color:var(--text-light);">
-        <div class="card-content">
-          <h3 style="
+      
+      <p style="margin-top:20px;"><strong>"However" can indicate both concession AND contrast</strong>, so you can use "however" anywhere you can use "nevertheless."</p>
+    </div>
+
+    <button class="nav-btn" onclick="completeUnit()" style="background:var(--pink);">Complete Unit</button>
+  </div>
+</section>
+
+<!-- FINAL -->
+<div id="finalMsg" style="display:none; padding:80px 40px; background:var(--green-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3rem; margin-bottom:20px;">🎉 Unit 21 Completed</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px;">You have mastered car parts vocabulary, commuting terms, conditional sentences, and the use of nevertheless/however.</p>
+    <p style="font-size:1.1rem; margin-bottom:30px; opacity:0.8;">The brain doesn't translate. The brain assembles.</p>
+    <a href="indexmax.html" class="nav-btn" style="background:var(--pink); color:var(--text-dark);">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:var(--green-dark); color:var(--text-light);">
+  <p><strong>Discovery MAX Neuroeducation</strong></p>
+  <p>Unit 21: A Brand New Used Car | Método NBF | Toño Vicas</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 120;
+
+// AUDIO FEEDBACK
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.1; u.pitch = 1;
+  synth.speak(u);
+}
+
+function updateProgress() {
+  document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
+}
+
+function normalizeText(text) {
+  if (!text) return "";
+  return text.toLowerCase().replace(/[?!.,']/g, "").replace(/\s+/g, " ").trim();
+}
+
+function scrollToNext() {
+  speak('Next section unlocked');
+  window.scrollBy({ top: window.innerHeight * 0.9, behavior: 'smooth' });
+}
+
+function checkSimple(inputId, keywords, fbId, ansId) {
+  const val = normalizeText(document.getElementById(inputId).value);
+  const fb = document.getElementById(fbId);
+  const ans = document.getElementById(ansId);
+  const allFound = keywords.every(k => val.includes(k));
+  
+  if(allFound) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correct. Structure validated.';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Review the key elements.';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Reflection recorded. Excellent cognitive effort.';
+    fb.style.display = 'block';
+    speak('Great answer!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep reflection. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Try again');
+  }
+}
+
+let selectedOptions = {};
+function
