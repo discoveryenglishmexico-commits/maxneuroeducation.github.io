@@ -17,7 +17,7 @@
   --text-light: #ffffff;
 }
 * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
-body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--light-pink); }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--light-pink); overflow-x:hidden; }
 
 .hero {
   height:90vh; position:relative;
@@ -108,12 +108,65 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
 .vocab-table td { padding:12px; border-bottom:1px solid #e5e7eb; color:var(--text-dark); }
 .vocab-table tr:hover { background:var(--light-pink); }
 
+/* NUEVO: Accordion Style for Car Parts */
+.accordion-container {
+  display:grid; gap:15px; margin:30px 0;
+}
+.accordion-item {
+  background:var(--white); border-radius:8px; overflow:hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.accordion-header {
+  padding:20px 25px; background:var(--green); color:var(--text-light);
+  cursor:pointer; font-weight:600; font-size:1.1rem;
+  display:flex; justify-content:space-between; align-items:center;
+  transition: background 0.3s;
+}
+.accordion-header:hover { background:var(--green-dark); }
+.accordion-header::after {
+  content:'▼'; font-size:1.2rem; transition: transform 0.3s;
+}
+.accordion-item.active .accordion-header::after {
+  transform: rotate(180deg);
+}
+.accordion-content {
+  max-height:0; overflow:hidden; transition: max-height 0.3s ease;
+  background:var(--light-pink);
+}
+.accordion-item.active .accordion-content {
+  max-height:200px;
+}
+.accordion-body {
+  padding:20px 25px; color:var(--text-dark); line-height:1.8;
+}
+
+/* Match Exercise with Images */
+.match-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:25px; margin:30px 0;
+}
+.match-item {
+  background:var(--white); border-radius:8px; overflow:hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.match-image {
+  width:100%; height:200px; object-fit:cover;
+}
+.match-label {
+  padding:15px; background:var(--green); color:var(--text-light);
+  text-align:center; font-weight:600; font-size:1.1rem;
+}
+
+/* Responsive Fixes */
 @media(max-width:768px) {
   .hero { height:75vh; }
   .section-image { min-height:40vh; }
-  .section-solid { padding:60px 20px; }
+  .section-solid { padding:40px 20px; }
   .card-grid { grid-template-columns:1fr; }
   .reading-block { padding:25px; }
+  .exercise-box { padding:20px; }
+  .match-grid { grid-template-columns:1fr; }
+  .accordion-header { padding:15px 20px; font-size:1rem; }
+  .accordion-body { padding:15px 20px; }
 }
 </style>
 </head>
@@ -188,7 +241,7 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
   </div>
 </section>
 
-<!-- SECTION 2: VOCABULARY - CAR PARTS -->
+<!-- SECTION 2: VOCABULARY - CAR PARTS (ACCORDION STYLE) -->
 <section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=1920&q=80');">
   <div class="section-image-content">
     <h2>Car Parts Vocabulary</h2>
@@ -199,60 +252,240 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
 <section class="section-solid pink">
   <div class="container">
     <h2 style="color:var(--green-dark);">🚗 Vocabulary: Car Parts</h2>
-    <p style="font-size:1.1rem; margin-bottom:30px; color:var(--text-dark);">Learn the definitions of essential car parts:</p>
+    <p style="font-size:1.1rem; margin-bottom:30px; color:var(--text-dark);">Click on each car part to reveal its definition:</p>
     
-    <div class="vocab-table">
-      <tr><th>Car Part</th><th>Definition</th></tr>
-      <tr><td><strong>gear stick</strong></td><td>the short metal lever in a car that a driver uses to change the gears</td></tr>
-      <tr><td><strong>glove compartment</strong></td><td>the small cupboard in front of the passenger seat of a car</td></tr>
-      <tr><td><strong>handbrake</strong></td><td>the piece of equipment in a car that you pull with your hand to keep the car still after it has stopped</td></tr>
-      <tr><td><strong>headrest</strong></td><td>the top part of a chair or car seat that you lean your head against</td></tr>
-      <tr><td><strong>headroom</strong></td><td>the amount of space between your head and a ceiling, especially in a car</td></tr>
-      <tr><td><strong>horn</strong></td><td>the object in a car or other vehicle that makes a loud warning noise when you press it</td></tr>
-      <tr><td><strong>ignition</strong></td><td>the place where you put in the key to make a car's engine start</td></tr>
-      <tr><td><strong>instrument panel</strong></td><td>the board that faces the driver or pilot inside a vehicle, ship, or plane, where they can see and operate the controls</td></tr>
-      <tr><td><strong>interior</strong></td><td>the inside part of something, especially a building or vehicle</td></tr>
-      <tr><td><strong>speedometer</strong></td><td>the piece of equipment in a vehicle that shows how fast it is going</td></tr>
-      <tr><td><strong>milometer</strong></td><td>a piece of equipment fitted to a vehicle that shows how many miles the vehicle has travelled</td></tr>
-      <tr><td><strong>panel</strong></td><td>the part of a vehicle or machine where the switches and other instruments are found</td></tr>
-      <tr><td><strong>passenger seat</strong></td><td>the front seat in a road vehicle beside the driver's seat</td></tr>
-      <tr><td><strong>rear-view mirror</strong></td><td>a mirror fixed inside the front window of a car that lets the driver see what is happening behind it</td></tr>
-      <tr><td><strong>seat belt</strong></td><td>a strong belt in a car or plane that you fasten around yourself to hold you in your seat</td></tr>
-      <tr><td><strong>steering wheel</strong></td><td>the wheel in a vehicle that you hold and turn to control the direction it travels in</td></tr>
-      <tr><td><strong>trunk</strong></td><td>space for storing things in a boat or vehicle</td></tr>
-      <tr><td><strong>sunscreen</strong></td><td>a screen that you put on one of the windows inside your car so that it will not get too hot when it is parked in the sun</td></tr>
-      <tr><td><strong>visor</strong></td><td>a flat object at the top of the front window of a car that you pull down to protect your eyes from the sun</td></tr>
-      <tr><td><strong>in (the) front</strong></td><td>in the part of a car where the driver and the controls are</td></tr>
-      <tr><td><strong>in the back</strong></td><td>in the part of the car where the passengers are</td></tr>
+    <div class="accordion-container">
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">gear stick</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the short metal lever in a car that a driver uses to change the gears</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">glove compartment</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the small cupboard in front of the passenger seat of a car</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">handbrake</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the piece of equipment in a car that you pull with your hand to keep the car still after it has stopped</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">headrest</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the top part of a chair or car seat that you lean your head against</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">headroom</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the amount of space between your head and a ceiling, especially in a car</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">horn</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the object in a car or other vehicle that makes a loud warning noise when you press it</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">ignition</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the place where you put in the key to make a car's engine start</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">instrument panel</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the board that faces the driver or pilot inside a vehicle, ship, or plane, where they can see and operate the controls</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">interior</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the inside part of something, especially a building or vehicle</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">speedometer</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the piece of equipment in a vehicle that shows how fast it is going</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">milometer</div>
+        <div class="accordion-content">
+          <div class="accordion-body">a piece of equipment fitted to a vehicle that shows how many miles the vehicle has travelled</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">panel</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the part of a vehicle or machine where the switches and other instruments are found</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">passenger seat</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the front seat in a road vehicle beside the driver's seat</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">rear-view mirror</div>
+        <div class="accordion-content">
+          <div class="accordion-body">a mirror fixed inside the front window of a car that lets the driver see what is happening behind it</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">seat belt</div>
+        <div class="accordion-content">
+          <div class="accordion-body">a strong belt in a car or plane that you fasten around yourself to hold you in your seat</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">steering wheel</div>
+        <div class="accordion-content">
+          <div class="accordion-body">the wheel in a vehicle that you hold and turn to control the direction it travels in</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">trunk</div>
+        <div class="accordion-content">
+          <div class="accordion-body">space for storing things in a boat or vehicle</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">sunscreen</div>
+        <div class="accordion-content">
+          <div class="accordion-body">a screen that you put on one of the windows inside your car so that it will not get too hot when it is parked in the sun</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">visor</div>
+        <div class="accordion-content">
+          <div class="accordion-body">a flat object at the top of the front window of a car that you pull down to protect your eyes from the sun</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">in (the) front</div>
+        <div class="accordion-content">
+          <div class="accordion-body">in the part of a car where the driver and the controls are</div>
+        </div>
+      </div>
+      <div class="accordion-item" onclick="toggleAccordion(this)">
+        <div class="accordion-header">in the back</div>
+        <div class="accordion-content">
+          <div class="accordion-body">in the part of the car where the passengers are</div>
+        </div>
+      </div>
     </div>
 
     <h3 style="margin-top:40px; color:var(--green-dark);">Match the vocabulary words with the correct picture</h3>
     <p style="margin-bottom:20px;">Memorize and then match:</p>
-    <div class="card-grid">
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">1. gear stick</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">2. in the back</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">3. glove compartment</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">4. in (the) front</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">5. handbrake</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">6. visor</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">7. headrest</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">8. sunscreen</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">9. headroom</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">10. trunk</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">11. horn</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">12. ignition</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">13. steering wheel</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">14. instrument panel</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">15. seat belt</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">16. interior</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">17. rear-view mirror</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">18. speedometer</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">19. passenger seat</h3></div></div>
-      <div class="card" style="background:var(--green); color:var(--text-light);"><div class="card-content"><h3 style="color:var(--white);">20. milometer</h3></div></div>
+    
+    <div class="match-grid">
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=600&q=80" alt="Gear stick" class="match-image">
+        <div class="match-label">1. gear stick</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=80" alt="Back seat" class="match-image">
+        <div class="match-label">2. in the back</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1507136566006-cfc505b1199b?w=600&q=80" alt="Glove compartment" class="match-image">
+        <div class="match-label">3. glove compartment</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80" alt="Front seat" class="match-image">
+        <div class="match-label">4. in (the) front</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Handbrake" class="match-image">
+        <div class="match-label">5. handbrake</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&q=80" alt="Visor" class="match-image">
+        <div class="match-label">6. visor</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=600&q=80" alt="Headrest" class="match-image">
+        <div class="match-label">7. headrest</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1507136566006-cfc505b1199b?w=600&q=80" alt="Sunscreen" class="match-image">
+        <div class="match-label">8. sunscreen</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=80" alt="Headroom" class="match-image">
+        <div class="match-label">9. headroom</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80" alt="Trunk" class="match-image">
+        <div class="match-label">10. trunk</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Horn" class="match-image">
+        <div class="match-label">11. horn</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&q=80" alt="Ignition" class="match-image">
+        <div class="match-label">12. ignition</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1507136566006-cfc505b1199b?w=600&q=80" alt="Steering wheel" class="match-image">
+        <div class="match-label">13. steering wheel</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=80" alt="Instrument panel" class="match-image">
+        <div class="match-label">14. instrument panel</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80" alt="Seat belt" class="match-image">
+        <div class="match-label">15. seat belt</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Interior" class="match-image">
+        <div class="match-label">16. interior</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&q=80" alt="Rear-view mirror" class="match-image">
+        <div class="match-label">17. rear-view mirror</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1507136566006-cfc505b1199b?w=600&q=80" alt="Speedometer" class="match-image">
+        <div class="match-label">18. speedometer</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=80" alt="Passenger seat" class="match-image">
+        <div class="match-label">19. passenger seat</div>
+      </div>
+      <div class="match-item">
+        <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80" alt="Milometer" class="match-image">
+        <div class="match-label">20. milometer</div>
+      </div>
     </div>
     <button class="nav-btn" onclick="scrollToNext()" style="background:var(--green-dark); color:var(--text-light);">Continue →</button>
   </div>
 </section>
+
+<script>
+// Accordion Toggle Function
+function toggleAccordion(element) {
+  const isActive = element.classList.contains('active');
+  // Close all accordions
+  document.querySelectorAll('.accordion-item').forEach(item => {
+    item.classList.remove('active');
+  });
+  // Open clicked one if it wasn't active
+  if (!isActive) {
+    element.classList.add('active');
+  }
+}
+</script>
 <!-- SECTION 3: CRITICAL THINKING - BUYING A CAR DIALOGUE -->
 <section class="section-solid white">
   <div class="container">
@@ -373,7 +606,12 @@ body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; 
       <div class="exercise-item"><label>7. If I forgot my best friend's birthday, ______________________________________.</label><textarea class="exercise-textarea" id="ex7g" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7g','fb7g')">Check Answer</button><div class="feedback" id="fb7g"></div></div>
       <div class="exercise-item"><label>8. If I won a lot of money, ________________________________________________.</label><textarea class="exercise-textarea" id="ex7h" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7h','fb7h')">Check Answer</button><div class="feedback" id="fb7h"></div></div>
       <div class="exercise-item"><label>9. If I lost my friend's favorite book, ________________________________________.</label><textarea class="exercise-textarea" id="ex7i" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7i','fb7i')">Check Answer</button><div class="feedback" id="fb7i"></div></div>
-      <div class="exercise-item"><label>10. If I became President, ________________________________________________.</label><textarea class="exercise-textarea" id="ex7j" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussi<!-- SECTION 8: REWRITE SENTENCES -->
+      <div class="exercise-item"><label>10. If I became President, ________________________________________________.</label><textarea class="exercise-textarea" id="ex7j" placeholder="Complete the sentence..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex7j','fb7j')">Check Answer</button><div class="feedback" id="fb7j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+<!-- SECTION 8: REWRITE SENTENCES -->
 <section class="section-solid green">
   <div class="container">
     <h2>✍️ Rewrite: What would your best friend do?</h2>
@@ -574,4 +812,50 @@ function checkDiscussion(inputId, feedbackId) {
 }
 
 let selectedOptions = {};
-function
+function selectOption(btn, questionId, option) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedOptions[questionId] = option;
+}
+
+function checkMC(questionId, correctAnswer, feedbackId) {
+  const fb = document.getElementById(feedbackId);
+  const ans = document.getElementById(feedbackId.replace('fb', 'ans'));
+  if (!selectedOptions[questionId]) { 
+    fb.className='feedback error'; 
+    fb.textContent='⚠️ Select an option'; 
+    fb.style.display='block'; 
+    speak('Select an option');
+    return; 
+  }
+  if (selectedOptions[questionId] === correctAnswer) {
+    fb.className='feedback success'; 
+    fb.textContent='✅ Correct'; 
+    fb.style.display='block'; 
+    ans.style.display='none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className='feedback error'; 
+    fb.textContent='❌ Incorrect'; 
+    fb.style.display='block'; 
+    ans.style.display='block';
+    speak('Sorry, try again');
+  }
+}
+
+function completeUnit() {
+  if(completedCount >= 95) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! You completed Unit 21!');
+  } else {
+    alert(`⚠️ Complete at least 95 of 120 exercises.\nCompleted: ${completedCount}/120`);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
