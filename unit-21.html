@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 21: A Brand New Used Car | Discovery MAX Neuroeducation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #27AE60;
+  --green-dark: #1E8449;
+  --pink: #E8A0B0;
+  --pink-dark: #D48595;
+  --white: #FFFFFF;
+  --light-pink: #FDF2F4;
+  --text-dark: #1a1a1a;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--light-pink); }
+
+.hero {
+  height:90vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(30,132,73,0.75), rgba(232,160,176,0.65)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:10px 25px; background:var(--pink); color:var(--text-dark); font-weight:700; font-size:0.9rem; letter-spacing:2px; margin-bottom:20px; border-radius:4px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.hero p { font-size:1.3rem; font-weight:300; max-width:700px; margin:0 auto; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--green-dark); padding:12px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--pink),var(--green)); transition: width 0.5s ease; }
+
+.section-image {
+  min-height:50vh; position:relative; background-size:cover; background-position:center;
+  display:flex; align-items:center; justify-content:center; padding:60px 20px;
+}
+.section-image::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(30,132,73,0.75), rgba(232,160,176,0.65)); }
+.section-image-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; }
+.section-image-content h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; margin-bottom:15px; }
+
+.section-solid { padding:80px 40px; }
+.section-solid.green { background:var(--green); color:var(--text-light); }
+.section-solid.green-dark { background:var(--green-dark); color:var(--text-light); }
+.section-solid.pink { background:var(--pink); color:var(--text-dark); }
+.section-solid.light-pink { background:var(--light-pink); color:var(--text-dark); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:1100px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { background:var(--white); padding:40px; border-radius:8px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-left:6px solid var(--pink); }
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--green-dark); margin-bottom:20px; }
+.reading-block p { font-size:1.1rem; line-height:2; color:var(--text-dark); margin-bottom:15px; }
+
+.card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; margin:40px 0; }
+.card { background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transition: transform 0.3s; }
+.card:hover { transform: translateY(-8px); }
+.card-content { padding:25px; }
+.card-content h3 { font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:10px; color:var(--green-dark); }
+.card-content p { color:#4b5563; font-size:0.95rem; line-height:1.7; }
+
+.exercise-box { background:var(--white); padding:30px; border-radius:8px; margin:30px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--green-dark); margin-bottom:20px; }
+.exercise-item { margin:20px 0; padding:20px; background:var(--light-pink); border-left:4px solid var(--pink); border-radius:4px; }
+.exercise-item label { font-weight:600; font-size:1.05rem; display:block; margin-bottom:12px; color:var(--text-dark); }
+.exercise-input, .exercise-textarea {
+  width:100%; padding:12px; border:2px solid #d1d5db; border-radius:6px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s;
+}
+.exercise-input:focus, .exercise-textarea:focus { outline:none; border-color:var(--pink); }
+.exercise-textarea { min-height:100px; resize:vertical; }
+
+.btn-verify {
+  margin-top:12px; padding:10px 24px; background:var(--pink); color:var(--text-dark);
+  border:none; border-radius:6px; font-weight:600; cursor:pointer; transition: background 0.3s;
+}
+.btn-verify:hover { background:var(--pink-dark); }
+
+.feedback { margin-top:12px; padding:12px; border-radius:6px; font-weight:600; display:none; }
+.feedback.success { background:#d1fae5; color:#065f46; border-left:4px solid #10b981; }
+.feedback.error { background:#fee2e2; color:#991b1b; border-left:4px solid #ef4444; }
+.hidden-answer { display:none; margin-top:12px; padding:12px; background:#fef3c7; border-left:4px solid var(--pink); border-radius:6px; color:#92400e; font-weight:600; }
+
+.options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:15px 0; }
+.option-btn { padding:14px; background:var(--white); border:2px solid #d1d5db; border-radius:6px; cursor:pointer; transition:0.3s; color:var(--text-dark); text-align:left; font-size:0.95rem; font-family:'Inter',sans-serif; }
+.option-btn:hover { border-color:var(--pink); background:rgba(232,160,176,0.1); }
+.option-btn.selected { background:var(--pink); color:var(--text-dark); border-color:var(--pink); font-weight:600; }
+
+.nav-btn {
+  display:inline-block; margin-top:30px; padding:15px 40px; background:var(--pink); color:var(--text-dark);
+  text-decoration:none; border-radius:6px; font-weight:700; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer;
+}
+.nav-btn:hover { background:var(--pink-dark); transform:translateY(-2px); }
+
+.highlight-box { background:rgba(232,160,176,0.15); border-left:4px solid var(--pink); padding:20px 25px; margin:20px 0; border-radius:0 8px 8px 0; font-style:italic; color:var(--text-dark); }
+
+.grammar-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.grammar-table th, .grammar-table td { padding:14px; text-align:left; border-bottom:1px solid #e5e7eb; color:var(--text-dark); }
+.grammar-table th { background:var(--green-dark); color:var(--text-light); font-family:'Playfair Display',serif; font-size:1rem; }
+.grammar-table td { font-size:0.95rem; }
+
+.vocab-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.vocab-table th { background:var(--green); color:var(--text-light); padding:14px; text-align:left; font-weight:700; }
+.vocab-table td { padding:12px; border-bottom:1px solid #e5e7eb; color:var(--text-dark); }
+.vocab-table tr:hover { background:var(--light-pink); }
+
+@media(max-width:768px) {
+  .hero { height:75vh; }
+  .section-image { min-height:40vh; }
+  .section-solid { padding:60px 20px; }
+  .card-grid { grid-template-columns:1fr; }
+  .reading-block { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">UNIT 21</div>
+    <h1>A Brand New Used Car</h1>
+    <p>Exploring car parts, commuting vocabulary, and mastering conditional sentences.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<!-- SECTION 1: READING - EDDY WILLIAMS -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>A Brand New Used Car</h2>
+    <p>By Eddy Williams</p>
+  </div>
+</section>
+
+<section class="section-solid green">
+  <div class="container">
+    <h2>📖 Reading: A Brand New Used Car</h2>
+    
+    <div class="reading-block" style="border-left:6px solid var(--pink);">
+      <h3 style="color:var(--green-dark); border-bottom:3px solid var(--pink); padding-bottom:15px;">🎙️ Hey, hey fellows, it's me again Eddy Williams</h3>
+      <p>I'm here to share a whole new experience, my folks are actually going to acquire a car for me, because I've finally hooked them up, about how necessary it is for my daily come and go. I've been telling them that if they were to buy me a ride, I would have more time to study.</p>
+      <p>But now the thing is, which ride I can get with only $3,000.00 grand, obviously I'm going to go to a car dealer with my old man, because he has way more experience than me, if we are talking about cars.</p>
+      <p>Pops learn to drive when he was 12 years old, gramps used to sit him on his lap and let him hold on to the steering wheel as they were driving down the roadway, I remember the first time that I heard that story I was really amazed, before that, I used to think that gramps was cool but after that, to me he is the coolest.</p>
+      <p>I had to go to a driving school to learn how to drive because pops was too grim with me when he was teaching me and that only made me get excessively edgy, so because of that I decided to change. I guess it was a good call because in the driving school they helped me with the exam at the DMV, which made it easier to get my driver's permit.</p>
+      <p>So I'm all set to start on the hunt for my new car, to tell you the truth I'm so anxious to get started on doing so. The only bad part about this deal is that I'm going to be my sister's chauffeur, it sucks but it'll be worth it.</p>
+      <p style="font-weight:600; color:var(--green-dark);">Now if you were in my place which kind of car would you recommend me to get? Obviously I want a sports car but I know that those kind of cars eat up a lot of gas. I know decisions, decisions.</p>
+    </div>
+
+    <div class="exercise-box" style="margin-top:40px;">
+      <h3>Strategic Comprehension</h3>
+      <div class="exercise-item">
+        <label>1. How much money does Eddy have to buy a car?</label>
+        <input type="text" class="exercise-input" id="ex1a" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1a',['3000','dollars'],'fb1a','ans1a')">Check Answer</button>
+        <div class="hidden-answer" id="ans1a">$3,000</div>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. At what age did Eddy's father learn to drive?</label>
+        <input type="text" class="exercise-input" id="ex1b" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1b',['12','twelve'],'fb1b','ans1b')">Check Answer</button>
+        <div class="hidden-answer" id="ans1b">12 years old</div>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Why did Eddy have to go to driving school?</label>
+        <input type="text" class="exercise-input" id="ex1c" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1c',['pops','grim','edgy'],'fb1c','ans1c')">Check Answer</button>
+        <div class="hidden-answer" id="ans1c">Because his father (pops) was too grim and made him get excessively edgy</div>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. What is the only bad part about getting a car?</label>
+        <input type="text" class="exercise-input" id="ex1d" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1d',['sister','chauffeur'],'fb1d','ans1d')">Check Answer</button>
+        <div class="hidden-answer" id="ans1d">He's going to be his sister's chauffeur</div>
+        <div class="feedback" id="fb1d"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 2: VOCABULARY - CAR PARTS -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Car Parts Vocabulary</h2>
+    <p>Essential parts of a vehicle</p>
+  </div>
+</section>
+
+<section class="section-solid pink">
+  <div class="container">
+    <h2 style="color:var(--green-dark);">🚗 Vocabulary: Car Parts</h2>
+    <p style="font-size:1.1rem; margin-bottom:30px; color:var(--text-dark);">Learn the definitions of essential car parts:</p>
+    
+    <div class="vocab-table">
+      <tr><th>Car Part</th><th>Definition</th></tr>
+      <tr><td><strong>gear stick</strong></td><td>the short metal lever in a car that a driver uses to change the gears</td></tr>
+      <tr><td><strong>glove compartment</strong></td><td>the small cupboard in front of the passenger seat of a car</td></tr>
+      <tr><td><strong>handbrake</strong></td><td>the piece of equipment in a car that you pull with your hand to keep the car still after it has stopped</td></tr>
+      <tr><td><strong>headrest</strong></td><td>the top part of a chair or car seat that you lean your head against</td></tr>
+      <tr><td><strong>headroom</strong></td><td>the amount of space between your head and a ceiling, especially in a car</td></tr>
+      <tr><td><strong>horn</strong></td><td>the object in a car or other vehicle that makes a loud warning noise when you press it</td></tr>
+      <tr><td><strong>ignition</strong></td><td>the place where you put in the key to make a car's engine start</td></tr>
+      <tr><td><strong>instrument panel</strong></td><td>the board that faces the driver or pilot inside a vehicle, ship, or plane, where they can see and operate the controls</td></tr>
+      <tr><td><strong>interior</strong></td><td>the inside part of something, especially a building or vehicle</td></tr>
+      <tr><td><strong>speedometer</strong></td><td>the piece of equipment in a vehicle that shows how fast it is going</td></tr>
+      <tr><td><strong>milometer</strong></td><td>a piece of equipment fitted to a vehicle that shows how many miles the vehicle has travelled</td></tr>
+      <tr><td><strong>panel</strong></td><td>the part of a vehicle or machine where the switches and other instruments are found</td></tr>
+      <tr><td><strong>passenger seat</strong></td><td>the front seat in a road vehicle beside the driver's seat</td></tr>
+      <tr><td><strong>rear-view mirror</strong></td><td>a mirror fixed inside the front window of a car that lets the driver see what is happening behind it</td></tr>
+      <tr><td><strong>seat belt</strong></td><td>a strong belt in a car or plane that you fasten around yourself to hold you in your seat</td></tr>
+      <tr><td><strong>steering wheel</strong></td><td>the wheel in a vehicle that you hold and turn to control the direction it travels in</td></tr>
+      <tr><td><strong>trunk</strong></td><td>space for storing things in a boat or vehicle</td></tr>
+      <tr><td><strong>sunscreen</strong></td><td>a screen that you put on one of the windows inside your car so that it will not get too hot when it is parked in the sun</td></tr>
+      <tr><td><strong>visor</strong></td><td>a flat object at the top of the front window of a car that you pull down to protect your eyes from the sun</td></tr>
+      <tr><td><strong>in (the) front</strong></td><td>in the part of a car where the driver and the controls are</td></tr>
+      <tr><td><strong>in the back</strong></td><td>in the part of the car where the passengers are</td></tr>
+    </div>
+
+    <h3 style="margin-top:40px; color:var(--green-dark);">Match the vocabulary words with the correct picture</h3>
+    <p style="margin-bottom:20px;">Memorize and then match:</p>
+    <div class="card-grid">
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">1. gear stick</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">2. in the back</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">3. glove compartment</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">4. in (the) front</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">5. handbrake</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">6. visor</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">7. headrest</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">8. sunscreen</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">9. headroom</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">10. trunk</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">11. horn</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">12. ignition</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">13. steering wheel</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">14. instrument panel</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">15. seat belt</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="color:var(--white);">16. interior</h3>
+        </div>
+      </div>
+      <div class="card" style="background:var(--green); color:var(--text-light);">
+        <div class="card-content">
+          <h3 style="
