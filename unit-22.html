@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 22: Holidays | Discovery MAX Neuroeducation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E74C3C;
+  --red-dark: #C0392B;
+  --orange: #FF6B35;
+  --orange-dark: #D35400;
+  --green: #27AE60;
+  --green-dark: #1E8449;
+  --yellow: #F2C94C;
+  --yellow-dark: #D4AC0D;
+  --blue: #2E86AB;
+  --blue-dark: #1A5276;
+  --white: #FFFFFF;
+  --light-bg: #FFF9F0;
+  --text-dark: #1a1a1a;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--light-bg); overflow-x:hidden; }
+
+.hero {
+  height:90vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(231,76,60,0.75), rgba(39,174,96,0.65)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:10px 25px; background:var(--yellow); color:var(--text-dark); font-weight:700; font-size:0.9rem; letter-spacing:2px; margin-bottom:20px; border-radius:4px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.hero p { font-size:1.3rem; font-weight:300; max-width:700px; margin:0 auto; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--red-dark); padding:12px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--yellow),var(--green)); transition: width 0.5s ease; }
+
+.section-image {
+  min-height:50vh; position:relative; background-size:cover; background-position:center;
+  display:flex; align-items:center; justify-content:center; padding:60px 20px;
+}
+.section-image::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(231,76,60,0.75), rgba(39,174,96,0.65)); }
+.section-image-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; }
+.section-image-content h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; margin-bottom:15px; }
+
+.section-solid { padding:80px 40px; }
+.section-solid.red { background:var(--red); color:var(--text-light); }
+.section-solid.red-dark { background:var(--red-dark); color:var(--text-light); }
+.section-solid.green { background:var(--green); color:var(--text-light); }
+.section-solid.green-dark { background:var(--green-dark); color:var(--text-light); }
+.section-solid.orange { background:var(--orange); color:var(--text-light); }
+.section-solid.yellow { background:var(--yellow); color:var(--text-dark); }
+.section-solid.blue { background:var(--blue); color:var(--text-light); }
+.section-solid.blue-dark { background:var(--blue-dark); color:var(--text-light); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:1100px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { background:var(--white); padding:40px; border-radius:8px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-left:6px solid var(--yellow); }
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--red-dark); margin-bottom:20px; }
+.reading-block p { font-size:1.1rem; line-height:2; color:var(--text-dark); margin-bottom:15px; }
+
+.card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; margin:40px 0; }
+.card { background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transition: transform 0.3s; }
+.card:hover { transform: translateY(-8px); }
+.card-content { padding:25px; }
+.card-content h3 { font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:10px; color:var(--red-dark); }
+.card-content p { color:#4b5563; font-size:0.95rem; line-height:1.7; }
+
+.exercise-box { background:var(--white); padding:30px; border-radius:8px; margin:30px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--red-dark); margin-bottom:20px; }
+.exercise-item { margin:20px 0; padding:20px; background:var(--light-bg); border-left:4px solid var(--orange); border-radius:4px; }
+.exercise-item label { font-weight:600; font-size:1.05rem; display:block; margin-bottom:12px; color:var(--text-dark); }
+.exercise-input, .exercise-textarea {
+  width:100%; padding:12px; border:2px solid #d1d5db; border-radius:6px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s;
+}
+.exercise-input:focus, .exercise-textarea:focus { outline:none; border-color:var(--orange); }
+.exercise-textarea { min-height:100px; resize:vertical; }
+
+.btn-verify {
+  margin-top:12px; padding:10px 24px; background:var(--orange); color:var(--text-light);
+  border:none; border-radius:6px; font-weight:600; cursor:pointer; transition: background 0.3s;
+}
+.btn-verify:hover { background:var(--orange-dark); }
+
+.feedback { margin-top:12px; padding:12px; border-radius:6px; font-weight:600; display:none; }
+.feedback.success { background:#d1fae5; color:#065f46; border-left:4px solid #10b981; }
+.feedback.error { background:#fee2e2; color:#991b1b; border-left:4px solid #ef4444; }
+.hidden-answer { display:none; margin-top:12px; padding:12px; background:#fef3c7; border-left:4px solid var(--yellow); border-radius:6px; color:#92400e; font-weight:600; }
+
+.options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:15px 0; }
+.option-btn { padding:14px; background:var(--white); border:2px solid #d1d5db; border-radius:6px; cursor:pointer; transition:0.3s; color:var(--text-dark); text-align:left; font-size:0.95rem; font-family:'Inter',sans-serif; }
+.option-btn:hover { border-color:var(--orange); background:rgba(255,107,53,0.1); }
+.option-btn.selected { background:var(--orange); color:var(--text-light); border-color:var(--orange); font-weight:600; }
+
+.nav-btn {
+  display:inline-block; margin-top:30px; padding:15px 40px; background:var(--yellow); color:var(--text-dark);
+  text-decoration:none; border-radius:6px; font-weight:700; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer;
+}
+.nav-btn:hover { background:var(--yellow-dark); transform:translateY(-2px); }
+
+.highlight-box { background:rgba(242,201,76,0.15); border-left:4px solid var(--yellow); padding:20px 25px; margin:20px 0; border-radius:0 8px 8px 0; font-style:italic; color:var(--text-dark); }
+
+.grammar-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.grammar-table th, .grammar-table td { padding:14px; text-align:left; border-bottom:1px solid #e5e7eb; color:var(--text-dark); }
+.grammar-table th { background:var(--red-dark); color:var(--text-light); font-family:'Playfair Display',serif; font-size:1rem; }
+.grammar-table td { font-size:0.95rem; }
+
+.vocab-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.vocab-table th { background:var(--green); color:var(--text-light); padding:14px; text-align:left; font-weight:700; }
+.vocab-table td { padding:12px; border-bottom:1px solid #e5e7eb; color:var(--text-dark); }
+.vocab-table tr:hover { background:var(--light-bg); }
+
+@media(max-width:768px) {
+  .hero { height:75vh; }
+  .section-image { min-height:40vh; }
+  .section-solid { padding:40px 20px; }
+  .card-grid { grid-template-columns:1fr; }
+  .reading-block { padding:25px; }
+  .exercise-box { padding:20px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">UNIT 22</div>
+    <h1>Holidays</h1>
+    <p>Exploring Christmas traditions, Santa Claus history, and mastering conditional sentences.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<!-- SECTION 1: READING - HOLIDAYS (ROSEMARY WILLIAMS) -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Holidays</h2>
+    <p>By Rosemary Williams</p>
+  </div>
+</section>
+
+<section class="section-solid red">
+  <div class="container">
+    <h2>📖 Reading: Holidays</h2>
+    
+    <div class="reading-block" style="border-left:6px solid var(--yellow);">
+      <h3 style="color:var(--red-dark); border-bottom:3px solid var(--yellow); padding-bottom:15px;">🎄 Hi fellows, it's me Rosemary Williams</h3>
+      <p>I want to share a few things with you all. The whole family was talking the other day about skipping Christmas celebration and instead heading on to the beach, but as we were discussing it, we came up with the closure that if we were to go out of town we weren't going to decorate the house, there wasn't going to be a point on doing so, since we weren't going to be here.</p>
+      <p>You know what the issue here is, that we live in the suburbs and it's very common for everyone to spruce up their homes, and if we were the only ones not to do so, we might be pointed at, as the ones who messed up their Christmas.</p>
+      <p>What do you think we should do about it? James thinks that it should be best if we stayed for Christmas Eve and Christmas, then we could head on to the beach.</p>
+      <p>Eddy prefers to just leave and not to worry about what others would think of us since it's our decision on what we do or not, but he doesn't see the whole picture here. We are active members of the community and members of the local club.</p>
+      <p>A decision like that will obviously have a negative impact on our appearance.</p>
+      <p>My Kim loves the holidays. She relishes seating around the Christmas tree, singing Christmas carols, drinking hot coco with marshmallows, sharing the Christmas dinner, the whole deal, she was kind of jolted by the news of putting a side that special day (for her) and instead going to the beach.</p>
+      <p>I think the same as my little sugar, I love putting up the Christmas ornaments, setting the tree, hanging the lights inside and out, and preparing the dinner, the whole nine yards.</p>
+      <p style="font-weight:600; color:var(--red-dark);">Honestly, I think that we'll do as my husband James said, because that way we'll kill two birds with one stone, we'll get to enjoy the holidays and after that, we can head on to the beach. Perfect, then is all set, thanks for listening, cheerio.</p>
+    </div>
+
+    <div class="exercise-box" style="margin-top:40px;">
+      <h3>Strategic Comprehension</h3>
+      <div class="exercise-item">
+        <label>1. What was the family considering instead of celebrating Christmas at home?</label>
+        <input type="text" class="exercise-input" id="ex1a" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1a',['beach','heading'],'fb1a','ans1a')">Check Answer</button>
+        <div class="hidden-answer" id="ans1a">Heading to the beach</div>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Why is it important for Rosemary to decorate their house?</label>
+        <input type="text" class="exercise-input" id="ex1b" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1b',['suburbs','common','pointed'],'fb1b','ans1b')">Check Answer</button>
+        <div class="hidden-answer" id="ans1b">They live in the suburbs where everyone decorates, and not doing so would make them stand out negatively</div>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. What does James suggest as a solution?</label>
+        <input type="text" class="exercise-input" id="ex1c" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1c',['stay','christmas','eve','beach'],'fb1c','ans1c')">Check Answer</button>
+        <div class="hidden-answer" id="ans1c">Stay for Christmas Eve and Christmas, then head to the beach</div>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. How did Kim react to the news of going to the beach instead of celebrating Christmas?</label>
+        <input type="text" class="exercise-input" id="ex1d" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1d',['jolted','shocked','upset'],'fb1d','ans1d')">Check Answer</button>
+        <div class="hidden-answer" id="ans1d">She was jolted (shocked/upset)</div>
+        <div class="feedback" id="fb1d"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 2: CRITICAL THINKING - CHRISTMAS QUESTIONS -->
+<section class="section-solid green">
+  <div class="container">
+    <h2>🎅 Critical Thinking: Christmas Questions</h2>
+    <p style="margin-bottom:20px;">Answer the questions below. Remember to support your answers (minimum 20 characters):</p>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. Do you celebrate X-mas? If so, what's a typical Christmas like for you?</label><textarea class="exercise-textarea" id="ex2a" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2a','fb2a')">Check Answer</button><div class="feedback" id="fb2a"></div></div>
+      <div class="exercise-item"><label>2. Do you make a big deal out of Christmas or do you think Christmas is just a bunch of rubbish? Why?</label><textarea class="exercise-textarea" id="ex2b" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2b','fb2b')">Check Answer</button><div class="feedback" id="fb2b"></div></div>
+      <div class="exercise-item"><label>3. Have you bought any special gifts for this upcoming holiday season? Or do you plan to buy any? Why is that?</label><textarea class="exercise-textarea" id="ex2c" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2c','fb2c')">Check Answer</button><div class="feedback" id="fb2c"></div></div>
+      <div class="exercise-item"><label>4. Would you prefer a white Christmas or a Christmas at a tropical holiday resort? Why is that?</label><textarea class="exercise-textarea" id="ex2d" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2d','fb2d')">Check Answer</button><div class="feedback" id="fb2d"></div></div>
+      <div class="exercise-item"><label>5. What would be the perfect Christmas for you? Please explain.</label><textarea class="exercise-textarea" id="ex2e" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2e','fb2e')">Check Answer</button><div class="feedback" id="fb2e"></div></div>
+      <div class="exercise-item"><label>6. Please describe the best Christmas you have ever had. What made it so great?</label><textarea class="exercise-textarea" id="ex2f" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2f','fb2f')">Check Answer</button><div class="feedback" id="fb2f"></div></div>
+      <div class="exercise-item"><label>7. Have you ever had a terrible Christmas? If yes, what happened?</label><textarea class="exercise-textarea" id="ex2g" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2g','fb2g')">Check Answer</button><div class="feedback" id="fb2g"></div></div>
+      <div class="exercise-item"><label>8. Many movies, songs, and stories refer to something called the "Christmas spirit." What do you think this means?</label><textarea class="exercise-textarea" id="ex2h" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2h','fb2h')">Check Answer</button><div class="feedback" id="fb2h"></div></div>
+      <div class="exercise-item"><label>9. How would you feel if Christmas got canceled?</label><textarea class="exercise-textarea" id="ex2i" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2i','fb2i')">Check Answer</button><div class="feedback" id="fb2i"></div></div>
+      <div class="exercise-item"><label>10. Is Christmas more about commercialism or goodwill? Please explain.</label><textarea class="exercise-textarea" id="ex2j" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2j','fb2j')">Check Answer</button><div class="feedback" id="fb2j"></div></div>
+      <div class="exercise-item"><label>11. What would you do if your child asked, "Is Santa real?"</label><textarea class="exercise-textarea" id="ex2k" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex2k','fb2k')">Check Answer</button><div class="feedback" id="fb2k"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--red); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 3: READING - SANTA CLAUS HISTORY -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Santa Claus History</h2>
+    <p>The evolution of a legend</p>
+  </div>
+</section>
+
+<section class="section-solid orange">
+  <div class="container">
+    <h2>📖 Reading: Santa Claus History</h2>
+    
+    <div class="reading-block" style="border-left:6px solid var(--yellow);">
+      <h3 style="color:var(--red-dark);">The Origins of Santa Claus</h3>
+      <p>The first figure of Santa Claus was inspired in the Dutch legend of Sinter Klaas, bought by settlers to New York in the 17th century.</p>
+      <p>In 1809 the popular author Washington Irving, under the pseudonym Dietrich Knickerbocker gave the Americans the first details description about the Dutch version of Saint Nicholas in his "History of New York" in which he described the arrival of the saint on horseback each Eve of Saint Nicholas.</p>
+      <p>The Dutch-American Saint Nicholas achieved his fully form in 1823 in the poem 'A visit from Saint Nicholas', best known as 'The night before Christmas'. It was written by Clement Clarke Moore and included details such as the name of the reindeer, Santa Claus's laughs, winks and nods at, and the method by which Saint Nicholas, referred to as an elf, returns up the chimney.</p>
+      <p>But the image of Santa Claus we know appeared in the 1930s. In modern version of the Santa Claus legend, only his toyshop workers were elves. Rudolph, the ninth reindeer, with a red and shiny nose, was invented in 1939 by an advertising writer for the Montgomery Ward Company. Images of Santa Claus were further popularized through Haddon Sundblom's depiction of him for The Coca-Cola Company's Christmas advertising in the 1930s. The popularity of the image spawned urban legends that Santa Claus was in fact invented by Coca-Cola or that Santa wears red and white because they are the Coca-Cola colors, but it wasn't true.</p>
+      <p>Over the years children naturally wanted to know where Santa Claus actually came from. Where did he live when he wasn't delivering presents? Those questions gave rise to the legend that Santa Claus lived in the North Pole, where his Christmas-gift shop was also located. But in 1925, since grazing reindeer would not be possible at the North Pole, newspapers revealed that Santa Claus in fact lived in a Finnish city called Lapland. In 1930 a Finnish public radio revealed the secret: Santa lives on Lapland's Korvtunturi – 'Ear Fell', situated on Finland's eastern frontier.</p>
+      <p>Since 1950, Santa has happily gone to Napapiiri to meet children and the young at heart. By 1985 he established his own Santa Claus office and comes there everyday of the year to hear what children want for Christmas, and to talk with children from all over the world. Santa Claus village is Santa's main Post Office which receives children's letters from the four corners of the world.</p>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 4: SANTA CLAUS - FIND THE WORDS + TRUE/FALSE -->
+<section class="section-solid yellow">
+  <div class="container">
+    <h2 style="color:var(--red-dark);">🔍 Santa Claus - Vocabulary + True/False</h2>
+    
+    <div class="exercise-box">
+      <h3>Find in the text words which mean:</h3>
+      <div class="exercise-item">
+        <label>a) an invented name:</label>
+        <input type="text" class="exercise-input" id="ex4a" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex4a',['pseudonym'],'fb4a','ans4a')">Check Answer</button>
+        <div class="hidden-answer" id="ans4a">pseudonym</div>
+        <div class="feedback" id="fb4a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>b) a quick opening and closing of your eye:</label>
+        <input type="text" class="exercise-input" id="ex4b" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex4b',['wink'],'fb4b','ans4b')">Check Answer</button>
+        <div class="hidden-answer" id="ans4b">wink</div>
+        <div class="feedback" id="fb4b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>c) an imaginary creature like a small person with pointed ears:</label>
+        <input type="text" class="exercise-input" id="ex4c" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex4c',['elf'],'fb4c','ans4c')">Check Answer</button>
+        <div class="hidden-answer" id="ans4c">elf</div>
+        <div class="feedback" id="fb4c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>d) eating grass:</label>
+        <input type="text" class="exercise-input" id="ex4d" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex4d',['grazing'],'fb4d','ans4d')">Check Answer</button>
+        <div class="hidden-answer" id="ans4d">grazing</div>
+        <div class="feedback" id="fb4d"></div>
+      </div>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Answer (t) for True or (f) for False:</h3>
+      <div class="exercise-item">
+        <label>a) Santa Claus was first inspired in Saint Nicholas</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4e','a')">True</button>
+          <button class="option-btn" onclick="selectOption(this,'q4e','b')">False</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4e','a','fb4e')">Check Answer</button>
+        <div class="hidden-answer" id="ans4e">True</div>
+        <div class="feedback" id="fb4e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>b) In 1809 the image of Saint Nicholas appeared in American literature</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4f','a')">True</button>
+          <button class="option-btn" onclick="selectOption(this,'q4f','b')">False</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4f','a','fb4f')">Check Answer</button>
+        <div class="hidden-answer" id="ans4f">True</div>
+        <div class="feedback" id="fb4f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>c) Saint Nicholas arrives on his reindeer</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4g','a')">True</button>
+          <button class="option-btn" onclick="selectOption(this,'q4g','b')">False</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4g','b','fb4g')">Check Answer</button>
+        <div class="hidden-answer" id="ans4g">False (on horseback)</div>
+        <div class="feedback" id="fb4g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>d) Saint Nicholas was a man in The Night Before Christmas</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4h','a')">True</button>
+          <button class="option-btn" onclick="selectOption(this,'q4h','b')">False</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4h','b','fb4h')">Check Answer</button>
+        <div class="hidden-answer" id="ans4h">False (referred to as an elf)</div>
+        <div class="feedback" id="fb4h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>e) Coca Cola company created the actual image of Santa Claus</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4i','a')">True</button>
+          <button class="option-btn" onclick="selectOption(this,'q4i','b')">False</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4i','b','fb4i')">Check Answer</button>
+        <div class="hidden-answer" id="ans4i">False (popularized it, but didn't create it)</div>
+        <div class="feedback" id="fb4i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>f) Santa Claus lives in Finland</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4j','a')">True</button>
+          <button class="option-btn" onclick="selectOption(this,'q4j','b')">False</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4j','a','fb4j')">Check Answer</button>
+        <div class="hidden-answer" id="ans4j">True (Lapland, Finland)</div>
+        <div class="feedback" id="fb4j"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--red); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+<!-- SECTION 5: VOCABULARY EXERCISES - HOLIDAYS -->
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--red-dark);">📝 Vocabulary Exercises: Holidays</h2>
+    <p style="margin-bottom:20px;">Use the correct form of the following words and phrases to fill in the gaps. Then make questions from the sentences.</p>
+    <div class="highlight-box">
+      <strong>Words:</strong> crowds, work, lift, queue, floor, book, good time, holiday resorts, tourist traps, make a complaint
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. I think _______________ are good places to go on holidays if you have small children. They always have many activities specifically for the tourist.</label>
+        <input type="text" class="exercise-input" id="ex5a" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex5a',['holiday','resorts'],'fb5a','ans5a')">Check Answer</button>
+        <div class="hidden-answer" id="ans5a">holiday resorts</div>
+        <div class="feedback" id="fb5a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. I _______________ last time I went on holiday because I wasn't satisfied with the Hotel.</label>
+        <input type="text" class="exercise-input" id="ex5b" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex5b',['made','complaint'],'fb5b','ans5b')">Check Answer</button>
+        <div class="hidden-answer" id="ans5b">made a complaint</div>
+        <div class="feedback" id="fb5b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. The _______________ didn't _______________ in the hotel I stayed in my last holiday so I had to use the stairs. It was funny; my room was on the eight _______________.</label>
+        <input type="text" class="exercise-input" id="ex5c" placeholder="Fill in the blanks...">
+        <button class="btn-verify" onclick="checkSimple('ex5c',['lift','work','floor'],'fb5c','ans5c')">Check Answer</button>
+        <div class="hidden-answer" id="ans5c">lift / work / floor</div>
+        <div class="feedback" id="fb5c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. I hate _______________. That's why I avoid places where there are too many people.</label>
+        <input type="text" class="exercise-input" id="ex5d" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex5d',['crowds'],'fb5d','ans5d')">Check Answer</button>
+        <div class="hidden-answer" id="ans5d">crowds</div>
+        <div class="feedback" id="fb5d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. I don't like _______________ to get into museums and art galleries because I hate waiting.</label>
+        <input type="text" class="exercise-input" id="ex5e" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex5e',['queue','queuing'],'fb5e','ans5e')">Check Answer</button>
+        <div class="hidden-answer" id="ans5e">queuing / to queue</div>
+        <div class="feedback" id="fb5e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. I try to avoid _______________ when I go on holiday because they're so expensive.</label>
+        <input type="text" class="exercise-input" id="ex5f" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex5f',['tourist','traps'],'fb5f','ans5f')">Check Answer</button>
+        <div class="hidden-answer" id="ans5f">tourist traps</div>
+        <div class="feedback" id="fb5f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. I always _______________ my holidays at the last minute because there are some good last-minute deals and cheap offers.</label>
+        <input type="text" class="exercise-input" id="ex5g" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex5g',['book'],'fb5g','ans5g')">Check Answer</button>
+        <div class="hidden-answer" id="ans5g">book</div>
+        <div class="feedback" id="fb5g"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 6: MATCH EXERCISE - COUNTRIES, CAPITALS, ATTRACTIONS -->
+<section class="section-solid green">
+  <div class="container">
+    <h2>🌍 Match Exercise: Countries, Capitals, Attractions</h2>
+    <p style="margin-bottom:20px;">Match the countries in column A with the capitals in column B and famous national attractions in column C.</p>
+    
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label><strong>1. Italy</strong> - Capital: _______________ - Attraction: _______________</label>
+        <input type="text" class="exercise-input" id="ex6a" placeholder="Capital...">
+        <input type="text" class="exercise-input" id="ex6a2" placeholder="Attraction..." style="margin-top:10px;">
+        <button class="btn-verify" onclick="checkSimple('ex6a',['rome'],'fb6a','ans6a')">Check Capital</button>
+        <button class="btn-verify" onclick="checkSimple('ex6a2',['colosseum'],'fb6a2','ans6a2')">Check Attraction</button>
+        <div class="hidden-answer" id="ans6a">Rome</div>
+        <div class="hidden-answer" id="ans6a2">The Colosseum</div>
+        <div class="feedback" id="fb6a"></div>
+        <div class="feedback" id="fb6a2"></div>
+      </div>
+      <div class="exercise-item">
+        <label><strong>2. England</strong> - Capital: _______________ - Attraction: _______________</label>
+        <input type="text" class="exercise-input" id="ex6b" placeholder="Capital...">
+        <input type="text" class="exercise-input" id="ex6b2" placeholder="Attraction..." style="margin-top:10px;">
+        <button class="btn-verify" onclick="checkSimple('ex6b',['london'],'fb6b','ans6b')">Check Capital</button>
+        <button class="btn-verify" onclick="checkSimple('ex6b2',['big','ben'],'fb6b2','ans6b2')">Check Attraction</button>
+        <div class="hidden-answer" id="ans6b">London</div>
+        <div class="hidden-answer" id="ans6b2">The Big Ben</div>
+        <div class="feedback" id="fb6b"></div>
+        <div class="feedback" id="fb6b2"></div>
+      </div>
+      <div class="exercise-item">
+        <label><strong>3. Egypt</strong> - Capital: _______________ - Attraction: _______________</label>
+        <input type="text" class="exercise-input" id="ex6c" placeholder="Capital...">
+        <input type="text" class="exercise-input" id="ex6c2" placeholder="Attraction..." style="margin-top:10px;">
+        <button class="btn-verify" onclick="checkSimple('ex6c',['cairo'],'fb6c','ans6c')">Check Capital</button>
+        <button class="btn-verify" onclick="checkSimple('ex6c2',['pyramids'],'fb6c2','ans6c2')">Check Attraction</button>
+        <div class="hidden-answer" id="ans6c">Cairo</div>
+        <div class="hidden-answer" id="ans6c2">The Pyramids</div>
+        <div class="feedback" id="fb6c"></div>
+        <div class="feedback" id="fb6c2"></div>
+      </div>
+      <div class="exercise-item">
+        <label><strong>4. Greece</strong> - Capital: _______________ - Attraction: _______________</label>
+        <input type="text" class="exercise-input" id="ex6d" placeholder="Capital...">
+        <input type="text" class="exercise-input" id="ex6d2" placeholder="Attraction..." style="margin-top:10px;">
+        <button class="btn-verify" onclick="checkSimple('ex6d',['athens'],'fb6d','ans6d')">Check Capital</button>
+        <button class="btn-verify" onclick="checkSimple('ex6d2',['parthenon'],'fb6d2','ans6d2')">Check Attraction</button>
+        <div class="hidden-answer" id="ans6d">Athens</div>
+        <div class="hidden-answer" id="ans6d2">The Parthenon</div>
+        <div class="feedback" id="fb6d"></div>
+        <div class="feedback" id="fb6d2"></div>
+      </div>
+      <div class="exercise-item">
+        <label><strong>5. Norway</strong> - Capital: _______________ - Attraction: _______________</label>
+        <input type="text" class="exercise-input" id="ex6e" placeholder="Capital...">
+        <input type="text" class="exercise-input" id="ex6e2" placeholder="Attraction..." style="margin-top:10px;">
+        <button class="btn-verify" onclick="checkSimple('ex6e',['oslo'],'fb6e','ans6e')">Check Capital</button>
+        <button class="btn-verify" onclick="checkSimple('ex6e2',['fjords'],'fb6e2','ans6e2')">Check Attraction</button>
+        <div class="hidden-answer" id="ans6e">Oslo</div>
+        <div class="hidden-answer" id="ans6e2">The Fjords</div>
+        <div class="feedback" id="fb6e"></div>
+        <div class="feedback" id="fb6e2"></div>
+      </div>
+      <div class="exercise-item">
+        <label><strong>6. China</strong> - Capital: _______________ - Attraction: _______________</label>
+        <input type="text" class="exercise-input" id="ex6f" placeholder="Capital...">
+        <input type="text" class="exercise-input" id="ex6f2" placeholder="Attraction..." style="margin-top:10px;">
+        <button class="btn-verify" onclick="checkSimple('ex6f',['beijing'],'fb6f','ans6f')">Check Capital</button>
+        <button class="btn-verify" onclick="checkSimple('ex6f2',['great','wall'],'fb6f2','ans6f2')">Check Attraction</button>
+        <div class="hidden-answer" id="ans6f">Beijing</div>
+        <div class="hidden-answer" id="ans6f2">The Great Wall</div>
+        <div class="feedback" id="fb6f"></div>
+        <div class="feedback" id="fb6f2"></div>
+      </div>
+      <div class="exercise-item">
+        <label><strong>7. Switzerland</strong> - Capital: _______________ - Attraction: _______________</label>
+        <input type="text" class="exercise-input" id="ex6g" placeholder="Capital...">
+        <input type="text" class="exercise-input" id="ex6g2" placeholder="Attraction..." style="margin-top:10px;">
+        <button class="btn-verify" onclick="checkSimple('ex6g',['berne','bern'],'fb6g','ans6g')">Check Capital</button>
+        <button class="btn-verify" onclick="checkSimple('ex6g2',['alps'],'fb6g2','ans6g2')">Check Attraction</button>
+        <div class="hidden-answer" id="ans6g">Berne</div>
+        <div class="hidden-answer" id="ans6g2">The Alps</div>
+        <div class="feedback" id="fb6g"></div>
+        <div class="feedback" id="fb6g2"></div>
+      </div>
+      <div class="exercise-item">
+        <label><strong>8. India</strong> - Capital: _______________ - Attraction: _______________</label>
+        <input type="text" class="exercise-input" id="ex6h" placeholder="Capital...">
+        <input type="text" class="exercise-input" id="ex6h2" placeholder="Attraction..." style="margin-top:10px;">
+        <button class="btn-verify" onclick="checkSimple('ex6h',['new','delhi'],'fb6h','ans6h')">Check Capital</button>
+        <button class="btn-verify" onclick="checkSimple('ex6h2',['taj','mahal'],'fb6h2','ans6h2')">Check Attraction</button>
+        <div class="hidden-answer" id="ans6h">New Delhi</div>
+        <div class="hidden-answer" id="ans6h2">The Taj Mahal</div>
+        <div class="feedback" id="fb6h"></div>
+        <div class="feedback" id="fb6h2"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--red); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 7: PHRASAL VERBS FILL-IN EXERCISE -->
+<section class="section-solid orange">
+  <div class="container">
+    <h2>🔤 Phrasal Verbs Fill-in Exercise</h2>
+    <p style="margin-bottom:20px;">Use the following words and prepositions to form meaningful sentences.</p>
+    <div class="highlight-box">
+      <strong>Verbs:</strong> believe, fill, get, look, put, switch, take, throw, turn, try<br>
+      <strong>Prepositions:</strong> away, down, for, in, off, on, out
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1) Quick! _______________ the bus. It's ready to leave.</label>
+        <input type="text" class="exercise-input" id="ex7a" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex7a',['get','on'],'fb7a','ans7a')">Check Answer</button>
+        <div class="hidden-answer" id="ans7a">get on</div>
+        <div class="feedback" id="fb7a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2) I don't know where my book is. I have to _______________ it.</label>
+        <input type="text" class="exercise-input" id="ex7b" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex7b',['look','for'],'fb7b','ans7b')">Check Answer</button>
+        <div class="hidden-answer" id="ans7b">look for</div>
+        <div class="feedback" id="fb7b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3) It's dark inside. Can you _______________ the light, please?</label>
+        <input type="text" class="exercise-input" id="ex7c" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex7c',['switch','on','turn','on'],'fb7c','ans7c')">Check Answer</button>
+        <div class="hidden-answer" id="ans7c">switch on / turn on</div>
+        <div class="feedback" id="fb7c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4) _______________ the form, please.</label>
+        <input type="text" class="exercise-input" id="ex7d" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex7d',['fill','in'],'fb7d','ans7d')">Check Answer</button>
+        <div class="hidden-answer" id="ans7d">fill in / fill out</div>
+        <div class="feedback" id="fb7d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5) I need some new clothes. Why don't you _______________ these jeans?</label>
+        <input type="text" class="exercise-input" id="ex7e" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex7e',['try','on'],'fb7e','ans7e')">Check Answer</button>
+        <div class="hidden-answer" id="ans7e">try on</div>
+        <div class="feedback" id="fb7e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6) It's warm inside. _______________ your coat.</label>
+        <input type="text" class="exercise-input" id="ex7f" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex7f',['take','off'],'fb7f','ans7f')">Check Answer</button>
+        <div class="hidden-answer" id="ans7f">take off</div>
+        <div class="feedback" id="fb7f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7) This pencil is really old. You can _______________ it _______________.</label>
+        <input type="text" class="exercise-input" id="ex7g" placeholder="Fill in the blanks...">
+        <button class="btn-verify" onclick="checkSimple('ex7g',['throw','away'],'fb7g','ans7g')">Check Answer</button>
+        <div class="hidden-answer" id="ans7g">throw away</div>
+        <div class="feedback" id="fb7g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8) It's so loud here. Can you _______________ the radio a little.</label>
+        <input type="text" class="exercise-input" id="ex7h" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex7h',['turn','down'],'fb7h','ans7h')">Check Answer</button>
+        <div class="hidden-answer" id="ans7h">turn down</div>
+        <div class="feedback" id="fb7h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9) The firemen were able to _______________ the fire in Church Street.</label>
+        <input type="text" class="exercise-input" id="ex7i" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex7i',['put','out'],'fb7i','ans7i')">Check Answer</button>
+        <div class="hidden-answer" id="ans7i">put out</div>
+        <div class="feedback" id="fb7i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10) Does your little brother _______________ ghosts?</label>
+        <input type="text" class="exercise-input" id="ex7j" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex7j',['believe','in'],'fb7j','ans7j')">Check Answer</button>
+        <div class="hidden-answer" id="ans7j">believe in</div>
+        <div class="feedback" id="fb7j"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 8: FIRST CONDITIONAL EXERCISES -->
+<section class="section-solid blue">
+  <div class="container">
+    <h2>📝 First Conditional Exercises</h2>
+    <div class="highlight-box" style="background:rgba(242,201,76,0.2); color:var(--text-light);">
+      <p><strong>We use the first conditional to express possibility in the present or in the future.</strong></p>
+      <p>The subordinate clause (If) has a verb in the present simple. The main clause is always in the future.</p>
+    </div>
+    <div class="exercise-box">
+      <h3>Complete the sentences:</h3>
+      <div class="exercise-item">
+        <label>1. If you _______________ (help) me with my homework, I _______________ (finish) it in time to go to the cinema.</label>
+        <input type="text" class="exercise-input" id="ex8a" placeholder="Fill in the blanks...">
+        <button class="btn-verify" onclick="checkSimple('ex8a',['help','will','finish'],'fb8a','ans8a')">Check Answer</button>
+        <div class="hidden-answer" id="ans8a">help / will finish</div>
+        <div class="feedback" id="fb8a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. If it _______________ (not/rain), the students _______________ (practice) sport in the playground.</label>
+        <input type="text" class="exercise-input" id="ex8b" placeholder="Fill in the blanks...">
+        <button class="btn-verify" onclick="checkSimple('ex8b',['not','rain','doesnt','doesn','will','practice'],'fb8b','ans8b')">Check Answer</button>
+        <div class="hidden-answer" id="ans8b">doesn't rain / will practice</div>
+        <div class="feedback" id="fb8b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Jane _______________ (come) home early if she _______________ (not/be) very busy at work.</label>
+        <input type="text" class="exercise-input" id="ex8c" placeholder="Fill in the blanks...">
+        <button class="btn-verify" onclick="checkSimple('ex8c',['will','come','not','busy','isnt','isn'],'fb8c','ans8c')">Check Answer</button>
+        <div class="hidden-answer" id="ans8c">will come / isn't</div>
+        <div class="feedback" id="fb8c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. Our teacher _______________ (be) pleased if we _______________ (do) our homework.</label>
+        <input type="text" class="exercise-input" id="ex8d" placeholder="Fill in the blanks...">
+        <button class="btn-verify" onclick="checkSimple('ex8d',['will','be','do'],'fb8d','ans8d')">Check Answer</button>
+        <div class="hidden-answer" id="ans8d">will be / do</div>
+        <div class="feedback" id="fb8d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. If Robert _______________ (play) football with us, we _______________ (win) the match.</label>
+        <input type="text" class="exercise-input" id="ex8e" placeholder="Fill in the blanks...">
+        <button class="btn-verify" onclick="checkSimple('ex8e',['play','will','win'],'fb8e','ans8e')">Check Answer</button>
+        <div class="hidden-answer" id="ans8e">plays / will win</div>
+        <div class="feedback" id="fb8e"></div>
+      </div>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Save the Planet - What can we do?</h3>
+      <div class="exercise-item">
+        <label>6. If we _______________ (recycle) more, we _______________ (help) our planet.</label>
+        <input type="text" class="exercise-input" id="ex8f" placeholder="Fill in the blanks...">
+        <button class="btn-verify" onclick="checkSimple('ex8f',['recycle','will','help'],'fb8f','ans8f')">Check Answer</button>
+        <div class="hidden-answer" id="ans8f">recycle / will help</div>
+        <div class="feedback" id="fb8f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. If people _______________ (share) their cars to go to work, there _______________ (not/be) so many car fumes.</label>
+        <input type="text" class="exercise-input" id="ex8g" placeholder="Fill in the blanks...">
+        <button class="btn-verify" onclick="checkSimple('ex8g',['share','will','not','be','wont','won'],'fb8g','ans8g')">Check Answer</button>
+        <div class="hidden-answer" id="ans8g">share / won't be</div>
+        <div class="feedback" id="fb8g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. We _______________ (save) thousands of trees if we _______________ (not/waste) so much paper.</label>
+        <input type="text" class="exercise-input" id="ex8h" placeholder="Fill in the blanks...">
+        <button class="btn-verify" onclick="checkSimple('ex8h',['will','save','not','waste','dont','don'],'fb8h','ans8h')">Check Answer</button>
+        <div class="hidden-answer" id="ans8h">will save / don't waste</div>
+        <div class="feedback" id="fb8h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. If the government _______________ (fine) those who pollute the atmosphere, some factories _______________ (stop) throwing waste into rivers.</label>
+        <input type="text" class="exercise-input" id="ex8i" placeholder="Fill in the blanks...">
+        <button class="btn-verify" onclick="checkSimple('ex8i',['fine','will','stop'],'fb8i','ans8i')">Check Answer</button>
+        <div class="hidden-answer" id="ans8i">fines / will stop</div>
+        <div class="feedback" id="fb8i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. If we only _______________ (use) the water we need, we _______________ (contribute) to our planet's recovery.</label>
+        <input type="text" class="exercise-input" id="ex8j" placeholder="Fill in the blanks...">
+        <button class="btn-verify" onclick="checkSimple('ex8j',['use','will','contribute'],'fb8j','ans8j')">Check Answer</button>
+        <div class="hidden-answer" id="ans8j">use / will contribute</div>
+        <div class="feedback" id="fb8j"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--red); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 9: CHRISTMAS CONDITIONALS - SUPERSTITIONS -->
+<section class="section-solid red-dark">
+  <div class="container">
+    <h2>🎄 Christmas Conditionals - Superstitions</h2>
+    <p style="margin-bottom:20px;">Below are some superstitions about Christmas and New Year. Each first conditional sentence comes with three possible endings, choose the correct one.</p>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. If you sweep the house on New Year's Day, ______________________________.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q9a','a')">dust will come in</button>
+          <button class="option-btn" onclick="selectOption(this,'q9a','b')">Nothing will happen</button>
+          <button class="option-btn" onclick="selectOption(this,'q9a','c')">you will sweep the good luck out</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q9a','c','fb9a')">Check Answer</button>
+        <div class="hidden-answer" id="ans9a">you will sweep the good luck out</div>
+        <div class="feedback" id="fb9a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. If you open the door at the stroke of midnight on New Year, _______________________________________.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q9b','a')">It will be cold</button>
+          <button class="option-btn" onclick="selectOption(this,'q9b','b')">everybody will leave the house</button>
+          <button class="option-btn" onclick="selectOption(this,'q9b','c')">good luck will come into the house, and bad luck will leave</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q9b','c','fb9b')">Check Answer</button>
+        <div class="hidden-answer" id="ans9b">good luck will come into the house, and bad luck will leave</div>
+        <div class="feedback" id="fb9b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. If you find a ring in your Christmas pudding, you will ______________________________.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q9c','a')">be the next person at the table to get married</button>
+          <button class="option-btn" onclick="selectOption(this,'q9c','b')">choke</button>
+          <button class="option-btn" onclick="selectOption(this,'q9c','c')">be lucky</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q9c','a','fb9c')">Check Answer</button>
+        <div class="hidden-answer" id="ans9c">be the next person at the table to get married</div>
+        <div class="feedback" id="fb9c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. If you put a piece of Christmas cake under your pillow, you will ______________________________.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q9d','a')">have a mess in the morning</button>
+          <button class="option-btn" onclick="selectOption(this,'q9d','b')">dream of your future husband/wife</button>
+          <button class="option-btn" onclick="selectOption(this,'q9d','c')">probably eat it</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q9d','b','fb9d')">Check Answer</button>
+        <div class="hidden-answer" id="ans9d">dream of your future husband/wife</div>
+        <div class="feedback" id="fb9d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. If a child is born on New Year's Day, the family will become ______________________________.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q9e','a')">poor</button>
+          <button class="option-btn" onclick="selectOption(this,'q9e','b')">rich</button>
+          <button class="option-btn" onclick="selectOption(this,'q9e','c')">bankrupt</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q9e','b','fb9e')">Check Answer</button>
+        <div class="hidden-answer" id="ans9e">rich</div>
+        <div class="feedback" id="fb9e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. If a girl sees a man passing her window when she first looks out on New Year's Day, she ______________________________.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q9f','a')">will fall in love</button>
+          <button class="option-btn" onclick="selectOption(this,'q9f','b')">will get married before the end of the year</button>
+          <button class="option-btn" onclick="selectOption(this,'q9f','c')">will call the cops</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q9f','b','fb9f')">Check Answer</button>
+        <div class="hidden-answer" id="ans9f">will get married before the end of the year</div>
+        <div class="feedback" id="fb9f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. If the fourth of January is rainy, that means that April (the 4th month) will ______________________________.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q9g','a')">be sunny</button>
+          <button class="option-btn" onclick="selectOption(this,'q9g','b')">be rainy too</button>
+          <button class="option-btn" onclick="selectOption(this,'q9g','c')">be hazy</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q9g','b','fb9g')">Check Answer</button>
+        <div class="hidden-answer" id="ans9g">be rainy too</div>
+        <div class="feedback" id="fb9g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. If you don't pay back your bank loans before New Year, you will ______________________________.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q9h','a')">have bad luck</button>
+          <button class="option-btn" onclick="selectOption(this,'q9h','b')">have good luck</button>
+          <button class="option-btn" onclick="selectOption(this,'q9h','c')">be in debt all year</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q9h','c','fb9h')">Check Answer</button>
+        <div class="hidden-answer" id="ans9h">be in debt all year</div>
+        <div class="feedback" id="fb9h"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+<!-- SECTION 10: PAST PERFECT - POSITIVE OR NEGATIVE -->
+<section class="section-solid yellow">
+  <div class="container">
+    <h2 style="color:var(--red-dark);">📝 Past Perfect: Positive or Negative</h2>
+    <div class="highlight-box">
+      <p><strong>Make the positive or negative past perfect simple of the sentences below.</strong></p>
+      <p><strong>Example:</strong> When I arrived at the cinema, the film had started (start).</p>
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. She ____________________ (live) in China before she went to Thailand.</label><input type="text" class="exercise-input" id="ex10a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10a',['had','lived'],'fb10a','ans10a')">Check Answer</button><div class="hidden-answer" id="ans10a">had lived</div><div class="feedback" id="fb10a"></div></div>
+      <div class="exercise-item"><label>2. After they ____________________ (eat) the shellfish, they began to feel sick.</label><input type="text" class="exercise-input" id="ex10b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10b',['had','eaten'],'fb10b','ans10b')">Check Answer</button><div class="hidden-answer" id="ans10b">had eaten</div><div class="feedback" id="fb10b"></div></div>
+      <div class="exercise-item"><label>3. If you ____________________ (listen) to me, you would have got the job.</label><input type="text" class="exercise-input" id="ex10c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10c',['had','listened'],'fb10c','ans10c')">Check Answer</button><div class="hidden-answer" id="ans10c">had listened</div><div class="feedback" id="fb10c"></div></div>
+      <div class="exercise-item"><label>4. When we ____________________ (finish) dinner, we went out.</label><input type="text" class="exercise-input" id="ex10d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10d',['had','finished'],'fb10d','ans10d')">Check Answer</button><div class="hidden-answer" id="ans10d">had finished</div><div class="feedback" id="fb10d"></div></div>
+      <div class="exercise-item"><label>5. The garden was dead because it ____________________ (be) dry all summer.</label><input type="text" class="exercise-input" id="ex10e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10e',['had','been'],'fb10e','ans10e')">Check Answer</button><div class="hidden-answer" id="ans10e">had been</div><div class="feedback" id="fb10e"></div></div>
+      <div class="exercise-item"><label>6. He ____________________ (meet) her somewhere before.</label><input type="text" class="exercise-input" id="ex10f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10f',['had','met'],'fb10f','ans10f')">Check Answer</button><div class="hidden-answer" id="ans10f">had met</div><div class="feedback" id="fb10f"></div></div>
+      <div class="exercise-item"><label>7. The grass was yellow because it ____________________ (not/rain) all summer.</label><input type="text" class="exercise-input" id="ex10g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10g',['had','not','rained','hadnt','hadn'],'fb10g','ans10g')">Check Answer</button><div class="hidden-answer" id="ans10g">hadn't rained / had not rained</div><div class="feedback" id="fb10g"></div></div>
+      <div class="exercise-item"><label>8. The lights went off because we ____________________ (not/pay) the electricity bill.</label><input type="text" class="exercise-input" id="ex10h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10h',['had','not','paid','hadnt','hadn'],'fb10h','ans10h')">Check Answer</button><div class="hidden-answer" id="ans10h">hadn't paid / had not paid</div><div class="feedback" id="fb10h"></div></div>
+      <div class="exercise-item"><label>9. The children ____________________ (not/do) their homework, so they were in trouble.</label><input type="text" class="exercise-input" id="ex10i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10i',['had','not','done','hadnt','hadn'],'fb10i','ans10i')">Check Answer</button><div class="hidden-answer" id="ans10i">hadn't done / had not done</div><div class="feedback" id="fb10i"></div></div>
+      <div class="exercise-item"><label>10. They ____________________ (not/eat) so we went to a restaurant.</label><input type="text" class="exercise-input" id="ex10j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex10j',['had','not','eaten','hadnt','hadn'],'fb10j','ans10j')">Check Answer</button><div class="hidden-answer" id="ans10j">hadn't eaten / had not eaten</div><div class="feedback" id="fb10j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--red); color:var(--text-light);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 11: PAST PERFECT QUESTIONS -->
+<section class="section-solid green-dark">
+  <div class="container">
+    <h2>❓ Past Perfect Questions</h2>
+    <div class="highlight-box" style="background:rgba(242,201,76,0.2); color:var(--text-light);">
+      <p><strong>Write the words in brackets into the blanks to complete the questions. Change the words into their Past Participle form.</strong></p>
+      <p><strong>Example:</strong> Had Gerry handed in the summary by the time it was due? (Gerry/hand in)</p>
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. ____________________ the instructions before they switched on the mobile phone? (they/read)</label><input type="text" class="exercise-input" id="ex11a" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11a',['had','they','read'],'fb11a','ans11a')">Check Answer</button><div class="hidden-answer" id="ans11a">Had they read</div><div class="feedback" id="fb11a"></div></div>
+      <div class="exercise-item"><label>2. ____________________ the new words before she texted her friend? (the girl/learn)</label><input type="text" class="exercise-input" id="ex11b" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11b',['had','the','girl','learned','learnt'],'fb11b','ans11b')">Check Answer</button><div class="hidden-answer" id="ans11b">Had the girl learned</div><div class="feedback" id="fb11b"></div></div>
+      <div class="exercise-item"><label>3. ____________________ the office before they drove away? (they/ring)</label><input type="text" class="exercise-input" id="ex11c" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11c',['had','they','rung'],'fb11c','ans11c')">Check Answer</button><div class="hidden-answer" id="ans11c">Had they rung</div><div class="feedback" id="fb11c"></div></div>
+      <div class="exercise-item"><label>4. What ____________________ before she turned on the TV? (Lucy/do)</label><input type="text" class="exercise-input" id="ex11d" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11d',['had','lucy','done'],'fb11d','ans11d')">Check Answer</button><div class="hidden-answer" id="ans11d">had Lucy done</div><div class="feedback" id="fb11d"></div></div>
+      <div class="exercise-item"><label>5. ____________________ the software before he switched off the computer? (Walter/update)</label><input type="text" class="exercise-input" id="ex11e" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11e',['had','walter','updated'],'fb11e','ans11e')">Check Answer</button><div class="hidden-answer" id="ans11e">Had Walter updated</div><div class="feedback" id="fb11e"></div></div>
+      <div class="exercise-item"><label>6. What ____________________ before she ran away? (she/find)</label><input type="text" class="exercise-input" id="ex11f" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11f',['had','she','found'],'fb11f','ans11f')">Check Answer</button><div class="hidden-answer" id="ans11f">had she found</div><div class="feedback" id="fb11f"></div></div>
+      <div class="exercise-item"><label>7. ____________________ the onions before he hurried to the window? (Tim/cut)</label><input type="text" class="exercise-input" id="ex11g" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11g',['had','tim','cut'],'fb11g','ans11g')">Check Answer</button><div class="hidden-answer" id="ans11g">Had Tim cut</div><div class="feedback" id="fb11g"></div></div>
+      <div class="exercise-item"><label>8. ____________________ here before? (you/surf)</label><input type="text" class="exercise-input" id="ex11h" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11h',['had','you','surfed'],'fb11h','ans11h')">Check Answer</button><div class="hidden-answer" id="ans11h">Had you surfed</div><div class="feedback" id="fb11h"></div></div>
+      <div class="exercise-item"><label>9. ____________________ to Lisa before she prepared dinner? (Peggy/talk)</label><input type="text" class="exercise-input" id="ex11i" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11i',['had','peggy','talked'],'fb11i','ans11i')">Check Answer</button><div class="hidden-answer" id="ans11i">Had Peggy talked</div><div class="feedback" id="fb11i"></div></div>
+      <div class="exercise-item"><label>10. ____________________ London before you went there in 2009? (you/ever/visit)</label><input type="text" class="exercise-input" id="ex11j" placeholder=""><button class="btn-verify" onclick="checkSimple('ex11j',['had','you','ever','visited'],'fb11j','ans11j')">Check Answer</button><div class="hidden-answer" id="ans11j">Had you ever visited</div><div class="feedback" id="fb11j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--yellow);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 12: MODAL WORDS - MEANINGS -->
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--red-dark);">🔤 Modal Words - Meanings</h2>
+    <div class="highlight-box">
+      <p><strong>Each modal word can have several meanings. For each of the following sentences, two explanations are given. Underline the most likely explanation.</strong></p>
+      <p><strong>Example:</strong> Abby should get good results in her exams.<br>
+      ❌ Abby has an obligation to get good results in her exams.<br>
+      ✅ It is probably that Abby will get good results in her exams.</p>
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. I couldn't swim until I was 10 years old.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q12a','a')">I didn't have permission to swim until I was 10 years old.</button><button class="option-btn" onclick="selectOption(this,'q12a','b')">I didn't have the ability to swim until I was 10 years old.</button></div><button class="btn-verify" onclick="checkMC('q12a','b','fb12a')">Check Answer</button><div class="hidden-answer" id="ans12a">I didn't have the ability to swim until I was 10 years old.</div><div class="feedback" id="fb12a"></div></div>
+      <div class="exercise-item"><label>2. Passengers may smoke once the plane is airborne.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q12b','a')">There is a possibility that passengers will smoke once the plane is airborne.</button><button class="option-btn" onclick="selectOption(this,'q12b','b')">Passengers have permission to smoke once the plane is airborne.</button></div><button class="btn-verify" onclick="checkMC('q12b','b','fb12b')">Check Answer</button><div class="hidden-answer" id="ans12b">Passengers have permission to smoke once the plane is airborne.</div><div class="feedback" id="fb12b"></div></div>
+      <div class="exercise-item"><label>3. No one can smoke on the London Underground.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q12c','a')">No one has the ability to smoke on the London Underground.</button><button class="option-btn" onclick="selectOption(this,'q12c','b')">No one has permission to smoke on the London Underground.</button></div><button class="btn-verify" onclick="checkMC('q12c','b','fb12c')">Check Answer</button><div class="hidden-answer" id="ans12c">No one has permission to smoke on the London Underground.</div><div class="feedback" id="fb12c"></div></div>
+      <div class="exercise-item"><label>4. You should wear glasses.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q12d','a')">My advice is that you wear glasses.</button><button class="option-btn" onclick="selectOption(this,'q12d','b')">There is a probability that you will have to wear glasses.</button></div><button class="btn-verify" onclick="checkMC('q12d','a','fb12d')">Check Answer</button><div class="hidden-answer" id="ans12d">My advice is that you wear glasses.</div><div class="feedback" id="fb12d"></div></div>
+      <div class="exercise-item"><label>5. Will you answer the door?</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q12e','a')">Are you at some time in the future going to answer the door?</button><button class="option-btn" onclick="selectOption(this,'q12e','b')">I'm asking to answer the door.</button></div><button class="btn-verify" onclick="checkMC('q12e','b','fb12e')">Check Answer</button><div class="hidden-answer" id="ans12e">I'm asking to answer the door.</div><div class="feedback" id="fb12e"></div></div>
+      <div class="exercise-item"><label>6. I couldn't get the top off the bottle.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q12f','a')">I did not have permission to get the top off the bottle.</button><button class="option-btn" onclick="selectOption(this,'q12f','b')">I did not manage to get the top off the bottle.</button></div><button class="btn-verify" onclick="checkMC('q12f','b','fb12f')">Check Answer</button><div class="hidden-answer" id="ans12f">I did not manage to get the top off the bottle.</div><div class="feedback" id="fb12f"></div></div>
+      <div class="exercise-item"><label>7. You must be tired.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q12g','a')">I am sure you are tired.</button><button class="option-btn" onclick="selectOption(this,'q12g','b')">I order you to be tired.</button></div><button class="btn-verify" onclick="checkMC('q12g','a','fb12g')">Check Answer</button><div class="hidden-answer" id="ans12g">I am sure you are tired.</div><div class="feedback" id="fb12g"></div></div>
+      <div class="exercise-item"><label>8. Bruce's got a meeting after work so he may not go to the party.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q12h','a')">Bruce does not have permission to go to the party.</button><button class="option-btn" onclick="selectOption(this,'q12h','b')">There's a possibility Bruce won't go to the party.</button></div><button class="btn-verify" onclick="checkMC('q12h','b','fb12h')">Check Answer</button><div class="hidden-answer" id="ans12h">There's a possibility Bruce won't go to the party.</div><div class="feedback" id="fb12h"></div></div>
+      <div class="exercise-item"><label>9. You mustn't have given me a lift.</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q12i','a')">You gave me a lift. This was very kind but not necessary.</button><button class="option-btn" onclick="selectOption(this,'q12i','b')">You didn't give me a lift because it wasn't necessary.</button></div><button class="btn-verify" onclick="checkMC('q12i','a','fb12i')">Check Answer</button><div class="hidden-answer" id="ans12i">You gave me a lift. This was very kind but not necessary.</div><div class="feedback" id="fb12i"></div></div>
+      <div class="exercise-item"><label>10. You might have helped to clear up after the party!</label><div class="options-grid"><button class="option-btn" onclick="selectOption(this,'q12j','a')">I'm angry because I think you ought to have helped clear up.</button><button class="option-btn" onclick="selectOption(this,'q12j','b')">I think that there's just a possibility that you helped to clear up.</button></div><button class="btn-verify" onclick="checkMC('q12j','a','fb12j')">Check Answer</button><div class="hidden-answer" id="ans12j">I'm angry because I think you ought to have helped clear up.</div><div class="feedback" id="fb12j"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 13: GRAMMAR REVIEW -->
+<section class="section-solid blue-dark">
+  <div class="container">
+    <h2 style="color:var(--yellow);">📚 Grammar Review</h2>
+    
+    <div class="reading-block">
+      <h3 style="color:var(--red-dark);">First Conditional: Real Possibility</h3>
+      <p>We are talking about the future. We are thinking about a particular condition or situation in the future, and the result of this condition. There is a real possibility that this condition will happen.</p>
+      <div class="grammar-table">
+        <tr><th>IF</th><th>condition</th><th>result</th></tr>
+        <tr><td>present simple</td><td>WILL + base word</td><td></td></tr>
+        <tr><td>If it rains</td><td>I will stay at home.</td><td></td></tr>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3 style="color:var(--red-dark);">Past Perfect</h3>
+      <p>The past perfect simple expresses an action taking place before a certain time in the past.</p>
+      <div class="grammar-table">
+        <tr><th>Positive</th><th>Negative</th><th>Question</th></tr>
+        <tr><td>I had spoken.</td><td>I had not spoken.</td><td>Had I spoken?</td></tr>
+      </div>
+      <p style="margin-top:15px;">For irregular verbs, use the past participle form. For regular verbs, just add -ed.</p>
+      <div class="highlight-box" style="margin-top:15px;">
+        <strong>Use:</strong> Action taking place before a certain time in the past (putting emphasis only on the fact, not the duration)<br><br>
+        <strong>Example:</strong> Before I came here, I had spoken to Jack.
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3 style="color:var(--red-dark);">Modal Words</h3>
+      <p>The modal words include can, must, may, might, will, would, should. They are used with other words turning into verbs to express ability, obligation, possibility, and so on.</p>
+      <div class="grammar-table">
+        <tr><th>Modal</th><th>Meaning</th><th>Example</th></tr>
+        <tr><td>can</td><td>to express ability</td><td>I can speak a little Russian.</td></tr>
+        <tr><td>can</td><td>to request permission</td><td>Can I open the window?</td></tr>
+        <tr><td>may</td><td>to express possibility</td><td>I may be home late.</td></tr>
+        <tr><td>may</td><td>to request permission</td><td>May I sit down, please?</td></tr>
+        <tr><td>must</td><td>to express obligation</td><td>I must go now.</td></tr>
+        <tr><td>must</td><td>to express strong belief</td><td>She must be over 90 years old.</td></tr>
+        <tr><td>should</td><td>to give advice</td><td>You should stop smoking.</td></tr>
+        <tr><td>would</td><td>to request or offer</td><td>Would you like a cup of tea?</td></tr>
+        <tr><td>would</td><td>in if-sentences</td><td>If I were you, I would say sorry.</td></tr>
+      </div>
+      <p style="margin-top:15px;">Modal words are unlike other verbs. They do not change their form (spelling) and they have no infinitive or participle (past/present). The modals must and can need substitute words turning into verbs to express obligation or ability in the different tenses.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3 style="color:var(--red-dark);">✅ Answers: Match Exercise</h3>
+      <div class="grammar-table">
+        <tr><th>Column A</th><th>Column B</th><th>Column C</th></tr>
+        <tr><td>Italy</td><td>Rome</td><td>The Colosseum</td></tr>
+        <tr><td>England</td><td>London</td><td>The Big Ben</td></tr>
+        <tr><td>Egypt</td><td>Cairo</td><td>The Pyramids</td></tr>
+        <tr><td>Greece</td><td>Athens</td><td>The Parthenon</td></tr>
+        <tr><td>Norway</td><td>Oslo</td><td>The Fjords</td></tr>
+        <tr><td>China</td><td>Beijing</td><td>The Great Wall</td></tr>
+        <tr><td>Switzerland</td><td>Berne</td><td>The Alps</td></tr>
+        <tr><td>India</td><td>New Delhi</td><td>The Taj Mahal</td></tr>
+      </div>
+    </div>
+
+    <button class="nav-btn" onclick="completeUnit()" style="background:var(--yellow);">Complete Unit</button>
+  </div>
+</section>
+
+<!-- FINAL -->
+<div id="finalMsg" style="display:none; padding:80px 40px; background:var(--red-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3rem; margin-bottom:20px;">🎉 Unit 22 Completed</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px;">You have mastered holiday vocabulary, Santa Claus history, first conditional, past perfect, and modal words.</p>
+    <p style="font-size:1.1rem; margin-bottom:30px; opacity:0.8;">The brain doesn't translate. The brain assembles.</p>
+    <a href="indexmax.html" class="nav-btn" style="background:var(--yellow); color:var(--text-dark);">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:var(--red-dark); color:var(--text-light);">
+  <p><strong>Discovery MAX Neuroeducation</strong></p>
+  <p>Unit 22: Holidays | Método NBF | Toño Vicas</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 120;
+
+// AUDIO FEEDBACK
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.1; u.pitch = 1;
+  synth.speak(u);
+}
+
+function updateProgress() {
+  document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
+}
+
+function normalizeText(text) {
+  if (!text) return "";
+  return text.toLowerCase().replace(/[?!.,']/g, "").replace(/\s+/g, " ").trim();
+}
+
+function scrollToNext() {
+  speak('Next section unlocked');
+  window.scrollBy({ top: window.innerHeight * 0.9, behavior: 'smooth' });
+}
+
+function checkSimple(inputId, keywords, fbId, ansId) {
+  const val = normalizeText(document.getElementById(inputId).value);
+  const fb = document.getElementById(fbId);
+  const ans = document.getElementById(ansId);
+  const allFound = keywords.some(k => val.includes(k));
+  
+  if(allFound) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correct. Structure validated.';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Review the key elements.';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Reflection recorded. Excellent cognitive effort.';
+    fb.style.display = 'block';
+    speak('Great answer!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep reflection. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Try again');
+  }
+}
+
+let selectedOptions = {};
+function selectOption(btn, questionId, option) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedOptions[questionId] = option;
+}
+
+function checkMC(questionId, correctAnswer, feedbackId) {
+  const fb = document.getElementById(feedbackId);
+  const ans = document.getElementById(feedbackId.replace('fb', 'ans'));
+  if (!selectedOptions[questionId]) { 
+    fb.className='feedback error'; 
+    fb.textContent='⚠️ Select an option'; 
+    fb.style.display='block'; 
+    speak('Select an option');
+    return; 
+  }
+  if (selectedOptions[questionId] === correctAnswer) {
+    fb.className='feedback success'; 
+    fb.textContent='✅ Correct'; 
+    fb.style.display='block'; 
+    ans.style.display='none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className='feedback error'; 
+    fb.textContent='❌ Incorrect'; 
+    fb.style.display='block'; 
+    ans.style.display='block';
+    speak('Sorry, try again');
+  }
+}
+
+function completeUnit() {
+  if(completedCount >= 95) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! You completed Unit 22!');
+  } else {
+    alert(`⚠️ Complete at least 95 of 120 exercises.\nCompleted: ${completedCount}/120`);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
