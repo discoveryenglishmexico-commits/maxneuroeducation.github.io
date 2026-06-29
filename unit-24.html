@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 24: Health & Emergencies | Discovery MAX Neuroeducation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink: #FF8080;
+  --pink-dark: #E55B5B;
+  --purple: #5B5BD1;
+  --purple-dark: #4848A8;
+  --light-pink: #FFE5E5;
+  --light-purple: #E5E5FF;
+  --white: #FFFFFF;
+  --text-dark: #1a1a1a;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--light-pink); overflow-x:hidden; }
+
+.hero {
+  height:90vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(255,128,128,0.8), rgba(91,91,209,0.7)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:10px 25px; background:var(--purple); color:var(--text-light); font-weight:700; font-size:0.9rem; letter-spacing:2px; margin-bottom:20px; border-radius:4px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.hero p { font-size:1.3rem; font-weight:300; max-width:700px; margin:0 auto; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--purple-dark); padding:12px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--pink),var(--purple)); transition: width 0.5s ease; }
+
+.section-image {
+  min-height:50vh; position:relative; background-size:cover; background-position:center;
+  display:flex; align-items:center; justify-content:center; padding:60px 20px;
+}
+.section-image::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(255,128,128,0.8), rgba(91,91,209,0.7)); }
+.section-image-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; }
+.section-image-content h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; margin-bottom:15px; }
+
+.section-solid { padding:80px 40px; }
+.section-solid.pink { background:var(--pink); color:var(--text-light); }
+.section-solid.pink-dark { background:var(--pink-dark); color:var(--text-light); }
+.section-solid.purple { background:var(--purple); color:var(--text-light); }
+.section-solid.purple-dark { background:var(--purple-dark); color:var(--text-light); }
+.section-solid.light-pink { background:var(--light-pink); color:var(--text-dark); }
+.section-solid.light-purple { background:var(--light-purple); color:var(--text-dark); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:1100px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { background:var(--white); padding:40px; border-radius:8px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-left:6px solid var(--purple); }
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--purple-dark); margin-bottom:20px; }
+.reading-block p { font-size:1.1rem; line-height:2; color:var(--text-dark); margin-bottom:15px; }
+
+.exercise-box { background:var(--white); padding:30px; border-radius:8px; margin:30px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--purple-dark); margin-bottom:20px; }
+.exercise-item { margin:20px 0; padding:20px; background:var(--light-pink); border-left:4px solid var(--pink); border-radius:4px; }
+.exercise-item label { font-weight:600; font-size:1.05rem; display:block; margin-bottom:12px; color:var(--text-dark); }
+.exercise-input, .exercise-textarea {
+  width:100%; padding:12px; border:2px solid #d1d5db; border-radius:6px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s;
+}
+.exercise-input:focus, .exercise-textarea:focus { outline:none; border-color:var(--pink); }
+.exercise-textarea { min-height:100px; resize:vertical; }
+
+.btn-verify {
+  margin-top:12px; padding:10px 24px; background:var(--pink); color:var(--text-light);
+  border:none; border-radius:6px; font-weight:600; cursor:pointer; transition: background 0.3s;
+}
+.btn-verify:hover { background:var(--pink-dark); }
+
+.feedback { margin-top:12px; padding:12px; border-radius:6px; font-weight:600; display:none; }
+.feedback.success { background:#d1fae5; color:#065f46; border-left:4px solid #10b981; }
+.feedback.error { background:#fee2e2; color:#991b1b; border-left:4px solid #ef4444; }
+.hidden-answer { display:none; margin-top:12px; padding:12px; background:var(--light-purple); border-left:4px solid var(--purple); border-radius:6px; color:var(--purple-dark); font-weight:600; }
+
+.options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:15px 0; }
+.option-btn { padding:14px; background:var(--white); border:2px solid #d1d5db; border-radius:6px; cursor:pointer; transition:0.3s; color:var(--text-dark); text-align:left; font-size:0.95rem; font-family:'Inter',sans-serif; }
+.option-btn:hover { border-color:var(--pink); background:rgba(255,128,128,0.1); }
+.option-btn.selected { background:var(--pink); color:var(--text-light); border-color:var(--pink); font-weight:600; }
+
+.nav-btn {
+  display:inline-block; margin-top:30px; padding:15px 40px; background:var(--pink); color:var(--text-light);
+  text-decoration:none; border-radius:6px; font-weight:700; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer;
+}
+.nav-btn:hover { background:var(--pink-dark); transform:translateY(-2px); }
+
+.highlight-box { background:rgba(255,128,128,0.1); border-left:4px solid var(--pink); padding:20px 25px; margin:20px 0; border-radius:0 8px 8px 0; font-style:italic; color:var(--text-dark); }
+
+.grammar-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.grammar-table th, .grammar-table td { padding:14px; text-align:left; border-bottom:1px solid #e5e7eb; color:var(--text-dark); }
+.grammar-table th { background:var(--purple-dark); color:var(--text-light); font-family:'Playfair Display',serif; font-size:1rem; }
+
+@media(max-width:768px) {
+  .hero { height:75vh; }
+  .section-image { min-height:40vh; }
+  .section-solid { padding:40px 20px; }
+  .reading-block { padding:25px; }
+  .exercise-box { padding:20px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">UNIT 24</div>
+    <h1>Health & Emergencies</h1>
+    <p>Exploring medical vocabulary, alternative therapies, and mastering adverbs and comparatives.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<!-- SECTION 1: READING - AN EMERGENCY VISIT TO THE MEDIC -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>An Emergency Visit to the Medic</h2>
+    <p>The Williams Family</p>
+  </div>
+</section>
+
+<section class="section-solid pink">
+  <div class="container">
+    <h2>📖 Reading: An Emergency Visit to the Medic</h2>
+    
+    <div class="reading-block">
+      <h3 style="color:var(--purple-dark); border-bottom:3px solid var(--pink); padding-bottom:15px;">🏥 Eddy's Emergency</h3>
+      <p>Today the Williams' family took quite a blow due to the fact that Mrs. Rose Mary got a phone call from the dean's office which startled her off completely. As soon as she picked the phone up she got the intuition that something was wrong. When she answered, right away she recognized the dean's secretary's voice right away.</p>
+      <p>The news was that her son Eddy had to be taken to the Hospital in an emergency. As soon as she heard that, she rapidly asked what had been the problem and in which Hospital her son had been taken to for her to head out to it immediately. She got there and headed straight to the reception to ask about her son, the nurse asked her to please calm down first because she was very anguished. The nurse gave her a glass of water and told her not to worry because her son was fine. He has to go to the ophthalmologist because Eddy had an eyestrain problem which caused him to have an episode of dizziness and blurry vision. Although it is very important to have it checked out immediately.</p>
+      <p>After getting the feedback from the nurse, Mrs. Rose Mary headed into the room were her son was being examine, Eddy was sure happy to see his mom, and so was she. She hugged him and laid a big kiss on his forehead.</p>
+    </div>
+
+    <div class="exercise-box" style="margin-top:40px;">
+      <h3>Strategic Comprehension</h3>
+      <div class="exercise-item">
+        <label>1. Who called Mrs. Rose Mary?</label>
+        <input type="text" class="exercise-input" id="ex1a" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1a',['dean','secretary'],'fb1a','ans1a')">Check Answer</button>
+        <div class="hidden-answer" id="ans1a">The dean's secretary</div>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. What was the emergency?</label>
+        <input type="text" class="exercise-input" id="ex1b" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1b',['eddy','hospital','emergency'],'fb1b','ans1b')">Check Answer</button>
+        <div class="hidden-answer" id="ans1b">Eddy had to be taken to the hospital in an emergency</div>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. What was Eddy's medical problem?</label>
+        <input type="text" class="exercise-input" id="ex1c" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1c',['eyestrain','dizziness','blurry'],'fb1c','ans1c')">Check Answer</button>
+        <div class="hidden-answer" id="ans1c">Eyestrain causing dizziness and blurry vision</div>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. What specialist does Eddy need to see?</label>
+        <input type="text" class="exercise-input" id="ex1d" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1d',['ophthalmologist'],'fb1d','ans1d')">Check Answer</button>
+        <div class="hidden-answer" id="ans1d">The ophthalmologist</div>
+        <div class="feedback" id="fb1d"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 2: VOCABULARY - ALTERNATIVE THERAPY -->
+<section class="section-solid purple">
+  <div class="container">
+    <h2>🌿 Vocabulary: Alternative Therapy</h2>
+    <p style="margin-bottom:20px;">Match the Alternative Therapy to its correct description.</p>
+    
+    <div class="exercise-box">
+      <h3>Match the therapy with the description</h3>
+      <div class="exercise-item">
+        <label>1. You sit in a bath</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q2a','a')">acupuncture</button>
+          <button class="option-btn" onclick="selectOption(this,'q2a','b')">aroma therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2a','c')">herbal medicine</button>
+          <button class="option-btn" onclick="selectOption(this,'q2a','d')">heat therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2a','e')">light therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2a','f')">massage</button>
+          <button class="option-btn" onclick="selectOption(this,'q2a','g')">meditation</button>
+          <button class="option-btn" onclick="selectOption(this,'q2a','h')">visualization</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q2a','d','fb2a')">Check Answer</button>
+        <div class="hidden-answer" id="ans2a">heat therapy</div>
+        <div class="feedback" id="fb2a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Doctors put needles into your skin</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q2b','a')">acupuncture</button>
+          <button class="option-btn" onclick="selectOption(this,'q2b','b')">aroma therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2b','c')">herbal medicine</button>
+          <button class="option-btn" onclick="selectOption(this,'q2b','d')">heat therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2b','e')">light therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2b','f')">massage</button>
+          <button class="option-btn" onclick="selectOption(this,'q2b','g')">meditation</button>
+          <button class="option-btn" onclick="selectOption(this,'q2b','h')">visualization</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q2b','a','fb2b')">Check Answer</button>
+        <div class="hidden-answer" id="ans2b">acupuncture</div>
+        <div class="feedback" id="fb2b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. You sit in a bright light</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q2c','a')">acupuncture</button>
+          <button class="option-btn" onclick="selectOption(this,'q2c','b')">aroma therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2c','c')">herbal medicine</button>
+          <button class="option-btn" onclick="selectOption(this,'q2c','d')">heat therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2c','e')">light therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2c','f')">massage</button>
+          <button class="option-btn" onclick="selectOption(this,'q2c','g')">meditation</button>
+          <button class="option-btn" onclick="selectOption(this,'q2c','h')">visualization</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q2c','e','fb2c')">Check Answer</button>
+        <div class="hidden-answer" id="ans2c">light therapy</div>
+        <div class="feedback" id="fb2c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. You drink tea or powders made from plants</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q2d','a')">acupuncture</button>
+          <button class="option-btn" onclick="selectOption(this,'q2d','b')">aroma therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2d','c')">herbal medicine</button>
+          <button class="option-btn" onclick="selectOption(this,'q2d','d')">heat therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2d','e')">light therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2d','f')">massage</button>
+          <button class="option-btn" onclick="selectOption(this,'q2d','g')">meditation</button>
+          <button class="option-btn" onclick="selectOption(this,'q2d','h')">visualization</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q2d','c','fb2d')">Check Answer</button>
+        <div class="hidden-answer" id="ans2d">herbal medicine</div>
+        <div class="feedback" id="fb2d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. A masseur touches and rubs your body</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q2e','a')">acupuncture</button>
+          <button class="option-btn" onclick="selectOption(this,'q2e','b')">aroma therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2e','c')">herbal medicine</button>
+          <button class="option-btn" onclick="selectOption(this,'q2e','d')">heat therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2e','e')">light therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2e','f')">massage</button>
+          <button class="option-btn" onclick="selectOption(this,'q2e','g')">meditation</button>
+          <button class="option-btn" onclick="selectOption(this,'q2e','h')">visualization</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q2e','f','fb2e')">Check Answer</button>
+        <div class="hidden-answer" id="ans2e">massage</div>
+        <div class="feedback" id="fb2e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. You imagine a place, object or situation</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q2f','a')">acupuncture</button>
+          <button class="option-btn" onclick="selectOption(this,'q2f','b')">aroma therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2f','c')">herbal medicine</button>
+          <button class="option-btn" onclick="selectOption(this,'q2f','d')">heat therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2f','e')">light therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2f','f')">massage</button>
+          <button class="option-btn" onclick="selectOption(this,'q2f','g')">meditation</button>
+          <button class="option-btn" onclick="selectOption(this,'q2f','h')">visualization</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q2f','h','fb2f')">Check Answer</button>
+        <div class="hidden-answer" id="ans2f">visualization</div>
+        <div class="feedback" id="fb2f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. You breathe in oil flavors made from plants</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q2g','a')">acupuncture</button>
+          <button class="option-btn" onclick="selectOption(this,'q2g','b')">aroma therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2g','c')">herbal medicine</button>
+          <button class="option-btn" onclick="selectOption(this,'q2g','d')">heat therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2g','e')">light therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2g','f')">massage</button>
+          <button class="option-btn" onclick="selectOption(this,'q2g','g')">meditation</button>
+          <button class="option-btn" onclick="selectOption(this,'q2g','h')">visualization</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q2g','b','fb2g')">Check Answer</button>
+        <div class="hidden-answer" id="ans2g">aroma therapy</div>
+        <div class="feedback" id="fb2g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. You focus on a word or thought for a while</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q2h','a')">acupuncture</button>
+          <button class="option-btn" onclick="selectOption(this,'q2h','b')">aroma therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2h','c')">herbal medicine</button>
+          <button class="option-btn" onclick="selectOption(this,'q2h','d')">heat therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2h','e')">light therapy</button>
+          <button class="option-btn" onclick="selectOption(this,'q2h','f')">massage</button>
+          <button class="option-btn" onclick="selectOption(this,'q2h','g')">meditation</button>
+          <button class="option-btn" onclick="selectOption(this,'q2h','h')">visualization</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q2h','g','fb2h')">Check Answer</button>
+        <div class="hidden-answer" id="ans2h">meditation</div>
+        <div class="feedback" id="fb2h"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--purple);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 3: CRITICAL THINKING - HEALTH QUESTIONS -->
+<section class="section-solid light-pink">
+  <div class="container">
+    <h2 style="color:var(--purple-dark);">💭 Critical Thinking: Health Questions</h2>
+    <p style="margin-bottom:20px;">Answer the questions below. Remember to support your answers (minimum 20 characters):</p>
+    <div class="exercise-box">
+      <div class="exercise-item"><label>1. Do you regularly think about your health? Why or why not? What about worrying about it?</label><textarea class="exercise-textarea" id="ex3a" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3a','fb3a')">Check Answer</button><div class="feedback" id="fb3a"></div></div>
+      <div class="exercise-item"><label>2. If there was a pill that allowed you to eat anything without putting on the pounds, would you take it? How would you answer if there were side-effects too?</label><textarea class="exercise-textarea" id="ex3b" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3b','fb3b')">Check Answer</button><div class="feedback" id="fb3b"></div></div>
+      <div class="exercise-item"><label>3. Is dieting healthy? Why or why not?</label><textarea class="exercise-textarea" id="ex3c" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3c','fb3c')">Check Answer</button><div class="feedback" id="fb3c"></div></div>
+      <div class="exercise-item"><label>4. Do you think that glamour magazines and supermodels portray an unrealistic image of the human body? Should these sort of magazines be banned and/or regulated?</label><textarea class="exercise-textarea" id="ex3d" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3d','fb3d')">Check Answer</button><div class="feedback" id="fb3d"></div></div>
+      <div class="exercise-item"><label>5. How healthy do you consider yourself to be? Why is that?</label><textarea class="exercise-textarea" id="ex3e" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3e','fb3e')">Check Answer</button><div class="feedback" id="fb3e"></div></div>
+      <div class="exercise-item"><label>6. Do you agree or disagree? Eating healthily takes top priority, even if it means eating food that doesn't taste very good. Please explain.</label><textarea class="exercise-textarea" id="ex3f" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3f','fb3f')">Check Answer</button><div class="feedback" id="fb3f"></div></div>
+      <div class="exercise-item"><label>7. Have you ever heard this phrase before? "You are what you eat". What does it mean to you?</label><textarea class="exercise-textarea" id="ex3g" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3g','fb3g')">Check Answer</button><div class="feedback" id="fb3g"></div></div>
+      <div class="exercise-item"><label>8. Do you agree or disagree? The happiest people are healthy people. Why is that?</label><textarea class="exercise-textarea" id="ex3h" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3h','fb3h')">Check Answer</button><div class="feedback" id="fb3h"></div></div>
+      <div class="exercise-item"><label>9. In today's fast-paced society, how easy is it to eat healthily? Why is that?</label><textarea class="exercise-textarea" id="ex3i" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3i','fb3i')">Check Answer</button><div class="feedback" id="fb3i"></div></div>
+      <div class="exercise-item"><label>10. Which nationality portrays the unhealthiest image? How about the healthiest? Why?</label><textarea class="exercise-textarea" id="ex3j" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3j','fb3j')">Check Answer</button><div class="feedback" id="fb3j"></div></div>
+      <div class="exercise-item"><label>11. How often do you go to the doctor to check your health? Should you go more often?</label><textarea class="exercise-textarea" id="ex3k" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3k','fb3k')">Check Answer</button><div class="feedback" id="fb3k"></div></div>
+      <div class="exercise-item"><label>12. Which ends up as more important to our physical health, the food that we eat or our genes? Why?</label><textarea class="exercise-textarea" id="ex3l" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3l','fb3l')">Check Answer</button><div class="feedback" id="fb3l"></div></div>
+      <div class="exercise-item"><label>13. Do you think that genetically modified food is unhealthy? How about dangerous? Should it be banned? Why/not?</label><textarea class="exercise-textarea" id="ex3m" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3m','fb3m')">Check Answer</button><div class="feedback" id="fb3m"></div></div>
+      <div class="exercise-item"><label>14. Do you think the food we eat affects our physical and mental health? Why/not?</label><textarea class="exercise-textarea" id="ex3n" placeholder="Develop your answer..."></textarea><button class="btn-verify" onclick="checkDiscussion('ex3n','fb3n')">Check Answer</button><div class="feedback" id="fb3n"></div></div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 4: COMMON MEDICAL TERMS -->
+<section class="section-solid purple-dark">
+  <div class="container">
+    <h2>🏥 Common Medical Terms</h2>
+    <p style="margin-bottom:20px;">Choose the correct medical term for each definition.</p>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. Another word for a stomach is _____.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4a','a')">throat</button>
+          <button class="option-btn" onclick="selectOption(this,'q4a','b')">larynx</button>
+          <button class="option-btn" onclick="selectOption(this,'q4a','c')">femur</button>
+          <button class="option-btn" onclick="selectOption(this,'q4a','d')">abdomen</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4a','d','fb4a')">Check Answer</button>
+        <div class="hidden-answer" id="ans4a">abdomen</div>
+        <div class="feedback" id="fb4a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. In the medical field, if something like a tumor is discovered, tests are performed to determine whether it is benign or _____. This later term means that the tumor is cancerous and life-threatening.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4b','a')">malignant</button>
+          <button class="option-btn" onclick="selectOption(this,'q4b','b')">careless</button>
+          <button class="option-btn" onclick="selectOption(this,'q4b','c')">benevolent</button>
+          <button class="option-btn" onclick="selectOption(this,'q4b','d')">careful</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4b','a','fb4b')">Check Answer</button>
+        <div class="hidden-answer" id="ans4b">malignant</div>
+        <div class="feedback" id="fb4b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. When someone is physically dependant on a drug like nicotine, they are _____ to the chemical substance.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4c','a')">rejected</button>
+          <button class="option-btn" onclick="selectOption(this,'q4c','b')">addicted</button>
+          <button class="option-btn" onclick="selectOption(this,'q4c','c')">adopted</button>
+          <button class="option-btn" onclick="selectOption(this,'q4c','d')">embraced</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4c','b','fb4c')">Check Answer</button>
+        <div class="hidden-answer" id="ans4c">addicted</div>
+        <div class="feedback" id="fb4c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. Sometimes, people have _____ reactions to certain drugs that are prescribed to them by physicians. This means they have bad and/or unforeseen reactions to the drugs.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4d','a')">adverse</button>
+          <button class="option-btn" onclick="selectOption(this,'q4d','b')">assumed</button>
+          <button class="option-btn" onclick="selectOption(this,'q4d','c')">approved</button>
+          <button class="option-btn" onclick="selectOption(this,'q4d','d')">agreed</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4d','a','fb4d')">Check Answer</button>
+        <div class="hidden-answer" id="ans4d">adverse</div>
+        <div class="feedback" id="fb4d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. Some prescription drugs do what they are supposed to do; however, there are some bad _____ effects that certain medications can cause like nausea and dizziness.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4e','a')">turn</button>
+          <button class="option-btn" onclick="selectOption(this,'q4e','b')">reach</button>
+          <button class="option-btn" onclick="selectOption(this,'q4e','c')">touch</button>
+          <button class="option-btn" onclick="selectOption(this,'q4e','d')">side</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4e','d','fb4e')">Check Answer</button>
+        <div class="hidden-answer" id="ans4e">side</div>
+        <div class="feedback" id="fb4e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. A _____ is an unborn child that is growing within a mother's womb.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4f','a')">bud</button>
+          <button class="option-btn" onclick="selectOption(this,'q4f','b')">fetus</button>
+          <button class="option-btn" onclick="selectOption(this,'q4f','c')">term</button>
+          <button class="option-btn" onclick="selectOption(this,'q4f','d')">egg</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4f','b','fb4f')">Check Answer</button>
+        <div class="hidden-answer" id="ans4f">fetus</div>
+        <div class="feedback" id="fb4f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. _____ from males and eggs from females are necessary in order for humans to reproduce.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4g','a')">sperm</button>
+          <button class="option-btn" onclick="selectOption(this,'q4g','b')">tadpoles</button>
+          <button class="option-btn" onclick="selectOption(this,'q4g','c')">saunas</button>
+          <button class="option-btn" onclick="selectOption(this,'q4g','d')">flora</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4g','a','fb4g')">Check Answer</button>
+        <div class="hidden-answer" id="ans4g">sperm</div>
+        <div class="feedback" id="fb4g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. When a patient has a _____ illness, this means that the illness is incurable and fatal.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4h','a')">oral</button>
+          <button class="option-btn" onclick="selectOption(this,'q4h','b')">terminal</button>
+          <button class="option-btn" onclick="selectOption(this,'q4h','c')">aural</button>
+          <button class="option-btn" onclick="selectOption(this,'q4h','d')">synthetic</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4h','b','fb4h')">Check Answer</button>
+        <div class="hidden-answer" id="ans4h">terminal</div>
+        <div class="feedback" id="fb4h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. Sometimes, women have _____ sections while giving birth to their babies. This is when doctors remove the baby from the mother's womb via a surgical incision in the abdomen rather than a vaginal birth.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4i','a')">vacant</button>
+          <button class="option-btn" onclick="selectOption(this,'q4i','b')">removal</button>
+          <button class="option-btn" onclick="selectOption(this,'q4i','c')">caesarian</button>
+          <button class="option-btn" onclick="selectOption(this,'q4i','d')">victorian</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4i','c','fb4i')">Check Answer</button>
+        <div class="hidden-answer" id="ans4i">caesarian</div>
+        <div class="feedback" id="fb4i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. A _____ is a chemical substance that causes cancer. This substance is found in air pollution and cigarettes.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4j','a')">carcinogen</button>
+          <button class="option-btn" onclick="selectOption(this,'q4j','b')">parsley</button>
+          <button class="option-btn" onclick="selectOption(this,'q4j','c')">cataract</button>
+          <button class="option-btn" onclick="selectOption(this,'q4j','d')">bronchitis</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4j','a','fb4j')">Check Answer</button>
+        <div class="hidden-answer" id="ans4j">carcinogen</div>
+        <div class="feedback" id="fb4j"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--pink);">Continue →</button>
+  </div>
+</section>
+<!-- SECTION 5: ACCIDENTS AND INJURIES -->
+<section class="section-solid pink">
+  <div class="container">
+    <h2>🚑 Accidents and Injuries</h2>
+    <p style="margin-bottom:20px;">Match the sentence beginnings and endings.</p>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. I was so surprised that I dropped _____</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q5a','a')">on the ice and hurt themselves.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5a','b')">that cushion!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5a','c')">her ankle the first time she went skiing.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5a','d')">my cell phone.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5a','e')">over on the street. I was so embarrassed!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5a','f')">my elbow on the wall. It really hurt!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5a','g')">my finger on a piece of glass.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5a','h')">any of those plates.</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q5a','d','fb5a')">Check Answer</button>
+        <div class="hidden-answer" id="ans5a">my cell phone.</div>
+        <div class="feedback" id="fb5a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Yes, you can wash the dishes but don't break _____</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q5b','a')">on the ice and hurt themselves.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5b','b')">that cushion!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5b','c')">her ankle the first time she went skiing.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5b','d')">my cell phone.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5b','e')">over on the street. I was so embarrassed!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5b','f')">my elbow on the wall. It really hurt!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5b','g')">my finger on a piece of glass.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5b','h')">any of those plates.</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q5b','h','fb5b')">Check Answer</button>
+        <div class="hidden-answer" id="ans5b">any of those plates.</div>
+        <div class="feedback" id="fb5b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Every winter, people slip _____</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q5c','a')">on the ice and hurt themselves.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5c','b')">that cushion!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5c','c')">her ankle the first time she went skiing.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5c','d')">my cell phone.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5c','e')">over on the street. I was so embarrassed!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5c','f')">my elbow on the wall. It really hurt!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5c','g')">my finger on a piece of glass.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5c','h')">any of those plates.</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q5c','a','fb5c')">Check Answer</button>
+        <div class="hidden-answer" id="ans5c">on the ice and hurt themselves.</div>
+        <div class="feedback" id="fb5c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. This morning, I banged _____</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q5d','a')">on the ice and hurt themselves.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5d','b')">that cushion!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5d','c')">her ankle the first time she went skiing.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5d','d')">my cell phone.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5d','e')">over on the street. I was so embarrassed!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5d','f')">my elbow on the wall. It really hurt!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5d','g')">my finger on a piece of glass.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5d','h')">any of those plates.</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q5d','f','fb5d')">Check Answer</button>
+        <div class="hidden-answer" id="ans5d">my elbow on the wall. It really hurt!</div>
+        <div class="feedback" id="fb5d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. Unfortunately, she broke _____</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q5e','a')">on the ice and hurt themselves.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5e','b')">that cushion!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5e','c')">her ankle the first time she went skiing.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5e','d')">my cell phone.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5e','e')">over on the street. I was so embarrassed!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5e','f')">my elbow on the wall. It really hurt!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5e','g')">my finger on a piece of glass.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5e','h')">any of those plates.</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q5e','c','fb5e')">Check Answer</button>
+        <div class="hidden-answer" id="ans5e">her ankle the first time she went skiing.</div>
+        <div class="feedback" id="fb5e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. I tripped and fell _____</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q5f','a')">on the ice and hurt themselves.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5f','b')">that cushion!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5f','c')">her ankle the first time she went skiing.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5f','d')">my cell phone.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5f','e')">over on the street. I was so embarrassed!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5f','f')">my elbow on the wall. It really hurt!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5f','g')">my finger on a piece of glass.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5f','h')">any of those plates.</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q5f','e','fb5f')">Check Answer</button>
+        <div class="hidden-answer" id="ans5f">over on the street. I was so embarrassed!</div>
+        <div class="feedback" id="fb5f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. Ouch! I've just cut _____</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q5g','a')">on the ice and hurt themselves.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5g','b')">that cushion!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5g','c')">her ankle the first time she went skiing.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5g','d')">my cell phone.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5g','e')">over on the street. I was so embarrassed!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5g','f')">my elbow on the wall. It really hurt!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5g','g')">my finger on a piece of glass.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5g','h')">any of those plates.</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q5g','g','fb5g')">Check Answer</button>
+        <div class="hidden-answer" id="ans5g">my finger on a piece of glass.</div>
+        <div class="feedback" id="fb5g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. Careful you don't trip over _____</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q5h','a')">on the ice and hurt themselves.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5h','b')">that cushion!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5h','c')">her ankle the first time she went skiing.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5h','d')">my cell phone.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5h','e')">over on the street. I was so embarrassed!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5h','f')">my elbow on the wall. It really hurt!</button>
+          <button class="option-btn" onclick="selectOption(this,'q5h','g')">my finger on a piece of glass.</button>
+          <button class="option-btn" onclick="selectOption(this,'q5h','h')">any of those plates.</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q5h','b','fb5h')">Check Answer</button>
+        <div class="hidden-answer" id="ans5h">that cushion!</div>
+        <div class="feedback" id="fb5h"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 6: ERROR CORRECTION - PREVENTING HOUSEHOLD ACCIDENTS -->
+<section class="section-solid light-purple">
+  <div class="container">
+    <h2 style="color:var(--purple-dark);">🔍 Error Correction: Preventing Household Accidents</h2>
+    <p style="margin-bottom:20px;">Find and correct one error in each sentence. Either add a missing word or correct a word that's there.</p>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. Be careful not to slip on newly washed kitchen floors.</label>
+        <input type="text" class="exercise-input" id="ex6a" placeholder="Corrected sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex6a',['correct','no','error'],'fb6a','ans6a')">Check Answer</button>
+        <div class="hidden-answer" id="ans6a">✓ Correct as is (no error)</div>
+        <div class="feedback" id="fb6a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Take care when you clean up broken glass to avoid cutting yourself.</label>
+        <input type="text" class="exercise-input" id="ex6b" placeholder="Corrected sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex6b',['correct','no','error'],'fb6b','ans6b')">Check Answer</button>
+        <div class="hidden-answer" id="ans6b">✓ Correct as is (no error)</div>
+        <div class="feedback" id="fb6b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Keep cupboard doors closed so you don't bang the head.</label>
+        <input type="text" class="exercise-input" id="ex6c" placeholder="Corrected sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex6c',['your','head'],'fb6c','ans6c')">Check Answer</button>
+        <div class="hidden-answer" id="ans6c">Keep cupboard doors closed so you don't bang YOUR head.</div>
+        <div class="feedback" id="fb6c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. Avoid leaving things on the floor or someone may trip on them.</label>
+        <input type="text" class="exercise-input" id="ex6d" placeholder="Corrected sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex6d',['trip','over'],'fb6d','ans6d')">Check Answer</button>
+        <div class="hidden-answer" id="ans6d">Avoid leaving things on the floor or someone may trip OVER them.</div>
+        <div class="feedback" id="fb6d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. If your child break a toy, throw it away or repair it because it could be dangerous.</label>
+        <input type="text" class="exercise-input" id="ex6e" placeholder="Corrected sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex6e',['breaks'],'fb6e','ans6e')">Check Answer</button>
+        <div class="hidden-answer" id="ans6e">If your child BREAKS a toy, throw it away or repair it because it could be dangerous.</div>
+        <div class="feedback" id="fb6e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. Make sure not to stand up too fast, as you might get dizzy and fall over.</label>
+        <input type="text" class="exercise-input" id="ex6f" placeholder="Corrected sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex6f',['correct','no','error'],'fb6f','ans6f')">Check Answer</button>
+        <div class="hidden-answer" id="ans6f">✓ Correct as is (no error)</div>
+        <div class="feedback" id="fb6f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. Take care when going downstairs because it's easy to slip and broke your ankle.</label>
+        <input type="text" class="exercise-input" id="ex6g" placeholder="Corrected sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex6g',['break','your','ankle'],'fb6g','ans6g')">Check Answer</button>
+        <div class="hidden-answer" id="ans6g">Take care when going downstairs because it's easy to slip and BREAK your ankle.</div>
+        <div class="feedback" id="fb6g"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 7: HEALTH AND TREATMENTS -->
+<section class="section-solid purple">
+  <div class="container">
+    <h2>💊 Health and Treatments</h2>
+    <p style="margin-bottom:20px;">Match the vocabulary words with the correct definitions.</p>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. medicines that destroy harmful bacteria and cure infections</label>
+        <input type="text" class="exercise-input" id="ex7a" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex7a',['antibiotics'],'fb7a','ans7a')">Check Answer</button>
+        <div class="hidden-answer" id="ans7a">antibiotics</div>
+        <div class="feedback" id="fb7a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. a treatment in which thin needles are placed at nerve centers around the body</label>
+        <input type="text" class="exercise-input" id="ex7b" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex7b',['acupuncture','accupunture'],'fb7b','ans7b')">Check Answer</button>
+        <div class="hidden-answer" id="ans7b">acupuncture</div>
+        <div class="feedback" id="fb7b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. something you do to try and cure an illness or injury, usually suggested by a doctor</label>
+        <input type="text" class="exercise-input" id="ex7c" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex7c',['treatment'],'fb7c','ans7c')">Check Answer</button>
+        <div class="hidden-answer" id="ans7c">a treatment</div>
+        <div class="feedback" id="fb7c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. drugs which reduce pain</label>
+        <input type="text" class="exercise-input" id="ex7d" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex7d',['painkillers'],'fb7d','ans7d')">Check Answer</button>
+        <div class="hidden-answer" id="ans7d">painkillers</div>
+        <div class="feedback" id="fb7d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. a mental state like sleep in which your thoughts can be influenced</label>
+        <input type="text" class="exercise-input" id="ex7e" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex7e',['hypnosis'],'fb7e','ans7e')">Check Answer</button>
+        <div class="hidden-answer" id="ans7e">hypnosis</div>
+        <div class="feedback" id="fb7e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. the signs of an illness</label>
+        <input type="text" class="exercise-input" id="ex7f" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex7f',['symptoms'],'fb7f','ans7f')">Check Answer</button>
+        <div class="hidden-answer" id="ans7f">symptoms</div>
+        <div class="feedback" id="fb7f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. a treatment in which you practice moving parts of your body</label>
+        <input type="text" class="exercise-input" id="ex7g" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex7g',['physiotherapy'],'fb7g','ans7g')">Check Answer</button>
+        <div class="hidden-answer" id="ans7g">physiotherapy</div>
+        <div class="feedback" id="fb7g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. something that makes you better when you're ill</label>
+        <input type="text" class="exercise-input" id="ex7h" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex7h',['remedy'],'fb7h','ans7h')">Check Answer</button>
+        <div class="hidden-answer" id="ans7h">a remedy</div>
+        <div class="feedback" id="fb7h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. a sugar pill</label>
+        <input type="text" class="exercise-input" id="ex7i" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex7i',['placebo'],'fb7i','ans7i')">Check Answer</button>
+        <div class="hidden-answer" id="ans7i">a placebo</div>
+        <div class="feedback" id="fb7i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. when a doctor cuts you open to repair or remove something</label>
+        <input type="text" class="exercise-input" id="ex7j" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex7j',['surgery'],'fb7j','ans7j')">Check Answer</button>
+        <div class="hidden-answer" id="ans7j">surgery</div>
+        <div class="feedback" id="fb7j"></div>
+      </div>
+      <div class="exercise-item">
+        <label>11. a disease of the body or mind</label>
+        <input type="text" class="exercise-input" id="ex7k" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex7k',['illness'],'fb7k','ans7k')">Check Answer</button>
+        <div class="hidden-answer" id="ans7k">an illness</div>
+        <div class="feedback" id="fb7k"></div>
+      </div>
+      <div class="exercise-item">
+        <label>12. a drug given to stop you from getting a certain disease</label>
+        <input type="text" class="exercise-input" id="ex7l" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex7l',['vaccination'],'fb7l','ans7l')">Check Answer</button>
+        <div class="hidden-answer" id="ans7l">vaccination</div>
+        <div class="feedback" id="fb7l"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--pink);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 8: HEALTHCARE VOCABULARY (3 CONVERSATIONS) -->
+<section class="section-solid pink-dark">
+  <div class="container">
+    <h2>🏥 Healthcare Vocabulary</h2>
+    <p style="margin-bottom:20px;">Complete the expressions with the correct vocabulary word.</p>
+    <div class="highlight-box" style="background:rgba(255,128,128,0.15);">
+      <strong>Words:</strong> entitled, openly, status, health, access, manner, out, regular, treatments, people
+    </div>
+    <div class="exercise-box">
+      <h3>Conversation 1</h3>
+      <div class="exercise-item">
+        <label>'Unfortunately I don't have (1) _____ insurance right now because I've just moved here, but I've applied for it. It's quite good because it covers various (2) _____, including dental work. Also, this country has a very efficient medical system. They treat (3) _____ right away, with no waiting time.'</label>
+        <input type="text" class="exercise-input" id="ex8a" placeholder="Word 1...">
+        <input type="text" class="exercise-input" id="ex8a2" placeholder="Word 2..." style="margin-top:10px;">
+        <input type="text" class="exercise-input" id="ex8a3" placeholder="Word 3..." style="margin-top:10px;">
+        <button class="btn-verify" onclick="checkSimple('ex8a',['health'],'fb8a','ans8a')">Check 1</button>
+        <button class="btn-verify" onclick="checkSimple('ex8a2',['treatments'],'fb8a2','ans8a2')">Check 2</button>
+        <button class="btn-verify" onclick="checkSimple('ex8a3',['people'],'fb8a3','ans8a3')">Check 3</button>
+        <div class="hidden-answer" id="ans8a">health</div>
+        <div class="hidden-answer" id="ans8a2">treatments</div>
+        <div class="hidden-answer" id="ans8a3">people</div>
+        <div class="feedback" id="fb8a"></div>
+        <div class="feedback" id="fb8a2"></div>
+        <div class="feedback" id="fb8a3"></div>
+      </div>
+      <h3>Conversation 2</h3>
+      <div class="exercise-item">
+        <label>'I try to have (4) _____ check-ups although I'm quite busy. I tend to ask my doctor a lot of questions and he discusses everything (5) _____ with me. In my grandparents' day, people were never given (6) _____ to medical information but now we're (7) _____ to see our own medical records. They're quite interesting to read, actually!'</label>
+        <input type="text" class="exercise-input" id="ex8b" placeholder="Word 4...">
+        <input type="text" class="exercise-input" id="ex8b2" placeholder="Word 5..." style="margin-top:10px;">
+        <input type="text" class="exercise-input" id="ex8b3" placeholder="Word 6..." style="margin-top:10px;">
+        <input type="text" class="exercise-input" id="ex8b4" placeholder="Word 7..." style="margin-top:10px;">
+        <button class="btn-verify" onclick="checkSimple('ex8b',['regular'],'fb8b','ans8b')">Check 4</button>
+        <button class="btn-verify" onclick="checkSimple('ex8b2',['openly'],'fb8b2','ans8b2')">Check 5</button>
+        <button class="btn-verify" onclick="checkSimple('ex8b3',['access'],'fb8b3','ans8b3')">Check 6</button>
+        <button class="btn-verify" onclick="checkSimple('ex8b4',['entitled'],'fb8b4','ans8b4')">Check 7</button>
+        <div class="hidden-answer" id="ans8b">regular</div>
+        <div class="hidden-answer" id="ans8b2">openly</div>
+        <div class="hidden-answer" id="ans8b3">access</div>
+        <div class="hidden-answer" id="ans8b4">entitled</div>
+        <div class="feedback" id="fb8b"></div>
+        <div class="feedback" id="fb8b2"></div>
+        <div class="feedback" id="fb8b3"></div>
+        <div class="feedback" id="fb8b4"></div>
+      </div>
+      <h3>Conversation 3</h3>
+      <div class="exercise-item">
+        <label>'Where I live, doctors and nurses have a high (8) _____ because they help to save lives, but even though they're important, they have a friendly (9) _____ towards their patients. Another good thing is nurses don't have to help (10) _____ with cleaning because hospitals have lots of cleaning staff. That means nurses can focus totally on patient care.'</label>
+        <input type="text" class="exercise-input" id="ex8c" placeholder="Word 8...">
+        <input type="text" class="exercise-input" id="ex8c2" placeholder="Word 9..." style="margin-top:10px;">
+        <input type="text" class="exercise-input" id="ex8c3" placeholder="Word 10..." style="margin-top:10px;">
+        <button class="btn-verify" onclick="checkSimple('ex8c',['status'],'fb8c','ans8c')">Check 8</button>
+        <button class="btn-verify" onclick="checkSimple('ex8c2',['manner'],'fb8c2','ans8c2')">Check 9</button>
+        <button class="btn-verify" onclick="checkSimple('ex8c3',['out'],'fb8c3','ans8c3')">Check 10</button>
+        <div class="hidden-answer" id="ans8c">status</div>
+        <div class="hidden-answer" id="ans8c2">manner</div>
+        <div class="hidden-answer" id="ans8c3">out</div>
+        <div class="feedback" id="fb8c"></div>
+        <div class="feedback" id="fb8c2"></div>
+        <div class="feedback" id="fb8c3"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 9: GRAMMAR - SENTENCE ORDER -->
+<section class="section-solid light-pink">
+  <div class="container">
+    <h2 style="color:var(--purple-dark);">🔤 Grammar: Sentence Order</h2>
+    <p style="margin-bottom:20px;">Put each sentence in the correct order.</p>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. I've with terrible just come down a .</label>
+        <input type="text" class="exercise-input" id="ex9a" placeholder="Correct order...">
+        <button class="btn-verify" onclick="checkSimple('ex9a',['ive','just','come','down','with','terrible','cold'],'fb9a','ans9a')">Check Answer</button>
+        <div class="hidden-answer" id="ans9a">I've just come down with a terrible cold.</div>
+        <div class="feedback" id="fb9a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Have to allergic had ever you an reaction aspirin?</label>
+        <input type="text" class="exercise-input" id="ex9b" placeholder="Correct order...">
+        <button class="btn-verify" onclick="checkSimple('ex9b',['have','you','ever','had','an','allergic','reaction','to','aspirin'],'fb9b','ans9b')">Check Answer</button>
+        <div class="hidden-answer" id="ans9b">Have you ever had an allergic reaction to aspirin?</div>
+        <div class="feedback" id="fb9b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Tim and first summer baby Rena their are expecting this .</label>
+        <input type="text" class="exercise-input" id="ex9c" placeholder="Correct order...">
+        <button class="btn-verify" onclick="checkSimple('ex9c',['tim','and','rena','are','expecting','their','first','baby','this','summer'],'fb9c','ans9c')">Check Answer</button>
+        <div class="hidden-answer" id="ans9c">Tim and Rena are expecting their first baby this summer.</div>
+        <div class="feedback" id="fb9c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. They're X-ray my an going ankle of take to .</label>
+        <input type="text" class="exercise-input" id="ex9d" placeholder="Correct order...">
+        <button class="btn-verify" onclick="checkSimple('ex9d',['theyre','going','to','take','an','x-ray','of','my','ankle'],'fb9d','ans9d')">Check Answer</button>
+        <div class="hidden-answer" id="ans9d">They're going to take an X-ray of my ankle.</div>
+        <div class="feedback" id="fb9d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. He his he can't voice has speak because lost!</label>
+        <input type="text" class="exercise-input" id="ex9e" placeholder="Correct order...">
+        <button class="btn-verify" onclick="checkSimple('ex9e',['he','has','lost','his','voice','he','cant','speak'],'fb9e','ans9e')">Check Answer</button>
+        <div class="hidden-answer" id="ans9e">He has lost his voice, he can't speak!</div>
+        <div class="feedback" id="fb9e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. I've leg in strained a muscle right my .</label>
+        <input type="text" class="exercise-input" id="ex9f" placeholder="Correct order...">
+        <button class="btn-verify" onclick="checkSimple('ex9f',['ive','strained','a','muscle','in','my','right','leg'],'fb9f','ans9f')">Check Answer</button>
+        <div class="hidden-answer" id="ans9f">I've strained a muscle in my right leg.</div>
+        <div class="feedback" id="fb9f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. It that so almost was hot I fainted .</label>
+        <input type="text" class="exercise-input" id="ex9g" placeholder="Correct order...">
+        <button class="btn-verify" onclick="checkSimple('ex9g',['it','was','so','hot','that','i','almost','fainted'],'fb9g','ans9g')">Check Answer</button>
+        <div class="hidden-answer" id="ans9g">It was so hot that I almost fainted.</div>
+        <div class="feedback" id="fb9g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. She Friday gave baby last to boy a birth .</label>
+        <input type="text" class="exercise-input" id="ex9h" placeholder="Correct order...">
+        <button class="btn-verify" onclick="checkSimple('ex9h',['she','gave','birth','to','a','baby','boy','last','friday'],'fb9h','ans9h')">Check Answer</button>
+        <div class="hidden-answer" id="ans9h">She gave birth to a baby boy last Friday.</div>
+        <div class="feedback" id="fb9h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. I ten for was about unconscious minutes .</label>
+        <input type="text" class="exercise-input" id="ex9i" placeholder="Correct order...">
+        <button class="btn-verify" onclick="checkSimple('ex9i',['i','was','unconscious','for','about','ten','minutes'],'fb9i','ans9i')">Check Answer</button>
+        <div class="hidden-answer" id="ans9i">I was unconscious for about ten minutes.</div>
+        <div class="feedback" id="fb9i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. Mike over has got flu just the .</label>
+        <input type="text" class="exercise-input" id="ex9j" placeholder="Correct order...">
+        <button class="btn-verify" onclick="checkSimple('ex9j',['mike','has','just','got','over','the','flu'],'fb9j','ans9j')">Check Answer</button>
+        <div class="hidden-answer" id="ans9j">Mike has just got over the flu.</div>
+        <div class="feedback" id="fb9j"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+<!-- SECTION 10: GRAMMAR - ADJECTIVE OR ADVERB -->
+<section class="section-solid purple">
+  <div class="container">
+    <h2>📝 Grammar: Adjective or Adverb</h2>
+    <p style="margin-bottom:20px;">Fill in the blanks with an adjective or an adverb.</p>
+    <div class="highlight-box" style="background:rgba(255,128,128,0.15);">
+      <strong>Example:</strong> Peter works slowly (slow). Answer: Peter works <strong>slowly</strong>.
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. He _____ reads a book. (quick)</label>
+        <input type="text" class="exercise-input" id="ex10a" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10a',['quickly'],'fb10a','ans10a')">Check Answer</button>
+        <div class="hidden-answer" id="ans10a">quickly</div>
+        <div class="feedback" id="fb10a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Mandy is a _____ girl. (pretty)</label>
+        <input type="text" class="exercise-input" id="ex10b" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10b',['pretty'],'fb10b','ans10b')">Check Answer</button>
+        <div class="hidden-answer" id="ans10b">pretty</div>
+        <div class="feedback" id="fb10b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. The class is _____ loud today. (terrible)</label>
+        <input type="text" class="exercise-input" id="ex10c" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10c',['terribly'],'fb10c','ans10c')">Check Answer</button>
+        <div class="hidden-answer" id="ans10c">terribly</div>
+        <div class="feedback" id="fb10c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. Max is a _____ singer. (good)</label>
+        <input type="text" class="exercise-input" id="ex10d" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10d',['good'],'fb10d','ans10d')">Check Answer</button>
+        <div class="hidden-answer" id="ans10d">good</div>
+        <div class="feedback" id="fb10d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. You can _____ open this tin. (easy)</label>
+        <input type="text" class="exercise-input" id="ex10e" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10e',['easily'],'fb10e','ans10e')">Check Answer</button>
+        <div class="hidden-answer" id="ans10e">easily</div>
+        <div class="feedback" id="fb10e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. It's a _____ day today. (terrible)</label>
+        <input type="text" class="exercise-input" id="ex10f" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10f',['terrible'],'fb10f','ans10f')">Check Answer</button>
+        <div class="hidden-answer" id="ans10f">terrible</div>
+        <div class="feedback" id="fb10f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. She sings the song _____. (good)</label>
+        <input type="text" class="exercise-input" id="ex10g" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10g',['well'],'fb10g','ans10g')">Check Answer</button>
+        <div class="hidden-answer" id="ans10g">well</div>
+        <div class="feedback" id="fb10g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. He is a _____ driver. (careful)</label>
+        <input type="text" class="exercise-input" id="ex10h" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10h',['careful'],'fb10h','ans10h')">Check Answer</button>
+        <div class="hidden-answer" id="ans10h">careful</div>
+        <div class="feedback" id="fb10h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. He drives the car _____. (careful)</label>
+        <input type="text" class="exercise-input" id="ex10i" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10i',['carefully'],'fb10i','ans10i')">Check Answer</button>
+        <div class="hidden-answer" id="ans10i">carefully</div>
+        <div class="feedback" id="fb10i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. The dog barks _____. (loud)</label>
+        <input type="text" class="exercise-input" id="ex10j" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10j',['loudly','loud'],'fb10j','ans10j')">Check Answer</button>
+        <div class="hidden-answer" id="ans10j">loudly</div>
+        <div class="feedback" id="fb10j"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--purple-dark);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 11: GRAMMAR - WHERE DOES THE ADVERB GO? -->
+<section class="section-solid pink">
+  <div class="container">
+    <h2>📝 Grammar: Where does the adverb go?</h2>
+    <p style="margin-bottom:20px;">Rewrite the sentences and put the adverb in the correct place.</p>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. I'm going to buy a house next year. (probably)</label>
+        <input type="text" class="exercise-input" id="ex11a" placeholder="Rewrite the sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex11a',['im','going','probably','to','buy','a','house','next','year'],'fb11a','ans11a')">Check Answer</button>
+        <div class="hidden-answer" id="ans11a">I'm probably going to buy a house next year.</div>
+        <div class="feedback" id="fb11a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Ann has started learning Mandarin. (just)</label>
+        <input type="text" class="exercise-input" id="ex11b" placeholder="Rewrite the sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex11b',['ann','has','just','started','learning','mandarin'],'fb11b','ans11b')">Check Answer</button>
+        <div class="hidden-answer" id="ans11b">Ann has just started learning Mandarin.</div>
+        <div class="feedback" id="fb11b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Tom doesn't like technology. He hasn't got a computer. (even)</label>
+        <input type="text" class="exercise-input" id="ex11c" placeholder="Rewrite the sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex11c',['tom','doesnt','like','technology','he','hasnt','even','got','a','computer'],'fb11c','ans11c')">Check Answer</button>
+        <div class="hidden-answer" id="ans11c">Tom doesn't like technology. He hasn't even got a computer.</div>
+        <div class="feedback" id="fb11c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. I watch television, though I surf the internet. (hardly ever, frequently)</label>
+        <input type="text" class="exercise-input" id="ex11d" placeholder="Rewrite the sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex11d',['i','hardly','ever','watch','television','though','i','frequently','surf','the','internet'],'fb11d','ans11d')">Check Answer</button>
+        <div class="hidden-answer" id="ans11d">I hardly ever watch television, though I frequently surf the internet.</div>
+        <div class="feedback" id="fb11d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. My brother smiles. He's so serious and solemn. (hardly ever, always)</label>
+        <input type="text" class="exercise-input" id="ex11e" placeholder="Rewrite the sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex11e',['my','brother','hardly','ever','smiles','hes','always','so','serious','and','solemn'],'fb11e','ans11e')">Check Answer</button>
+        <div class="hidden-answer" id="ans11e">My brother hardly ever smiles. He's always so serious and solemn.</div>
+        <div class="feedback" id="fb11e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. I haven't finished doing my project. I've got five more pages to write. (yet, still)</label>
+        <input type="text" class="exercise-input" id="ex11f" placeholder="Rewrite the sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex11f',['i','havent','finished','doing','my','project','yet','ive','still','got','five','more','pages','to','write'],'fb11f','ans11f')">Check Answer</button>
+        <div class="hidden-answer" id="ans11f">I haven't finished doing my project yet. I've still got five more pages to write.</div>
+        <div class="feedback" id="fb11f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. He has had six cars and they have been BMWs. (all)</label>
+        <input type="text" class="exercise-input" id="ex11g" placeholder="Rewrite the sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex11g',['he','has','had','six','cars','and','they','have','all','been','bmws'],'fb11g','ans11g')">Check Answer</button>
+        <div class="hidden-answer" id="ans11g">He has had six cars and they have all been BMWs.</div>
+        <div class="feedback" id="fb11g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. Darren is a good football player and he plays tennis. (also)</label>
+        <input type="text" class="exercise-input" id="ex11h" placeholder="Rewrite the sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex11h',['darren','is','a','good','football','player','and','he','also','plays','tennis'],'fb11h','ans11h')">Check Answer</button>
+        <div class="hidden-answer" id="ans11h">Darren is a good football player and he also plays tennis.</div>
+        <div class="feedback" id="fb11h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. I've got two sisters and they're married. (both)</label>
+        <input type="text" class="exercise-input" id="ex11i" placeholder="Rewrite the sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex11i',['ive','got','two','sisters','and','theyre','both','married'],'fb11i','ans11i')">Check Answer</button>
+        <div class="hidden-answer" id="ans11i">I've got two sisters and they're both married.</div>
+        <div class="feedback" id="fb11i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. The presentation wasn't very good. I could hear the presenter. (hardly)</label>
+        <input type="text" class="exercise-input" id="ex11j" placeholder="Rewrite the sentence...">
+        <button class="btn-verify" onclick="checkSimple('ex11j',['the','presentation','wasnt','very','good','i','could','hardly','hear','the','presenter'],'fb11j','ans11j')">Check Answer</button>
+        <div class="hidden-answer" id="ans11j">The presentation wasn't very good. I could hardly hear the presenter.</div>
+        <div class="feedback" id="fb11j"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 12: COMPARISON GAME -->
+<section class="section-solid light-purple">
+  <div class="container">
+    <h2 style="color:var(--purple-dark);">⚖️ Comparison Game</h2>
+    <p style="margin-bottom:20px;">Which are some differences between these things using comparatives?</p>
+    <div class="highlight-box">
+      <strong>Examples:</strong><br>
+      • Magazines are more expensive than newspapers.<br>
+      • Magazines are thicker than newspapers.<br>
+      • Newspapers are more topical than magazines.
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. A car and a bus</label>
+        <textarea class="exercise-textarea" id="ex12a" placeholder="Write a comparison..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex12a','fb12a')">Check Answer</button>
+        <div class="feedback" id="fb12a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. London and Tokyo</label>
+        <textarea class="exercise-textarea" id="ex12b" placeholder="Write a comparison..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex12b','fb12b')">Check Answer</button>
+        <div class="feedback" id="fb12b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Hip-hop music and pop music</label>
+        <textarea class="exercise-textarea" id="ex12c" placeholder="Write a comparison..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex12c','fb12c')">Check Answer</button>
+        <div class="feedback" id="fb12c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. Girls and boys</label>
+        <textarea class="exercise-textarea" id="ex12d" placeholder="Write a comparison..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex12d','fb12d')">Check Answer</button>
+        <div class="feedback" id="fb12d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. Thailand and England</label>
+        <textarea class="exercise-textarea" id="ex12e" placeholder="Write a comparison..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex12e','fb12e')">Check Answer</button>
+        <div class="feedback" id="fb12e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. Football and badminton</label>
+        <textarea class="exercise-textarea" id="ex12f" placeholder="Write a comparison..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex12f','fb12f')">Check Answer</button>
+        <div class="feedback" id="fb12f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. iPhone and Samsung</label>
+        <textarea class="exercise-textarea" id="ex12g" placeholder="Write a comparison..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex12g','fb12g')">Check Answer</button>
+        <div class="feedback" id="fb12g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. High School and university</label>
+        <textarea class="exercise-textarea" id="ex12h" placeholder="Write a comparison..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex12h','fb12h')">Check Answer</button>
+        <div class="feedback" id="fb12h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. An elephant and a mouse</label>
+        <textarea class="exercise-textarea" id="ex12i" placeholder="Write a comparison..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex12i','fb12i')">Check Answer</button>
+        <div class="feedback" id="fb12i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. Teacher and a student</label>
+        <textarea class="exercise-textarea" id="ex12j" placeholder="Write a comparison..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex12j','fb12j')">Check Answer</button>
+        <div class="feedback" id="fb12j"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 13: SUPERLATIVE MEDIA -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Superlative Media</h2>
+    <p>Music • TV & Internet • Cinema</p>
+  </div>
+</section>
+
+<section class="section-solid purple-dark">
+  <div class="container">
+    <h2>🎬 Superlative Media</h2>
+    <p style="margin-bottom:20px;">Change each adjective to its superlative form. Then complete each sentence with your opinion.</p>
+    
+    <div class="exercise-box">
+      <h3 style="color:var(--pink-dark);">🎵 MUSIC</h3>
+      <div class="exercise-item">
+        <label>1. The most famous (famous) band is The Rolling Stones because their music is awesome.</label>
+        <input type="text" class="exercise-input" id="ex13a" placeholder="Example completed">
+        <button class="btn-verify" onclick="checkSimple('ex13a',['example'],'fb13a','ans13a')">Check Answer</button>
+        <div class="hidden-answer" id="ans13a">Example completed ✓</div>
+        <div class="feedback" id="fb13a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. The _____ (relaxing) music is _____</label>
+        <input type="text" class="exercise-input" id="ex13b" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13b',['most','relaxing'],'fb13b','ans13b')">Check Answer</button>
+        <div class="hidden-answer" id="ans13b">the most relaxing</div>
+        <div class="feedback" id="fb13b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. The _____ (exciting) dance music is _____</label>
+        <input type="text" class="exercise-input" id="ex13c" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13c',['most','exciting'],'fb13c','ans13c')">Check Answer</button>
+        <div class="hidden-answer" id="ans13c">the most exciting</div>
+        <div class="feedback" id="fb13c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. The _____ (good) female singer is _____</label>
+        <input type="text" class="exercise-input" id="ex13d" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13d',['best'],'fb13d','ans13d')">Check Answer</button>
+        <div class="hidden-answer" id="ans13d">the best</div>
+        <div class="feedback" id="fb13d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. The _____ (good) male singer is _____</label>
+        <input type="text" class="exercise-input" id="ex13e" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13e',['best'],'fb13e','ans13e')">Check Answer</button>
+        <div class="hidden-answer" id="ans13e">the best</div>
+        <div class="feedback" id="fb13e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. The _____ (bad) pop group is _____</label>
+        <input type="text" class="exercise-input" id="ex13f" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13f',['worst'],'fb13f','ans13f')">Check Answer</button>
+        <div class="hidden-answer" id="ans13f">the worst</div>
+        <div class="feedback" id="fb13f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. The _____ (interesting) decade for pop music is/was _____</label>
+        <input type="text" class="exercise-input" id="ex13g" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13g',['most','interesting'],'fb13g','ans13g')">Check Answer</button>
+        <div class="hidden-answer" id="ans13g">the most interesting</div>
+        <div class="feedback" id="fb13g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. The _____ (great) pop group in the world is/was _____</label>
+        <input type="text" class="exercise-input" id="ex13h" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13h',['greatest','best'],'fb13h','ans13h')">Check Answer</button>
+        <div class="hidden-answer" id="ans13h">the greatest / the best</div>
+        <div class="feedback" id="fb13h"></div>
+      </div>
+    </div>
+
+    <div class="exercise-box">
+      <h3 style="color:var(--pink-dark);">📺 TV AND THE INTERNET</h3>
+      <div class="exercise-item">
+        <label>1. The _____ (interesting) TV program is _____</label>
+        <input type="text" class="exercise-input" id="ex13i" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13i',['most','interesting'],'fb13i','ans13i')">Check Answer</button>
+        <div class="hidden-answer" id="ans13i">the most interesting</div>
+        <div class="feedback" id="fb13i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. The _____ (bad) TV program at the moment is _____</label>
+        <input type="text" class="exercise-input" id="ex13j" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13j',['worst'],'fb13j','ans13j')">Check Answer</button>
+        <div class="hidden-answer" id="ans13j">the worst</div>
+        <div class="feedback" id="fb13j"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. The _____ (funny) comedy on TV is _____</label>
+        <input type="text" class="exercise-input" id="ex13k" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13k',['funniest'],'fb13k','ans13k')">Check Answer</button>
+        <div class="hidden-answer" id="ans13k">the funniest</div>
+        <div class="feedback" id="fb13k"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. The _____ (interesting) presenter on TV is _____</label>
+        <input type="text" class="exercise-input" id="ex13l" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13l',['most','interesting'],'fb13l','ans13l')">Check Answer</button>
+        <div class="hidden-answer" id="ans13l">the most interesting</div>
+        <div class="feedback" id="fb13l"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. The _____ (good) news website is _____</label>
+        <input type="text" class="exercise-input" id="ex13m" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13m',['best'],'fb13m','ans13m')">Check Answer</button>
+        <div class="hidden-answer" id="ans13m">the best</div>
+        <div class="feedback" id="fb13m"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. The _____ (popular) social networking website is _____</label>
+        <input type="text" class="exercise-input" id="ex13n" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13n',['most','popular'],'fb13n','ans13n')">Check Answer</button>
+        <div class="hidden-answer" id="ans13n">the most popular</div>
+        <div class="feedback" id="fb13n"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. The _____ (popular) email is _____</label>
+        <input type="text" class="exercise-input" id="ex13o" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13o',['most','popular'],'fb13o','ans13o')">Check Answer</button>
+        <div class="hidden-answer" id="ans13o">the most popular</div>
+        <div class="feedback" id="fb13o"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. The _____ (bad) search engine is _____</label>
+        <input type="text" class="exercise-input" id="ex13p" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13p',['worst'],'fb13p','ans13p')">Check Answer</button>
+        <div class="hidden-answer" id="ans13p">the worst</div>
+        <div class="feedback" id="fb13p"></div>
+      </div>
+    </div>
+
+    <div class="exercise-box">
+      <h3 style="color:var(--pink-dark);">🎬 CINEMA</h3>
+      <div class="exercise-item">
+        <label>1. The _____ (good) film I've seen this year is _____</label>
+        <input type="text" class="exercise-input" id="ex13q" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13q',['best'],'fb13q','ans13q')">Check Answer</button>
+        <div class="hidden-answer" id="ans13q">the best</div>
+        <div class="feedback" id="fb13q"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. The _____ (bad) film I've ever seen is _____</label>
+        <input type="text" class="exercise-input" id="ex13r" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13r',['worst'],'fb13r','ans13r')">Check Answer</button>
+        <div class="hidden-answer" id="ans13r">the worst</div>
+        <div class="feedback" id="fb13r"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. The _____ (sad) film I've ever seen is _____</label>
+        <input type="text" class="exercise-input" id="ex13s" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13s',['saddest'],'fb13s','ans13s')">Check Answer</button>
+        <div class="hidden-answer" id="ans13s">the saddest</div>
+        <div class="feedback" id="fb13s"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. The _____ (exciting) film I've ever seen is _____</label>
+        <input type="text" class="exercise-input" id="ex13t" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13t',['most','exciting'],'fb13t','ans13t')">Check Answer</button>
+        <div class="hidden-answer" id="ans13t">the most exciting</div>
+        <div class="feedback" id="fb13t"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. The _____ (beautiful) film soundtrack I've ever heard is _____</label>
+        <input type="text" class="exercise-input" id="ex13u" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13u',['most','beautiful'],'fb13u','ans13u')">Check Answer</button>
+        <div class="hidden-answer" id="ans13u">the most beautiful</div>
+        <div class="feedback" id="fb13u"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. The _____ (interesting) film director is _____</label>
+        <input type="text" class="exercise-input" id="ex13v" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13v',['most','interesting'],'fb13v','ans13v')">Check Answer</button>
+        <div class="hidden-answer" id="ans13v">the most interesting</div>
+        <div class="feedback" id="fb13v"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. The _____ (attractive) actor or actress is _____</label>
+        <input type="text" class="exercise-input" id="ex13w" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13w',['most','attractive'],'fb13w','ans13w')">Check Answer</button>
+        <div class="hidden-answer" id="ans13w">the most attractive</div>
+        <div class="feedback" id="fb13w"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. The _____ (good) young actor or actress is _____</label>
+        <input type="text" class="exercise-input" id="ex13x" placeholder="Complete with superlative...">
+        <button class="btn-verify" onclick="checkSimple('ex13x',['best'],'fb13x','ans13x')">Check Answer</button>
+        <div class="hidden-answer" id="ans13x">the best</div>
+        <div class="feedback" id="fb13x"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--pink);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 14: GRAMMAR REVIEW -->
+<section class="section-solid pink-dark">
+  <div class="container">
+    <h2>📚 Grammar Review</h2>
+    
+    <div class="reading-block">
+      <h3 style="color:var(--purple-dark);">Adverbs</h3>
+      <p>Adverbs are an important part of speech. They usually answer questions such as <strong>how?, where?, when?, how often?</strong> and <strong>how much?</strong></p>
+      
+      <h4 style="color:var(--pink-dark); margin-top:20px;">What is an Adverb?</h4>
+      <p>An adverb is a word that tells us more about a verb. It "qualifies" or "modifies" a verb (The man ran quickly).</p>
+      <ul style="margin-left:20px;">
+        <li>John speaks <strong>loudly</strong>. (How does John speak?)</li>
+        <li><strong>Afterwards</strong> she smoked a cigarette. (When did she smoke?)</li>
+        <li>Mary lives <strong>locally</strong>. (Where does Mary live?)</li>
+      </ul>
+      <p style="margin-top:15px;">But adverbs can also modify adjectives (Tara is really beautiful), or even other adverbs (It works very well).</p>
+      
+      <h4 style="color:var(--pink-dark); margin-top:20px;">Adverb Form</h4>
+      <p>We make many adverbs by adding <strong>-ly</strong> to an adjective:</p>
+      <ul style="margin-left:20px;">
+        <li>quick (adjective) → quickly (adverb)</li>
+        <li>careful (adjective) → carefully (adverb)</li>
+        <li>beautiful (adjective) → beautifully (adverb)</li>
+      </ul>
+      <p style="margin-top:15px;">But not all words that end in -ly are adverbs. The words friendly, lovely, lonely and neighborly, for example, are all adjectives.</p>
+      <p style="margin-top:15px;">And some adverbs have no particular form: <strong>well, fast, very, never, always, often, still</strong></p>
+    </div>
+
+    <div class="reading-block">
+      <h3 style="color:var(--purple-dark);">Comparative and Superlative Adjectives</h3>
+      <p>The comparative form of an adjective is used for comparing two people or things (i.e. he is taller than me), while the superlative is used for comparing one person or thing with every other member of their group (i.e. he was the tallest boy in the class).</p>
+      
+      <div class="grammar-table">
+        <tr><th>Type</th><th>Rule</th><th>Examples</th></tr>
+        <tr><td><strong>One syllable</strong></td><td>Add -er / -est</td><td>warm - warmer - warmest<br>quick - quicker - quickest</td></tr>
+        <tr><td><strong>One syllable ending in -e</strong></td><td>Add -r / -st</td><td>late - later - latest<br>nice - nicer - nicest</td></tr>
+        <tr><td><strong>One syllable ending in consonant</strong></td><td>Double consonant + -er / -est</td><td>big - bigger - biggest<br>wet - wetter - wettest</td></tr>
+        <tr><td><strong>Two syllables ending in -y</strong></td><td>Change y to i + -er / -est</td><td>happy - happier - happiest<br>tidy - tidier - tidiest</td></tr>
+        <tr><td><strong>Two syllables (other)</strong></td><td>Use more / most</td><td>famous - more famous - the most famous</td></tr>
+        <tr><td><strong>Three+ syllables</strong></td><td>Use more / most</td><td>interesting - more interesting - the most interesting<br>attractive - more attractive - most attractive</td></tr>
+        <tr><td><strong>Irregular</strong></td><td>Memorize</td><td>bad - worse - worst<br>good - better - best<br>little - less - least<br>much - more - most</td></tr>
+      </div>
+    </div>
+
+    <button class="nav-btn" onclick="completeUnit()" style="background:var(--purple);">Complete Unit</button>
+  </div>
+</section>
+
+<!-- FINAL -->
+<div id="finalMsg" style="display:none; padding:80px 40px; background:var(--purple-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3rem; margin-bottom:20px;">🎉 Unit 24 Completed</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px;">You have mastered medical vocabulary, alternative therapies, adverbs, and comparatives/superlatives.</p>
+    <p style="font-size:1.1rem; margin-bottom:30px; opacity:0.8;">The brain doesn't translate. The brain assembles.</p>
+    <a href="indexmax.html" class="nav-btn" style="background:var(--pink); color:var(--text-light);">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:var(--purple-dark); color:var(--text-light);">
+  <p><strong>Discovery MAX Neuroeducation</strong></p>
+  <p>Unit 24: Health & Emergencies | Método NBF | Toño Vicas</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 120;
+
+// AUDIO FEEDBACK
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.1; u.pitch = 1;
+  synth.speak(u);
+}
+
+function updateProgress() {
+  document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
+}
+
+function normalizeText(text) {
+  if (!text) return "";
+  return text.toLowerCase().replace(/[?!.,']/g, "").replace(/\s+/g, " ").trim();
+}
+
+function scrollToNext() {
+  speak('Next section unlocked');
+  window.scrollBy({ top: window.innerHeight * 0.9, behavior: 'smooth' });
+}
+
+function checkSimple(inputId, keywords, fbId, ansId) {
+  const val = normalizeText(document.getElementById(inputId).value);
+  const fb = document.getElementById(fbId);
+  const ans = document.getElementById(ansId);
+  const allFound = keywords.some(k => val.includes(k));
+  
+  if(allFound) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correct. Structure validated.';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Review the key elements.';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Reflection recorded. Excellent cognitive effort.';
+    fb.style.display = 'block';
+    speak('Great answer!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep reflection. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Try again');
+  }
+}
+
+let selectedOptions = {};
+function selectOption(btn, questionId, option) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedOptions[questionId] = option;
+}
+
+function checkMC(questionId, correctAnswer, feedbackId) {
+  const fb = document.getElementById(feedbackId);
+  const ans = document.getElementById(feedbackId.replace('fb', 'ans'));
+  if (!selectedOptions[questionId]) { 
+    fb.className='feedback error'; 
+    fb.textContent='⚠️ Select an option'; 
+    fb.style.display='block'; 
+    speak('Select an option');
+    return; 
+  }
+  if (selectedOptions[questionId] === correctAnswer) {
+    fb.className='feedback success'; 
+    fb.textContent='✅ Correct'; 
+    fb.style.display='block'; 
+    ans.style.display='none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className='feedback error'; 
+    fb.textContent='❌ Incorrect'; 
+    fb.style.display='block'; 
+    ans.style.display='block';
+    speak('Sorry, try again');
+  }
+}
+
+function completeUnit() {
+  if(completedCount >= 95) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! You completed Unit 24!');
+  } else {
+    alert(`⚠️ Complete at least 95 of 120 exercises.\nCompleted: ${completedCount}/120`);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
