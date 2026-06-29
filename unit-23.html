@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 23: The Importance of Music | Discovery MAX Neuroeducation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple: #8E44AD;
+  --purple-dark: #6C3483;
+  --magenta: #E91E63;
+  --magenta-dark: #C2185B;
+  --pink-light: #F3E5F5;
+  --purple-light: #E1BEE7;
+  --white: #FFFFFF;
+  --text-dark: #1a1a1a;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.7; background:var(--pink-light); overflow-x:hidden; }
+
+.hero {
+  height:90vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1511646891520-0c832fa3a0e7?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(142,68,173,0.8), rgba(233,30,99,0.7)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:10px 25px; background:var(--magenta); color:var(--text-light); font-weight:700; font-size:0.9rem; letter-spacing:2px; margin-bottom:20px; border-radius:4px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.hero p { font-size:1.3rem; font-weight:300; max-width:700px; margin:0 auto; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--purple-dark); padding:12px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--magenta),var(--purple)); transition: width 0.5s ease; }
+
+.section-image {
+  min-height:50vh; position:relative; background-size:cover; background-position:center;
+  display:flex; align-items:center; justify-content:center; padding:60px 20px;
+}
+.section-image::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(142,68,173,0.8), rgba(233,30,99,0.7)); }
+.section-image-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; }
+.section-image-content h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; margin-bottom:15px; }
+
+.section-solid { padding:80px 40px; }
+.section-solid.purple { background:var(--purple); color:var(--text-light); }
+.section-solid.purple-dark { background:var(--purple-dark); color:var(--text-light); }
+.section-solid.magenta { background:var(--magenta); color:var(--text-light); }
+.section-solid.magenta-dark { background:var(--magenta-dark); color:var(--text-light); }
+.section-solid.pink-light { background:var(--pink-light); color:var(--text-dark); }
+.section-solid.purple-light { background:var(--purple-light); color:var(--text-dark); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:1100px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { background:var(--white); padding:40px; border-radius:8px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-left:6px solid var(--magenta); }
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--purple-dark); margin-bottom:20px; }
+.reading-block p { font-size:1.1rem; line-height:2; color:var(--text-dark); margin-bottom:15px; }
+
+.exercise-box { background:var(--white); padding:30px; border-radius:8px; margin:30px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--purple-dark); margin-bottom:20px; }
+.exercise-item { margin:20px 0; padding:20px; background:var(--pink-light); border-left:4px solid var(--magenta); border-radius:4px; }
+.exercise-item label { font-weight:600; font-size:1.05rem; display:block; margin-bottom:12px; color:var(--text-dark); }
+.exercise-input, .exercise-textarea {
+  width:100%; padding:12px; border:2px solid #d1d5db; border-radius:6px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s;
+}
+.exercise-input:focus, .exercise-textarea:focus { outline:none; border-color:var(--magenta); }
+.exercise-textarea { min-height:100px; resize:vertical; }
+
+.btn-verify {
+  margin-top:12px; padding:10px 24px; background:var(--magenta); color:var(--text-light);
+  border:none; border-radius:6px; font-weight:600; cursor:pointer; transition: background 0.3s;
+}
+.btn-verify:hover { background:var(--magenta-dark); }
+
+.feedback { margin-top:12px; padding:12px; border-radius:6px; font-weight:600; display:none; }
+.feedback.success { background:#d1fae5; color:#065f46; border-left:4px solid #10b981; }
+.feedback.error { background:#fee2e2; color:#991b1b; border-left:4px solid #ef4444; }
+.hidden-answer { display:none; margin-top:12px; padding:12px; background:var(--purple-light); border-left:4px solid var(--purple); border-radius:6px; color:var(--purple-dark); font-weight:600; }
+
+.options-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:15px 0; }
+.option-btn { padding:14px; background:var(--white); border:2px solid #d1d5db; border-radius:6px; cursor:pointer; transition:0.3s; color:var(--text-dark); text-align:left; font-size:0.95rem; font-family:'Inter',sans-serif; }
+.option-btn:hover { border-color:var(--magenta); background:rgba(233,30,99,0.1); }
+.option-btn.selected { background:var(--magenta); color:var(--text-light); border-color:var(--magenta); font-weight:600; }
+
+.nav-btn {
+  display:inline-block; margin-top:30px; padding:15px 40px; background:var(--magenta); color:var(--text-light);
+  text-decoration:none; border-radius:6px; font-weight:700; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer;
+}
+.nav-btn:hover { background:var(--magenta-dark); transform:translateY(-2px); }
+
+.highlight-box { background:rgba(233,30,99,0.1); border-left:4px solid var(--magenta); padding:20px 25px; margin:20px 0; border-radius:0 8px 8px 0; font-style:italic; color:var(--text-dark); }
+
+.grammar-table { width:100%; border-collapse:collapse; margin:20px 0; background:var(--white); border-radius:8px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.grammar-table th, .grammar-table td { padding:14px; text-align:left; border-bottom:1px solid #e5e7eb; color:var(--text-dark); }
+.grammar-table th { background:var(--purple-dark); color:var(--text-light); font-family:'Playfair Display',serif; font-size:1rem; }
+
+@media(max-width:768px) {
+  .hero { height:75vh; }
+  .section-image { min-height:40vh; }
+  .section-solid { padding:40px 20px; }
+  .reading-block { padding:25px; }
+  .exercise-box { padding:20px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">UNIT 23</div>
+    <h1>The Importance of Music</h1>
+    <p>Exploring musical genres, opera history, and mastering the Second Conditional.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<!-- SECTION 1: READING - THE IMPORTANCE OF MUSIC -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1511646891520-0c832fa3a0e7?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>The Importance of Music</h2>
+    <p>By The Williams Family</p>
+  </div>
+</section>
+
+<section class="section-solid purple">
+  <div class="container">
+    <h2>📖 Reading: The Importance of Music</h2>
+    
+    <div class="reading-block">
+      <h3 style="color:var(--purple-dark); border-bottom:3px solid var(--magenta); padding-bottom:15px;">🎵 The Williams' Life</h3>
+      <p>The Williams' life appears to go by just as normal as any other family, with an understanding among each other. They all attended an R&B concert which they enjoy very much, they saw and heard a Macklemore & Ryan Lewis concert. Their favorite song was "Can't Hold Us".</p>
+      <p><strong>Mr. James Williams</strong> loves Rock, especially from the 70's and 80's. The 70s is by far, the best decade of rock music. Some of the finest progressive, blues rock, and hard rock bands emerged during this time. I am using the term rock pretty loosely meaning I may include some borderline rock artists and as well as funk, but I won't be putting any classical, pure jazz, soul, or blues without rock influence. Today's music or better yet the music that teenagers listen to now a day drives him nuts. Among his favorite groups and singers are Pink Floyd, Led Zeppelin, Black Sabbath, Van Halen, not so much Ozzy but he thinks that some of his tunes are hot. For example, "Mr. Crowley" or "Crazy Train", he also relishes listening to "Gun's and Roses". Mr. James likes music so much that he's almost listening to music all the time, while driving to work, at work, at home, even while he's showering he likes to hum to his favorite songs.</p>
+      <p><strong>Mrs. Rose Mary Williams</strong> likes her husband's music very much but it isn't the kind of music she prefers. She rather listen to classic music, for example the "Forth and the Fifth Symphony" or the "Swan Lake" by Tchaikovsky. She gloats over this kind of music whenever she can, while doing house chores, yoga, or reading a good book.</p>
+      <p><strong>Edward</strong> like most of teenagers prefers to listen to Pop and R&B. Did you know that about 70% of teens prefer this kind of music, 13% lean towards Rock, and around 15% prefer Rap music? Edward likes performers like, John Newman but only some of his lyrics for example: "Love me again", "Losing sleep", "Out of my head" just to mention some. Another of his favorites is Kelly Rowland but not just because of her grace and good looks but due to her singing style, he likes songs like "Like this", "Kisses down low" or "Motivation". Obviously he can't leave out the admirable Beyoncé and some of her best singles, like "Love on top", "Ring the alarm" or "Me, myself and I". His little sister <strong>Kimberly</strong> most of the time looks up to him so she enjoys almost all the music that her brother listens too, but she could seat with her mom or dad and listen to their music of preference as well.</p>
+      <p style="font-weight:600; color:var(--purple-dark);">What kind of music do you like to listen to? Eddy and Kim's parents have taught them not to lean towards gaudy and vulgar music which they won't benefit from; I guess that's a way of education if you see it that way.</p>
+    </div>
+
+    <div class="exercise-box" style="margin-top:40px;">
+      <h3>Strategic Comprehension</h3>
+      <div class="exercise-item">
+        <label>1. What concert did the Williams family attend together?</label>
+        <input type="text" class="exercise-input" id="ex1a" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1a',['macklemore','ryan','lewis'],'fb1a','ans1a')">Check Answer</button>
+        <div class="hidden-answer" id="ans1a">Macklemore & Ryan Lewis (R&B concert)</div>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. What kind of music does Mr. James Williams love?</label>
+        <input type="text" class="exercise-input" id="ex1b" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1b',['rock','70s','80s'],'fb1b','ans1b')">Check Answer</button>
+        <div class="hidden-answer" id="ans1b">Rock, especially from the 70's and 80's</div>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. What kind of music does Mrs. Rose Mary Williams prefer?</label>
+        <input type="text" class="exercise-input" id="ex1c" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1c',['classical','classic','tchaikovsky'],'fb1c','ans1c')">Check Answer</button>
+        <div class="hidden-answer" id="ans1c">Classical music (Tchaikovsky)</div>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. What percentage of teenagers prefer Pop and R&B?</label>
+        <input type="text" class="exercise-input" id="ex1d" placeholder="Answer precisely...">
+        <button class="btn-verify" onclick="checkSimple('ex1d',['70','70%','seventy'],'fb1d','ans1d')">Check Answer</button>
+        <div class="hidden-answer" id="ans1d">70%</div>
+        <div class="feedback" id="fb1d"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 2: READING - OPERA -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Opera</h2>
+    <p>A dramatic art form</p>
+  </div>
+</section>
+
+<section class="section-solid magenta">
+  <div class="container">
+    <h2>🎭 Reading: Opera</h2>
+    
+    <div class="reading-block">
+      <h3 style="color:var(--purple-dark);">What is Opera?</h3>
+      <p>Opera refers to a dramatic art form, originating in Europe, in which the emotional content is conveyed to the audience as much through music, both vocal and instrumental, as it is through the lyrics. By contrast, in musical theater an actor's dramatic performance is primary, and the music plays a lesser role. The drama in opera is presented using the primary elements of theater such as scenery, costumes, and acting. However, the words of the opera, or libretto, are sung rather than spoken. The singers are accompanied by a musical ensemble ranging from a small instrumental ensemble to a full symphonic orchestra.</p>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Choose the most appropriate answer</h3>
+      <div class="exercise-item">
+        <label>1. It is pointed out in the reading that opera…</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q2a','a')">a) is a drama sung with the accompaniment of an orchestra</button>
+          <button class="option-btn" onclick="selectOption(this,'q2a','b')">b) is not a high-budget production</button>
+          <button class="option-btn" onclick="selectOption(this,'q2a','c')">c) is often performed in Europe</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q2a','a','fb2a')">Check Answer</button>
+        <div class="hidden-answer" id="ans2a">a) is a drama sung with the accompaniment of an orchestra</div>
+        <div class="feedback" id="fb2a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. We can understand from the reading that…</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q2b','a')">a) drama in opera is more important than the music</button>
+          <button class="option-btn" onclick="selectOption(this,'q2b','b')">b) orchestras in operas can vary considerably in size</button>
+          <button class="option-btn" onclick="selectOption(this,'q2b','c')">c) musical theater relies above all on music</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q2b','b','fb2b')">Check Answer</button>
+        <div class="hidden-answer" id="ans2b">b) orchestras in operas can vary considerably in size</div>
+        <div class="feedback" id="fb2b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. It is stated in the reading that…</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q2c','a')">a) acting and costumes are secondary to music in musical theater</button>
+          <button class="option-btn" onclick="selectOption(this,'q2c','b')">b) music in musical theater is not as important as it is in opera</button>
+          <button class="option-btn" onclick="selectOption(this,'q2c','c')">c) an opera requires a huge orchestra as well as a large choir</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q2c','b','fb2c')">Check Answer</button>
+        <div class="hidden-answer" id="ans2c">b) music in musical theater is not as important as it is in opera</div>
+        <div class="feedback" id="fb2c"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--purple);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 3: VOCABULARY - MUSICAL TERMS -->
+<section class="section-solid pink-light">
+  <div class="container">
+    <h2 style="color:var(--purple-dark);">🎼 Vocabulary: Musical Terms</h2>
+    <p style="margin-bottom:20px;">Choose the correct musical vocabulary to match the definition.</p>
+    <div class="highlight-box">
+      <strong>Words:</strong> album, single, top ten, number one, lyrics, vocals, melody, catchy, record, live, concert, backing track, collaborate, soundtrack, latest, airplay, instrumental
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>a collection of songs:</label>
+        <input type="text" class="exercise-input" id="ex3a" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3a',['album'],'fb3a','ans3a')">Check Answer</button>
+        <div class="hidden-answer" id="ans3a">album</div>
+        <div class="feedback" id="fb3a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>the words of a song:</label>
+        <input type="text" class="exercise-input" id="ex3b" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3b',['lyrics'],'fb3b','ans3b')">Check Answer</button>
+        <div class="hidden-answer" id="ans3b">lyrics</div>
+        <div class="feedback" id="fb3b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>one song from a collection:</label>
+        <input type="text" class="exercise-input" id="ex3c" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3c',['single'],'fb3c','ans3c')">Check Answer</button>
+        <div class="hidden-answer" id="ans3c">single</div>
+        <div class="feedback" id="fb3c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>a classification of the most popular songs:</label>
+        <input type="text" class="exercise-input" id="ex3d" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3d',['top','ten'],'fb3d','ans3d')">Check Answer</button>
+        <div class="hidden-answer" id="ans3d">top ten</div>
+        <div class="feedback" id="fb3d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>work on a project:</label>
+        <input type="text" class="exercise-input" id="ex3e" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3e',['collaborate'],'fb3e','ans3e')">Check Answer</button>
+        <div class="hidden-answer" id="ans3e">collaborate</div>
+        <div class="feedback" id="fb3e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>not recorded:</label>
+        <input type="text" class="exercise-input" id="ex3f" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3f',['live'],'fb3f','ans3f')">Check Answer</button>
+        <div class="hidden-answer" id="ans3f">live</div>
+        <div class="feedback" id="fb3f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>a song with no words:</label>
+        <input type="text" class="exercise-input" id="ex3g" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3g',['instrumental'],'fb3g','ans3g')">Check Answer</button>
+        <div class="hidden-answer" id="ans3g">instrumental</div>
+        <div class="feedback" id="fb3g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>number of times a radio station plays a song:</label>
+        <input type="text" class="exercise-input" id="ex3h" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3h',['airplay'],'fb3h','ans3h')">Check Answer</button>
+        <div class="hidden-answer" id="ans3h">airplay</div>
+        <div class="feedback" id="fb3h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>most recent:</label>
+        <input type="text" class="exercise-input" id="ex3i" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3i',['latest'],'fb3i','ans3i')">Check Answer</button>
+        <div class="hidden-answer" id="ans3i">latest</div>
+        <div class="feedback" id="fb3i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>the singing in a song:</label>
+        <input type="text" class="exercise-input" id="ex3j" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3j',['vocals'],'fb3j','ans3j')">Check Answer</button>
+        <div class="hidden-answer" id="ans3j">vocals</div>
+        <div class="feedback" id="fb3j"></div>
+      </div>
+      <div class="exercise-item">
+        <label>easy to remember and sing:</label>
+        <input type="text" class="exercise-input" id="ex3k" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3k',['catchy'],'fb3k','ans3k')">Check Answer</button>
+        <div class="hidden-answer" id="ans3k">catchy</div>
+        <div class="feedback" id="fb3k"></div>
+      </div>
+      <div class="exercise-item">
+        <label>the music of a song:</label>
+        <input type="text" class="exercise-input" id="ex3l" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3l',['melody'],'fb3l','ans3l')">Check Answer</button>
+        <div class="hidden-answer" id="ans3l">melody</div>
+        <div class="feedback" id="fb3l"></div>
+      </div>
+      <div class="exercise-item">
+        <label>recorded music at a concert:</label>
+        <input type="text" class="exercise-input" id="ex3m" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3m',['backing','track'],'fb3m','ans3m')">Check Answer</button>
+        <div class="hidden-answer" id="ans3m">backing track</div>
+        <div class="feedback" id="fb3m"></div>
+      </div>
+      <div class="exercise-item">
+        <label>the music for a film:</label>
+        <input type="text" class="exercise-input" id="ex3n" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3n',['soundtrack'],'fb3n','ans3n')">Check Answer</button>
+        <div class="hidden-answer" id="ans3n">soundtrack</div>
+        <div class="feedback" id="fb3n"></div>
+      </div>
+      <div class="exercise-item">
+        <label>copy music to a C.D.:</label>
+        <input type="text" class="exercise-input" id="ex3o" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex3o',['record'],'fb3o','ans3o')">Check Answer</button>
+        <div class="hidden-answer" id="ans3o">record</div>
+        <div class="feedback" id="fb3o"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 4: MUSIC AND SONGS - FILL IN THE BLANK -->
+<section class="section-solid purple-dark">
+  <div class="container">
+    <h2>🎵 Music and Songs</h2>
+    <p style="margin-bottom:20px;">For each sentence, choose the best word or phrase to complete the gap.</p>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. Most modern pop music is instantly forgettable. It doesn't have a _____ tune and thirty seconds after it stops, you've forgotten it.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4a','a')">catchy</button>
+          <button class="option-btn" onclick="selectOption(this,'q4a','b')">catching</button>
+          <button class="option-btn" onclick="selectOption(this,'q4a','c')">catchable</button>
+          <button class="option-btn" onclick="selectOption(this,'q4a','d')">catch-worthy</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4a','a','fb4a')">Check Answer</button>
+        <div class="hidden-answer" id="ans4a">catchy</div>
+        <div class="feedback" id="fb4a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. One of my friends used to work as a _____ for a major rock band. It was very hard work, lifting all their equipment and driving from city to city.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4b','a')">groupie</button>
+          <button class="option-btn" onclick="selectOption(this,'q4b','b')">gandy</button>
+          <button class="option-btn" onclick="selectOption(this,'q4b','c')">roadie</button>
+          <button class="option-btn" onclick="selectOption(this,'q4b','d')">rocky</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4b','c','fb4b')">Check Answer</button>
+        <div class="hidden-answer" id="ans4b">roadie</div>
+        <div class="feedback" id="fb4b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. The concert itself only lasted about an hour but the crowd kept cheering so the band came back and did three long _____.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4c','a')">returns</button>
+          <button class="option-btn" onclick="selectOption(this,'q4c','b')">re-hashes</button>
+          <button class="option-btn" onclick="selectOption(this,'q4c','c')">repeats</button>
+          <button class="option-btn" onclick="selectOption(this,'q4c','d')">encores</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4c','d','fb4c')">Check Answer</button>
+        <div class="hidden-answer" id="ans4c">encores</div>
+        <div class="feedback" id="fb4c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. There was a pianist playing at a bar I went to last week and I asked him if he took _____ and he said he did, but he didn't know anything by 'Megadeath'.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4d','a')">enquiries</button>
+          <button class="option-btn" onclick="selectOption(this,'q4d','b')">requests</button>
+          <button class="option-btn" onclick="selectOption(this,'q4d','c')">responses</button>
+          <button class="option-btn" onclick="selectOption(this,'q4d','d')">auditions</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4d','b','fb4d')">Check Answer</button>
+        <div class="hidden-answer" id="ans4d">requests</div>
+        <div class="feedback" id="fb4d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. Mark Harris started out in the boy _____ 'The Bad Lads', before launching a very successful solo career in the late nineties.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4e','a')">group</button>
+          <button class="option-btn" onclick="selectOption(this,'q4e','b')">outfit</button>
+          <button class="option-btn" onclick="selectOption(this,'q4e','c')">band</button>
+          <button class="option-btn" onclick="selectOption(this,'q4e','d')">brigade</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4e','c','fb4e')">Check Answer</button>
+        <div class="hidden-answer" id="ans4e">band</div>
+        <div class="feedback" id="fb4e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. Our English teacher thinks he's really cool. Every time he wants us to start talking together he says 'Lets _____'.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4f','a')">hit the floor</button>
+          <button class="option-btn" onclick="selectOption(this,'q4f','b')">rock and roll</button>
+          <button class="option-btn" onclick="selectOption(this,'q4f','c')">make a beat</button>
+          <button class="option-btn" onclick="selectOption(this,'q4f','d')">swing it</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4f','b','fb4f')">Check Answer</button>
+        <div class="hidden-answer" id="ans4f">rock and roll</div>
+        <div class="feedback" id="fb4f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. I'm really into _____ music. I think music from different cultural backgrounds is so much more interesting than British and American pop.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4g','a')">world</button>
+          <button class="option-btn" onclick="selectOption(this,'q4g','b')">worldly</button>
+          <button class="option-btn" onclick="selectOption(this,'q4g','c')">worldish</button>
+          <button class="option-btn" onclick="selectOption(this,'q4g','d')">worldwide</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4g','a','fb4g')">Check Answer</button>
+        <div class="hidden-answer" id="ans4g">world</div>
+        <div class="feedback" id="fb4g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. I managed to get a ticket to a Rolling Stones' _____ a few months back but then one of the band members got sick and they had to cancel.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4h','a')">release</button>
+          <button class="option-btn" onclick="selectOption(this,'q4h','b')">groove</button>
+          <button class="option-btn" onclick="selectOption(this,'q4h','c')">fest</button>
+          <button class="option-btn" onclick="selectOption(this,'q4h','d')">gig</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4h','d','fb4h')">Check Answer</button>
+        <div class="hidden-answer" id="ans4h">gig</div>
+        <div class="feedback" id="fb4h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. In the early days, the Beatles didn't play their own music. They just did _____ of famous US rock and roll artists.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4i','a')">copies</button>
+          <button class="option-btn" onclick="selectOption(this,'q4i','b')">covers</button>
+          <button class="option-btn" onclick="selectOption(this,'q4i','c')">remakes</button>
+          <button class="option-btn" onclick="selectOption(this,'q4i','d')">remixes</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4i','b','fb4i')">Check Answer</button>
+        <div class="hidden-answer" id="ans4i">covers</div>
+        <div class="feedback" id="fb4i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. The Albert Hall is a fantastic _____ for a classical concert. The acoustics are absolutely perfect.</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q4j','a')">site</button>
+          <button class="option-btn" onclick="selectOption(this,'q4j','b')">venue</button>
+          <button class="option-btn" onclick="selectOption(this,'q4j','c')">locale</button>
+          <button class="option-btn" onclick="selectOption(this,'q4j','d')">situation</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q4j','b','fb4j')">Check Answer</button>
+        <div class="hidden-answer" id="ans4j">venue</div>
+        <div class="feedback" id="fb4j"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+<!-- SECTION 5: MUSIC VOCABULARY - PARAGRAPH COMPLETION -->
+<section class="section-solid purple-light">
+  <div class="container">
+    <h2 style="color:var(--purple-dark);">🎼 Music Vocabulary - Paragraph Completion</h2>
+    <p style="margin-bottom:20px;">Read the paragraph and fill in the blanks with the vocabulary below.</p>
+    <div class="highlight-box">
+      <strong>Words:</strong> atmosphere, catchy, chorus, composers, concert, instrument, live, rhythm, scene, strong, symphony, traditional, venue
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. For me, Beethoven was one of the greatest classical _______________.</label>
+        <input type="text" class="exercise-input" id="ex5a" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex5a',['composers'],'fb5a','ans5a')">Check Answer</button>
+        <div class="hidden-answer" id="ans5a">composers</div>
+        <div class="feedback" id="fb5a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Though, I do find it difficult to sit through a whole _______________.</label>
+        <input type="text" class="exercise-input" id="ex5b" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex5b',['symphony'],'fb5b','ans5b')">Check Answer</button>
+        <div class="hidden-answer" id="ans5b">symphony</div>
+        <div class="feedback" id="fb5b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. It's been some time since I've gone to a _______________ _______________.</label>
+        <input type="text" class="exercise-input" id="ex5c" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex5c',['live','concert'],'fb5c','ans5c')">Check Answer</button>
+        <div class="hidden-answer" id="ans5c">live concert</div>
+        <div class="feedback" id="fb5c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. One of my favorite songs is Back it Up - it's got a really _______________ tune and a great _______________.</label>
+        <input type="text" class="exercise-input" id="ex5d" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex5d',['catchy','chorus'],'fb5d','ans5d')">Check Answer</button>
+        <div class="hidden-answer" id="ans5d">catchy / chorus</div>
+        <div class="feedback" id="fb5d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. There's an extremely lively music _______________ in my home town and you can often see some _______________ music in local pubs and clubs.</label>
+        <input type="text" class="exercise-input" id="ex5e" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex5e',['scene','live'],'fb5e','ans5e')">Check Answer</button>
+        <div class="hidden-answer" id="ans5e">scene / live</div>
+        <div class="feedback" id="fb5e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. My mother always wanted me to learn to play an _______________, but sadly I had no sense of _______________ and so couldn't keep to the beat.</label>
+        <input type="text" class="exercise-input" id="ex5f" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex5f',['instrument','rhythm'],'fb5f','ans5f')">Check Answer</button>
+        <div class="hidden-answer" id="ans5f">instrument / rhythm</div>
+        <div class="feedback" id="fb5f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. The largest musical _______________ in my country is probably the O2 Arena. There's a great _______________ there.</label>
+        <input type="text" class="exercise-input" id="ex5g" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex5g',['venue','atmosphere'],'fb5g','ans5g')">Check Answer</button>
+        <div class="hidden-answer" id="ans5g">venue / atmosphere</div>
+        <div class="feedback" id="fb5g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. Sad to say, a lot of _______________ and folk music is dying out in my country. It's probably the influence of MTV.</label>
+        <input type="text" class="exercise-input" id="ex5h" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex5h',['traditional'],'fb5h','ans5h')">Check Answer</button>
+        <div class="hidden-answer" id="ans5h">traditional</div>
+        <div class="feedback" id="fb5h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. What makes for a great song? Well, I guess that you need a _______________ tune and interesting lyrics.</label>
+        <input type="text" class="exercise-input" id="ex5i" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex5i',['strong','catchy'],'fb5i','ans5i')">Check Answer</button>
+        <div class="hidden-answer" id="ans5i">strong / catchy</div>
+        <div class="feedback" id="fb5i"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 6: CRITICAL THINKING - ILLEGAL DOWNLOADS -->
+<section class="section-solid magenta">
+  <div class="container">
+    <h2>💿 Critical Thinking: Illegal Downloads</h2>
+    
+    <div class="reading-block">
+      <h3 style="color:var(--purple-dark);">The Reality of Digital Downloads</h3>
+      <p>Who buys Blurays, DVDs or CDs these days? Of course, many download music through iTunes or Amazon, legally purchasing a data copy of the work. However, other individuals have quit making any purchases. Instead they turn to illegal downloads via person-to-person networks on the Internet.</p>
+      <p>Movie and music companies claim that downloads significantly reduce their profits. Once a movie has been watched, the majority of viewers won't watch it again. In other words, they'll spend their hard-earned cash elsewhere. The same holds true for music. However, the movie and music industry continue to thrive, mostly because people who download other work. In fact, many outside the industry suggest that file sharing has reinvigorated the entertainment industry.</p>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Comprehension Questions</h3>
+      <div class="exercise-item">
+        <label>1. What information isn't true?</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q6a','a')">a. many people download music legally</button>
+          <button class="option-btn" onclick="selectOption(this,'q6a','b')">b. file sharing may have reinvigorated the entertainment industry</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q6a','a','fb6a')">Check Answer</button>
+        <div class="hidden-answer" id="ans6a">a. many people download music legally (This IS true, so the question may be tricky - both are true according to the text)</div>
+        <div class="feedback" id="fb6a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. What describes best the opinion of the author?</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q6b','a')">a. supportive of downloading</button>
+          <button class="option-btn" onclick="selectOption(this,'q6b','b')">b. someone who has reinvigorated the entertainment industry</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q6b','a','fb6b')">Check Answer</button>
+        <div class="hidden-answer" id="ans6b">a. supportive of downloading</div>
+        <div class="feedback" id="fb6b"></div>
+      </div>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Personal Reflection</h3>
+      <div class="exercise-item">
+        <label>Have you ever downloaded movies or music illegally? Why or why not?</label>
+        <textarea class="exercise-textarea" id="ex6c" placeholder="Develop your answer..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex6c','fb6c')">Check Answer</button>
+        <div class="feedback" id="fb6c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>Do you know people who have done it? Why do you think they did it?</label>
+        <textarea class="exercise-textarea" id="ex6d" placeholder="Develop your answer..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex6d','fb6d')">Check Answer</button>
+        <div class="feedback" id="fb6d"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--purple);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 7: CRITICAL THINKING - ILLEGAL DOWNLOADS (ADDITIONAL) -->
+<section class="section-solid purple-dark">
+  <div class="container">
+    <h2>💭 Critical Thinking: Illegal Downloads (Extended)</h2>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>Why do people illegally download movies and music? Please explain.</label>
+        <textarea class="exercise-textarea" id="ex7a" placeholder="Develop your answer..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex7a','fb7a')">Check Answer</button>
+        <div class="feedback" id="fb7a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>Should people who illegally download be punished? Why or why not?</label>
+        <textarea class="exercise-textarea" id="ex7b" placeholder="Develop your answer..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex7b','fb7b')">Check Answer</button>
+        <div class="feedback" id="fb7b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>Can you think of any reasons that file sharing should be legal?</label>
+        <textarea class="exercise-textarea" id="ex7c" placeholder="Develop your answer..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex7c','fb7c')">Check Answer</button>
+        <div class="feedback" id="fb7c"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 8: WHOEVER/WHATEVER/WHENEVER/WHEREVER/WHICHEVER (1) -->
+<section class="section-solid pink-light">
+  <div class="container">
+    <h2 style="color:var(--purple-dark);">🔤 Critical Thinking: whoever/whatever/whenever/wherever/whichever</h2>
+    <p style="margin-bottom:20px;">Complete the sentences below with an appropriate word.</p>
+    <div class="highlight-box">
+      <strong>Options:</strong> whatever, whenever, wherever, whichever, whoever
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. You are welcome to come and stay with us _______________ you like.</label>
+        <input type="text" class="exercise-input" id="ex8a" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex8a',['whenever','wherever'],'fb8a','ans8a')">Check Answer</button>
+        <div class="hidden-answer" id="ans8a">whenever / wherever</div>
+        <div class="feedback" id="fb8a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. I'd like to speak to _______________ is in charge of sales.</label>
+        <input type="text" class="exercise-input" id="ex8b" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex8b',['whoever'],'fb8b','ans8b')">Check Answer</button>
+        <div class="hidden-answer" id="ans8b">whoever</div>
+        <div class="feedback" id="fb8b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. _______________ you do, don't forget to call me as soon as you arrive.</label>
+        <input type="text" class="exercise-input" id="ex8c" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex8c',['whatever'],'fb8c','ans8c')">Check Answer</button>
+        <div class="hidden-answer" id="ans8c">Whatever</div>
+        <div class="feedback" id="fb8c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. It comes in three colors; choose _______________ you prefer.</label>
+        <input type="text" class="exercise-input" id="ex8d" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex8d',['whichever'],'fb8d','ans8d')">Check Answer</button>
+        <div class="hidden-answer" id="ans8d">whichever</div>
+        <div class="feedback" id="fb8d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. What do you want to do on Saturday? I don't mind - _______________ you like!</label>
+        <input type="text" class="exercise-input" id="ex8e" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex8e',['whatever','whichever'],'fb8e','ans8e')">Check Answer</button>
+        <div class="hidden-answer" id="ans8e">whatever / whichever</div>
+        <div class="feedback" id="fb8e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. He always makes friends quickly, _______________ he goes.</label>
+        <input type="text" class="exercise-input" id="ex8f" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex8f',['wherever'],'fb8f','ans8f')">Check Answer</button>
+        <div class="hidden-answer" id="ans8f">wherever</div>
+        <div class="feedback" id="fb8f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. _______________ borrowed the dictionary should return it as quickly as possible.</label>
+        <input type="text" class="exercise-input" id="ex8g" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex8g',['whoever'],'fb8g','ans8g')">Check Answer</button>
+        <div class="hidden-answer" id="ans8g">Whoever</div>
+        <div class="feedback" id="fb8g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. The teacher says I don't participate enough, but _______________ I try to speak, someone interrupts me!</label>
+        <input type="text" class="exercise-input" id="ex8h" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex8h',['whenever'],'fb8h','ans8h')">Check Answer</button>
+        <div class="hidden-answer" id="ans8h">whenever</div>
+        <div class="feedback" id="fb8h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. There is no entrance fee; you give _______________ you can afford.</label>
+        <input type="text" class="exercise-input" id="ex8i" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex8i',['whatever','whichever'],'fb8i','ans8i')">Check Answer</button>
+        <div class="hidden-answer" id="ans8i">whatever / whichever</div>
+        <div class="feedback" id="fb8i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. He says he's from Brookstown, _______________ that is.</label>
+        <input type="text" class="exercise-input" id="ex8j" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex8j',['wherever'],'fb8j','ans8j')">Check Answer</button>
+        <div class="hidden-answer" id="ans8j">wherever</div>
+        <div class="feedback" id="fb8j"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 9: WHOEVER/WHATEVER/WHENEVER/WHEREVER/WHICHEVER (2) -->
+<section class="section-solid purple">
+  <div class="container">
+    <h2>🔤 whoever/whatever/whenever/wherever/whichever (Practice 2)</h2>
+    <p style="margin-bottom:20px;">Write the correct answer into the blank using the words below.</p>
+    <div class="highlight-box" style="background:rgba(233,30,99,0.1);">
+      <strong>Words:</strong> However, Whatever (x2), Whenever, Wherever (x2), Whichever, Whoever
+    </div>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. Do _______________ you want, just don't come to me if it all goes wrong.</label>
+        <input type="text" class="exercise-input" id="ex9a" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9a',['whatever'],'fb9a','ans9a')">Check Answer</button>
+        <div class="hidden-answer" id="ans9a">whatever</div>
+        <div class="feedback" id="fb9a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. It's impossible to say what time Ramsey will arrive. He just turns up _______________ he wants.</label>
+        <input type="text" class="exercise-input" id="ex9b" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9b',['whenever'],'fb9b','ans9b')">Check Answer</button>
+        <div class="hidden-answer" id="ans9b">whenever</div>
+        <div class="feedback" id="fb9b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Sit down _______________ you like.</label>
+        <input type="text" class="exercise-input" id="ex9c" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9c',['wherever'],'fb9c','ans9c')">Check Answer</button>
+        <div class="hidden-answer" id="ans9c">wherever</div>
+        <div class="feedback" id="fb9c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. You can invite _______________ you like — it's your party!</label>
+        <input type="text" class="exercise-input" id="ex9d" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9d',['whoever'],'fb9d','ans9d')">Check Answer</button>
+        <div class="hidden-answer" id="ans9d">whoever</div>
+        <div class="feedback" id="fb9d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. _______________ hard I try, I still can't find a job.</label>
+        <input type="text" class="exercise-input" id="ex9e" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9e',['however'],'fb9e','ans9e')">Check Answer</button>
+        <div class="hidden-answer" id="ans9e">However</div>
+        <div class="feedback" id="fb9e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. There are two dictionaries in the cupboard. Borrow _______________ one you want.</label>
+        <input type="text" class="exercise-input" id="ex9f" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9f',['whichever'],'fb9f','ans9f')">Check Answer</button>
+        <div class="hidden-answer" id="ans9f">whichever</div>
+        <div class="feedback" id="fb9f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. I would love to be rich enough to buy _______________ I wanted.</label>
+        <input type="text" class="exercise-input" id="ex9g" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9g',['whatever'],'fb9g','ans9g')">Check Answer</button>
+        <div class="hidden-answer" id="ans9g">whatever</div>
+        <div class="feedback" id="fb9g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. We had a great time in Botswana. The people were nice _______________ we went.</label>
+        <input type="text" class="exercise-input" id="ex9h" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex9h',['wherever'],'fb9h','ans9h')">Check Answer</button>
+        <div class="hidden-answer" id="ans9h">wherever</div>
+        <div class="feedback" id="fb9h"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--purple-dark);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 10: SECOND CONDITIONAL - LOTTERY SCENARIO -->
+<section class="section-solid magenta-dark">
+  <div class="container">
+    <h2>💰 Second Conditional - Lottery Scenario</h2>
+    <div class="highlight-box" style="background:rgba(233,30,99,0.1);">
+      <p><strong>Remember:</strong> Second Conditional = If + past simple, ... would + infinitive</p>
+      <p><strong>Example:</strong> "If I had a lot of money, I would travel around the world."</p>
+    </div>
+    <div class="exercise-box">
+      <h3>Complete the Conditional Sentences</h3>
+      <div class="exercise-item">
+        <label>1. If I _______________ the lottery, I _______________ a chance to hit the jackpot.</label>
+        <input type="text" class="exercise-input" id="ex10a" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10a',['won','would','have'],'fb10a','ans10a')">Check Answer</button>
+        <div class="hidden-answer" id="ans10a">won / would have</div>
+        <div class="feedback" id="fb10a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. If I _______________ the jackpot, I _______________ rich.</label>
+        <input type="text" class="exercise-input" id="ex10b" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10b',['won','hit','would','be'],'fb10b','ans10b')">Check Answer</button>
+        <div class="hidden-answer" id="ans10b">won (or hit) / would be</div>
+        <div class="feedback" id="fb10b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. If I _______________ rich, my life _______________ completely.</label>
+        <input type="text" class="exercise-input" id="ex10c" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10c',['were','was','would','change'],'fb10c','ans10c')">Check Answer</button>
+        <div class="hidden-answer" id="ans10c">were (or was) / would change</div>
+        <div class="feedback" id="fb10c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. I _______________ a lonely island, if I _______________ a nice one.</label>
+        <input type="text" class="exercise-input" id="ex10d" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10d',['would','buy','had','found'],'fb10d','ans10d')">Check Answer</button>
+        <div class="hidden-answer" id="ans10d">would buy / had (or found)</div>
+        <div class="feedback" id="fb10d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. If I _______________ a lonely island, I _______________ a huge house by the beach.</label>
+        <input type="text" class="exercise-input" id="ex10e" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10e',['had','bought','would','build'],'fb10e','ans10e')">Check Answer</button>
+        <div class="hidden-answer" id="ans10e">had (or bought) / would build</div>
+        <div class="feedback" id="fb10e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. I _______________ all my friends if I _______________ a house by the beach.</label>
+        <input type="text" class="exercise-input" id="ex10f" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10f',['would','invite','had','bought'],'fb10f','ans10f')">Check Answer</button>
+        <div class="hidden-answer" id="ans10f">would invite / had (or bought)</div>
+        <div class="feedback" id="fb10f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. I _______________ my friends up in my yacht if they _______________ to spend their holidays on my island.</label>
+        <input type="text" class="exercise-input" id="ex10g" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10g',['would','take','came','wanted'],'fb10g','ans10g')">Check Answer</button>
+        <div class="hidden-answer" id="ans10g">would take / came (or wanted)</div>
+        <div class="feedback" id="fb10g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. We _______________ great parties if my friends _______________ to my island.</label>
+        <input type="text" class="exercise-input" id="ex10h" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10h',['would','have','came','went'],'fb10h','ans10h')">Check Answer</button>
+        <div class="hidden-answer" id="ans10h">would have / came (or went)</div>
+        <div class="feedback" id="fb10h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. If we _______________ to go shopping in a big city, we _______________ a helicopter.</label>
+        <input type="text" class="exercise-input" id="ex10i" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10i',['wanted','needed','would','take'],'fb10i','ans10i')">Check Answer</button>
+        <div class="hidden-answer" id="ans10i">wanted (or needed) / would take</div>
+        <div class="feedback" id="fb10i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. But if my friends' holidays _______________ over, I _______________ very lonely on my lonely island.</label>
+        <input type="text" class="exercise-input" id="ex10j" placeholder="">
+        <button class="btn-verify" onclick="checkSimple('ex10j',['were','was','would','feel','be'],'fb10j','ans10j')">Check Answer</button>
+        <div class="hidden-answer" id="ans10j">were (or was) / would feel (or would be)</div>
+        <div class="feedback" id="fb10j"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+<!-- SECTION 11: SECOND CONDITIONAL MC -->
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--purple-dark);">📝 Second Conditional - Multiple Choice</h2>
+    <p style="margin-bottom:20px;">Complete the sentences by marking the correct option.</p>
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. If I were a bird, I...</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q11a','a')">a. will fly and see many places.</button>
+          <button class="option-btn" onclick="selectOption(this,'q11a','b')">b. would fly and see many places.</button>
+          <button class="option-btn" onclick="selectOption(this,'q11a','c')">c. can fly and see many places.</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q11a','b','fb11a')">Check Answer</button>
+        <div class="hidden-answer" id="ans11a">b. would fly and see many places.</div>
+        <div class="feedback" id="fb11a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. If I were a computer...</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q11b','a')">a. I will be very stupid.</button>
+          <button class="option-btn" onclick="selectOption(this,'q11b','b')">b. I am very stupid.</button>
+          <button class="option-btn" onclick="selectOption(this,'q11b','c')">c. I would be very stupid.</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q11b','c','fb11b')">Check Answer</button>
+        <div class="hidden-answer" id="ans11b">c. I would be very stupid.</div>
+        <div class="feedback" id="fb11b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. If there were no police officers...</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q11c','a')">a. there would be so much crime in the streets.</button>
+          <button class="option-btn" onclick="selectOption(this,'q11c','b')">b. there will be so much crime in the streets.</button>
+          <button class="option-btn" onclick="selectOption(this,'q11c','c')">c. there won't be so much crime in the streets.</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q11c','a','fb11c')">Check Answer</button>
+        <div class="hidden-answer" id="ans11c">a. there would be so much crime in the streets.</div>
+        <div class="feedback" id="fb11c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. People would spend more time at home, if…</label>
+        <div class="options-grid">
+          <button class="option-btn" onclick="selectOption(this,'q11d','a')">a. there were no restaurants.</button>
+          <button class="option-btn" onclick="selectOption(this,'q11d','b')">b. there are no restaurants.</button>
+          <button class="option-btn" onclick="selectOption(this,'q11d','c')">c. there will be no restaurants.</button>
+        </div>
+        <button class="btn-verify" onclick="checkMC('q11d','a','fb11d')">Check Answer</button>
+        <div class="hidden-answer" id="ans11d">a. there were no restaurants.</div>
+        <div class="feedback" id="fb11d"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 12: GRAMMATICAL MUSIC - IF I WERE A BOY -->
+<section class="section-image" style="background-image: url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=1920&q=80');">
+  <div class="section-image-content">
+    <h2>Grammatical Music</h2>
+    <p>Beyoncé - "If I Were a Boy"</p>
+  </div>
+</section>
+
+<section class="section-solid magenta">
+  <div class="container">
+    <h2>🎵 Grammatical Music: "If I Were a Boy"</h2>
+    
+    <div class="reading-block">
+      <h3 style="color:var(--purple-dark);">Learning the 2nd Conditional through Music</h3>
+      <p>Beyoncé's "If I Were a Boy" was the lead single from her album <em>I Am</em>. It is a great song to learn the English 2nd conditional.</p>
+      <p><strong>Notice the use of "if I were" and NOT "if I was".</strong> For all subjects, the verb to be is: <strong>were</strong> when using this conditional.</p>
+      <div class="highlight-box">
+        <strong>Simple Past:</strong> It was hot yesterday.<br>
+        <strong>2nd Conditional:</strong> If it were hot, we would go to the beach.
+      </div>
+    </div>
+
+    <div class="exercise-box">
+      <h3>Fill in the blanks with the correct words</h3>
+      <div class="exercise-item">
+        <label>🎵 "Drink beer with the _______________ and chase after girls, I'd kick it with who I wanted and I'd never get _______________ for it 'cause they stick up for me."</label>
+        <input type="text" class="exercise-input" id="ex12a" placeholder="Fill in the first blank...">
+        <input type="text" class="exercise-input" id="ex12a2" placeholder="Fill in the second blank..." style="margin-top:10px;">
+        <button class="btn-verify" onclick="checkSimple('ex12a',['guys'],'fb12a','ans12a')">Check 1st</button>
+        <button class="btn-verify" onclick="checkSimple('ex12a2',['confronted'],'fb12a2','ans12a2')">Check 2nd</button>
+        <div class="hidden-answer" id="ans12a">guys</div>
+        <div class="hidden-answer" id="ans12a2">confronted</div>
+        <div class="feedback" id="fb12a"></div>
+        <div class="feedback" id="fb12a2"></div>
+      </div>
+      <div class="exercise-item">
+        <label>🎵 "If I were a boy I would _______________ my phone tell everyone it's broken, so they'd think that I was sleepin' alone."</label>
+        <input type="text" class="exercise-input" id="ex12b" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex12b',['turn','off'],'fb12b','ans12b')">Check Answer</button>
+        <div class="hidden-answer" id="ans12b">turn off</div>
+        <div class="feedback" id="fb12b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>🎵 "I'd put _______________ first and make the rules as I go 'cause I know that she'd be faithful, Waitin' for me to come home."</label>
+        <input type="text" class="exercise-input" id="ex12c" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex12c',['myself'],'fb12c','ans12c')">Check Answer</button>
+        <div class="hidden-answer" id="ans12c">myself</div>
+        <div class="feedback" id="fb12c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>🎵 "It's a little too late for you to come back, say it's just a _______________, think I'd forgive you like that."</label>
+        <input type="text" class="exercise-input" id="ex12d" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex12d',['mistake'],'fb12d','ans12d')">Check Answer</button>
+        <div class="hidden-answer" id="ans12d">mistake</div>
+        <div class="feedback" id="fb12d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>🎵 "If you thought I would _______________ for you, you thought wrong."</label>
+        <input type="text" class="exercise-input" id="ex12e" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex12e',['wait'],'fb12e','ans12e')">Check Answer</button>
+        <div class="hidden-answer" id="ans12e">wait</div>
+        <div class="feedback" id="fb12e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>🎵 "Someday, you _______________ you were a better man."</label>
+        <input type="text" class="exercise-input" id="ex12f" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex12f',['wish'],'fb12f','ans12f')">Check Answer</button>
+        <div class="hidden-answer" id="ans12f">wish</div>
+        <div class="feedback" id="fb12f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>🎵 "You don't listen to her, you don't _______________ how it hurts, until you lose the one you wanted."</label>
+        <input type="text" class="exercise-input" id="ex12g" placeholder="Fill in the blank...">
+        <button class="btn-verify" onclick="checkSimple('ex12g',['care'],'fb12g','ans12g')">Check Answer</button>
+        <div class="hidden-answer" id="ans12g">care</div>
+        <div class="feedback" id="fb12g"></div>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="scrollToNext()" style="background:var(--purple);">Continue →</button>
+  </div>
+</section>
+
+<!-- SECTION 13: GRAMMAR REVIEW -->
+<section class="section-solid purple-dark">
+  <div class="container">
+    <h2>📚 Grammar Review</h2>
+    
+    <div class="reading-block">
+      <h3 style="color:var(--purple-dark);">Whatever / Whenever / Wherever / Whichever / Whoever</h3>
+      <p>These words are used as follows:</p>
+      
+      <div class="grammar-table">
+        <tr><th>Word</th><th>Meaning</th><th>Example</th></tr>
+        <tr><td><strong>Whatever</strong></td><td>anything or everything; regardless of what</td><td>"Whatever you do, don't forget your grandmother's birthday."</td></tr>
+        <tr><td><strong>Whenever</strong></td><td>every time; at any time; regardless of when</td><td>"Whenever we organize a picnic it rains."</td></tr>
+        <tr><td><strong>Wherever</strong></td><td>everywhere; no matter where; regardless of where</td><td>"Wherever you go you'll always find someone who speaks English."</td></tr>
+        <tr><td><strong>Whichever</strong></td><td>the person or thing which; no matter which; regardless of which</td><td>"Wear whichever shoes are the most comfortable."</td></tr>
+        <tr><td><strong>Whoever</strong></td><td>the person who; regardless of who</td><td>"Whoever comes with you is welcome."</td></tr>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3 style="color:var(--purple-dark);">Second Conditional</h3>
+      <p>The second conditional uses the past simple after if, then 'would' and the infinitive:</p>
+      <div class="highlight-box">
+        <strong>Structure:</strong> (if + past simple, ... would + infinitive)<br>
+        <strong>Note:</strong> We use 'were' instead of 'was' with 'I' and 'he/she/it'. This is mostly done in formal writing.
+      </div>
+      
+      <h4 style="color:var(--purple-dark); margin-top:20px;">Use 1: Unreal future situations</h4>
+      <p>We can use it to talk about things in the future that are probably not going to be true. Maybe I'm imagining some dream for example.</p>
+      <ul style="margin-left:20px;">
+        <li>If I won the lottery, I would buy a big house. (I probably won't win)</li>
+        <li>If I met the Queen of England, I would say hello.</li>
+        <li>She would travel all over the world if she were rich.</li>
+      </ul>
+      
+      <h4 style="color:var(--purple-dark); margin-top:20px;">Use 2: Impossible present situations</h4>
+      <p>We can use it to talk about something in the present which is impossible, because it's not true.</p>
+      <ul style="margin-left:20px;">
+        <li>If I had his number, I would call him. (I don't have his number now)</li>
+        <li>If I were you, I wouldn't go out with that man.</li>
+      </ul>
+    </div>
+
+    <div class="reading-block">
+      <h3 style="color:var(--purple-dark);">🎵 Full Lyrics: "If I Were a Boy" - Beyoncé</h3>
+      <p style="font-style:italic; line-height:2;">
+        If I were a boy, even just for a day,<br>
+        I'd roll out of bed in the morning and throw on what I wanted and go.<br>
+        Drink beer with the <strong>guys</strong> and chase after girls,<br>
+        I'd kick it with who I wanted and I'd never get <strong>confronted</strong> for it,<br>
+        'cause they stick up for me.<br><br>
+        
+        If I were a boy, I think I could understand<br>
+        how it feels to love a girl,<br>
+        I swear I'd be a better man.<br>
+        I'd listen to her 'cause I know how it hurts<br>
+        when you lose the one you wanted<br>
+        'cause he's taking you for granted<br>
+        and everything you had got destroyed.<br><br>
+        
+        If I were a boy, I would <strong>turn off</strong> my phone<br>
+        tell everyone it's broken,<br>
+        so they'd think that I was sleeping alone.<br>
+        I'd put <strong>myself</strong> first and make the rules as I go<br>
+        'cause I know that she'd be faithful,<br>
+        Waiting for me to come home (to come home).<br><br>
+        
+        It's a little too late for you to come back,<br>
+        say it's just a <strong>mistake</strong>, think I'd forgive you like that.<br>
+        If you thought I would <strong>wait</strong> for you, you thought wrong.<br><br>
+        
+        But you're just a boy, you don't understand<br>
+        (and you don't understand, oh)<br>
+        how it feels to love a girl.<br>
+        Someday, you <strong>wish</strong> you were a better man.<br>
+        You don't listen to her, you don't <strong>care</strong> how it hurts,<br>
+        until you lose the one you wanted<br>
+        'cause you've taken her for granted<br>
+        and everything you had got destroyed.<br><br>
+        
+        But you're just a boy...
+      </p>
+    </div>
+
+    <button class="nav-btn" onclick="completeUnit()" style="background:var(--magenta);">Complete Unit</button>
+  </div>
+</section>
+
+<!-- FINAL -->
+<div id="finalMsg" style="display:none; padding:80px 40px; background:var(--purple-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3rem; margin-bottom:20px;">🎉 Unit 23 Completed</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px;">You have mastered musical vocabulary, opera history, whoever/whatever/whenever/wherever/whichever, and the Second Conditional.</p>
+    <p style="font-size:1.1rem; margin-bottom:30px; opacity:0.8;">The brain doesn't translate. The brain assembles.</p>
+    <a href="indexmax.html" class="nav-btn" style="background:var(--magenta); color:var(--text-light);">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:var(--purple-dark); color:var(--text-light);">
+  <p><strong>Discovery MAX Neuroeducation</strong></p>
+  <p>Unit 23: The Importance of Music | Método NBF | Toño Vicas</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 120;
+
+// AUDIO FEEDBACK
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.1; u.pitch = 1;
+  synth.speak(u);
+}
+
+function updateProgress() {
+  document.getElementById('progressBar').style.width = `${(completedCount / totalEx) * 100}%`;
+}
+
+function normalizeText(text) {
+  if (!text) return "";
+  return text.toLowerCase().replace(/[?!.,']/g, "").replace(/\s+/g, " ").trim();
+}
+
+function scrollToNext() {
+  speak('Next section unlocked');
+  window.scrollBy({ top: window.innerHeight * 0.9, behavior: 'smooth' });
+}
+
+function checkSimple(inputId, keywords, fbId, ansId) {
+  const val = normalizeText(document.getElementById(inputId).value);
+  const fb = document.getElementById(fbId);
+  const ans = document.getElementById(ansId);
+  const allFound = keywords.some(k => val.includes(k));
+  
+  if(allFound) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Correct. Structure validated.';
+    fb.style.display = 'block';
+    ans.style.display = 'none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '❌ Review the key elements.';
+    fb.style.display = 'block';
+    ans.style.display = 'block';
+    speak('Sorry, try again');
+  }
+}
+
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Reflection recorded. Excellent cognitive effort.';
+    fb.style.display = 'block';
+    speak('Great answer!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep reflection. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Try again');
+  }
+}
+
+let selectedOptions = {};
+function selectOption(btn, questionId, option) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedOptions[questionId] = option;
+}
+
+function checkMC(questionId, correctAnswer, feedbackId) {
+  const fb = document.getElementById(feedbackId);
+  const ans = document.getElementById(feedbackId.replace('fb', 'ans'));
+  if (!selectedOptions[questionId]) { 
+    fb.className='feedback error'; 
+    fb.textContent='⚠️ Select an option'; 
+    fb.style.display='block'; 
+    speak('Select an option');
+    return; 
+  }
+  if (selectedOptions[questionId] === correctAnswer) {
+    fb.className='feedback success'; 
+    fb.textContent='✅ Correct'; 
+    fb.style.display='block'; 
+    ans.style.display='none';
+    speak('Excellent!');
+    completedCount++; updateProgress();
+  } else {
+    fb.className='feedback error'; 
+    fb.textContent='❌ Incorrect'; 
+    fb.style.display='block'; 
+    ans.style.display='block';
+    speak('Sorry, try again');
+  }
+}
+
+function completeUnit() {
+  if(completedCount >= 95) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! You completed Unit 23!');
+  } else {
+    alert(`⚠️ Complete at least 95 of 120 exercises.\nCompleted: ${completedCount}/120`);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
