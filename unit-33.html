@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 33: Marriage | Discovery MAX PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #DC143C;
+  --red-dark: #8B0000;
+  --pink: #FFB6C1;
+  --pink-dark: #FF69B4;
+  --cream: #FFF0F5;
+  --white: #FFFFFF;
+  --text-dark: #263238;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.8; background:var(--cream); overflow-x:hidden; }
+
+.hero {
+  height:85vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(220,20,60,0.85), rgba(255,182,193,0.75)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:8px 20px; background:var(--white); color:var(--red-dark); font-weight:800; font-size:0.85rem; letter-spacing:3px; margin-bottom:20px; border-radius:4px; text-transform:uppercase; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,4.5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.4); line-height:1.1; }
+.hero p { font-size:1.25rem; font-weight:300; max-width:700px; margin:0 auto; opacity:0.95; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--red-dark); padding:12px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.15); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--pink),var(--red)); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.section-solid { padding:80px 40px; }
+.section-solid.red { background:var(--red); color:var(--text-light); }
+.section-solid.red-dark { background:var(--red-dark); color:var(--text-light); }
+.section-solid.pink { background:var(--pink); color:var(--text-dark); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:950px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { 
+  background:var(--white); padding:50px; border-radius:12px; margin:30px 0; 
+  box-shadow: 0 15px 50px rgba(0,0,0,0.08); border-top:5px solid var(--red); 
+}
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--red-dark); margin-bottom:25px; border-bottom:2px solid #eee; padding-bottom:15px; }
+.reading-block p { font-size:1.05rem; line-height:1.9; color:#374151; margin-bottom:18px; }
+.reading-block ul { margin: 15px 0 20px 25px; }
+.reading-block li { margin-bottom: 10px; font-size: 1.05rem; color: #374151; }
+
+.love-box { 
+  background: linear-gradient(135deg, #FFE4E1, #FFC0CB); 
+  border-left:5px solid var(--red); padding:25px 30px; margin:25px 0; 
+  border-radius:0 10px 10px 0; color:var(--red-dark); font-weight:500;
+}
+.love-box strong { color: var(--red-dark); font-size: 1.15rem; }
+
+.exercise-box { background:var(--white); padding:40px; border-radius:12px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--red-dark); margin-bottom:25px; }
+.exercise-item { margin:25px 0; padding:25px; background:#FFF0F5; border-left:4px solid var(--red); border-radius:6px; transition: transform 0.2s; }
+.exercise-item:hover { transform: translateX(5px); }
+.exercise-item label { font-weight:600; font-size:1.1rem; display:block; margin-bottom:15px; color:var(--text-dark); line-height:1.5; }
+.exercise-textarea {
+  width:100%; padding:15px; border:2px solid #E2E8F0; border-radius:8px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s; min-height:120px; resize:vertical;
+}
+.exercise-textarea:focus { outline:none; border-color:var(--red); box-shadow: 0 0 0 3px rgba(220,20,60,0.1); }
+
+.btn-verify {
+  margin-top:15px; padding:12px 28px; background:var(--red); color:var(--text-light);
+  border:none; border-radius:6px; font-weight:700; cursor:pointer; transition: all 0.3s; letter-spacing:0.5px;
+}
+.btn-verify:hover { background:var(--red-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(220,20,60,0.3); }
+
+.feedback { margin-top:15px; padding:14px; border-radius:6px; font-weight:600; display:none; font-size:0.95rem; }
+.feedback.success { background:#D1FAE5; color:#065F46; border-left:4px solid #10B981; }
+.feedback.error { background:#FEE2E2; color:#991B1B; border-left:4px solid #EF4444; }
+
+.nav-btn {
+  display:inline-block; margin-top:40px; padding:16px 45px; background:var(--pink); color:var(--text-dark);
+  text-decoration:none; border-radius:8px; font-weight:800; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer; letter-spacing:1px;
+}
+.nav-btn:hover { background:var(--pink-dark); transform:translateY(-3px); box-shadow: 0 8px 20px rgba(255,182,193,0.4); }
+
+@media(max-width:768px) {
+  .hero { height:70vh; }
+  .section-solid { padding:50px 20px; }
+  .reading-block, .exercise-box { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">PRO MAX • UNIT 33</div>
+    <h1>Marriage</h1>
+    <p>The Secrets of a Successful Marriage: Actions Speak Louder Than Words</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--red-dark);">📖 Reading: The Foundation of Love</h2>
+    
+    <div class="reading-block">
+      <h3>Pervasive Personality Characteristics</h3>
+      <p>Did you ever wonder why some people find the perfect person to marry, do so, and enjoy a love affair that lasts a lifetime? On the other hand, some marry a person that is wrong for them now, wrong for them tomorrow and wrong for them for a lifetime?</p>
+      
+      <p>What's the difference? Why do some succeed at love and marriage where others fail?</p>
+      
+      <p>Experts often reminded us of the power of <strong>"pervasive personality characteristics"</strong> defined "pervasive" as "a recurring pattern of thought and behavior." In other words, these are the personality characteristics that a human being develops within the first two decades of life that, for the most part, defines who they are for a lifetime. Don't believed that you are what you are by the time you become an adult. Changing who and what you are becomes nearly impossible after that.</p>
+      
+      <div class="love-box">
+        <strong>💔 The Hard Truth:</strong><br>
+        The people you meet in life are, by the time they reach adulthood, pretty much what they are. They won't change much, if at all. The hard truth is they can't change who they really are, even if they wanted to. Oh, sure, people as adults can make you believe from time to time that they are something different than what they really are, but in the end, they are what they are. Make no mistake about that.
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>Actions Speak Louder Than Words</h3>
+      <p>When it comes to love and marriage, there is a truism that trumps all truisms. It goes like this – <strong>pay close and careful attention to the words, deeds, and actions of the person you think you are falling in love with. And in the end, pay most of your attention to their actions, first and foremost!</strong></p>
+      
+      <p>The truth is a person's actions speak so much louder than their words. Never lose sight of this truism for to do so is put your heart, your health, and your happiness at peril.</p>
+      
+      <div class="love-box" style="background: linear-gradient(135deg, #E6E6FA, #D8BFD8); border-left-color: #9370DB;">
+        <strong>💍 The Ultimate Secret:</strong><br>
+        As love and marriage experts say, one of the questions most often asked throughout the world is this: "What are the secrets of a successful marriage?" The immediate answer is always the same: <strong>marry the right person!</strong>
+      </div>
+
+      <p>Here's how it works. You think you love a guy. He tells you all of the right things. But over time you begin to notice that his actions belie his words. He tells you he respects you but dismisses your opinions. He waxes on about how he puts you on a pedestal but never opens the door for you when he gets to it first. He tells you how he wants the relationship between the two of you a shared relationship, and then he makes all the decisions. You get the idea. We could go on.</p>
+      
+      <p>This is the point, if you fail to notice and question the actions of the one you purport to love in the early stages of your relationship then you are deluding yourself into thinking he/she will change later on. They rarely do. And so often, those that ignore the signs and the warnings end up getting married, only to discover later on that the person they married is not who they thought he/she was.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>Building a Successful Marriage</h3>
+      <p>So, back to the earlier question, the best secret to a successful marriage is marrying the right person in the first place! Taking the time to carefully observe the actions of another person over a period of time tells you a lot more about them than their words ever could. All too often you can hear one or both people in a marriage lament, that if they had only paid attention to the telltale signs, they would not have married the person they married. Many of these relationships end in divorce.</p>
+      
+      <p>We don't mean to suggest that it is always easy to tell if the one you think you love is one you can have a successful marriage with. However, believe strongly that paying close and careful attention to the one you are thinking about marrying in the early stages of your relationship can save a lot of failed marriages from happening in the first place.</p>
+      
+      <div class="love-box">
+        <strong>🔑 The Ultimate Key:</strong><br>
+        This is the ultimate key to a successful marriage. If you consciously and rationally believe that the words, deeds, and actions of the one you are thinking of marrying all jive and are consistent, then your marriage has half a chance at being successful.
+      </div>
+
+      <p>In the end, a marriage built on this foundation has a reasonable chance of success. And while it's often said that a successful marriage is an accumulation of the simple things, and that a good marriage is simple to understand, remember that you have to do the simple things each and every day of your lives together to make it work.</p>
+      
+      <p>Making marriage a success requires hard work. If you base your marriage on a lie you ignored the actions you were observing in the person you were falling in love with then all of the simple things required to make a marriage work will more than likely not be enough to carry the day.</p>
+      
+      <p style="font-weight:700; color:var(--red-dark); font-size:1.15rem; margin-top:20px;">Pervasive characteristics in people are very real. They define who they are and they almost never change. Always keep your eyes wide open when you are falling in love. Never enter a marriage thinking you can ignore the behaviors now and change them later. Too many have fallen prey to this notion. It rarely ever works.</p>
+      <p style="font-weight:700; color:var(--red-dark); font-size:1.25rem; margin-top:20px; text-align:center;">Love well!</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-solid red">
+  <div class="container">
+    <h2 style="color:var(--white);">💕 Critical Thinking: Love & Relationships</h2>
+    <p style="margin-bottom:30px; opacity:0.95; font-size:1.1rem;">Reflect deeply on the following questions. The executive brain requires detailed analysis (minimum 20 characters per answer).</p>
+    
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. In your opinion does true love really exists? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1a" placeholder="Define true love..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1a','fb1a')">Validate Reflection</button>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Do you think that there's only a true, perfect mate out there for each one of us, those that mean that all others are an error? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1b" placeholder="Consider the concept of soulmates..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1b','fb1b')">Validate Reflection</button>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Is it possible to just love a person forever? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1c" placeholder="Analyze eternal love..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1c','fb1c')">Validate Reflection</button>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. Do think that romance is gone in this trendy, high living world of today? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1d" placeholder="Evaluate modern romance..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1d','fb1d')">Validate Reflection</button>
+        <div class="feedback" id="fb1d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. Think of five elements which a prosperous relation requires? In the lack of which will be a cause of misery and bitterness?</label>
+        <textarea class="exercise-textarea" id="ex1e" placeholder="List essential relationship elements..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1e','fb1e')">Validate Reflection</button>
+        <div class="feedback" id="fb1e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. Name one of the crazest things you have ever done in the name of love? How about the most foolish thing? The most amusing?</label>
+        <textarea class="exercise-textarea" id="ex1f" placeholder="Share love stories..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1f','fb1f')">Validate Reflection</button>
+        <div class="feedback" id="fb1f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. In your opinion which is the most important, gifts with a little physical affection, or a lot of hand touching, cuddling, and lots of smooching but with few gifts? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1g" placeholder="Compare affection styles..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1g','fb1g')">Validate Reflection</button>
+        <div class="feedback" id="fb1g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. Define how would a superb date should be like. Have you ever experience a situation alike. If this hasn't taken place to you, why do you think so?</label>
+        <textarea class="exercise-textarea" id="ex1h" placeholder="Describe your ideal date..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1h','fb1h')">Validate Reflection</button>
+        <div class="feedback" id="fb1h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. In your opinion who's better player at the game of love, relations, and romance, men or women? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1i" placeholder="Compare romantic skills..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1i','fb1i')">Validate Reflection</button>
+        <div class="feedback" id="fb1i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. Why do you think couples are getting married later and later in these days?</label>
+        <textarea class="exercise-textarea" id="ex1j" placeholder="Analyze marriage trends..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1j','fb1j')">Validate Reflection</button>
+        <div class="feedback" id="fb1j"></div>
+      </div>
+      <div class="exercise-item">
+        <label>11. Is it possible for you to love someone even if you found that person physically unattractive? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1k" placeholder="Consider love beyond appearance..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1k','fb1k')">Validate Reflection</button>
+        <div class="feedback" id="fb1k"></div>
+      </div>
+      <div class="exercise-item">
+        <label>12. In your opinion how possible is it to make a long-distance relationship work out? If so, how would it be able to make it work out?</label>
+        <textarea class="exercise-textarea" id="ex1l" placeholder="Evaluate long-distance relationships..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1l','fb1l')">Validate Reflection</button>
+        <div class="feedback" id="fb1l"></div>
+      </div>
+      <div class="exercise-item">
+        <label>13. Does love grow stronger as the relation goes on? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1m" placeholder="Analyze love evolution..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1m','fb1m')">Validate Reflection</button>
+        <div class="feedback" id="fb1m"></div>
+      </div>
+      <div class="exercise-item">
+        <label>14. Why is it so difficult for men and women to communicate sometimes? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1n" placeholder="Explore communication barriers..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1n','fb1n')">Validate Reflection</button>
+        <div class="feedback" id="fb1n"></div>
+      </div>
+    </div>
+    
+    <button class="nav-btn" onclick="completeUnit()">Complete Unit 33 →</button>
+  </div>
+</section>
+
+<div id="finalMsg" style="display:none; padding:100px 40px; background:var(--red-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:20px; color:var(--pink);">🎯 Unit 33 Mastered</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px; max-width:700px; margin-left:auto; margin-right:auto; opacity:0.9;">You have successfully explored the secrets of successful marriage and applied critical thinking to love and relationships.</p>
+    <p style="font-size:1.1rem; margin-bottom:40px; opacity:0.7; font-style:italic;">"The brain doesn't translate. The brain assembles."</p>
+    <a href="indexmax.html" class="nav-btn">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:#111; color:#888; font-size:0.9rem;">
+  <p><strong>Discovery MAX PRO Neuroeducation</strong></p>
+  <p>Unit 33: Marriage | Método NBF</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 14;
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.05; u.pitch = 1;
+  synth.speak(u);
+}
+function updateProgress() {
+  const pct = (completedCount / totalEx) * 100;
+  document.getElementById('progressBar').style.width = `${pct}%`;
+}
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Cognitive reflection validated. Excellent executive function.';
+    fb.style.display = 'block';
+    speak('Excellent reflection.');
+    if(!fb.dataset.counted) { completedCount++; updateProgress(); fb.dataset.counted = "true"; }
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep analysis. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Please elaborate your answer.');
+  }
+}
+function completeUnit() {
+  if(completedCount >= totalEx) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! Unit 33 completed.');
+  } else {
+    alert(`⚠️ Please complete all ${totalEx} critical thinking reflections to master this unit.\nCompleted: ${completedCount}/${totalEx}`);
+  }
+}
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
