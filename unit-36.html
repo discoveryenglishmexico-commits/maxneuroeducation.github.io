@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 36: Today's Women | Discovery MAX PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple: #6A0DAD;
+  --purple-dark: #4B0082;
+  --pink: #FF1493;
+  --pink-dark: #C71585;
+  --light-bg: #FFF0F5;
+  --white: #FFFFFF;
+  --text-dark: #263238;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.8; background:var(--light-bg); overflow-x:hidden; }
+
+.hero {
+  height:85vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(106,13,173,0.9), rgba(255,20,147,0.8)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:8px 20px; background:var(--white); color:var(--purple-dark); font-weight:800; font-size:0.85rem; letter-spacing:3px; margin-bottom:20px; border-radius:4px; text-transform:uppercase; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,4.5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.4); line-height:1.1; }
+.hero p { font-size:1.25rem; font-weight:300; max-width:700px; margin:0 auto; opacity:0.95; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--purple-dark); padding:12px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.15); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--pink),var(--purple)); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.section-solid { padding:80px 40px; }
+.section-solid.purple { background:var(--purple); color:var(--text-light); }
+.section-solid.purple-dark { background:var(--purple-dark); color:var(--text-light); }
+.section-solid.pink { background:var(--pink); color:var(--text-light); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:950px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { 
+  background:var(--white); padding:50px; border-radius:12px; margin:30px 0; 
+  box-shadow: 0 15px 50px rgba(0,0,0,0.08); border-top:5px solid var(--pink); 
+}
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--purple-dark); margin-bottom:25px; border-bottom:2px solid #eee; padding-bottom:15px; }
+.reading-block p { font-size:1.05rem; line-height:1.9; color:#374151; margin-bottom:18px; }
+.reading-block ul { margin: 15px 0 20px 25px; }
+.reading-block li { margin-bottom: 10px; font-size: 1.05rem; color: #374151; }
+
+.women-box { 
+  background: linear-gradient(135deg, #FFE4E1, #FFC0CB); 
+  border-left:5px solid var(--pink); padding:25px 30px; margin:25px 0; 
+  border-radius:0 10px 10px 0; color:var(--purple-dark); font-weight:500;
+}
+.women-box strong { color: var(--purple-dark); font-size: 1.15rem; }
+
+.stat-box {
+  background: linear-gradient(135deg, #E6E6FA, #D8BFD8);
+  border: 2px solid var(--purple);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 4px 12px rgba(106,13,173,0.2);
+}
+.stat-box strong { color: var(--purple-dark); font-size: 1.2rem; }
+
+.exercise-box { background:var(--white); padding:40px; border-radius:12px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--purple-dark); margin-bottom:25px; }
+.exercise-item { margin:25px 0; padding:25px; background:#FFF0F5; border-left:4px solid var(--purple); border-radius:6px; transition: transform 0.2s; }
+.exercise-item:hover { transform: translateX(5px); }
+.exercise-item label { font-weight:600; font-size:1.1rem; display:block; margin-bottom:15px; color:var(--text-dark); line-height:1.5; }
+.exercise-textarea {
+  width:100%; padding:15px; border:2px solid #E2E8F0; border-radius:8px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s; min-height:120px; resize:vertical;
+}
+.exercise-textarea:focus { outline:none; border-color:var(--pink); box-shadow: 0 0 0 3px rgba(255,20,147,0.2); }
+
+.btn-verify {
+  margin-top:15px; padding:12px 28px; background:var(--purple); color:var(--text-light);
+  border:none; border-radius:6px; font-weight:700; cursor:pointer; transition: all 0.3s; letter-spacing:0.5px;
+}
+.btn-verify:hover { background:var(--purple-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(106,13,173,0.3); }
+
+.feedback { margin-top:15px; padding:14px; border-radius:6px; font-weight:600; display:none; font-size:0.95rem; }
+.feedback.success { background:#D1FAE5; color:#065F46; border-left:4px solid #10B981; }
+.feedback.error { background:#FEE2E2; color:#991B1B; border-left:4px solid #EF4444; }
+
+.nav-btn {
+  display:inline-block; margin-top:40px; padding:16px 45px; background:var(--pink); color:var(--text-light);
+  text-decoration:none; border-radius:8px; font-weight:800; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer; letter-spacing:1px;
+}
+.nav-btn:hover { background:var(--pink-dark); transform:translateY(-3px); box-shadow: 0 8px 20px rgba(255,20,147,0.4); }
+
+@media(max-width:768px) {
+  .hero { height:70vh; }
+  .section-solid { padding:50px 20px; }
+  .reading-block, .exercise-box { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">PRO MAX • UNIT 36</div>
+    <h1>Today's Women</h1>
+    <p>Breaking Barriers: The Evolution of Women's Rights and Roles in Modern Society</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--purple-dark);">📖 Reading: The Journey to Equality</h2>
+    
+    <div class="reading-block">
+      <h3>Equal Rights: Reality vs. Perception</h3>
+      <p>Today's women are considered to have equal rights; but, is it really true? Old stereotypes still exist in many things. Women have worked hard for the rights that exist. They have made huge strides in changing the way society looks at them from the past.</p>
+      
+      <p>In the past, women were to stay at home, take care of the house chores, the cooking, the baking, the laundry, and teach the children by raising them with chores, discipline, and help with their homework. Husbands were expected to come home from work, have dinner at the table and the house neat and clean for them.</p>
+      
+      <div class="women-box">
+        <strong>💼 The Modern Shift:</strong><br>
+        Times have changed, though. Many women work outside of the home or even in the home for pay. With today's economic status, most families need two paychecks to make ends meet. Other women have a college degree and want to put it to use or continue in their careers. Although family may be important to them, self-improvement and being able to help provide for the family may be of a concern.
+      </div>
+
+      <p>With this shift in work situation, many women ask their husbands for help with the housework and the children and are scrutinized for it. It is not always an easy situation for a woman to be married, work, and have a family; but, it is quite often a choice that is made.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>The Wage Gap</h3>
+      <p>Although women are supposed to receive equal pay for equal work; this is generally not the case.</p>
+      
+      <div class="stat-box">
+        <strong>📊 Wage Gap Statistics (2000):</strong><br>
+        • <strong>White women:</strong> earned about 75 cents for each dollar white men earned<br>
+        • <strong>African American women:</strong> earned 85 cents for each African American dollar<br>
+        • <strong>Hispanic women:</strong> earned 88 cents for each Hispanic male dollar
+      </div>
+
+      <p>Women are still stereotyped, many times, in regard to jobs. In many cases, a man is chosen over a woman in a particular field.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>Stereotypes in Language and Media</h3>
+      <p>Other stereotypes occur in language and in the media. Many textbooks, magazines, and other printed materials are written as "he," "him," or "man" when the intention is to be generic, such as "he/she," "him/her," or "man/woman." Other language intricacies also devalue women.</p>
+      
+      <div class="women-box" style="background: linear-gradient(135deg, #FFE4E1, #FFC0CB); border-left-color: #DC143C;">
+        <strong>📺 Media Representation:</strong><br>
+        In the media, women are still portrayed in television commercials, shows, and movies as the homemaker, housewife, and mother. Some have branched out to include women as a working woman; but, usually only if she is displayed as being single.<br><br>
+        In a majority of commercials, women are still in the stereotypical roles. How often do you see a man advertising a cleaning product? A woman may be shown to advertise car parts; but, this is generally done in a sexual and seductive manner not as if she were knowledgeable about an engine.
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>Women's Contributions to Society</h3>
+      <p>Women are important in our society. They are nurses, teachers, lawyers, police officers, jailers, army soldiers, writers, sales clerks, managers, accountants, business leaders, and so much more. Women make a difference. Women get involved. Women volunteer more than men do.</p>
+      
+      <div class="women-box" style="background: linear-gradient(135deg, #E6E6FA, #D8BFD8); border-left-color: var(--purple);">
+        <strong>🌟 The Power of Volunteering:</strong><br>
+        Much of what has been accomplished in communities is due to the women that volunteer for different groups. These women get things done. It could be part of their nurturing instinct to hold close what is important to them and work for a better world.
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>The Balancing Act</h3>
+      <p>Women juggle many things in everyday life. For those who are married, or have children, it is even more of a balancing act.</p>
+      
+      <div class="stat-box" style="background: linear-gradient(135deg, #FFF0F5, #FFE4E1); border-color: var(--pink);">
+        <strong>⚖️ The Stress Factor:</strong><br>
+        According to experts, "Not surprisingly, given the relatively low levels of support women receive for juggling family, personal, and employment obligations, employed wives have less time for themselves and less leisure than employed husbands do, so they experience more stress."
+      </div>
+
+      <p>Equality between men and women has not been an easy road to travel. It has not ended yet. The solution will not be something that happens overnight. But, each little stride that is taken is one step closer to a better world for women of today and of the future.</p>
+      
+      <p style="font-weight:700; color:var(--purple-dark); font-size:1.25rem; margin-top:20px; text-align:center;">The journey continues. Every step matters.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-solid purple">
+  <div class="container">
+    <h2 style="color:var(--white);">🧠 Critical Thinking: Gender Equality & Society</h2>
+    <p style="margin-bottom:30px; opacity:0.95; font-size:1.1rem;">Reflect deeply on the following questions. The executive brain requires detailed analysis (minimum 20 characters per answer).</p>
+    
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. How hard is it to be a woman employee in your city? Explain why please?</label>
+        <textarea class="exercise-textarea" id="ex1a" placeholder="Analyze workplace challenges..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1a','fb1a')">Validate Reflection</button>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. In your opinion do men have the tougher lives than women? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1b" placeholder="Compare gender challenges..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1b','fb1b')">Validate Reflection</button>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. In your opinion can women be important leaders in today's society? If yes, why is that or why not?</label>
+        <textarea class="exercise-textarea" id="ex1c" placeholder="Evaluate women in leadership..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1c','fb1c')">Validate Reflection</button>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. Do you think that now a day the House chores should be share between men and women? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1d" placeholder="Consider household responsibilities..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1d','fb1d')">Validate Reflection</button>
+        <div class="feedback" id="fb1d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. In your opinion, why are women more exploited through advertising than men? Why do you think so?</label>
+        <textarea class="exercise-textarea" id="ex1e" placeholder="Analyze advertising practices..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1e','fb1e')">Validate Reflection</button>
+        <div class="feedback" id="fb1e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. Do you think a quota system should exist in companies and governments to ensure that 50% of managers are women? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1f" placeholder="Evaluate quota systems..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1f','fb1f')">Validate Reflection</button>
+        <div class="feedback" id="fb1f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. Do you think that gender equality and respect for women should be taught from elementary school? Why is that or why not?</label>
+        <textarea class="exercise-textarea" id="ex1g" placeholder="Consider early education..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1g','fb1g')">Validate Reflection</button>
+        <div class="feedback" id="fb1g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. Why do you think women are still not treated equally in the great democracies such as USA and Europe? What about in your society?</label>
+        <textarea class="exercise-textarea" id="ex1h" placeholder="Analyze persistent inequality..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1h','fb1h')">Validate Reflection</button>
+        <div class="feedback" id="fb1h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. What is the biggest change that needs to be made to move towards equality? Please explain.</label>
+        <textarea class="exercise-textarea" id="ex1i" placeholder="Identify key changes needed..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1i','fb1i')">Validate Reflection</button>
+        <div class="feedback" id="fb1i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. What kind of inequality exists in your country? Please explain.</label>
+        <textarea class="exercise-textarea" id="ex1j" placeholder="Describe local inequalities..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1j','fb1j')">Validate Reflection</button>
+        <div class="feedback" id="fb1j"></div>
+      </div>
+      <div class="exercise-item">
+        <label>11. Should there be much stiffer penalties for crimes involving violence against women? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1k" placeholder="Consider legal protections..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1k','fb1k')">Validate Reflection</button>
+        <div class="feedback" id="fb1k"></div>
+      </div>
+      <div class="exercise-item">
+        <label>12. What is the worst crime against women and what should the punishment be? Please explain.</label>
+        <textarea class="exercise-textarea" id="ex1l" placeholder="Address serious crimes..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1l','fb1l')">Validate Reflection</button>
+        <div class="feedback" id="fb1l"></div>
+      </div>
+      <div class="exercise-item">
+        <label>13. Who is the greatest woman you know and what makes her so great? Please explain.</label>
+        <textarea class="exercise-textarea" id="ex1m" placeholder="Celebrate remarkable women..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1m','fb1m')">Validate Reflection</button>
+        <div class="feedback" id="fb1m"></div>
+      </div>
+      <div class="exercise-item">
+        <label>14. Who is the greatest woman in world? What about in your country's history? Please explain.</label>
+        <textarea class="exercise-textarea" id="ex1n" placeholder="Identify historical figures..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1n','fb1n')">Validate Reflection</button>
+        <div class="feedback" id="fb1n"></div>
+      </div>
+    </div>
+    
+    <button class="nav-btn" onclick="completeUnit()">Complete Unit 36 →</button>
+  </div>
+</section>
+
+<div id="finalMsg" style="display:none; padding:100px 40px; background:var(--purple-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:20px; color:var(--pink);">🎯 Unit 36 Mastered</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px; max-width:700px; margin-left:auto; margin-right:auto; opacity:0.9;">You have successfully explored women's rights and roles and applied critical thinking to gender equality and societal progress.</p>
+    <p style="font-size:1.1rem; margin-bottom:40px; opacity:0.7; font-style:italic;">"The brain doesn't translate. The brain assembles."</p>
+    <a href="indexmax.html" class="nav-btn">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:#111; color:#888; font-size:0.9rem;">
+  <p><strong>Discovery MAX PRO Neuroeducation</strong></p>
+  <p>Unit 36: Today's Women | Método NBF</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 14;
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.05; u.pitch = 1;
+  synth.speak(u);
+}
+function updateProgress() {
+  const pct = (completedCount / totalEx) * 100;
+  document.getElementById('progressBar').style.width = `${pct}%`;
+}
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Cognitive reflection validated. Excellent executive function.';
+    fb.style.display = 'block';
+    speak('Excellent reflection.');
+    if(!fb.dataset.counted) { completedCount++; updateProgress(); fb.dataset.counted = "true"; }
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep analysis. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Please elaborate your answer.');
+  }
+}
+function completeUnit() {
+  if(completedCount >= totalEx) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! Unit 36 completed.');
+  } else {
+    alert(`⚠️ Please complete all ${totalEx} critical thinking reflections to master this unit.\nCompleted: ${completedCount}/${totalEx}`);
+  }
+}
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
