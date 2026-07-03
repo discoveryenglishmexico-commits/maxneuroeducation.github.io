@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 39: The Value of Marketing for Your Enterprise | Discovery MAX PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #FF6B35;
+  --orange-dark: #D35400;
+  --blue: #1E3A8A;
+  --blue-dark: #1E293B;
+  --light-bg: #FFF8F0;
+  --white: #FFFFFF;
+  --text-dark: #263238;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.8; background:var(--light-bg); overflow-x:hidden; }
+
+.hero {
+  height:85vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(255,107,53,0.85), rgba(30,58,138,0.8)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:8px 20px; background:var(--white); color:var(--orange-dark); font-weight:800; font-size:0.85rem; letter-spacing:3px; margin-bottom:20px; border-radius:4px; text-transform:uppercase; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,4.5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.4); line-height:1.1; }
+.hero p { font-size:1.25rem; font-weight:300; max-width:700px; margin:0 auto; opacity:0.95; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--blue-dark); padding:12px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.15); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--orange),var(--blue)); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.section-solid { padding:80px 40px; }
+.section-solid.orange { background:var(--orange); color:var(--text-light); }
+.section-solid.blue { background:var(--blue); color:var(--text-light); }
+.section-solid.blue-dark { background:var(--blue-dark); color:var(--text-light); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:950px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { 
+  background:var(--white); padding:50px; border-radius:12px; margin:30px 0; 
+  box-shadow: 0 15px 50px rgba(0,0,0,0.08); border-top:5px solid var(--orange); 
+}
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--blue-dark); margin-bottom:25px; border-bottom:2px solid #eee; padding-bottom:15px; }
+.reading-block p { font-size:1.05rem; line-height:1.9; color:#374151; margin-bottom:18px; }
+.reading-block ul { margin: 15px 0 20px 25px; }
+.reading-block li { margin-bottom: 10px; font-size: 1.05rem; color: #374151; }
+
+.marketing-box { 
+  background: linear-gradient(135deg, #FFE5D0, #FFD4B8); 
+  border-left:5px solid var(--orange); padding:25px 30px; margin:25px 0; 
+  border-radius:0 10px 10px 0; color:var(--blue-dark); font-weight:500;
+}
+.marketing-box strong { color: var(--blue-dark); font-size: 1.15rem; }
+
+.exercise-box { background:var(--white); padding:40px; border-radius:12px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--blue-dark); margin-bottom:25px; }
+.exercise-item { margin:25px 0; padding:25px; background:#FFF8F0; border-left:4px solid var(--orange); border-radius:6px; transition: transform 0.2s; }
+.exercise-item:hover { transform: translateX(5px); }
+.exercise-item label { font-weight:600; font-size:1.1rem; display:block; margin-bottom:15px; color:var(--text-dark); line-height:1.5; }
+.exercise-textarea {
+  width:100%; padding:15px; border:2px solid #E2E8F0; border-radius:8px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s; min-height:120px; resize:vertical;
+}
+.exercise-textarea:focus { outline:none; border-color:var(--orange); box-shadow: 0 0 0 3px rgba(255,107,53,0.2); }
+
+.btn-verify {
+  margin-top:15px; padding:12px 28px; background:var(--orange); color:var(--text-light);
+  border:none; border-radius:6px; font-weight:700; cursor:pointer; transition: all 0.3s; letter-spacing:0.5px;
+}
+.btn-verify:hover { background:var(--orange-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,107,53,0.3); }
+
+.feedback { margin-top:15px; padding:14px; border-radius:6px; font-weight:600; display:none; font-size:0.95rem; }
+.feedback.success { background:#D1FAE5; color:#065F46; border-left:4px solid #10B981; }
+.feedback.error { background:#FEE2E2; color:#991B1B; border-left:4px solid #EF4444; }
+
+.nav-btn {
+  display:inline-block; margin-top:40px; padding:16px 45px; background:var(--orange); color:var(--text-light);
+  text-decoration:none; border-radius:8px; font-weight:800; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer; letter-spacing:1px;
+}
+.nav-btn:hover { background:var(--orange-dark); transform:translateY(-3px); box-shadow: 0 8px 20px rgba(255,107,53,0.4); }
+
+@media(max-width:768px) {
+  .hero { height:70vh; }
+  .section-solid { padding:50px 20px; }
+  .reading-block, .exercise-box { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">PRO MAX • UNIT 39</div>
+    <h1>The Value of Marketing for Your Enterprise</h1>
+    <p>Understanding how marketing drives business success, brand recognition, and competitive advantage.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--blue-dark);">📖 Reading: The Marketing Imperative</h2>
+    
+    <div class="reading-block">
+      <h3>The Core of Business Success</h3>
+      <p>The core of your enterprise success lies in its marketing. Most sides of your business bank on successful marketing. The overall marketing umbrella covers advertising, public relations, promotions and sales. Marketing is a process by which a product or service is introduced and promoted to potential clients.</p>
+      
+      <div class="marketing-box">
+        <strong>⚠️ The Stark Reality:</strong><br>
+        Without marketing, your business may offer the best products or services in your industry, but none of your potential customers would know about it. Without marketing, sales may crash and companies may have to close.
+      </div>
+
+      <p>For a business to succeed, the product or service must be known to potential buyers. You have to use marketing strategies to create product or service awareness. Without marketing, your potential customers may never be aware of your business offerings and your business may not be given the opportunity to progress and succeed.</p>
+      
+      <p>Using marketing to promote your product, service and company provides your business with a chance of being discovered by prospective customers.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>Building Awareness and Sales</h3>
+      <p>Once your product, service or company gets on the radar screen of your prospects, it increases your chances that consumers will make a purchase. As awareness becomes a reality, it is also the point where new customers start to spread the word, telling friends and family about this amazing new product they discovered. Your sales will steadily increase as the word spreads.</p>
+      
+      <div class="marketing-box">
+        <strong>📈 The Word-of-Mouth Effect:</strong><br>
+        Without employing marketing strategies, these sales may not have ever happened; without sales, a company cannot succeed.
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>Building Reputation and Brand</h3>
+      <p>The success of a company often rests on a solid reputation. Marketing builds brand name recognition or product recall with a company. When a company reaches the high expectations of the public, its reputation stands on firmer ground. As your reputation grows, the business expands and sales increase.</p>
+      
+      <p>The reputation of your company is built through active participation in community programs, effective communication and quality products or services.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>Promoting Healthy Competition</h3>
+      <p>Marketing also promotes an environment in the marketplace for healthy competition. Marketing efforts get the word out on pricing of products and services, which not only reaches the intended consumers, but also reaches other companies competing for the consumers' economy.</p>
+      
+      <div class="marketing-box" style="background: linear-gradient(135deg, #E0F2FE, #BAE6FD); border-left-color: var(--blue);">
+        <strong>🏆 The Competitive Edge:</strong><br>
+        As opposed to companies that have a monopoly on products and services that can charge almost any price, marketing helps keep pricing competitive for a business to try to win over consumers before its competition does.
+      </div>
+
+      <p>Without competition, well known companies would continue to sell while lesser known companies or new companies would stand little chance of ever becoming successful.</p>
+      
+      <p>Marketing supplies a healthy competition that allows small businesses and new businesses to be successful enter and grow in the marketplace.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>The Investment in Marketing</h3>
+      <p>Although marketing is hugely important for a business to succeed, it can also be very expensive. In its first year, a company might spend as much as half of its sales on marketing programs. After the first year, a marketing budget can reach as much as 30 percent (sometimes more) of the annual sales.</p>
+      
+      <div class="marketing-box">
+        <strong>💼 A Healthy Mix:</strong><br>
+        A marketing program that gives your company the best chance is a healthy mix of different forms of marketing, such as:<br>
+        • Website development<br>
+        • Public relations<br>
+        • Print and broadcast advertising<br>
+        • Design and printing for all print materials<br>
+        • Trade shows and other special events
+      </div>
+
+      <p style="font-weight:700; color:var(--orange-dark); font-size:1.25rem; margin-top:20px; text-align:center;">Marketing helps the business world go round and around.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-solid orange">
+  <div class="container">
+    <h2 style="color:var(--text-light);">🧠 Critical Thinking: Advertising & Business</h2>
+    <p style="margin-bottom:30px; opacity:0.95; font-size:1.1rem;">Reflect deeply on the following questions. The executive brain requires detailed analysis (minimum 20 characters per answer).</p>
+    
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. Think of the 3 best techniques of advertising that you know of? Why did you select them?</label>
+        <textarea class="exercise-textarea" id="ex1a" placeholder="Identify top advertising techniques..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1a','fb1a')">Validate Reflection</button>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. What are the main functions of advertising in your opinion?</label>
+        <textarea class="exercise-textarea" id="ex1b" placeholder="Define advertising purposes..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1b','fb1b')">Validate Reflection</button>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. What is the effect of advertising on people? Explain if you think advertising is a good or a bad thing.</label>
+        <textarea class="exercise-textarea" id="ex1c" placeholder="Analyze advertising impact..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1c','fb1c')">Validate Reflection</button>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. What do you think makes a good commercial enjoyable? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1d" placeholder="Identify commercial success factors..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1d','fb1d')">Validate Reflection</button>
+        <div class="feedback" id="fb1d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. In your opinion should there be laws regulating some advertisements? Which ones and why those?</label>
+        <textarea class="exercise-textarea" id="ex1e" placeholder="Consider advertising regulations..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1e','fb1e')">Validate Reflection</button>
+        <div class="feedback" id="fb1e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. Do you think commercials directed to children should be more tightly regulated than those directed to adults? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1f" placeholder="Evaluate child-targeted advertising..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1f','fb1f')">Validate Reflection</button>
+        <div class="feedback" id="fb1f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. What would the world be like without advertisements?</label>
+        <textarea class="exercise-textarea" id="ex1g" placeholder="Imagine an ad-free world..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1g','fb1g')">Validate Reflection</button>
+        <div class="feedback" id="fb1g"></div>
+      </div>
+      <div class="exercise-item" style="background: linear-gradient(135deg, #FFF0F5, #FFE4E1); border-left-color: #DC143C;">
+        <label style="color: #DC143C; font-size: 1.2rem;">🎯 IMAGINE THAT YOU HAVE YOUR OWN COMPANY</label>
+      </div>
+      <div class="exercise-item">
+        <label>8. What are you specifically selling? (product)</label>
+        <textarea class="exercise-textarea" id="ex1h" placeholder="Define your product..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1h','fb1h')">Validate Reflection</button>
+        <div class="feedback" id="fb1h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. Who are you selling to? (men, women, children, third age people, pets, etc.)</label>
+        <textarea class="exercise-textarea" id="ex1i" placeholder="Identify your target audience..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1i','fb1i')">Validate Reflection</button>
+        <div class="feedback" id="fb1i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. What is your target market age, and gender of your customers?</label>
+        <textarea class="exercise-textarea" id="ex1j" placeholder="Define demographics..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1j','fb1j')">Validate Reflection</button>
+        <div class="feedback" id="fb1j"></div>
+      </div>
+      <div class="exercise-item">
+        <label>11. Who are your competitors and what are the benefits of your product over theirs?</label>
+        <textarea class="exercise-textarea" id="ex1k" placeholder="Analyze competition and advantages..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1k','fb1k')">Validate Reflection</button>
+        <div class="feedback" id="fb1k"></div>
+      </div>
+      <div class="exercise-item">
+        <label>12. What could the ad be like of your advertisement? Describe please.</label>
+        <textarea class="exercise-textarea" id="ex1l" placeholder="Design your advertisement..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1l','fb1l')">Validate Reflection</button>
+        <div class="feedback" id="fb1l"></div>
+      </div>
+    </div>
+    
+    <button class="nav-btn" onclick="completeUnit()">Complete Unit 39 →</button>
+  </div>
+</section>
+
+<div id="finalMsg" style="display:none; padding:100px 40px; background:var(--blue-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:20px; color:var(--orange);">🎯 Unit 39 Mastered</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px; max-width:700px; margin-left:auto; margin-right:auto; opacity:0.9;">You have successfully explored the value of marketing and applied critical thinking to advertising, business strategy, and entrepreneurship.</p>
+    <p style="font-size:1.1rem; margin-bottom:40px; opacity:0.7; font-style:italic;">"The brain doesn't translate. The brain assembles."</p>
+    <a href="indexmax.html" class="nav-btn">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:#111; color:#888; font-size:0.9rem;">
+  <p><strong>Discovery MAX PRO Neuroeducation</strong></p>
+  <p>Unit 39: The Value of Marketing for Your Enterprise | Método NBF</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 12;
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.05; u.pitch = 1;
+  synth.speak(u);
+}
+function updateProgress() {
+  const pct = (completedCount / totalEx) * 100;
+  document.getElementById('progressBar').style.width = `${pct}%`;
+}
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Cognitive reflection validated. Excellent executive function.';
+    fb.style.display = 'block';
+    speak('Excellent reflection.');
+    if(!fb.dataset.counted) { completedCount++; updateProgress(); fb.dataset.counted = "true"; }
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep analysis. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Please elaborate your answer.');
+  }
+}
+function completeUnit() {
+  if(completedCount >= totalEx) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! Unit 39 completed.');
+  } else {
+    alert(`⚠️ Please complete all ${totalEx} critical thinking reflections to master this unit.\nCompleted: ${completedCount}/${totalEx}`);
+  }
+}
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
