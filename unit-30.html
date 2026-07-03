@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 30: Technology, a Forthcoming of Promise | Discovery MAX PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan: #00CED1;
+  --cyan-dark: #008B8B;
+  --navy: #191970;
+  --navy-dark: #0F0F4E;
+  --silver: #C0C0C0;
+  --light-bg: #F0F8FF;
+  --white: #FFFFFF;
+  --text-dark: #263238;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.8; background:var(--light-bg); overflow-x:hidden; }
+
+.hero {
+  height:85vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(0,206,209,0.85), rgba(25,25,112,0.85)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:8px 20px; background:var(--cyan); color:var(--navy-dark); font-weight:800; font-size:0.85rem; letter-spacing:3px; margin-bottom:20px; border-radius:4px; text-transform:uppercase; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,4.5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.4); line-height:1.1; }
+.hero p { font-size:1.25rem; font-weight:300; max-width:700px; margin:0 auto; opacity:0.95; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--navy-dark); padding:12px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.15); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--cyan),var(--navy)); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.section-solid { padding:80px 40px; }
+.section-solid.cyan { background:var(--cyan); color:var(--text-light); }
+.section-solid.navy { background:var(--navy); color:var(--text-light); }
+.section-solid.navy-dark { background:var(--navy-dark); color:var(--text-light); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:950px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { 
+  background:var(--white); padding:50px; border-radius:12px; margin:30px 0; 
+  box-shadow: 0 15px 50px rgba(0,0,0,0.08); border-top:5px solid var(--cyan); 
+}
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--navy-dark); margin-bottom:25px; border-bottom:2px solid #eee; padding-bottom:15px; }
+.reading-block p { font-size:1.05rem; line-height:1.9; color:#374151; margin-bottom:18px; }
+.reading-block ul { margin: 15px 0 20px 25px; }
+.reading-block li { margin-bottom: 10px; font-size: 1.05rem; color: #374151; }
+
+.tech-box { 
+  background: linear-gradient(135deg, #E0FFFF, #B0E0E6); 
+  border-left:5px solid var(--cyan); padding:25px 30px; margin:25px 0; 
+  border-radius:0 10px 10px 0; color:var(--navy-dark); font-weight:500;
+}
+.tech-box strong { color: var(--navy-dark); font-size: 1.15rem; }
+
+.exercise-box { background:var(--white); padding:40px; border-radius:12px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--navy-dark); margin-bottom:25px; }
+.exercise-item { margin:25px 0; padding:25px; background:#E0FFFF; border-left:4px solid var(--cyan); border-radius:6px; transition: transform 0.2s; }
+.exercise-item:hover { transform: translateX(5px); }
+.exercise-item label { font-weight:600; font-size:1.1rem; display:block; margin-bottom:15px; color:var(--text-dark); line-height:1.5; }
+.exercise-textarea {
+  width:100%; padding:15px; border:2px solid #E2E8F0; border-radius:8px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s; min-height:120px; resize:vertical;
+}
+.exercise-textarea:focus { outline:none; border-color:var(--cyan); box-shadow: 0 0 0 3px rgba(0,206,209,0.2); }
+
+.btn-verify {
+  margin-top:15px; padding:12px 28px; background:var(--cyan); color:var(--navy-dark);
+  border:none; border-radius:6px; font-weight:700; cursor:pointer; transition: all 0.3s; letter-spacing:0.5px;
+}
+.btn-verify:hover { background:var(--cyan-dark); color:var(--text-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,206,209,0.3); }
+
+.feedback { margin-top:15px; padding:14px; border-radius:6px; font-weight:600; display:none; font-size:0.95rem; }
+.feedback.success { background:#D1FAE5; color:#065F46; border-left:4px solid #10B981; }
+.feedback.error { background:#FEE2E2; color:#991B1B; border-left:4px solid #EF4444; }
+
+.nav-btn {
+  display:inline-block; margin-top:40px; padding:16px 45px; background:var(--cyan); color:var(--navy-dark);
+  text-decoration:none; border-radius:8px; font-weight:800; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer; letter-spacing:1px;
+}
+.nav-btn:hover { background:var(--cyan-dark); color:var(--text-light); transform:translateY(-3px); box-shadow: 0 8px 20px rgba(0,206,209,0.4); }
+
+@media(max-width:768px) {
+  .hero { height:70vh; }
+  .section-solid { padding:50px 20px; }
+  .reading-block, .exercise-box { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">PRO MAX • UNIT 30</div>
+    <h1>Technology: A Forthcoming of Promise</h1>
+    <p>Exploring the technological breakthroughs shaping our future and transforming society.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--navy-dark);">📖 Reading: The Technological Revolution</h2>
+    
+    <div class="reading-block">
+      <h3>The 21st Century Technological Landscape</h3>
+      <p>Looking at technology developments at the turn of the 21st century, there seems to be once again a broad range of new technical breakthroughs in reach. Further rapid progress is expected in <strong>information technology, new materials, genetics technology, environment protection and energy technologies</strong>, to name just a few. New possible combinations and interactions of the various technologies will also be of major importance.</p>
+      
+      <p>However, only a few of these technologies appear to be pervasive enough or to provide mankind with new basic capacities for them to have a major impact on society.</p>
+      
+      <div class="tech-box">
+        <strong>🔮 Key Technologies for the Next 30 Years:</strong><br>
+        • <strong>Genetics technology</strong><br>
+        • <strong>Energy technologies</strong><br>
+        • <strong>Environment protection technologies</strong><br><br>
+        <strong>🚀 Main Driving Force for the Next 10 Years:</strong><br>
+        • <strong>Information Technology</strong> - on the verge of a new take-off
+      </div>
+
+      <p>In a thirty-year perspective, genetics technology as well as energy and environment technologies could hold this potential. But looking ahead towards the next ten years or so, the main driving force for economic and social change will be <strong>information technology</strong>. After a quarter of a century of gradual development and diffusion, many believe that information technology is on the verge of a new take-off.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>Tomorrow's Information Technology</h3>
+      <p>Beyond the convergence of computers, television and telephones, tomorrow's powerful desktop computers will be characterized by:</p>
+      <ul>
+        <li>The use of <strong>sensory input and output devices</strong></li>
+        <li>The use of <strong>intelligent agent software</strong></li>
+        <li>Most importantly, an <strong>all-pervasive network connectivity</strong></li>
+      </ul>
+      
+      <p>In particular, the latter will lead to another important feature of tomorrow's information technology, notably universal <strong>"smartness"</strong>. In the longer term, people will be used to having networks connecting everything. They will experience:</p>
+      <ul>
+        <li>Smart furniture, kitchens and offices</li>
+        <li>Smart buildings where they live and work</li>
+        <li>Sensor-conducted smart cars on smart highways</li>
+      </ul>
+      
+      <div class="tech-box" style="background: linear-gradient(135deg, #E6E6FA, #D8BFD8); border-left-color: var(--navy);">
+        <strong>🌐 Promising Applications:</strong><br>
+        • <strong>Imaging:</strong> Highly sophisticated bar codes, video marketing and virtual goods<br>
+        • <strong>Cyberspace Design:</strong> Complex technical products (automobiles, skyscrapers, aircrafts) will be designed, planned, built, tested and evaluated in cyberspace before being manufactured for real<br>
+        • <strong>Universal Penetration:</strong> A decade from now, information technology will in all probability have penetrated every aspect of human activity
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>Electronic Commerce: Transforming Business</h3>
+      <p>Computer-enabled electronic commerce is likely to modify significantly current ways of doing business. Anyone with a computer and Internet access can benefit from the enlarged choice and the competitive supply on the global market place.</p>
+      
+      <div class="tech-box">
+        <strong>📊 E-Commerce Statistics:</strong><br>
+        • <strong>Amazon.com</strong> holds <strong>13 million titles</strong><br>
+        • The biggest bookshops in New York arrive at no more than <strong>180,000 titles</strong><br>
+        • World-wide electronic commerce revenues will rise dramatically - certainly by about <strong>1000% over the next four to five years</strong>
+      </div>
+
+      <p>Electronic commerce will also lead to modifications in value chains: some will be dismantled, and others re-assembled. Most importantly, there will be a process of <strong>dis-intermediatisation</strong>. Many intermediate agents between producers and consumers will have to change their role or disappear. Examples include:</p>
+      <ul>
+        <li>Travel agencies</li>
+        <li>Insurance brokers</li>
+        <li>Local bank offices</li>
+        <li>Many sectors of retailing</li>
+      </ul>
+    </div>
+
+    <div class="reading-block">
+      <h3>Social Organization: New Communities</h3>
+      <p>There will also be major implications for social organization: in private life, business and government. The advanced power of computing, coupled with low cost telecommunications, may lead to new kinds of communities both real and virtual.</p>
+      
+      <div class="tech-box" style="background: linear-gradient(135deg, #FFF8DC, #FAEBD7); border-left-color: #DAA520;">
+        <strong>🏘️ Potential Changes:</strong><br>
+        • <strong>Teleworking, teleshopping and telelearning</strong> may result in a move away from big urban agglomerations<br>
+        • New developments in settlement patterns<br>
+        • Easy access to interactive global networks will enhance the spread of "cyber" communities<br>
+        • <strong>Bi-polarisation of company structures:</strong> Very big global players on one side, and very small, highly specialized companies on the other
+      </div>
+
+      <p>In business and government, many foresee the end of the traditional hierarchical command and control structures. These may be increasingly replaced by <strong>horizontal networks and cooperative teams</strong>, providing members with greater freedom and responsibility in decision-making.</p>
+      
+      <p>All this will increase efficiency further, but at the same time, will provide scope for growing diversity, for greater individual choice and for many new opportunities for people's self-determination and self-fulfillment.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>Embracing the Future</h3>
+      <p>Nonetheless, technological advances in themselves provide no foregone conclusion as to the extent and manner in which they will be used. In order to realize the promises of 21st century technologies in particular information technology, individuals, business and governments need to <strong>embrace a culture of creativity, experimentation and openness to change</strong>.</p>
+      
+      <p>Policy at national and international levels has to ensure that the benefits are shared by society as a whole. It should also see to it that, wherever possible, potential risks associated with the new technologies are controlled and undesirable side-effects contained without unduly impairing technological, economic and social dynamism.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-solid cyan">
+  <div class="container">
+    <h2 style="color:var(--navy-dark);">🧠 Critical Thinking: Technology & Society</h2>
+    <p style="margin-bottom:30px; opacity:0.95; font-size:1.1rem;">Reflect deeply on the following questions. The executive brain requires detailed analysis (minimum 20 characters per answer).</p>
+    
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. In your opinion can the Internet be the most important invention of the last 50 years? Why is it?</label>
+        <textarea class="exercise-textarea" id="ex1a" placeholder="Evaluate the Internet's impact..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1a','fb1a')">Validate Reflection</button>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. In your opinion can the computer be the most important invention of the last 100 years? Why is it?</label>
+        <textarea class="exercise-textarea" id="ex1b" placeholder="Compare computers with other inventions..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1b','fb1b')">Validate Reflection</button>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. In your opinion could computers be the size of a watch in 20 years from now?</label>
+        <textarea class="exercise-textarea" id="ex1c" placeholder="Predict future miniaturization..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1c','fb1c')">Validate Reflection</button>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. In your opinion will computers run most of our homes and businesses in 20 years from now?</label>
+        <textarea class="exercise-textarea" id="ex1d" placeholder="Envision smart homes and offices..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1d','fb1d')">Validate Reflection</button>
+        <div class="feedback" id="fb1d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. Do you think there could be a computer or Internet crash in the future? Why or why not?</label>
+        <textarea class="exercise-textarea" id="ex1e" placeholder="Consider technological vulnerabilities..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1e','fb1e')">Validate Reflection</button>
+        <div class="feedback" id="fb1e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. In your opinion what would happen if there was a technological crash down?</label>
+        <textarea class="exercise-textarea" id="ex1f" placeholder="Analyze societal dependence on technology..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1f','fb1f')">Validate Reflection</button>
+        <div class="feedback" id="fb1f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. How frequently do you use your laptop or desktop computer? Is that too much or too little of a time?</label>
+        <textarea class="exercise-textarea" id="ex1g" placeholder="Reflect on your personal tech usage..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1g','fb1g')">Validate Reflection</button>
+        <div class="feedback" id="fb1g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. In your opinion how do you think computers would be like in 2020?</label>
+        <textarea class="exercise-textarea" id="ex1h" placeholder="Project future computer capabilities..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1h','fb1h')">Validate Reflection</button>
+        <div class="feedback" id="fb1h"></div>
+      </div>
+    </div>
+    
+    <button class="nav-btn" onclick="completeUnit()">Complete Unit 30 →</button>
+  </div>
+</section>
+
+<div id="finalMsg" style="display:none; padding:100px 40px; background:var(--navy-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:20px; color:var(--cyan);">🎯 Unit 30 Mastered</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px; max-width:700px; margin-left:auto; margin-right:auto; opacity:0.9;">You have successfully explored technological promises and applied critical thinking to the future of innovation.</p>
+    <p style="font-size:1.1rem; margin-bottom:40px; opacity:0.7; font-style:italic;">"The brain doesn't translate. The brain assembles."</p>
+    <a href="indexmax.html" class="nav-btn">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:#111; color:#888; font-size:0.9rem;">
+  <p><strong>Discovery MAX PRO Neuroeducation</strong></p>
+  <p>Unit 30: Technology, a Forthcoming of Promise | Método NBF</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 8;
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.05; u.pitch = 1;
+  synth.speak(u);
+}
+function updateProgress() {
+  const pct = (completedCount / totalEx) * 100;
+  document.getElementById('progressBar').style.width = `${pct}%`;
+}
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Cognitive reflection validated. Excellent executive function.';
+    fb.style.display = 'block';
+    speak('Excellent reflection.');
+    if(!fb.dataset.counted) { completedCount++; updateProgress(); fb.dataset.counted = "true"; }
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep analysis. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Please elaborate your answer.');
+  }
+}
+function completeUnit() {
+  if(completedCount >= totalEx) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! Unit 30 completed.');
+  } else {
+    alert(`⚠️ Please complete all ${totalEx} critical thinking reflections to master this unit.\nCompleted: ${completedCount}/${totalEx}`);
+  }
+}
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
