@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 34: The Warfare on Men | Discovery MAX PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --steel: #708090;
+  --steel-dark: #4A5568;
+  --navy: #2F4F4F;
+  --navy-dark: #1A2F2F;
+  --silver: #C0C0C0;
+  --light-bg: #F5F5F5;
+  --white: #FFFFFF;
+  --text-dark: #263238;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.8; background:var(--light-bg); overflow-x:hidden; }
+
+.hero {
+  height:85vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(112,128,144,0.9), rgba(47,79,79,0.85)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:8px 20px; background:var(--silver); color:var(--navy-dark); font-weight:800; font-size:0.85rem; letter-spacing:3px; margin-bottom:20px; border-radius:4px; text-transform:uppercase; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,4.5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.4); line-height:1.1; }
+.hero p { font-size:1.25rem; font-weight:300; max-width:700px; margin:0 auto; opacity:0.95; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--navy-dark); padding:12px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.15); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--silver),var(--steel)); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.section-solid { padding:80px 40px; }
+.section-solid.steel { background:var(--steel); color:var(--text-light); }
+.section-solid.navy { background:var(--navy); color:var(--text-light); }
+.section-solid.navy-dark { background:var(--navy-dark); color:var(--text-light); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:950px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { 
+  background:var(--white); padding:50px; border-radius:12px; margin:30px 0; 
+  box-shadow: 0 15px 50px rgba(0,0,0,0.08); border-top:5px solid var(--steel); 
+}
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--navy-dark); margin-bottom:25px; border-bottom:2px solid #eee; padding-bottom:15px; }
+.reading-block p { font-size:1.05rem; line-height:1.9; color:#374151; margin-bottom:18px; }
+.reading-block ul { margin: 15px 0 20px 25px; }
+.reading-block li { margin-bottom: 10px; font-size: 1.05rem; color: #374151; }
+
+.debate-box { 
+  background: linear-gradient(135deg, #E8EAF6, #C5CAE9); 
+  border-left:5px solid var(--steel); padding:25px 30px; margin:25px 0; 
+  border-radius:0 10px 10px 0; color:var(--navy-dark); font-weight:500;
+}
+.debate-box strong { color: var(--navy-dark); font-size: 1.15rem; }
+
+.exercise-box { background:var(--white); padding:40px; border-radius:12px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--navy-dark); margin-bottom:25px; }
+.exercise-item { margin:25px 0; padding:25px; background:#F5F5F5; border-left:4px solid var(--steel); border-radius:6px; transition: transform 0.2s; }
+.exercise-item:hover { transform: translateX(5px); }
+.exercise-item label { font-weight:600; font-size:1.1rem; display:block; margin-bottom:15px; color:var(--text-dark); line-height:1.5; }
+.exercise-textarea {
+  width:100%; padding:15px; border:2px solid #E2E8F0; border-radius:8px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s; min-height:120px; resize:vertical;
+}
+.exercise-textarea:focus { outline:none; border-color:var(--steel); box-shadow: 0 0 0 3px rgba(112,128,144,0.2); }
+
+.btn-verify {
+  margin-top:15px; padding:12px 28px; background:var(--steel); color:var(--text-light);
+  border:none; border-radius:6px; font-weight:700; cursor:pointer; transition: all 0.3s; letter-spacing:0.5px;
+}
+.btn-verify:hover { background:var(--steel-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(112,128,144,0.3); }
+
+.feedback { margin-top:15px; padding:14px; border-radius:6px; font-weight:600; display:none; font-size:0.95rem; }
+.feedback.success { background:#D1FAE5; color:#065F46; border-left:4px solid #10B981; }
+.feedback.error { background:#FEE2E2; color:#991B1B; border-left:4px solid #EF4444; }
+
+.nav-btn {
+  display:inline-block; margin-top:40px; padding:16px 45px; background:var(--silver); color:var(--navy-dark);
+  text-decoration:none; border-radius:8px; font-weight:800; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer; letter-spacing:1px;
+}
+.nav-btn:hover { background:#A9A9A9; transform:translateY(-3px); box-shadow: 0 8px 20px rgba(192,192,192,0.4); }
+
+@media(max-width:768px) {
+  .hero { height:70vh; }
+  .section-solid { padding:50px 20px; }
+  .reading-block, .exercise-box { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">PRO MAX • UNIT 34</div>
+    <h1>The Warfare on Men</h1>
+    <p>The Battle of the Sexes: Understanding Modern Gender Relations</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--navy-dark);">📖 Reading: The Changing Landscape</h2>
+    
+    <div class="reading-block">
+      <h3>The Battle of the Sexes</h3>
+      <p>The battle of the sexes is alive and well. The share of women ages eighteen to thirty-four that say having a successful marriage is one of the most important things in their lives rose nine percentage points since 1997 from 28 percent to 37 percent. For men, the opposite occurred. The share voicing this opinion dropped, from 35 percent to 29 percent.</p>
+      
+      <p><strong>Believe it or not, modern women want to get married. Trouble is men don't.</strong></p>
+      
+      <p>The so-called dearth of good men has been a hot subject in the media as of late. Much of the coverage has been in response to the fact that for the first time in history, women have become the majority of the U.S. workforce. They're also getting most of the college degrees. The problem? This new phenomenon has changed the dance between men and women.</p>
+      
+      <div class="debate-box">
+        <strong>⚔️ A Provocative Question:</strong><br>
+        But what if the dearth of good men, and ongoing battle of the sexes, is women's fault?
+      </div>
+
+      <p>Thirteen years were spent examining social agendas as they pertain to sex, parenting, and gender roles. Researchers accidentally stumbled upon a subculture of men who've told in no uncertain terms, that they were never getting married.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>The Dramatic Changes</h3>
+      <p>To say gender relations have changed dramatically is an understatement. Ever since the sexual revolution, there has been a profound overhaul in the way men and women interact. Men haven't changed much they had no revolution that demanded it but women have changed dramatically.</p>
+      
+      <p>In a nutshell, women are angry. They're also defensive, though often unknowingly. That's because they've been raised to think of men as the enemy. Armed with this new attitude, women pushed men off their pedestal and climbed up to take what they were taught to believe was rightfully theirs.</p>
+      
+      <div class="debate-box" style="background: linear-gradient(135deg, #FFE4E1, #FFC0CB); border-left-color: #DC143C;">
+        <strong>💼 The Media's Role:</strong><br>
+        All the articles and books (and television programs, for that matter) put women front and center, while men and children sit in the back seat. But after decades of browbeating the American male, men are tired. Tired of being told there's something fundamentally wrong with them. Tired of being told that if women aren't happy, it's men's fault.
+      </div>
+
+      <p>The so-called rise of women has not threatened men. It has pissed them off. It has also undermined their ability to become self-sufficient in the hopes of someday supporting a family. Men want to love women, not compete with them. They want to provide for and protect their families it's in their DNA. But modern women won't let them.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>The Unfortunate Reality</h3>
+      <p>It's all so unfortunate for women, not men. Feminism serves men very well: they can have sex intimacy and even live with their girlfriends with no responsibilities whatsoever.</p>
+      
+      <p>It's the women who lose. Not only are they saddled with the consequences of sex, by dismissing male nature they're forever seeking a balanced life.</p>
+      
+      <div class="debate-box">
+        <strong>🔄 The Paradox:</strong><br>
+        The fact is women need men's linear career goals they need men to pick up the slack at the office in order to live the balanced life they seek.
+      </div>
+
+      <p>So if men today are slackers, and if they're retreating from marriage, women should look in the mirror and ask themselves what role they've played to bring about this transformation.</p>
+      
+      <p style="font-weight:700; color:var(--steel-dark); font-size:1.15rem; margin-top:20px;">Fortunately, there is good news: women have the power to turn everything around. All they have to do is surrender to their nature, their femininity and let men surrender to theirs.</p>
+      <p style="font-weight:700; color:var(--steel-dark); font-size:1.25rem; margin-top:20px; text-align:center;">If they do, marriageable men will come out of the woods.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-solid steel">
+  <div class="container">
+    <h2 style="color:var(--white);">⚖️ Critical Thinking: Gender & Society</h2>
+    <p style="margin-bottom:30px; opacity:0.95; font-size:1.1rem;">Reflect deeply on the following questions. The executive brain requires detailed analysis (minimum 20 characters per answer).</p>
+    
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. Are women and men comparable?</label>
+        <textarea class="exercise-textarea" id="ex1a" placeholder="Compare genders..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1a','fb1a')">Validate Reflection</button>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Can women be adequate Administrators and Directors? In your opinion can they transcend in these aspects? Why do you have that opinion?</label>
+        <textarea class="exercise-textarea" id="ex1b" placeholder="Evaluate women in leadership..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1b','fb1b')">Validate Reflection</button>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Can men be adequate sitters of children? In your opinion can they transcend in these aspects?</label>
+        <textarea class="exercise-textarea" id="ex1c" placeholder="Consider men as caregivers..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1c','fb1c')">Validate Reflection</button>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. What can men do finer than women? Why do you have that opinion?</label>
+        <textarea class="exercise-textarea" id="ex1d" placeholder="Identify male strengths..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1d','fb1d')">Validate Reflection</button>
+        <div class="feedback" id="fb1d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. What can women do finer than men? Why do you have that opinion?</label>
+        <textarea class="exercise-textarea" id="ex1e" placeholder="Identify female strengths..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1e','fb1e')">Validate Reflection</button>
+        <div class="feedback" id="fb1e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. Write a few frequent used stereotypes in regard to women? What's your opinion with any of these notions?</label>
+        <textarea class="exercise-textarea" id="ex1f" placeholder="List female stereotypes..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1f','fb1f')">Validate Reflection</button>
+        <div class="feedback" id="fb1f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. Write a few frequent used stereotypes in regard to men? What's your opinion with any of these notions?</label>
+        <textarea class="exercise-textarea" id="ex1g" placeholder="List male stereotypes..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1g','fb1g')">Validate Reflection</button>
+        <div class="feedback" id="fb1g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. Which presents better grants to the public in general, men or women? Why do you have that opinion?</label>
+        <textarea class="exercise-textarea" id="ex1h" placeholder="Compare public service..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1h','fb1h')">Validate Reflection</button>
+        <div class="feedback" id="fb1h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. What are the acquired roles of men and women correspondingly? Could these roles be defied and altered?</label>
+        <textarea class="exercise-textarea" id="ex1i" placeholder="Analyze gender roles..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1i','fb1i')">Validate Reflection</button>
+        <div class="feedback" id="fb1i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. Rapidly mention ten acclaimed women. Then the same for ten acclaimed men. Contrast your lists and establish how much alike or distinct they are in conditions of profession, upbringing, kinds of accomplishments, etc.</label>
+        <textarea class="exercise-textarea" id="ex1j" placeholder="List and compare accomplished individuals..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1j','fb1j')">Validate Reflection</button>
+        <div class="feedback" id="fb1j"></div>
+      </div>
+      <div class="exercise-item">
+        <label>11. Could males and females be permitted to combat shoulder to shoulder in the military?</label>
+        <textarea class="exercise-textarea" id="ex1k" placeholder="Consider military integration..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1k','fb1k')">Validate Reflection</button>
+        <div class="feedback" id="fb1k"></div>
+      </div>
+      <div class="exercise-item">
+        <label>12. Could the world be a nicer place if women were in empowerment?</label>
+        <textarea class="exercise-textarea" id="ex1l" placeholder="Imagine female leadership..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1l','fb1l')">Validate Reflection</button>
+        <div class="feedback" id="fb1l"></div>
+      </div>
+      <div class="exercise-item">
+        <label>13. Is it extremist to say that men wind up as more prosperous in business?</label>
+        <textarea class="exercise-textarea" id="ex1m" placeholder="Evaluate business success..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1m','fb1m')">Validate Reflection</button>
+        <div class="feedback" id="fb1m"></div>
+      </div>
+      <div class="exercise-item">
+        <label>14. In your opinion who is easier to bring up, boys or girls? Why do you think so?</label>
+        <textarea class="exercise-textarea" id="ex1n" placeholder="Compare child-rearing..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1n','fb1n')">Validate Reflection</button>
+        <div class="feedback" id="fb1n"></div>
+      </div>
+      <div class="exercise-item">
+        <label>15. Imagine that a male couple wants to turn into parents, and female couple wants to turn into parents. Which of the two couples could demonstrate more efficient? What's your opinion about it?</label>
+        <textarea class="exercise-textarea" id="ex1o" placeholder="Compare same-sex parenting..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1o','fb1o')">Validate Reflection</button>
+        <div class="feedback" id="fb1o"></div>
+      </div>
+      <div class="exercise-item">
+        <label>16. In your society, is it more simple/better to be a male or a female? Why do think so? Do you think a person of the contrary sex would agree or disagree with you?</label>
+        <textarea class="exercise-textarea" id="ex1p" placeholder="Analyze gender advantages..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1p','fb1p')">Validate Reflection</button>
+        <div class="feedback" id="fb1p"></div>
+      </div>
+      <div class="exercise-item">
+        <label>17. How can male friendships be different from female friendships? Why do you think so?</label>
+        <textarea class="exercise-textarea" id="ex1q" placeholder="Compare friendship styles..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1q','fb1q')">Validate Reflection</button>
+        <div class="feedback" id="fb1q"></div>
+      </div>
+      <div class="exercise-item">
+        <label>18. What's your opinion about friendships between men and women? Is it possible for two people of contrary sex to only be friends? Why or why not?</label>
+        <textarea class="exercise-textarea" id="ex1r" placeholder="Evaluate cross-gender friendships..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1r','fb1r')">Validate Reflection</button>
+        <div class="feedback" id="fb1r"></div>
+      </div>
+    </div>
+    
+    <button class="nav-btn" onclick="completeUnit()">Complete Unit 34 →</button>
+  </div>
+</section>
+
+<div id="finalMsg" style="display:none; padding:100px 40px; background:var(--navy-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:20px; color:var(--silver);">🎯 Unit 34 Mastered</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px; max-width:700px; margin-left:auto; margin-right:auto; opacity:0.9;">You have successfully explored the battle of the sexes and applied critical thinking to gender relations and societal roles.</p>
+    <p style="font-size:1.1rem; margin-bottom:40px; opacity:0.7; font-style:italic;">"The brain doesn't translate. The brain assembles."</p>
+    <a href="indexmax.html" class="nav-btn">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:#111; color:#888; font-size:0.9rem;">
+  <p><strong>Discovery MAX PRO Neuroeducation</strong></p>
+  <p>Unit 34: The Warfare on Men | Método NBF</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 18;
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.05; u.pitch = 1;
+  synth.speak(u);
+}
+function updateProgress() {
+  const pct = (completedCount / totalEx) * 100;
+  document.getElementById('progressBar').style.width = `${pct}%`;
+}
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Cognitive reflection validated. Excellent executive function.';
+    fb.style.display = 'block';
+    speak('Excellent reflection.');
+    if(!fb.dataset.counted) { completedCount++; updateProgress(); fb.dataset.counted = "true"; }
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep analysis. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Please elaborate your answer.');
+  }
+}
+function completeUnit() {
+  if(completedCount >= totalEx) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! Unit 34 completed.');
+  } else {
+    alert(`⚠️ Please complete all ${totalEx} critical thinking reflections to master this unit.\nCompleted: ${completedCount}/${totalEx}`);
+  }
+}
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
