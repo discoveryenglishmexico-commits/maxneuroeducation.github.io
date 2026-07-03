@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 32: Is Social Media Creating a Lonely Planet? | Discovery MAX PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --turquoise: #40E0D0;
+  --turquoise-dark: #20B2AA;
+  --coral: #FF7F50;
+  --coral-dark: #FF6347;
+  --light-bg: #F0FFFF;
+  --white: #FFFFFF;
+  --text-dark: #263238;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.8; background:var(--light-bg); overflow-x:hidden; }
+
+.hero {
+  height:85vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(64,224,208,0.85), rgba(255,127,80,0.75)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:8px 20px; background:var(--white); color:var(--turquoise-dark); font-weight:800; font-size:0.85rem; letter-spacing:3px; margin-bottom:20px; border-radius:4px; text-transform:uppercase; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,4.5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.4); line-height:1.1; }
+.hero p { font-size:1.25rem; font-weight:300; max-width:700px; margin:0 auto; opacity:0.95; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--turquoise-dark); padding:12px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.15); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--coral),var(--turquoise)); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.section-solid { padding:80px 40px; }
+.section-solid.turquoise { background:var(--turquoise); color:var(--text-light); }
+.section-solid.turquoise-dark { background:var(--turquoise-dark); color:var(--text-light); }
+.section-solid.coral { background:var(--coral); color:var(--text-light); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:950px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { 
+  background:var(--white); padding:50px; border-radius:12px; margin:30px 0; 
+  box-shadow: 0 15px 50px rgba(0,0,0,0.08); border-top:5px solid var(--coral); 
+}
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--turquoise-dark); margin-bottom:25px; border-bottom:2px solid #eee; padding-bottom:15px; }
+.reading-block p { font-size:1.05rem; line-height:1.9; color:#374151; margin-bottom:18px; }
+.reading-block ul { margin: 15px 0 20px 25px; }
+.reading-block li { margin-bottom: 10px; font-size: 1.05rem; color: #374151; }
+
+.social-box { 
+  background: linear-gradient(135deg, #E0FFFF, #AFEEEE); 
+  border-left:5px solid var(--turquoise); padding:25px 30px; margin:25px 0; 
+  border-radius:0 10px 10px 0; color:var(--turquoise-dark); font-weight:500;
+}
+.social-box strong { color: var(--turquoise-dark); font-size: 1.15rem; }
+
+.stat-highlight {
+  background: linear-gradient(135deg, #FFE4E1, #FFC0CB);
+  border: 2px solid var(--coral);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 4px 12px rgba(255,127,80,0.2);
+}
+.stat-highlight strong { color: var(--coral-dark); font-size: 1.3rem; }
+
+.exercise-box { background:var(--white); padding:40px; border-radius:12px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--turquoise-dark); margin-bottom:25px; }
+.exercise-item { margin:25px 0; padding:25px; background:#F0FFFF; border-left:4px solid var(--turquoise); border-radius:6px; transition: transform 0.2s; }
+.exercise-item:hover { transform: translateX(5px); }
+.exercise-item label { font-weight:600; font-size:1.1rem; display:block; margin-bottom:15px; color:var(--text-dark); line-height:1.5; }
+.exercise-textarea {
+  width:100%; padding:15px; border:2px solid #E2E8F0; border-radius:8px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s; min-height:120px; resize:vertical;
+}
+.exercise-textarea:focus { outline:none; border-color:var(--coral); box-shadow: 0 0 0 3px rgba(255,127,80,0.2); }
+
+.btn-verify {
+  margin-top:15px; padding:12px 28px; background:var(--turquoise); color:var(--text-light);
+  border:none; border-radius:6px; font-weight:700; cursor:pointer; transition: all 0.3s; letter-spacing:0.5px;
+}
+.btn-verify:hover { background:var(--turquoise-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(64,224,208,0.3); }
+
+.feedback { margin-top:15px; padding:14px; border-radius:6px; font-weight:600; display:none; font-size:0.95rem; }
+.feedback.success { background:#D1FAE5; color:#065F46; border-left:4px solid #10B981; }
+.feedback.error { background:#FEE2E2; color:#991B1B; border-left:4px solid #EF4444; }
+
+.nav-btn {
+  display:inline-block; margin-top:40px; padding:16px 45px; background:var(--coral); color:var(--text-light);
+  text-decoration:none; border-radius:8px; font-weight:800; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer; letter-spacing:1px;
+}
+.nav-btn:hover { background:var(--coral-dark); transform:translateY(-3px); box-shadow: 0 8px 20px rgba(255,127,80,0.4); }
+
+@media(max-width:768px) {
+  .hero { height:70vh; }
+  .section-solid { padding:50px 20px; }
+  .reading-block, .exercise-box { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">PRO MAX • UNIT 32</div>
+    <h1>Is Social Media Creating a Lonely Planet?</h1>
+    <p>Exploring whether updating social networks affects loneliness and human connection.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--turquoise-dark);">📖 Reading: The Digital Connection Paradox</h2>
+    
+    <div class="reading-block">
+      <h3>The Staggering Numbers</h3>
+      <p>A new study explores whether or not updating social networks affects loneliness.</p>
+      
+      <div class="stat-highlight">
+        <strong>📊 Daily Social Media Activity:</strong><br>
+        • Over <strong>400 million Tweets</strong> published on Twitter every day<br>
+        • <strong>48 hours of video</strong> uploaded on YouTube on a daily basis<br>
+        • LinkedIn recently announced that it had reached the <strong>200 million-user mark</strong><br>
+        • The numbers are only getting bigger
+      </div>
+
+      <p>But, even with these staggering numbers across some of the world's largest and most important social networks, nothing compares in size, volume and girth to the people's republic of <strong>Facebook</strong>.</p>
+      
+      <div class="stat-highlight" style="background: linear-gradient(135deg, #E0FFFF, #B0E0E6); border-color: var(--turquoise);">
+        <strong>🌍 Facebook's Population:</strong><br>
+        • Over <strong>one billion people</strong> on earth<br>
+        • Represents <strong>12% of all those who inhabit this planet</strong><br>
+        • Facebook is becoming more of its own Internet where people become the nodes of a global social network and relationships form the interconnections between them
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>The Egosystem: You at the Center</h3>
+      <p>This isn't a discussion about Facebook though. For many, Facebook is at the heart of what I refer to as an <strong>egosystem</strong>, a network where people literally place themselves at the center of their own digital universe. They surround themselves with the people, businesses, organizations, and artists they find most interesting to follow and also engage.</p>
+      
+      <div class="social-box">
+        <strong>⚠️ Important Distinction:</strong><br>
+        Don't confuse the egosystem with egotism however. Because people are at the center of their online experiences they in theory control what they see and in turn how they act and react. The question is though whether or not people who update social networks contribute to self-centeredness or if there's another reason behind it.
+      </div>
+
+      <p>In the very least, people are much more connected and informed nowadays. Facebook and other social networks are affecting the way people learn, communicate, and share. But we're learning that when people do share something in social networks, they may do so with a form of hope or even confidence that people will in real-time and due time stop, notice, and respond.</p>
+      
+      <p>Take a moment to consider why you post online? Do you do so because it's simply self-expression? Do you share what you're doing to prompt a reaction? Is it cathartic? Whatever it is, it's important to understand as it's setting the stage for everyday social networking.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>The Research: Does Posting Reduce Loneliness?</h3>
+      <p>That's when I stumbled across a research paper, <strong>"Does Posting Facebook Status Updates Increase or Decrease Loneliness?"</strong></p>
+      
+      <div class="social-box" style="background: linear-gradient(135deg, #D1FAE5, #A7F3D0); border-left-color: #10B981;">
+        <strong>✅ Key Finding:</strong><br>
+        Self-centeredness? Almost immediately, the researchers found that <strong>individuals who regularly update Facebook reduced the sensation of loneliness</strong>. Why? Believe it or not people felt more connected and in touch with friends on a daily basis.
+      </div>
+
+      <p>A research explored communication types and the closeness of relationships during a student's transition to college. They learned that <strong>computer-mediated communication emerged as more important than phone calls for sustaining friendships</strong>.</p>
+      
+      <p>People believe that sooner or later, their friends will read the update and that's enough to satisfy or at least defer solitary sentiment.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>Digital Relationships: A New Definition?</h3>
+      <p>Perhaps in the back of your mind, you're wondering or possibly scoffing at the idea of a digital relationship. There's just no way that a connection on a social network or the act of updating status boxes can replace the importance of a physical connection and real-world conversations right?</p>
+      
+      <div class="social-box">
+        <strong>🔄 Generational Differences:</strong><br>
+        Like online privacy before it, the significance or even definition of relationships may in fact be different across generations. It doesn't make it wrong, but it is indeed interesting and worthy of study and understanding.
+      </div>
+
+      <p>While social networking is something that is a learned behavior among matures, boomers and Gen Xers, engaging with friends across laptop, tablet and mobile screens is <strong>completely natural to Millennials and Gen Z</strong>. It's simply in their DNA.</p>
+      
+      <p>Now, how social networking overall affects long-term personality traits, such as narcissism, empathy, self-esteem, etc., will take further study. But in this particular case, social networking does indeed carry positive connotations. Whether you agree or disagree, we found that <strong>closeness, or the appearance of it, is a direct result of updating social status</strong>. So for now, it can be said that online interaction maintains and cultivates real world relationships.</p>
+      
+      <p style="font-weight:700; color:var(--turquoise-dark); font-size:1.15rem; margin-top:20px;">What do you think?</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-solid turquoise">
+  <div class="container">
+    <h2 style="color:var(--text-light);">🧠 Critical Thinking: Social Media & Connection</h2>
+    <p style="margin-bottom:30px; opacity:0.95; font-size:1.1rem;">Reflect deeply on the following questions. The executive brain requires detailed analysis (minimum 20 characters per answer).</p>
+    
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. Is it normal for you to blog? Why or why is it not?</label>
+        <textarea class="exercise-textarea" id="ex1a" placeholder="Reflect on your blogging habits..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1a','fb1a')">Validate Reflection</button>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Is it normal for you to use social network sites like LinkedIn or Facebook? Why or why is it not?</label>
+        <textarea class="exercise-textarea" id="ex1b" placeholder="Evaluate your social media usage..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1b','fb1b')">Validate Reflection</button>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Would you take into account making your own website or blog? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1c" placeholder="Consider creating your own digital presence..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1c','fb1c')">Validate Reflection</button>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. Is security online something that worries you? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1d" placeholder="Analyze your concerns about online security..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1d','fb1d')">Validate Reflection</button>
+        <div class="feedback" id="fb1d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. In your opinion: The net one of the most significant inventions ever. Why?</label>
+        <textarea class="exercise-textarea" id="ex1e" placeholder="Evaluate the Internet's significance..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1e','fb1e')">Validate Reflection</button>
+        <div class="feedback" id="fb1e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. Why did you begin to use the net? Explain please.</label>
+        <textarea class="exercise-textarea" id="ex1f" placeholder="Describe your introduction to the Internet..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1f','fb1f')">Validate Reflection</button>
+        <div class="feedback" id="fb1f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. Which are your sites of preference on the net? Explain please.</label>
+        <textarea class="exercise-textarea" id="ex1g" placeholder="List and explain your favorite websites..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1g','fb1g')">Validate Reflection</button>
+        <div class="feedback" id="fb1g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. In your opinion which could be some positive sides about the net? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1h" placeholder="Identify benefits of the Internet..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1h','fb1h')">Validate Reflection</button>
+        <div class="feedback" id="fb1h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. In your opinion which could be some negative sides about the net? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1i" placeholder="Identify drawbacks of the Internet..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1i','fb1i')">Validate Reflection</button>
+        <div class="feedback" id="fb1i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. In your opinion can the net have changed communities throughout the planet? If so, how has it done it?</label>
+        <textarea class="exercise-textarea" id="ex1j" placeholder="Analyze the Internet's impact on communities..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1j','fb1j')">Validate Reflection</button>
+        <div class="feedback" id="fb1j"></div>
+      </div>
+      <div class="exercise-item">
+        <label>11. Do you imagine life without the net? Why or why not?</label>
+        <textarea class="exercise-textarea" id="ex1k" placeholder="Envision a world without the Internet..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1k','fb1k')">Validate Reflection</button>
+        <div class="feedback" id="fb1k"></div>
+      </div>
+      <div class="exercise-item">
+        <label>12. Do you think that the Internet can help ESL students learn English? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1l" placeholder="Evaluate the Internet's role in language learning..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1l','fb1l')">Validate Reflection</button>
+        <div class="feedback" id="fb1l"></div>
+      </div>
+    </div>
+    
+    <button class="nav-btn" onclick="completeUnit()">Complete Unit 32 →</button>
+  </div>
+</section>
+
+<div id="finalMsg" style="display:none; padding:100px 40px; background:var(--turquoise-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:20px; color:var(--coral);">🎯 Unit 32 Mastered</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px; max-width:700px; margin-left:auto; margin-right:auto; opacity:0.9;">You have successfully explored social media's impact on loneliness and applied critical thinking to digital connection and human relationships.</p>
+    <p style="font-size:1.1rem; margin-bottom:40px; opacity:0.7; font-style:italic;">"The brain doesn't translate. The brain assembles."</p>
+    <a href="indexmax.html" class="nav-btn">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:#111; color:#888; font-size:0.9rem;">
+  <p><strong>Discovery MAX PRO Neuroeducation</strong></p>
+  <p>Unit 32: Is Social Media Creating a Lonely Planet? | Método NBF</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 12;
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.05; u.pitch = 1;
+  synth.speak(u);
+}
+function updateProgress() {
+  const pct = (completedCount / totalEx) * 100;
+  document.getElementById('progressBar').style.width = `${pct}%`;
+}
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Cognitive reflection validated. Excellent executive function.';
+    fb.style.display = 'block';
+    speak('Excellent reflection.');
+    if(!fb.dataset.counted) { completedCount++; updateProgress(); fb.dataset.counted = "true"; }
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep analysis. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Please elaborate your answer.');
+  }
+}
+function completeUnit() {
+  if(completedCount >= totalEx) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! Unit 32 completed.');
+  } else {
+    alert(`⚠️ Please complete all ${totalEx} critical thinking reflections to master this unit.\nCompleted: ${completedCount}/${totalEx}`);
+  }
+}
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
