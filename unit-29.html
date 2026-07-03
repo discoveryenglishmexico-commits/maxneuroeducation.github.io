@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 29: Improve Your Memory | Discovery MAX PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --indigo: #4B0082;
+  --indigo-dark: #2E0054;
+  --gold: #FFD700;
+  --gold-dark: #DAA520;
+  --cream: #FFF8DC;
+  --white: #FFFFFF;
+  --text-dark: #263238;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.8; background:var(--cream); overflow-x:hidden; }
+
+.hero {
+  height:85vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(75,0,130,0.9), rgba(46,0,84,0.85)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:8px 20px; background:var(--gold); color:var(--text-dark); font-weight:800; font-size:0.85rem; letter-spacing:3px; margin-bottom:20px; border-radius:4px; text-transform:uppercase; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,4.5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.4); line-height:1.1; }
+.hero p { font-size:1.25rem; font-weight:300; max-width:700px; margin:0 auto; opacity:0.95; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--indigo-dark); padding:12px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.15); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--gold),var(--indigo)); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.section-solid { padding:80px 40px; }
+.section-solid.indigo { background:var(--indigo); color:var(--text-light); }
+.section-solid.indigo-dark { background:var(--indigo-dark); color:var(--text-light); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:950px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { 
+  background:var(--white); padding:50px; border-radius:12px; margin:30px 0; 
+  box-shadow: 0 15px 50px rgba(0,0,0,0.08); border-top:5px solid var(--gold); 
+}
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--indigo-dark); margin-bottom:25px; border-bottom:2px solid #eee; padding-bottom:15px; }
+.reading-block p { font-size:1.05rem; line-height:1.9; color:#374151; margin-bottom:18px; }
+.reading-block ul { margin: 15px 0 20px 25px; }
+.reading-block li { margin-bottom: 10px; font-size: 1.05rem; color: #374151; }
+
+.tip-box { 
+  background: linear-gradient(135deg, #FFF8DC, #FFE4B5); 
+  border-left:5px solid var(--gold); padding:25px 30px; margin:25px 0; 
+  border-radius:0 10px 10px 0; color:var(--indigo-dark); font-weight:500;
+}
+.tip-box strong { color: var(--indigo-dark); font-size: 1.15rem; }
+
+.exercise-box { background:var(--white); padding:40px; border-radius:12px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--indigo-dark); margin-bottom:25px; }
+.exercise-item { margin:25px 0; padding:25px; background:#FFF8DC; border-left:4px solid var(--indigo); border-radius:6px; transition: transform 0.2s; }
+.exercise-item:hover { transform: translateX(5px); }
+.exercise-item label { font-weight:600; font-size:1.1rem; display:block; margin-bottom:15px; color:var(--text-dark); line-height:1.5; }
+.exercise-textarea {
+  width:100%; padding:15px; border:2px solid #E2E8F0; border-radius:8px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s; min-height:120px; resize:vertical;
+}
+.exercise-textarea:focus { outline:none; border-color:var(--gold); box-shadow: 0 0 0 3px rgba(255,215,0,0.2); }
+
+.btn-verify {
+  margin-top:15px; padding:12px 28px; background:var(--indigo); color:var(--text-light);
+  border:none; border-radius:6px; font-weight:700; cursor:pointer; transition: all 0.3s; letter-spacing:0.5px;
+}
+.btn-verify:hover { background:var(--indigo-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(75,0,130,0.3); }
+
+.feedback { margin-top:15px; padding:14px; border-radius:6px; font-weight:600; display:none; font-size:0.95rem; }
+.feedback.success { background:#D1FAE5; color:#065F46; border-left:4px solid #10B981; }
+.feedback.error { background:#FEE2E2; color:#991B1B; border-left:4px solid #EF4444; }
+
+.nav-btn {
+  display:inline-block; margin-top:40px; padding:16px 45px; background:var(--gold); color:var(--text-dark);
+  text-decoration:none; border-radius:8px; font-weight:800; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer; letter-spacing:1px;
+}
+.nav-btn:hover { background:var(--gold-dark); transform:translateY(-3px); box-shadow: 0 8px 20px rgba(255,215,0,0.4); }
+
+@media(max-width:768px) {
+  .hero { height:70vh; }
+  .section-solid { padding:50px 20px; }
+  .reading-block, .exercise-box { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">PRO MAX • UNIT 29</div>
+    <h1>Improve Your Memory</h1>
+    <p>Establishing Your Capability to Reminisce. Master the art of remembering and recalling.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--indigo-dark);">📖 Reading: The Power of Memory</h2>
+    
+    <div class="reading-block">
+      <h3>Why Memory Matters</h3>
+      <p>Are you often unable to remember an important issue, figure or fact? Do you forget people's names at the worst moments? Have you ever been asked a question, and you couldn't know the answer, but you struggle to form an intelligent reply?</p>
+      
+      <p>These are common instances where a good memory is important. Memory is more than recalling information for exams or trivia games. It's an important <strong>work skill</strong> that you can develop and improve. Whether it's remembering key statistics during a negotiation, or quoting a precedent-setting action when making a decision, or impressing clients with your knowledge of their product lines, your ability to remember is a major advantage.</p>
+      
+      <p>People with good memories are often seen as <strong>knowledgeable, smart, competent, and dependable</strong>. And there are many techniques you can use to develop your own ability to remember information and then recall it when and where you need it.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>The Foundation: A Healthy Mind and Body</h3>
+      <p>The basis for a good memory is a healthy mind and body. You can't expect your brain to function at its best if you don't take care of the body that feeds it. Here are some key issues that you need to address:</p>
+      
+      <div class="tip-box">
+        <strong>🧠 Key Pillars of Memory Health:</strong><br>
+        • <strong>Eat well:</strong> Make sure key vitamins are in your diet, including folic acid, vitamin B12, and antioxidants. These improve the sharpness of the mind.<br><br>
+        • <strong>Drink plenty of water:</strong> Most of us are dehydrated and don't even know it. When you don't drink enough water, your body and mind become weak and tired.<br><br>
+        • <strong>Get enough sleep:</strong> During sleep, your brain recharges itself. Studies have shown that your brain needs sleep to change new memories into long-term memories.<br><br>
+        • <strong>Don't smoke, limit caffeine and alcohol use. Get enough exercise.</strong>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>Mnemonic Techniques</h3>
+      <p>Mnemonics are simple memory-improving tools that help you connect every day, easy-to-remember items and ideas to information you want to remember. Later, by recalling these everyday items, you can also recall what you wanted to remember.</p>
+      
+      <div class="tip-box" style="background: linear-gradient(135deg, #E6E6FA, #D8BFD8); border-left-color: var(--indigo);">
+        <strong>🗺️ Powerful Memory Systems:</strong><br><br>
+        <strong>1. The Journey System:</strong> In your mind, think about a familiar journey or trip. Associate the things that you want to remember with each landmark on your journey.<br><br>
+        <strong>2. The Roman Room System:</strong> This technique uses location to stimulate your memory. Connect your list with items you see in a familiar room or location.<br><br>
+        <strong>3. Mind Maps:</strong> An effective way to link ideas and concepts in your brain, and then "see" the connections first hand. Mind mapping is a note-taking technique that records information in a way that shows you how various pieces of information fit together.
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>Exercise Your Brain</h3>
+      <p>As with other parts of your body, your mind needs exercise. You can exercise your brain by using it in different ways, on a regular basis.</p>
+      
+      <div class="tip-box">
+        <strong>💪 Brain Training Activities:</strong><br>
+        • <strong>Learn a new skill or start a hobby:</strong> Find activities that build skills you don't normally use in your daily life.<br><br>
+        • <strong>Use visualization on a regular basis:</strong> Since much of memory involves associating and recalling images, it's important to build this skill.<br><br>
+        • <strong>Keep active socially:</strong> When you communicate and interact with people, you have to be alert. This helps keep your brain strong and alive.<br><br>
+        • <strong>Keep your brain active with memory games and puzzles:</strong> Try Sudoku, chess, Scrabble, and Word Twist as well as trivia games, pair matching, and puzzles.
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>Jill Price: The Woman Who Remembers Everything</h3>
+      <p>This woman recalls every detail of her life since she was 14. There is no 'off' button. She is one of four people diagnosed with <strong>superior autobiographical memory</strong>. And it's a living hell.</p>
+      
+      <div class="tip-box" style="background: linear-gradient(135deg, #FFE4E1, #FFC0CB); border-left-color: #C71585;">
+        <strong>📖 From Jill Price's Memoir:</strong><br>
+        <em>"There you are as a 10-year-old in your family room watching The Brady Bunch; then you're whisked off to a scene of you at 17 driving around town with your best friends; and before long you're on a beach during a family vacation when you were three. That's how I experience my memories... I can recall memories at will if I'm asked to, but on a regular basis my remembering is automatic... It's as though I have all my prior selves still inside me, the self I was on every day of my life, like her or not, nested as in a Russian doll - inside today's Jill are complete replicas of yesterday's Jill and the Jills for all the days stretching so far back in time..."</em>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-solid indigo">
+  <div class="container">
+    <h2 style="color:var(--gold);">🧠 Critical Thinking: Memory & Mind</h2>
+    <p style="margin-bottom:30px; opacity:0.95; font-size:1.1rem;">Reflect deeply on the following questions. The executive brain requires detailed analysis (minimum 20 characters per answer).</p>
+    
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. How would you say is your memory's capacity?</label>
+        <textarea class="exercise-textarea" id="ex1a" placeholder="Evaluate your memory capacity..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1a','fb1a')">Validate Reflection</button>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. How important is it for you to remember names, important dates, and details?</label>
+        <textarea class="exercise-textarea" id="ex1b" placeholder="Analyze the importance of details..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1b','fb1b')">Validate Reflection</button>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Would you want to have a better memory? What for?</label>
+        <textarea class="exercise-textarea" id="ex1c" placeholder="Consider the benefits of improved memory..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1c','fb1c')">Validate Reflection</button>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. Which ways of memory upgrading techniques are you aware of?</label>
+        <textarea class="exercise-textarea" id="ex1d" placeholder="List memory techniques you know..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1d','fb1d')">Validate Reflection</button>
+        <div class="feedback" id="fb1d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. Do you think some day there could be more people like Jill Price? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1e" placeholder="Consider the implications of perfect memory..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1e','fb1e')">Validate Reflection</button>
+        <div class="feedback" id="fb1e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. Which could be the clearest memory from your childhood? Define it please.</label>
+        <textarea class="exercise-textarea" id="ex1f" placeholder="Describe your clearest childhood memory..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1f','fb1f')">Validate Reflection</button>
+        <div class="feedback" id="fb1f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. Do you tend to place all of your phone numbers and e-mails in your cell phone, because is difficult for you to remember them?</label>
+        <textarea class="exercise-textarea" id="ex1g" placeholder="Reflect on your reliance on technology..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1g','fb1g')">Validate Reflection</button>
+        <div class="feedback" id="fb1g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. Can you remember your home phone number? How come?</label>
+        <textarea class="exercise-textarea" id="ex1h" placeholder="Test your recall of important numbers..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1h','fb1h')">Validate Reflection</button>
+        <div class="feedback" id="fb1h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. Do you think that people in their 50s usually have better memories than people in their 30s? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1i" placeholder="Analyze age and memory relationship..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1i','fb1i')">Validate Reflection</button>
+        <div class="feedback" id="fb1i"></div>
+      </div>
+      <div class="exercise-item">
+        <label>10. Do you think that if you don't use your memory, it can become poor? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1j" placeholder="Consider the "use it or lose it" principle..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1j','fb1j')">Validate Reflection</button>
+        <div class="feedback" id="fb1j"></div>
+      </div>
+      <div class="exercise-item">
+        <label>11. How many birthdays, commemorative days, and other important dates can you remember in this moment?</label>
+        <textarea class="exercise-textarea" id="ex1k" placeholder="Count the dates you remember..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1k','fb1k')">Validate Reflection</button>
+        <div class="feedback" id="fb1k"></div>
+      </div>
+      <div class="exercise-item">
+        <label>12. How could you do upgrade your memory?</label>
+        <textarea class="exercise-textarea" id="ex1l" placeholder="Propose a memory improvement plan..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1l','fb1l')">Validate Reflection</button>
+        <div class="feedback" id="fb1l"></div>
+      </div>
+    </div>
+    
+    <button class="nav-btn" onclick="completeUnit()">Complete Unit 29 →</button>
+  </div>
+</section>
+
+<div id="finalMsg" style="display:none; padding:100px 40px; background:var(--indigo-dark); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:20px; color:var(--gold);">🎯 Unit 29 Mastered</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px; max-width:700px; margin-left:auto; margin-right:auto; opacity:0.9;">You have successfully explored memory improvement techniques and applied critical thinking to the power of reminiscence.</p>
+    <p style="font-size:1.1rem; margin-bottom:40px; opacity:0.7; font-style:italic;">"The brain doesn't translate. The brain assembles."</p>
+    <a href="indexmax.html" class="nav-btn">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:#111; color:#888; font-size:0.9rem;">
+  <p><strong>Discovery MAX PRO Neuroeducation</strong></p>
+  <p>Unit 29: Improve Your Memory | Método NBF</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 12;
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.05; u.pitch = 1;
+  synth.speak(u);
+}
+function updateProgress() {
+  const pct = (completedCount / totalEx) * 100;
+  document.getElementById('progressBar').style.width = `${pct}%`;
+}
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Cognitive reflection validated. Excellent executive function.';
+    fb.style.display = 'block';
+    speak('Excellent reflection.');
+    if(!fb.dataset.counted) { completedCount++; updateProgress(); fb.dataset.counted = "true"; }
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep analysis. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Please elaborate your answer.');
+  }
+}
+function completeUnit() {
+  if(completedCount >= totalEx) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! Unit 29 completed.');
+  } else {
+    alert(`⚠️ Please complete all ${totalEx} critical thinking reflections to master this unit.\nCompleted: ${completedCount}/${totalEx}`);
+  }
+}
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
