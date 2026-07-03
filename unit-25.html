@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 25: Stress Administration | Discovery MAX PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #00838F;
+  --teal-dark: #005662;
+  --navy: #1A237E;
+  --navy-light: #3949AB;
+  --amber: #FFCA28;
+  --amber-dark: #FFB300;
+  --light-bg: #F4F7F6;
+  --white: #FFFFFF;
+  --text-dark: #263238;
+  --text-light: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--text-dark); line-height:1.8; background:var(--light-bg); overflow-x:hidden; }
+
+.hero {
+  height:85vh; position:relative;
+  background: url('https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1920&q=80') center/cover;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(0,131,143,0.85), rgba(26,35,126,0.85)); }
+.hero-content { position:relative; z-index:2; text-align:center; color:var(--text-light); max-width:900px; padding:40px; }
+.hero-badge { display:inline-block; padding:8px 20px; background:var(--amber); color:var(--text-dark); font-weight:800; font-size:0.85rem; letter-spacing:3px; margin-bottom:20px; border-radius:4px; text-transform:uppercase; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,4.5rem); font-weight:900; margin-bottom:20px; text-shadow: 0 4px 20px rgba(0,0,0,0.4); line-height:1.1; }
+.hero p { font-size:1.25rem; font-weight:300; max-width:700px; margin:0 auto; opacity:0.9; }
+
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--navy); padding:12px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.progress-bar { height:6px; background:rgba(255,255,255,0.15); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--amber),var(--teal)); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.section-solid { padding:80px 40px; }
+.section-solid.teal { background:var(--teal); color:var(--text-light); }
+.section-solid.navy { background:var(--navy); color:var(--text-light); }
+.section-solid.white { background:var(--white); color:var(--text-dark); }
+
+.container { max-width:950px; margin:0 auto; }
+.section-solid h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:900; margin-bottom:30px; }
+
+.reading-block { 
+  background:var(--white); padding:50px; border-radius:12px; margin:30px 0; 
+  box-shadow: 0 15px 50px rgba(0,0,0,0.08); border-top:5px solid var(--amber); 
+}
+.reading-block h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--teal-dark); margin-bottom:25px; border-bottom:2px solid #eee; padding-bottom:15px; }
+.reading-block p { font-size:1.05rem; line-height:1.9; color:#374151; margin-bottom:18px; }
+.reading-block ul { margin: 15px 0 20px 25px; }
+.reading-block li { margin-bottom: 10px; font-size: 1.05rem; color: #374151; }
+
+.highlight-box { 
+  background: linear-gradient(135deg, #E0F7FA, #B2EBF2); 
+  border-left:5px solid var(--teal); padding:25px 30px; margin:25px 0; 
+  border-radius:0 10px 10px 0; color:var(--teal-dark); font-weight:500;
+}
+.highlight-box strong { color: var(--navy); }
+
+.exercise-box { background:var(--white); padding:40px; border-radius:12px; margin:30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+.exercise-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--navy); margin-bottom:25px; }
+.exercise-item { margin:25px 0; padding:25px; background:#F8FAFC; border-left:4px solid var(--teal); border-radius:6px; transition: transform 0.2s; }
+.exercise-item:hover { transform: translateX(5px); }
+.exercise-item label { font-weight:600; font-size:1.1rem; display:block; margin-bottom:15px; color:var(--text-dark); line-height:1.5; }
+.exercise-textarea {
+  width:100%; padding:15px; border:2px solid #E2E8F0; border-radius:8px; font-size:1rem;
+  font-family:'Inter',sans-serif; background:var(--white); color:var(--text-dark); transition: border-color 0.3s; min-height:120px; resize:vertical;
+}
+.exercise-textarea:focus { outline:none; border-color:var(--teal); box-shadow: 0 0 0 3px rgba(0,131,143,0.1); }
+
+.btn-verify {
+  margin-top:15px; padding:12px 28px; background:var(--teal); color:var(--text-light);
+  border:none; border-radius:6px; font-weight:700; cursor:pointer; transition: all 0.3s; letter-spacing:0.5px;
+}
+.btn-verify:hover { background:var(--teal-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,131,143,0.3); }
+
+.feedback { margin-top:15px; padding:14px; border-radius:6px; font-weight:600; display:none; font-size:0.95rem; }
+.feedback.success { background:#D1FAE5; color:#065F46; border-left:4px solid #10B981; }
+.feedback.error { background:#FEE2E2; color:#991B1B; border-left:4px solid #EF4444; }
+
+.nav-btn {
+  display:inline-block; margin-top:40px; padding:16px 45px; background:var(--amber); color:var(--text-dark);
+  text-decoration:none; border-radius:8px; font-weight:800; font-size:1.1rem; transition: 0.3s; border:none; cursor:pointer; letter-spacing:1px;
+}
+.nav-btn:hover { background:var(--amber-dark); transform:translateY(-3px); box-shadow: 0 8px 20px rgba(255,202,40,0.4); }
+
+@media(max-width:768px) {
+  .hero { height:70vh; }
+  .section-solid { padding:50px 20px; }
+  .reading-block, .exercise-box { padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">PRO MAX • UNIT 25</div>
+    <h1>Stress Administration</h1>
+    <p>How to Dwindle, Restrain, and Endure with Stress. Master your thoughts, emotions, and schedule.</p>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+</div>
+
+<section class="section-solid white">
+  <div class="container">
+    <h2 style="color:var(--teal-dark);">📖 Reading: Taking Charge</h2>
+    
+    <div class="reading-block">
+      <h3>Identifying Your True Sources of Stress</h3>
+      <p>It may seem that there is nothing you can do about stress. The bills will not stop coming, there will never be more hours in the day, and your career and family responsibilities will always be demanding. But you have more control than you might think. In fact, the simple realization that you are in control of your life is the foundation of stress management. Managing stress is all about taking charge: of your thoughts, emotions, schedule, and the way you deal with problems.</p>
+      
+      <p>Stress administration starts with identifying the sources of stress in your life. This is not as easy as it sounds. Your true sources of stress are not always obvious, and it is all too easy to overlook your own stress-inducing thoughts, feelings, and behaviors. Sure, you may know that you are constantly worried about work deadlines. However, maybe it is your procrastination, rather than the actual job demands, that leads to deadline stress.</p>
+      
+      <p>To identify your true sources of stress, look closely at your habits, attitude, and excuses:</p>
+      <ul>
+        <li>Do you explain away stress as temporary (<em>"I just have a million things going on right now"</em>) even though you cannot remember the last time you took a breather?</li>
+        <li>Do you define stress as an integral part of your work or home life (<em>"Things are always crazy around here"</em>) or as a part of your personality (<em>"I have a lot of nervous energy, that's all"</em>)?</li>
+        <li>Do you blame your stress on other people or outside events, or view it as entirely normal and unexceptional?</li>
+      </ul>
+      <p>Until you accept responsibility for the role you play in creating or maintaining it, your stress level will remain outside your control.</p>
+    </div>
+
+    <div class="reading-block">
+      <h3>Start a Stress Journal & Evaluate Coping Mechanisms</h3>
+      <p>A stress journal can help you identify the regular stressors in your life and the way you deal with them. Each time you feel stressed, keep track of it in your journal. As you keep a daily log, you will begin to see patterns and common themes.</p>
+      
+      <div class="highlight-box">
+        <strong>Write down:</strong><br>
+        • What caused your stress?<br>
+        • How you felt, both physically and emotionally?<br>
+        • How you acted in response?<br>
+        • Did you feel stress before?<br>
+        • What you did to make yourself feel better?
+      </div>
+
+      <p>Unfortunately, many people endure stress in ways that compound the problem. These coping strategies may temporarily reduce stress, but they cause more damage in the long run:</p>
+      <ul>
+        <li>Smoking / Drinking too much</li>
+        <li>Zoning out for hours in front of the TV or computer</li>
+        <li>Withdrawing from friends, family, and activities</li>
+        <li>Using pills or drugs to relax / Sleeping too much</li>
+        <li>Procrastinating / Taking out your stress on others</li>
+      </ul>
+    </div>
+
+    <div class="reading-block">
+      <h3>Learning Healthier Ways: The Four A's</h3>
+      <p>If your methods of coping with stress are not contributing to your greater emotional and physical health, it is time to find healthier ones. There are many healthy ways to manage and deal with stress, but they all require change. You can either change the situation or change your reaction. When deciding which option to choose, it is helpful to think of the <strong>four A's: avoid, alter, adapt, or accept.</strong></p>
+      
+      <p>Since everyone has a unique response to stress, there is no "one size fits all" solution. Focus on what makes you feel calm and in control. Not all stress can be avoided, but you may be surprised by the number of stressors you can eliminate:</p>
+      <ul>
+        <li><strong>Avoid people who stress you out:</strong> If someone consistently causes stress and you can't turn the relationship around, limit your time with them or end it entirely.</li>
+        <li><strong>Take control of your environment:</strong> If the evening news makes you anxious, turn the TV off. If traffic has you tense, take a longer but less-traveled route.</li>
+        <li><strong>Pare down your commotion list:</strong> Analyze your schedule and responsibilities. Distinguish between the "shoulds" and the "musts." Drop tasks that are not truly necessary.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section-solid teal">
+  <div class="container">
+    <h2 style="color:var(--amber);">🧠 Critical Thinking: Stress & Lifestyle</h2>
+    <p style="margin-bottom:30px; opacity:0.9; font-size:1.1rem;">Reflect deeply on the following questions. The executive brain requires detailed analysis (minimum 20 characters per answer).</p>
+    
+    <div class="exercise-box">
+      <div class="exercise-item">
+        <label>1. The lifestyle of modern life has become way too swift. Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1a" placeholder="Analyze the pace of modern society..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1a','fb1a')">Validate Reflection</button>
+        <div class="feedback" id="fb1a"></div>
+      </div>
+      <div class="exercise-item">
+        <label>2. Are you an overworked person? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1b" placeholder="Evaluate your current workload..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1b','fb1b')">Validate Reflection</button>
+        <div class="feedback" id="fb1b"></div>
+      </div>
+      <div class="exercise-item">
+        <label>3. Are you a stressed out person? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1c" placeholder="Identify your personal stress triggers..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1c','fb1c')">Validate Reflection</button>
+        <div class="feedback" id="fb1c"></div>
+      </div>
+      <div class="exercise-item">
+        <label>4. Would you take into account taking a break from your job for a period of time to relax? Why is that?</label>
+        <textarea class="exercise-textarea" id="ex1d" placeholder="Consider the benefits of a sabbatical or extended break..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1d','fb1d')">Validate Reflection</button>
+        <div class="feedback" id="fb1d"></div>
+      </div>
+      <div class="exercise-item">
+        <label>5. In your opinion, in which way has the balance between work life and time off changed in the past five years in your city? Why?</label>
+        <textarea class="exercise-textarea" id="ex1e" placeholder="Observe societal shifts in your local environment..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1e','fb1e')">Validate Reflection</button>
+        <div class="feedback" id="fb1e"></div>
+      </div>
+      <div class="exercise-item">
+        <label>6. How would you portray your lifestyle: as quiet, tough, or good the way it is?</label>
+        <textarea class="exercise-textarea" id="ex1f" placeholder="Define your current lifestyle paradigm..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1f','fb1f')">Validate Reflection</button>
+        <div class="feedback" id="fb1f"></div>
+      </div>
+      <div class="exercise-item">
+        <label>7. How do you think it will be when you retire from work? Will you have more time for yourself, your partner, to travel? Why?</label>
+        <textarea class="exercise-textarea" id="ex1g" placeholder="Project your future retirement scenario..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1g','fb1g')">Validate Reflection</button>
+        <div class="feedback" id="fb1g"></div>
+      </div>
+      <div class="exercise-item">
+        <label>8. In your personal opinion, what is the absolute best way to relax?</label>
+        <textarea class="exercise-textarea" id="ex1h" placeholder="Describe your ultimate relaxation technique..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1h','fb1h')">Validate Reflection</button>
+        <div class="feedback" id="fb1h"></div>
+      </div>
+      <div class="exercise-item">
+        <label>9. For you, what is the right amount of hours of slumber each night? Do you think it is the appropriate time? Why?</label>
+        <textarea class="exercise-textarea" id="ex1i" placeholder="Analyze your sleep hygiene and requirements..."></textarea>
+        <button class="btn-verify" onclick="checkDiscussion('ex1i','fb1i')">Validate Reflection</button>
+        <div class="feedback" id="fb1i"></div>
+      </div>
+    </div>
+    
+    <button class="nav-btn" onclick="completeUnit()">Complete Unit 25 →</button>
+  </div>
+</section>
+
+<!-- FINAL -->
+<div id="finalMsg" style="display:none; padding:100px 40px; background:var(--navy); color:var(--text-light); text-align:center;">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:20px; color:var(--amber);">🎯 Unit 25 Mastered</h2>
+    <p style="font-size:1.3rem; margin-bottom:30px; max-width:700px; margin-left:auto; margin-right:auto; opacity:0.9;">You have successfully analyzed stress administration and applied critical thinking to your personal lifestyle.</p>
+    <p style="font-size:1.1rem; margin-bottom:40px; opacity:0.7; font-style:italic;">"The brain doesn't translate. The brain assembles."</p>
+    <a href="indexmax.html" class="nav-btn">Continue to Next Unit →</a>
+  </div>
+</div>
+
+<footer style="padding:40px 20px; text-align:center; background:#111; color:#888; font-size:0.9rem;">
+  <p><strong>Discovery MAX PRO Neuroeducation</strong></p>
+  <p>Unit 25: Stress Administration | Método NBF</p>
+</footer>
+
+<script>
+let completedCount = 0;
+const totalEx = 9;
+
+const synth = window.speechSynthesis;
+function speak(text) {
+  if(synth.speaking) synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 1.05; u.pitch = 1;
+  synth.speak(u);
+}
+
+function updateProgress() {
+  const pct = (completedCount / totalEx) * 100;
+  document.getElementById('progressBar').style.width = `${pct}%`;
+}
+
+function checkDiscussion(inputId, feedbackId) {
+  const val = document.getElementById(inputId).value.trim();
+  const fb = document.getElementById(feedbackId);
+  
+  if(val.length >= 20) {
+    fb.className = 'feedback success';
+    fb.textContent = '✅ Cognitive reflection validated. Excellent executive function.';
+    fb.style.display = 'block';
+    speak('Excellent reflection.');
+    if(!fb.dataset.counted) {
+        completedCount++; 
+        updateProgress();
+        fb.dataset.counted = "true";
+    }
+  } else {
+    fb.className = 'feedback error';
+    fb.textContent = '⚠️ The executive brain requires deep analysis. Please elaborate your answer (minimum 20 characters).';
+    fb.style.display = 'block';
+    speak('Please elaborate your answer.');
+  }
+}
+
+function completeUnit() {
+  if(completedCount >= totalEx) {
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalMsg').scrollIntoView({behavior:'smooth'});
+    speak('Congratulations! Unit 25 completed.');
+  } else {
+    alert(`⚠️ Please complete all ${totalEx} critical thinking reflections to master this unit.\nCompleted: ${completedCount}/${totalEx}`);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => { updateProgress(); });
+</script>
+</body>
+</html>
