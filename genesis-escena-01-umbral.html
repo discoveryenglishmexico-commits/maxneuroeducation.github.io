@@ -414,7 +414,10 @@ html, body {
 /* ========================================
    PROYECTO GÉNESIS — ESCENA 01
    Lógica de la experiencia
-   Versión: ALFA 1.1 (Ritmo ajustado)
+   Versión: ALFA 1.2
+   Correcciones:
+   1. Audio con async/await y mensaje de error
+   2. Omitir introducción cancela todos los timers
    ======================================== */
 
 // Estado global
@@ -425,24 +428,40 @@ const state = {
   sequenceStarted: false
 };
 
-// TIMING AJUSTADO (De ~37s a ~23s)
-// La suavidad del fade se mantiene, pero los mensajes cambian más rápido.
+// ========================================
+// CONTROL DE TIMERS (para poder cancelarlos)
+// ========================================
+const activeTimers = [];
+
+function scheduleTimeout(callback, delay) {
+  const id = setTimeout(callback, delay);
+  activeTimers.push(id);
+  return id;
+}
+
+function clearAllPendingTimers() {
+  activeTimers.forEach(id => clearTimeout(id));
+  activeTimers.length = 0;
+}
+
+// TIMING (sin cambios — 23 segundos totales)
 const TIMING = {
-  moment1Start: 500,      // 0.5s
-  moment1Duration: 3500,  // 3.5s
-  moment2Start: 4000,     // 4.0s
-  moment2Duration: 4000,  // 4.0s
-  moment3Start: 8000,     // 8.0s
-  moment3Duration: 5000,  // 5.0s
-  moment4Start: 13000,    // 13.0s
-  moment4Duration: 5000,  // 5.0s
-  moment5Start: 18000,    // 18.0s
-  moment5Duration: 5000,  // 5.0s
-  ctaStart: 23000         // 23.0s (La puerta aparece)
+  moment1Start: 500,
+  moment1Duration: 3500,
+  moment2Start: 4000,
+  moment2Duration: 4000,
+  moment3Start: 8000,
+  moment3Duration: 5000,
+  moment4Start: 13000,
+  moment4Duration: 5000,
+  moment5Start: 18000,
+  moment5Duration: 5000,
+  ctaStart: 23000
 };
 
 // ========================================
 // CANVAS — Partículas y líneas sutiles
+// (sin cambios)
 // ========================================
 const canvas = document.getElementById('backgroundCanvas');
 const ctx = canvas.getContext('2d');
@@ -459,7 +478,7 @@ class Particle {
   constructor() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
-    this.vx = (Math.random() - 0.5) * 0.15; // Un poco más lentas
+    this.vx = (Math.random() - 0.5) * 0.15;
     this.vy = (Math.random() - 0.5) * 0.15;
     this.radius = Math.random() * 1.2;
     this.opacity = Math.random() * 0.4 + 0.1;
@@ -468,7 +487,6 @@ class Particle {
   update() {
     this.x += this.vx;
     this.y += this.vy;
-    
     if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
     if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
   }
@@ -499,14 +517,12 @@ class Line {
   
   update() {
     this.age++;
-    
     if (this.fadeIn) {
       this.opacity += 0.004;
       if (this.opacity >= 0.12) this.fadeIn = false;
     } else {
       this.opacity -= 0.004;
     }
-    
     if (this.age > this.life || this.opacity <= 0) {
       this.reset();
     }
@@ -552,18 +568,30 @@ function startSequence() {
   if (state.sequenceStarted) return;
   state.sequenceStarted = true;
   
-  setTimeout(() => document.getElementById('brandHeader').classList.add('visible'), 200);
+  scheduleTimeout(() => {
+    document.getElementById('brandHeader').classList.add('visible');
+  }, 200);
   
-  setTimeout(() => { showMessage('message1'); state.currentMoment = 1; }, TIMING.moment1Start);
-  setTimeout(() => { showMessage('message2'); state.currentMoment = 2; }, TIMING.moment2Start);
-  setTimeout(() => { showMessage('message3'); state.currentMoment = 3; }, TIMING.moment3Start);
-  setTimeout(() => { showMessage('message4'); state.currentMoment = 4; }, TIMING.moment4Start);
-  setTimeout(() => { showMessage('message5'); state.currentMoment = 5; }, TIMING.moment5Start);
-  setTimeout(() => { showCTA(); }, TIMING.ctaStart);
+  scheduleTimeout(() => { showMessage('message1'); state.currentMoment = 1; }, TIMING.moment1Start);
+  scheduleTimeout(() => { showMessage('message2'); state.currentMoment = 2; }, TIMING.moment2Start);
+  scheduleTimeout(() => { showMessage('message3'); state.currentMoment = 3; }, TIMING.moment3Start);
+  scheduleTimeout(() => { showMessage('message4'); state.currentMoment = 4; }, TIMING.moment4Start);
+  scheduleTimeout(() => { showMessage('message5'); state.currentMoment = 5; }, TIMING.moment5Start);
+  scheduleTimeout(() => { showCTA(); }, TIMING.ctaStart);
 }
 
+// ========================================
+// OMITIR INTRODUCCIÓN
+// CORRECCIÓN: Cancela todos los timers pendientes
+// ========================================
 function skipToCTA() {
+  // 1. Cancelar todos los temporizadores pendientes
+  clearAllPendingTimers();
+  
+  // 2. Ocultar cualquier mensaje que esté visible
   document.querySelectorAll('.message').forEach(msg => msg.classList.remove('visible'));
+  
+  // 3. Mostrar el CTA inmediatamente
   showCTA();
   state.currentMoment = 6;
 }
@@ -586,19 +614,31 @@ function transitionToNextScene() {
 
 // ========================================
 // AUDIO
+// CORRECCIÓN: async/await + mensaje de error
 // ========================================
-function toggleAudio() {
+async function toggleAudio() {
   const audio = document.getElementById('ambientAudio');
   const button = document.getElementById('audioButton');
   
+  // Si ya está activo, silenciamos (sin cambios)
   if (state.audioEnabled) {
     audio.pause();
     state.audioEnabled = false;
-    button.textContent = '🔊 Activar experiencia sonora';
-  } else {
-    audio.play().catch(() => console.log('Audio no disponible (placeholder)'));
+    button.textContent = ' Activar experiencia sonora';
+    return;
+  }
+  
+  // Si no está activo, intentamos reproducir
+  try {
+    await audio.play();
+    // Solo si la reproducción fue exitosa cambiamos el estado y el texto
     state.audioEnabled = true;
-    button.textContent = ' Silenciar';
+    button.textContent = '🔇 Silenciar';
+  } catch (error) {
+    // Si falla (archivo no existe, autoplay bloqueado, etc.)
+    console.warn('Audio no disponible:', error);
+    state.audioEnabled = false;
+    button.textContent = '🔊 Experiencia sonora aún no disponible';
   }
 }
 
