@@ -1,3 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discovery MAX Neuroeducation — El Umbral</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ========================================
+   PROYECTO GÉNESIS — ESCENA 01: EL UMBRAL
+   Versión: ALFA 1.0
+   Objetivo: Despertar curiosidad intelectual
+   Regla de Oro: Programar para cómo se SIENTE
+   ======================================== */
+
+:root {
+  /* Paleta Discovery */
+  --bg-deep: #0a0e27;
+  --bg-darker: #050816;
+  --text-primary: #e8eaf6;
+  --text-secondary: #b8bcd4;
+  --accent-blue: #667eea;
+  --accent-gold: #d4af37;
+  
+  /* Timing */
+  --transition-slow: 2000ms;
+  --transition-medium: 1200ms;
+  --transition-fast: 600ms;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+}
+
+/* ========================================
+   CANVAS DE FONDO — Profundidad infinita
+   ======================================== */
+#backgroundCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.4;
+}
+
+/* ========================================
+   CONTENEDOR PRINCIPAL
+   ======================================== */
+.threshold-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* ========================================
+   MARCA — Superior
+   ======================================== */
+.brand-header {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0;
+  transition: opacity var(--transition-slow) ease-in;
+}
+
+.brand-header.visible {
+  opacity: 1;
+}
+
+.brand-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.brand-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+/* ========================================
+   MENSAJES — Centro de la experiencia
+   ======================================== */
+.message-container {
+  text-align: center;
+  max-width: 800px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.message {
+  position: absolute;
+  opacity: 0;
+  transition: opacity var(--transition-medium) ease-in-out;
+  width: 100%;
+  max-width: 800px;
+}
+
+.message.visible {
+  opacity: 1;
+}
+
+.message-primary {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.message-secondary {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-top: 1rem;
+}
+
+.message-question {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-primary);
+  font-style: italic;
+}
+
+/* ========================================
+   BOTÓN PRINCIPAL — La Puerta
+   ======================================== */
+.cta-container {
+  position: absolute;
+  bottom: 8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0;
+  transition: opacity var(--transition-slow) ease-in;
+}
+
+.cta-container.visible {
+  opacity: 1;
+}
+
+.cta-button {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--accent-blue);
+  padding: 1.2rem 3rem;
+  cursor: pointer;
+  transition: all var(--transition-fast) ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-blue);
+  transition: left var(--transition-fast) ease;
+  z-index: -1;
+}
+
+.cta-button:hover::before {
+  left: 0;
+}
+
+.cta-button:hover {
+  color: var(--bg-deep);
+  border-color: var(--accent-blue);
+}
+
+.cta-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  margin-top: 1rem;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+
+/* ========================================
+   CONTROLES — Discretos
+   ======================================== */
+.controls {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 100;
+}
+
+.control-button {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity var(--transition-fast) ease;
+  letter-spacing: 0.1em;
+}
+
+.control-button:hover {
+  opacity: 1;
+}
+
+/* ========================================
+   OVERLAY DE TRANSICIÓN — Atravesar puerta
+   ======================================== */
+.transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-darker);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-medium) ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.transition-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.transition-message {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  opacity: 0;
+  transition: opacity var(--transition-medium) ease;
+}
+
+.transition-message.visible {
+  opacity: 1;
+}
+
+/* ========================================
+   RESPONSIVE — Móvil
+   ======================================== */
+@media (max-width: 768px) {
+  .threshold-container {
+    padding: 1rem;
+  }
+  
+  .brand-header {
+    top: 1.5rem;
+  }
+  
+  .brand-name {
+    font-size: 0.65rem;
+  }
+  
+  .brand-subtitle {
+    font-size: 0.55rem;
+  }
+  
+  .cta-container {
+    bottom: 6rem;
+  }
+  
+  .cta-button {
+    padding: 1rem 2rem;
+    font-size: 0.8rem;
+  }
+  
+  .controls {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
+/* ========================================
+   ACCESIBILIDAD — Reducción de movimiento
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  #backgroundCanvas {
+    display: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Canvas para partículas y líneas sutiles -->
+<canvas id="backgroundCanvas"></canvas>
+
+<!-- Contenedor principal -->
+<div class="threshold-container">
+  
+  <!-- Marca -->
+  <header class="brand-header" id="brandHeader">
+    <div class="brand-name">Discovery Max Neuroeducation</div>
+    <div class="brand-subtitle">Neurocognitive English Training</div>
+  </header>
+  
+  <!-- Mensajes -->
+  <div class="message-container">
+    
+    <!-- Momento 1: Recepción -->
+    <div class="message" id="message1">
+      <div class="message-primary">Bienvenido a Discovery.</div>
+      <div class="message-secondary">Aquí no vienes a comenzar otro curso de inglés.</div>
+    </div>
+    
+    <!-- Momento 2: Cambio de expectativa -->
+    <div class="message" id="message2">
+      <div class="message-primary">Vienes a observar algo que probablemente nunca te enseñaron a mirar.</div>
+    </div>
+    
+    <!-- Momento 3: El cerebro como observador -->
+    <div class="message" id="message3">
+      <div class="message-primary">La forma en que tu cerebro procesa y construye el inglés.</div>
+      <div class="message-secondary">No vamos a juzgarlo. Vamos a observarlo.</div>
+    </div>
+    
+    <!-- Momento 4: El acuerdo intelectual -->
+    <div class="message" id="message4">
+      <div class="message-primary">No te pediremos que aceptes nuestras ideas.</div>
+      <div class="message-secondary">Te invitamos a observar, comparar y descubrir.</div>
+    </div>
+    
+    <!-- Momento 5: La pregunta de entrada -->
+    <div class="message" id="message5">
+      <div class="message-question">¿Estás dispuesto a mirar el inglés desde una perspectiva diferente?</div>
+    </div>
+    
+  </div>
+  
+  <!-- Botón principal -->
+  <div class="cta-container" id="ctaContainer">
+    <button class="cta-button" id="ctaButton">Comenzar la Exploración</button>
+    <div class="cta-subtitle">Primera estación: El Espejo</div>
+  </div>
+  
+</div>
+
+<!-- Controles -->
+<div class="controls">
+  <button class="control-button" id="skipButton">Omitir introducción</button>
+  <button class="control-button" id="audioButton">🔊 Activar experiencia sonora</button>
+</div>
+
+<!-- Overlay de transición -->
+<div class="transition-overlay" id="transitionOverlay">
+  <div class="transition-message" id="transitionMessage">Tu recorrido comienza aquí.</div>
+</div>
+
+<!-- Audio placeholder -->
+<audio id="ambientAudio" loop>
+  <source src="ambient-discovery.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 /* ========================================
    PROYECTO GÉNESIS — ESCENA 01
@@ -207,3 +619,6 @@ window.addEventListener('DOMContentLoaded', () => {
   startSequence();
 });
 </script>
+
+</body>
+</html>
