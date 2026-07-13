@@ -12,9 +12,9 @@
   --text-primary: #e8eaf6;
   --text-secondary: #b8bcd4;
   --accent-blue: #667eea;
-  --transition-slow: 2000ms;
-  --transition-medium: 1200ms;
-  --transition-fast: 600ms;
+  --transition-slow: 2500ms;
+  --transition-medium: 1800ms;
+  --transition-fast: 800ms;
 }
 
 * {
@@ -38,7 +38,7 @@ html, body {
   width: 100%;
   height: 100%;
   z-index: 1;
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
 .mirror-container {
@@ -106,13 +106,18 @@ html, body {
   color: var(--text-primary);
 }
 
-/* Contenedor del ensamble */
+/* Contenedor del ensamble - centrado */
 .assembly-container {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 120px;
+  width: 90%;
+  max-width: 900px;
+  min-height: 200px;
   opacity: 0;
   transition: opacity var(--transition-medium) ease-in-out;
 }
@@ -121,57 +126,80 @@ html, body {
   opacity: 1;
 }
 
+/* Cada palabra es una pieza */
 .word-piece {
   position: relative;
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 400;
   color: var(--text-primary);
-  margin: 0 0.5em;
-  display: inline-block;
+  margin: 0 0.4em;
   opacity: 0;
-  transition: opacity 800ms ease-in-out;
+  transition: opacity var(--transition-slow) ease-in-out;
+  display: inline-block;
 }
 
 .word-piece.visible {
   opacity: 1;
 }
 
-.word-piece.sliding {
-  transition: transform 1500ms cubic-bezier(0.4, 0, 0.2, 1), opacity 800ms ease-in-out;
-}
-
+/* Ecos cognitivos - FANTASMAS */
 .cognitive-echo {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
+  font-size: clamp(1rem, 2vw, 1.3rem);
   font-weight: 300;
   color: var(--text-secondary);
   opacity: 0;
-  transition: opacity 400ms ease-in-out;
   pointer-events: none;
   white-space: nowrap;
+  text-shadow: 0 0 20px rgba(184, 188, 212, 0.3);
 }
 
-.cognitive-echo.visible {
-  opacity: 0.35;
+/* Animación del eco: aparece, se mantiene, se desvanece */
+.cognitive-echo.ghost {
+  animation: ghostFade 2500ms ease-in-out forwards;
 }
 
+@keyframes ghostFade {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  20% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  70% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+/* Letra "y" flotante */
 .floating-letter {
   position: absolute;
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 400;
   color: var(--accent-blue);
   opacity: 0;
-  transition: all 1500ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-slow) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .floating-letter.visible {
   opacity: 1;
+}
+
+.floating-letter.moving {
+  /* Se moverá via JS */
 }
 
 .reflection-question {
@@ -315,7 +343,6 @@ html, body {
   opacity: 1;
 }
 
-/* Controles - ahora se ocultan cuando aparece el CTA */
 .controls {
   position: fixed;
   bottom: 2rem;
@@ -395,11 +422,10 @@ html, body {
     <div class="intro-text">Antes de aprender...<br>observemos cómo tu cerebro comienza a construir una idea.</div>
   </div>
   
-  <!-- Contenedor del ensamble - ahora con estructura clara -->
+  <!-- Contenedor del ensamble -->
   <div class="assembly-container" id="assemblyContainer">
     <div class="word-piece" id="wordThey">
       they
-      <div class="floating-letter" id="letterY">y</div>
     </div>
     <div class="word-piece" id="wordNeed">
       need
@@ -410,6 +436,7 @@ html, body {
       water
       <div class="cognitive-echo" id="echoWater">agua</div>
     </div>
+    <div class="floating-letter" id="letterY">y</div>
   </div>
   
   <div class="reflection-question" id="reflectionQuestion">
@@ -430,7 +457,6 @@ html, body {
   
 </div>
 
-<!-- Controles que se ocultarán -->
 <div class="controls" id="controls">
   <button class="control-button" id="skipButton">Omitir introducción</button>
   <button class="control-button" id="audioButton">🔊 Activar experiencia sonora</button>
@@ -479,10 +505,10 @@ class Particle {
   constructor() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
-    this.vx = (Math.random() - 0.5) * 0.15;
-    this.vy = (Math.random() - 0.5) * 0.15;
-    this.radius = Math.random() * 1.2;
-    this.opacity = Math.random() * 0.4 + 0.1;
+    this.vx = (Math.random() - 0.5) * 0.1;
+    this.vy = (Math.random() - 0.5) * 0.1;
+    this.radius = Math.random() * 1;
+    this.opacity = Math.random() * 0.3 + 0.1;
   }
   update() {
     this.x += this.vx;
@@ -505,20 +531,20 @@ class Line {
   reset() {
     this.x1 = Math.random() * canvas.width;
     this.y1 = Math.random() * canvas.height;
-    this.x2 = this.x1 + (Math.random() - 0.5) * 150;
-    this.y2 = this.y1 + (Math.random() - 0.5) * 150;
+    this.x2 = this.x1 + (Math.random() - 0.5) * 100;
+    this.y2 = this.y1 + (Math.random() - 0.5) * 100;
     this.opacity = 0;
     this.fadeIn = true;
-    this.life = Math.random() * 200 + 100;
+    this.life = Math.random() * 300 + 150;
     this.age = 0;
   }
   update() {
     this.age++;
     if (this.fadeIn) {
-      this.opacity += 0.004;
-      if (this.opacity >= 0.12) this.fadeIn = false;
+      this.opacity += 0.002;
+      if (this.opacity >= 0.08) this.fadeIn = false;
     } else {
-      this.opacity -= 0.004;
+      this.opacity -= 0.002;
     }
     if (this.age > this.life || this.opacity <= 0) this.reset();
   }
@@ -534,8 +560,8 @@ class Line {
 
 function initCanvas() {
   resizeCanvas();
-  for (let i = 0; i < 40; i++) particles.push(new Particle());
-  for (let i = 0; i < 4; i++) lines.push(new Line());
+  for (let i = 0; i < 30; i++) particles.push(new Particle());
+  for (let i = 0; i < 3; i++) lines.push(new Line());
 }
 
 function animateCanvas() {
@@ -547,6 +573,7 @@ function animateCanvas() {
 
 // ========================================
 // SECUENCIA DE ENSAMBLE COGNITIVO
+// Timing más lento para digestión cognitiva
 // ========================================
 function startSequence() {
   if (state.sequenceStarted) return;
@@ -555,165 +582,157 @@ function startSequence() {
   // Mostrar marca
   scheduleTimeout(() => {
     document.getElementById('brandHeader').classList.add('visible');
-  }, 200);
+  }, 500);
   
-  // Frase inicial (3 segundos)
+  // Frase inicial (4 segundos)
   scheduleTimeout(() => {
     document.getElementById('introMessage').classList.add('visible');
-  }, 1000);
+  }, 1500);
   
   scheduleTimeout(() => {
     document.getElementById('introMessage').classList.remove('visible');
-  }, 4000);
+  }, 5500);
   
   // Mostrar contenedor de ensamble
   scheduleTimeout(() => {
     document.getElementById('assemblyContainer').classList.add('visible');
-  }, 5000);
+  }, 6500);
   
-  // PASO 1: Aparece "need"
+  // PASO 1: Aparece "need" (2.5s para aparecer)
   scheduleTimeout(() => {
     document.getElementById('wordNeed').classList.add('visible');
-  }, 5500);
-  
-  // Eco "necesidad"
-  scheduleTimeout(() => {
-    document.getElementById('echoNeed').classList.add('visible');
-  }, 6200);
-  
-  scheduleTimeout(() => {
-    document.getElementById('echoNeed').classList.remove('visible');
-  }, 6600);
-  
-  // PASO 2: Aparece "water"
-  scheduleTimeout(() => {
-    document.getElementById('wordWater').classList.add('visible');
   }, 7500);
   
-  // Eco "agua"
+  // Eco "necesidad" - FANTASMA (aparece a los 2s, dura 2.5s)
   scheduleTimeout(() => {
-    document.getElementById('echoWater').classList.add('visible');
-  }, 8200);
-  
-  scheduleTimeout(() => {
-    document.getElementById('echoWater').classList.remove('visible');
-  }, 8600);
-  
-  // PASO 3: Aparece "the" delante de "need" (se desliza desde la izquierda)
-  scheduleTimeout(() => {
-    const wordThe = document.createElement('div');
-    wordThe.className = 'word-piece sliding';
-    wordThe.id = 'wordThe';
-    wordThe.textContent = 'the';
-    wordThe.style.transform = 'translateX(-100px)';
-    wordThe.style.opacity = '0';
-    
-    const wordNeed = document.getElementById('wordNeed');
-    wordNeed.parentNode.insertBefore(wordThe, wordNeed);
-    
-    // Forzar reflow
-    wordThe.offsetHeight;
-    
-    // Animar entrada
-    wordThe.style.transform = 'translateX(0)';
-    wordThe.style.opacity = '1';
+    document.getElementById('echoNeed').classList.add('ghost');
   }, 9500);
   
-  // PASO 4: Aparece "y" flotante y se integra en "the" → "they"
+  // PASO 2: Aparece "water" (2.5s después)
   scheduleTimeout(() => {
-    const letterY = document.getElementById('letterY');
-    letterY.classList.add('visible');
-    letterY.style.top = '-30px';
-    letterY.style.left = '100%';
-  }, 11500);
-  
-  // "y" se desplaza hacia "the"
-  scheduleTimeout(() => {
-    const letterY = document.getElementById('letterY');
-    letterY.style.top = '0px';
-    letterY.style.left = '100%';
+    document.getElementById('wordWater').classList.add('visible');
   }, 12000);
   
-  // "y" se integra - cambiar "the" a "they"
+  // Eco "agua" - FANTASMA
   scheduleTimeout(() => {
-    const wordThe = document.getElementById('wordThe');
-    wordThe.textContent = 'they';
-    letterY.style.opacity = '0';
-  }, 13500);
+    document.getElementById('echoWater').classList.add('ghost');
+  }, 14000);
+  
+  // Pausa para observar: "need water" (4s)
+  
+  // PASO 3: Aparece "the" delante de "need"
+  scheduleTimeout(() => {
+    document.getElementById('wordThey').classList.add('visible');
+    document.getElementById('wordThey').textContent = 'the';
+  }, 18000);
+  
+  // Pausa para observar: "the need water" (3s)
+  
+  // PASO 4: Aparece "y" flotante (sutil, azul)
+  scheduleTimeout(() => {
+    const letterY = document.getElementById('letterY');
+    const wordThey = document.getElementById('wordThey');
+    const container = document.getElementById('assemblyContainer');
+    
+    // Posicionar "y" al final de "the"
+    const theyRect = wordThey.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    
+    letterY.style.left = (theyRect.right - containerRect.left + 20) + 'px';
+    letterY.style.top = '0px';
+    letterY.classList.add('visible');
+  }, 21000);
+  
+  // "y" se desplaza lentamente hacia "the" (2.5s de movimiento)
+  scheduleTimeout(() => {
+    const letterY = document.getElementById('letterY');
+    letterY.style.left = '0px';
+    letterY.style.top = '0px';
+  }, 21500);
+  
+  // "y" se integra - cambiar "the" a "they" (suavemente)
+  scheduleTimeout(() => {
+    const wordThey = document.getElementById('wordThey');
+    wordThey.style.opacity = '0.5';
+  }, 24000);
+  
+  scheduleTimeout(() => {
+    const wordThey = document.getElementById('wordThey');
+    wordThey.textContent = 'they';
+    wordThey.style.opacity = '1';
+    document.getElementById('letterY').style.opacity = '0';
+  }, 25500);
+  
+  // Pausa para observar: "they need water" (3s)
   
   // PASO 5: Aparece "to" entre "need" y "water"
   scheduleTimeout(() => {
-    const wordTo = document.getElementById('wordTo');
-    wordTo.classList.add('visible');
-    wordTo.style.transform = 'translateY(-50px)';
-    
-    // Forzar reflow
-    wordTo.offsetHeight;
-    
-    wordTo.style.transform = 'translateY(0)';
-  }, 15000);
+    document.getElementById('wordTo').classList.add('visible');
+  }, 28500);
   
-  // Pausa para observar el resultado final: "they need to water"
+  // Pausa larga para observar el resultado final: "they need to water" (5s)
+  
+  // Ocultar ensamble
   scheduleTimeout(() => {
     document.getElementById('assemblyContainer').classList.remove('visible');
-  }, 18000);
+  }, 33500);
   
-  // Pregunta de reflexión (3 segundos)
+  // Pregunta de reflexión (5 segundos - tiempo para pensar)
   scheduleTimeout(() => {
     document.getElementById('reflectionQuestion').classList.add('visible');
-  }, 19000);
+  }, 34500);
   
   scheduleTimeout(() => {
     document.getElementById('reflectionQuestion').classList.remove('visible');
-  }, 22000);
+  }, 39500);
   
-  // Frases de cierre
+  // Frases de cierre (cada una con 3.5s)
   scheduleTimeout(() => {
     document.getElementById('closing1').classList.add('visible');
-  }, 23000);
+  }, 40500);
   
   scheduleTimeout(() => {
     document.getElementById('closing1').classList.remove('visible');
-  }, 25500);
+  }, 44000);
   
   scheduleTimeout(() => {
     document.getElementById('closing2').classList.add('visible');
-  }, 26500);
+  }, 45000);
   
   scheduleTimeout(() => {
     document.getElementById('closing2').classList.remove('visible');
-  }, 29000);
+  }, 48500);
   
   scheduleTimeout(() => {
     document.getElementById('closing3').classList.add('visible');
-  }, 30000);
+  }, 49500);
   
   scheduleTimeout(() => {
     document.getElementById('closing3').classList.remove('visible');
-  }, 32500);
+  }, 53000);
   
   scheduleTimeout(() => {
     document.getElementById('closing4').classList.add('visible');
-  }, 33500);
+  }, 54000);
   
   scheduleTimeout(() => {
     document.getElementById('closing4').classList.remove('visible');
-  }, 36500);
+  }, 57500);
   
-  // SPEAK
+  // SPEAK (4s)
   scheduleTimeout(() => {
     document.getElementById('speakWord').classList.add('visible');
-  }, 37500);
+  }, 58500);
   
   scheduleTimeout(() => {
     document.getElementById('speakWord').classList.remove('visible');
-  }, 40500);
+  }, 62500);
   
   // Botón final - OCULTAR CONTROLES
   scheduleTimeout(() => {
     document.getElementById('finalCta').classList.add('visible');
     document.getElementById('controls').classList.add('hidden');
-  }, 41500);
+  }, 63500);
 }
 
 function skipToFinal() {
@@ -757,7 +776,7 @@ async function toggleAudio() {
   } catch (error) {
     console.warn('Audio no disponible:', error);
     state.audioEnabled = false;
-    button.textContent = '🔊 Experiencia sonora aún no disponible';
+    button.textContent = ' Experiencia sonora aún no disponible';
   }
 }
 
