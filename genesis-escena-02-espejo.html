@@ -100,7 +100,7 @@ html, body {
 }
 
 /* ========================================
-   MENSAJES TEXTUALES (CORREGIDO)
+   MENSAJES TEXTUALES
    ======================================== */
 .message-container {
   position: absolute;
@@ -115,7 +115,7 @@ html, body {
   z-index: 15;
 }
 
-/* Novedad: Este grupo maneja las frases juntas para que fluyan hacia abajo */
+/* Grupo para manejar frases juntas y que fluyan hacia abajo */
 .message-group {
   position: absolute;
   width: 100%;
@@ -123,7 +123,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem; /* Espacio elegante entre frases que aparecen al mismo tiempo */
+  gap: 1.5rem;
   pointer-events: none;
 }
 
@@ -133,7 +133,6 @@ html, body {
   width: 100%;
   padding: 0 1rem;
   text-align: center;
-  /* Se eliminó position: absolute; para evitar que choquen entre sí */
 }
 
 .message-part.visible { opacity: 1; }
@@ -272,7 +271,7 @@ html, body {
 }
 
 /* ========================================
-   CONTROLES DISCRETOS (CORREGIDO)
+   CONTROLES DISCRETOS
    ======================================== */
 .controls {
   position: fixed;
@@ -282,11 +281,9 @@ html, body {
   flex-direction: column;
   gap: 1rem;
   z-index: 100;
-  /* Transición añadida para ocultarlos al final */
   transition: opacity var(--transition-medium) ease, visibility var(--transition-medium) ease;
 }
 
-/* Novedad: Clase para desaparecer los controles cuando surge el botón final */
 .controls.hidden {
   opacity: 0;
   visibility: hidden;
@@ -370,8 +367,6 @@ html, body {
   </header>
   
   <div class="message-container">
-    <!-- Novedad: Las frases ahora están agrupadas por momentos para que no choquen -->
-    
     <!-- M1 -->
     <div class="message-group">
       <div class="message-part text-standard" id="msg1a">Antes de buscar respuestas...</div>
@@ -389,7 +384,7 @@ html, body {
       <div class="message-part text-standard text-italic" id="msg4">¿En qué momento cambió lo que creías estar observando?</div>
     </div>
     
-    <!-- M5 (Agrupadas individualmente porque aparecen una por una) -->
+    <!-- M5 (Agrupadas individualmente) -->
     <div class="message-group">
       <div class="message-part text-standard" id="msg5a">No comenzarás desde cero.</div>
     </div>
@@ -429,7 +424,6 @@ html, body {
   
 </div>
 
-<!-- Novedad: Añadimos un id a .controls para ocultarlo fácilmente -->
 <div class="controls" id="interfaceControls">
   <button class="control-button" id="skipButton">Omitir introducción</button>
   <button class="control-button" id="audioButton">🔊 Activar experiencia sonora</button>
@@ -706,7 +700,6 @@ async function playClosingSequence() {
     m6.classList.remove('visible');
     await wait(1200);
 
-    // Muestra el botón y oculta los controles para evitar amontonamientos
     document.getElementById('ctaContainer').classList.add('visible');
     document.getElementById('interfaceControls').classList.add('hidden');
 }
@@ -751,13 +744,17 @@ audioBtn.addEventListener('click', async () => {
     }
 });
 
+// ========================================
+// AQUÍ ESTÁ EL CAMBIO DE NAVEGACIÓN
+// ========================================
 document.getElementById('ctaButton').addEventListener('click', () => {
     const overlay = document.getElementById('transitionOverlay');
     const msg = document.getElementById('transitionMessage');
     overlay.classList.add('active');
     setTimeout(() => msg.classList.add('visible'), 300);
     setTimeout(() => {
-        console.log("Transición a la Escena 03: El Alivio");
+        // Navegación hacia El Alivio programada
+        window.location.href = 'genesis-escena-03-alivio.html';
     }, 2500);
 });
 
