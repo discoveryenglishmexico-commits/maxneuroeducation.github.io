@@ -51,7 +51,7 @@ html, body {
   font-weight: 300;
   fill: #b8bcd4;
   opacity: 0;
-  filter: blur(2px);
+  filter: blur(1.5px);
   transform-origin: center;
   transition: 
     opacity 800ms ease,
@@ -59,13 +59,13 @@ html, body {
 }
 
 .echo-text.visible {
-  opacity: 0.55;
-  transform: scale(1.06);
+  opacity: 0.75;
+  transform: scale(1.08);
 }
 
 .echo-text.fade-out {
   opacity: 0;
-  transform: scale(0.96);
+  transform: scale(0.94);
 }
 
 .floating-letter {
@@ -95,13 +95,13 @@ html, body {
   <!-- need -->
   <g id="word-need" class="word-group">
     <text class="word-text" x="0" y="0">need</text>
-    <text class="echo-text" id="echo-need" x="0" y="-4">necesidad</text>
+    <text class="echo-text" id="echo-need" x="0" y="-20">necesidad</text>
   </g>
   
   <!-- water -->
   <g id="word-water" class="word-group">
     <text class="word-text" x="0" y="0">water</text>
-    <text class="echo-text" id="echo-water" x="0" y="-4">agua</text>
+    <text class="echo-text" id="echo-water" x="0" y="-20">agua</text>
   </g>
   
   <!-- the -->
@@ -124,9 +124,9 @@ html, body {
 const SVG_WIDTH = 1200;
 const SVG_HEIGHT = 400;
 const CENTER_X = SVG_WIDTH / 2;
-const CENTER_Y = SVG_HEIGHT / 2 + 25; // Ajuste vertical
-const WORD_SPACING = 40;
-const FONT_SIZE = 80;
+const CENTER_Y = SVG_HEIGHT / 2 + 25;
+const WORD_SPACING = 50;
+const MARGIN_PERCENT = 0.08;
 
 // Anchos aproximados de palabras (con font-size 80px)
 const wordWidths = {
@@ -138,31 +138,31 @@ const wordWidths = {
   'y': 30
 };
 
-// Posiciones para cada etapa (calculadas para centrar la composición completa)
-const stages = {
-  1: { // need
-    'need': CENTER_X - wordWidths['need'] / 2
-  },
-  2: { // need water
-    'need': CENTER_X - (wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2,
-    'water': CENTER_X - (wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['need'] + WORD_SPACING
-  },
-  3: { // the need water
-    'the': CENTER_X - (wordWidths['the'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2,
-    'need': CENTER_X - (wordWidths['the'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['the'] + WORD_SPACING,
-    'water': CENTER_X - (wordWidths['the'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['the'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING
-  },
-  4: { // they need water
-    'they': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2,
-    'need': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['they'] + WORD_SPACING,
-    'water': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING
-  },
-  5: { // they need to water
-    'they': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['to'] + WORD_SPACING + wordWidths['water']) / 2,
-    'need': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['to'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['they'] + WORD_SPACING,
-    'to': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['to'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING,
-    'water': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['to'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['to'] + WORD_SPACING
-  }
+// Calcular posiciones para cada estado (centrado horizontal)
+function calculateStatePositions(words) {
+  const totalWidth = words.reduce((sum, word, index) => {
+    return sum + wordWidths[word] + (index < words.length - 1 ? WORD_SPACING : 0);
+  }, 0);
+  
+  const startX = CENTER_X - totalWidth / 2;
+  const positions = {};
+  let currentX = startX;
+  
+  words.forEach(word => {
+    positions[word] = currentX;
+    currentX += wordWidths[word] + WORD_SPACING;
+  });
+  
+  return positions;
+}
+
+// Definir los 5 estados
+const states = {
+  1: calculateStatePositions(['need']),
+  2: calculateStatePositions(['need', 'water']),
+  3: calculateStatePositions(['the', 'need', 'water']),
+  4: calculateStatePositions(['they', 'need', 'water']),
+  5: calculateStatePositions(['they', 'need', 'to', 'water'])
 };
 
 // Función para posicionar una palabra
@@ -199,54 +199,54 @@ function hideEcho(echoId) {
 
 // Secuencia de animación
 function runSequence() {
-  // ETAPA 1: need
+  // ESTADO 1: need
   setTimeout(() => {
-    positionWord('word-need', stages[1]['need'], CENTER_Y);
+    positionWord('word-need', states[1]['need'], CENTER_Y);
     showWord('word-need');
   }, 500);
   
-  // Eco "necesidad"
+  // Eco "necesidad" - emerge desde atrás
   setTimeout(() => {
     showEcho('echo-need');
   }, 2000);
   
   setTimeout(() => {
     hideEcho('echo-need');
+  }, 3200);
+  
+  // ESTADO 2: need water
+  setTimeout(() => {
+    positionWord('word-need', states[2]['need'], CENTER_Y);
+    positionWord('word-water', states[2]['water'], CENTER_Y);
+    showWord('word-water');
   }, 4500);
   
-  // ETAPA 2: need water
-  setTimeout(() => {
-    positionWord('word-need', stages[2]['need'], CENTER_Y);
-    positionWord('word-water', stages[2]['water'], CENTER_Y);
-    showWord('word-water');
-  }, 5500);
-  
-  // Eco "agua"
+  // Eco "agua" - emerge desde atrás
   setTimeout(() => {
     showEcho('echo-water');
-  }, 7000);
+  }, 6000);
   
   setTimeout(() => {
     hideEcho('echo-water');
-  }, 9500);
+  }, 7200);
   
-  // ETAPA 3: the need water
+  // ESTADO 3: the need water
   setTimeout(() => {
-    positionWord('word-the', stages[3]['the'], CENTER_Y);
-    positionWord('word-need', stages[3]['need'], CENTER_Y);
-    positionWord('word-water', stages[3]['water'], CENTER_Y);
+    positionWord('word-the', states[3]['the'], CENTER_Y);
+    positionWord('word-need', states[3]['need'], CENTER_Y);
+    positionWord('word-water', states[3]['water'], CENTER_Y);
     showWord('word-the');
-  }, 10500);
+  }, 8500);
   
-  // ETAPA 4: they need water (the + y = they)
+  // ESTADO 4: they need water (the + y = they)
   setTimeout(() => {
     // Posicionar "y" al final de "the"
-    const theX = stages[3]['the'];
+    const theX = states[3]['the'];
     const yX = theX + wordWidths['the'];
     const letterY = document.getElementById('letter-y');
     letterY.style.transform = `translate(${yX}px, ${CENTER_Y}px)`;
     letterY.classList.add('visible');
-  }, 13000);
+  }, 10500);
   
   // Integrar "y" y transformar "the" en "they"
   setTimeout(() => {
@@ -258,19 +258,23 @@ function runSequence() {
     const theText = theGroup.querySelector('.word-text');
     theText.textContent = 'they';
     
-    positionWord('word-the', stages[4]['they'], CENTER_Y);
-    positionWord('word-need', stages[4]['need'], CENTER_Y);
-    positionWord('word-water', stages[4]['water'], CENTER_Y);
-  }, 14500);
+    positionWord('word-the', states[4]['they'], CENTER_Y);
+    positionWord('word-need', states[4]['need'], CENTER_Y);
+    positionWord('word-water', states[4]['water'], CENTER_Y);
+  }, 12000);
   
-  // ETAPA 5: they need to water
+  // ESTADO 5: they need to water
+  // Primero mover water para abrir espacio, luego aparecer to
   setTimeout(() => {
-    positionWord('word-to', stages[5]['to'], CENTER_Y);
-    positionWord('word-they', stages[5]['they'], CENTER_Y);
-    positionWord('word-need', stages[5]['need'], CENTER_Y);
-    positionWord('word-water', stages[5]['water'], CENTER_Y);
+    positionWord('word-water', states[5]['water'], CENTER_Y);
+  }, 13500);
+  
+  setTimeout(() => {
+    positionWord('word-to', states[5]['to'], CENTER_Y);
+    positionWord('word-they', states[5]['they'], CENTER_Y);
+    positionWord('word-need', states[5]['need'], CENTER_Y);
     showWord('word-to');
-  }, 17000);
+  }, 14000);
 }
 
 // Iniciar secuencia cuando cargue la página
