@@ -415,9 +415,6 @@ html, body {
    PROYECTO GÉNESIS — ESCENA 01
    Lógica de la experiencia
    Versión: ALFA 1.2
-   Correcciones:
-   1. Audio con async/await y mensaje de error
-   2. Omitir introducción cancela todos los timers
    ======================================== */
 
 // Estado global
@@ -444,7 +441,7 @@ function clearAllPendingTimers() {
   activeTimers.length = 0;
 }
 
-// TIMING (sin cambios — 23 segundos totales)
+// TIMING 
 const TIMING = {
   moment1Start: 500,
   moment1Duration: 3500,
@@ -461,7 +458,6 @@ const TIMING = {
 
 // ========================================
 // CANVAS — Partículas y líneas sutiles
-// (sin cambios)
 // ========================================
 const canvas = document.getElementById('backgroundCanvas');
 const ctx = canvas.getContext('2d');
@@ -582,64 +578,43 @@ function startSequence() {
 
 // ========================================
 // OMITIR INTRODUCCIÓN
-// CORRECCIÓN: Cancela todos los timers pendientes
 // ========================================
 function skipToCTA() {
-  // 1. Cancelar todos los temporizadores pendientes
   clearAllPendingTimers();
-  
-  // 2. Ocultar cualquier mensaje que esté visible
   document.querySelectorAll('.message').forEach(msg => msg.classList.remove('visible'));
-  
-  // 3. Mostrar el CTA inmediatamente
   showCTA();
-  state.currentMoment = 6;
+  state.currentMoment = 5;
 }
 
 // ========================================
-// TRANSICIÓN A ESCENA 2
+// FUNCIONES DE TRANSICIÓN Y AUDIO
 // ========================================
 function transitionToNextScene() {
-  const overlay = document.getElementById('transitionOverlay');
-  const message = document.getElementById('transitionMessage');
-  
-  overlay.classList.add('active');
-  setTimeout(() => message.classList.add('visible'), 500);
-  
-  setTimeout(() => {
-    console.log('Navegando a Escena 2: El Espejo');
-    // window.location.href = 'escena-02-espejo.html';
-  }, 2500);
+    const overlay = document.getElementById('transitionOverlay');
+    const msg = document.getElementById('transitionMessage');
+    overlay.classList.add('active');
+    setTimeout(() => msg.classList.add('visible'), 300);
+    setTimeout(() => {
+        // NAVEGACIÓN HACIA LA ESCENA 02 INTEGRADA AQUÍ
+        window.location.href = 'genesis-escena-02-espejo.html';
+    }, 2500);
 }
 
-// ========================================
-// AUDIO
-// CORRECCIÓN: async/await + mensaje de error
-// ========================================
-async function toggleAudio() {
-  const audio = document.getElementById('ambientAudio');
-  const button = document.getElementById('audioButton');
-  
-  // Si ya está activo, silenciamos (sin cambios)
-  if (state.audioEnabled) {
-    audio.pause();
-    state.audioEnabled = false;
-    button.textContent = ' Activar experiencia sonora';
-    return;
-  }
-  
-  // Si no está activo, intentamos reproducir
-  try {
-    await audio.play();
-    // Solo si la reproducción fue exitosa cambiamos el estado y el texto
-    state.audioEnabled = true;
-    button.textContent = '🔇 Silenciar';
-  } catch (error) {
-    // Si falla (archivo no existe, autoplay bloqueado, etc.)
-    console.warn('Audio no disponible:', error);
-    state.audioEnabled = false;
-    button.textContent = '🔊 Experiencia sonora aún no disponible';
-  }
+function toggleAudio() {
+    const audio = document.getElementById('ambientAudio');
+    const audioBtn = document.getElementById('audioButton');
+    try {
+        if (audio.paused) {
+            audio.play();
+            audioBtn.textContent = '🔊 Silenciar experiencia';
+        } else {
+            audio.pause();
+            audioBtn.textContent = '🔊 Activar experiencia sonora';
+        }
+    } catch (e) {
+        audioBtn.textContent = 'Experiencia sonora aún no disponible';
+        setTimeout(() => { audioBtn.textContent = '🔊 Activar experiencia sonora'; }, 3000);
+    }
 }
 
 // ========================================
@@ -653,12 +628,11 @@ window.addEventListener('resize', resizeCanvas);
 // ========================================
 // INICIALIZACIÓN
 // ========================================
-window.addEventListener('DOMContentLoaded', () => {
-  initCanvas();
-  animateCanvas();
-  startSequence();
+window.addEventListener('load', () => {
+    initCanvas();
+    animateCanvas();
+    startSequence();
 });
 </script>
-
 </body>
 </html>
