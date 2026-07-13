@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Proyecto Génesis — Fenómeno 001</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<title>Fenómeno 001 — Ensamble Cognitivo</title>
 <style>
 * {
   margin: 0;
@@ -13,211 +12,270 @@
 }
 
 html, body {
-  width: 100%;
   height: 100%;
-  background: #0a0e27;
   overflow: hidden;
+  background: #0a0e27;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#phenomenon-svg {
+#assembly-svg {
   width: 100%;
   height: 100%;
-  max-width: 1200px;
-  max-height: 420px;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+.word-group {
+  opacity: 0;
+  transition: 
+    transform 1400ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 500ms ease;
+}
+
+.word-group.visible {
+  opacity: 1;
 }
 
 .word-text {
   font-family: 'Playfair Display', serif;
-  font-size: 72px;
+  font-size: 80px;
   font-weight: 400;
   fill: #e8eaf6;
-  opacity: 0;
-  transition: opacity 500ms ease-in-out;
-}
-
-.word-text.visible {
-  opacity: 1;
 }
 
 .echo-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 78px;
-  font-weight: 400;
-  fill: #e8eaf6;
+  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+  font-weight: 300;
+  fill: #b8bcd4;
   opacity: 0;
-  filter: blur(2.5px);
-  transition: opacity 700ms ease-in-out;
+  filter: blur(2px);
+  transform-origin: center;
+  transition: 
+    opacity 800ms ease,
+    transform 1200ms ease;
 }
 
 .echo-text.visible {
-  opacity: 0.52;
+  opacity: 0.55;
+  transform: scale(1.06);
 }
 
-.echo-text.fading {
+.echo-text.fade-out {
   opacity: 0;
+  transform: scale(0.96);
 }
 
-.moving-text {
-  transition: transform 1700ms cubic-bezier(0.22, 1, 0.36, 1), opacity 500ms ease-in-out;
+.floating-letter {
+  font-family: 'Playfair Display', serif;
+  font-size: 80px;
+  font-weight: 400;
+  fill: #e8eaf6;
+  opacity: 0;
+  transition: 
+    transform 1400ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 500ms ease;
 }
 
-.y-letter {
-  transition: transform 1400ms cubic-bezier(0.22, 1, 0.36, 1), opacity 500ms ease-in-out;
+.floating-letter.visible {
+  opacity: 1;
 }
 
-.to-letter {
-  transition: transform 1700ms cubic-bezier(0.22, 1, 0.36, 1), opacity 500ms ease-in-out;
+.floating-letter.integrated {
+  opacity: 0;
 }
 </style>
 </head>
 <body>
 
-<svg id="phenomenon-svg" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid meet">
-  <!-- Ecos (detrás) -->
-  <text id="echo-necesidad" class="echo-text" x="0" y="0">necesidad</text>
-  <text id="echo-agua" class="echo-text" x="0" y="0">agua</text>
+<svg id="assembly-svg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid meet">
   
-  <!-- Palabras principales -->
-  <text id="word-need" class="word-text" x="0" y="0">need</text>
-  <text id="word-water" class="word-text" x="0" y="0">water</text>
-  <text id="word-the" class="word-text moving-text" x="0" y="0">the</text>
-  <text id="letter-y" class="word-text y-letter" x="0" y="0">y</text>
-  <text id="word-to" class="word-text to-letter" x="0" y="0">to</text>
+  <!-- need -->
+  <g id="word-need" class="word-group">
+    <text class="word-text" x="0" y="0">need</text>
+    <text class="echo-text" id="echo-need" x="0" y="-4">necesidad</text>
+  </g>
+  
+  <!-- water -->
+  <g id="word-water" class="word-group">
+    <text class="word-text" x="0" y="0">water</text>
+    <text class="echo-text" id="echo-water" x="0" y="-4">agua</text>
+  </g>
+  
+  <!-- the -->
+  <g id="word-the" class="word-group">
+    <text class="word-text" x="0" y="0">the</text>
+  </g>
+  
+  <!-- y (flotante) -->
+  <text id="letter-y" class="floating-letter" x="0" y="0">y</text>
+  
+  <!-- to -->
+  <g id="word-to" class="word-group">
+    <text class="word-text" x="0" y="0">to</text>
+  </g>
+  
 </svg>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const svg = document.getElementById('phenomenon-svg');
-  const centerY = 210;
-  
-  // Elementos
-  const wordNeed = document.getElementById('word-need');
-  const wordWater = document.getElementById('word-water');
-  const wordThe = document.getElementById('word-the');
-  const letterY = document.getElementById('letter-y');
-  const wordTo = document.getElementById('word-to');
-  const echoNecesidad = document.getElementById('echo-necesidad');
-  const echoAgua = document.getElementById('echo-agua');
-  
-  // Función para obtener el ancho de un texto
-  function getTextWidth(textElement) {
-    return textElement.getComputedTextLength();
+// Configuración
+const SVG_WIDTH = 1200;
+const SVG_HEIGHT = 400;
+const CENTER_X = SVG_WIDTH / 2;
+const CENTER_Y = SVG_HEIGHT / 2 + 25; // Ajuste vertical
+const WORD_SPACING = 40;
+const FONT_SIZE = 80;
+
+// Anchos aproximados de palabras (con font-size 80px)
+const wordWidths = {
+  'need': 120,
+  'water': 160,
+  'the': 80,
+  'they': 130,
+  'to': 70,
+  'y': 30
+};
+
+// Posiciones para cada etapa (calculadas para centrar la composición completa)
+const stages = {
+  1: { // need
+    'need': CENTER_X - wordWidths['need'] / 2
+  },
+  2: { // need water
+    'need': CENTER_X - (wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2,
+    'water': CENTER_X - (wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['need'] + WORD_SPACING
+  },
+  3: { // the need water
+    'the': CENTER_X - (wordWidths['the'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2,
+    'need': CENTER_X - (wordWidths['the'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['the'] + WORD_SPACING,
+    'water': CENTER_X - (wordWidths['the'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['the'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING
+  },
+  4: { // they need water
+    'they': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2,
+    'need': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['they'] + WORD_SPACING,
+    'water': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING
+  },
+  5: { // they need to water
+    'they': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['to'] + WORD_SPACING + wordWidths['water']) / 2,
+    'need': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['to'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['they'] + WORD_SPACING,
+    'to': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['to'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING,
+    'water': CENTER_X - (wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['to'] + WORD_SPACING + wordWidths['water']) / 2 + wordWidths['they'] + WORD_SPACING + wordWidths['need'] + WORD_SPACING + wordWidths['to'] + WORD_SPACING
   }
-  
-  // Posicionar texto centrado en x, y
-  function positionText(textElement, x, y) {
-    const width = getTextWidth(textElement);
-    textElement.setAttribute('x', x - width / 2);
-    textElement.setAttribute('y', y);
+};
+
+// Función para posicionar una palabra
+function positionWord(wordId, x, y) {
+  const group = document.getElementById(wordId);
+  if (group) {
+    group.style.transform = `translate(${x}px, ${y}px)`;
   }
-  
-  // Calcular posiciones iniciales
-  function calculatePositions() {
-    const needWidth = getTextWidth(wordNeed);
-    const waterWidth = getTextWidth(wordWater);
-    const theWidth = getTextWidth(wordThe);
-    const toWidth = getTextWidth(wordTo);
-    const spacing = 60;
-    
-    // Posición final de "need" y "water" (centrados)
-    const totalWidth = needWidth + waterWidth + spacing;
-    const startX = (1200 - totalWidth) / 2;
-    
-    const needX = startX;
-    const waterX = startX + needWidth + spacing;
-    
-    // Posicionar need
-    positionText(wordNeed, needX + needWidth / 2, centerY);
-    
-    // Posicionar water (inicialmente oculto)
-    positionText(wordWater, waterX + waterWidth / 2, centerY);
-    
-    // Posicionar the (inicialmente fuera a la izquierda)
-    const theFinalX = needX - theWidth - spacing / 2;
-    positionText(wordThe, theFinalX + theWidth / 2, centerY);
-    wordThe.style.transform = `translateX(-${theFinalX + theWidth + 200}px)`;
-    wordThe.style.opacity = '0';
-    
-    // Posicionar y (inicialmente flotando)
-    const yFinalX = theFinalX + theWidth;
-    positionText(letterY, yFinalX, centerY);
-    letterY.style.transform = `translate(100px, -50px)`;
-    letterY.style.opacity = '0';
-    
-    // Posicionar to (inicialmente cerca del espacio)
-    const toFinalX = needX + needWidth + spacing / 2;
-    positionText(wordTo, toFinalX + toWidth / 2, centerY);
-    wordTo.style.transform = `translateY(-80px)`;
-    wordTo.style.opacity = '0';
-    
-    // Posicionar ecos
-    const echoNecesidadWidth = getTextWidth(echoNecesidad);
-    positionText(echoNecesidad, needX + needWidth / 2, centerY - 15);
-    echoNecesidad.style.opacity = '0';
-    
-    const echoAguaWidth = getTextWidth(echoAgua);
-    positionText(echoAgua, waterX + waterWidth / 2, centerY - 15);
-    echoAgua.style.opacity = '0';
+}
+
+// Función para mostrar una palabra
+function showWord(wordId) {
+  const group = document.getElementById(wordId);
+  if (group) {
+    group.classList.add('visible');
   }
-  
-  // Secuencia temporal
-  function startSequence() {
-    calculatePositions();
-    
-    // Momento 1: need aparece (0.0s)
-    setTimeout(() => {
-      wordNeed.classList.add('visible');
-    }, 0);
-    
-    // Eco necesidad aparece (0.5s)
-    setTimeout(() => {
-      echoNecesidad.classList.add('visible');
-    }, 500);
-    
-    // Eco necesidad desaparece (2.0s)
-    setTimeout(() => {
-      echoNecesidad.classList.add('fading');
-    }, 2000);
-    
-    // Momento 2: water aparece (3.0s)
-    setTimeout(() => {
-      wordWater.classList.add('visible');
-    }, 3000);
-    
-    // Eco agua aparece (3.5s)
-    setTimeout(() => {
-      echoAgua.classList.add('visible');
-    }, 3500);
-    
-    // Eco agua desaparece (5.0s)
-    setTimeout(() => {
-      echoAgua.classList.add('fading');
-    }, 5000);
-    
-    // Momento 3: the se desliza (6.5s)
-    setTimeout(() => {
-      wordThe.style.opacity = '1';
-      wordThe.style.transform = 'translateX(0)';
-    }, 6500);
-    
-    // Momento 4: y se integra (9.5s)
-    setTimeout(() => {
-      letterY.style.opacity = '1';
-      letterY.style.transform = 'translate(0, 0)';
-    }, 9500);
-    
-    // Momento 5: to se coloca (12.5s)
-    setTimeout(() => {
-      wordTo.style.opacity = '1';
-      wordTo.style.transform = 'translateY(0)';
-    }, 12500);
+}
+
+// Función para mostrar eco
+function showEcho(echoId) {
+  const echo = document.getElementById(echoId);
+  if (echo) {
+    echo.classList.add('visible');
   }
+}
+
+// Función para ocultar eco
+function hideEcho(echoId) {
+  const echo = document.getElementById(echoId);
+  if (echo) {
+    echo.classList.add('fade-out');
+  }
+}
+
+// Secuencia de animación
+function runSequence() {
+  // ETAPA 1: need
+  setTimeout(() => {
+    positionWord('word-need', stages[1]['need'], CENTER_Y);
+    showWord('word-need');
+  }, 500);
   
-  // Iniciar
-  setTimeout(startSequence, 100);
+  // Eco "necesidad"
+  setTimeout(() => {
+    showEcho('echo-need');
+  }, 2000);
+  
+  setTimeout(() => {
+    hideEcho('echo-need');
+  }, 4500);
+  
+  // ETAPA 2: need water
+  setTimeout(() => {
+    positionWord('word-need', stages[2]['need'], CENTER_Y);
+    positionWord('word-water', stages[2]['water'], CENTER_Y);
+    showWord('word-water');
+  }, 5500);
+  
+  // Eco "agua"
+  setTimeout(() => {
+    showEcho('echo-water');
+  }, 7000);
+  
+  setTimeout(() => {
+    hideEcho('echo-water');
+  }, 9500);
+  
+  // ETAPA 3: the need water
+  setTimeout(() => {
+    positionWord('word-the', stages[3]['the'], CENTER_Y);
+    positionWord('word-need', stages[3]['need'], CENTER_Y);
+    positionWord('word-water', stages[3]['water'], CENTER_Y);
+    showWord('word-the');
+  }, 10500);
+  
+  // ETAPA 4: they need water (the + y = they)
+  setTimeout(() => {
+    // Posicionar "y" al final de "the"
+    const theX = stages[3]['the'];
+    const yX = theX + wordWidths['the'];
+    const letterY = document.getElementById('letter-y');
+    letterY.style.transform = `translate(${yX}px, ${CENTER_Y}px)`;
+    letterY.classList.add('visible');
+  }, 13000);
+  
+  // Integrar "y" y transformar "the" en "they"
+  setTimeout(() => {
+    const letterY = document.getElementById('letter-y');
+    letterY.classList.add('integrated');
+    
+    // Cambiar "the" a "they" y reposicionar
+    const theGroup = document.getElementById('word-the');
+    const theText = theGroup.querySelector('.word-text');
+    theText.textContent = 'they';
+    
+    positionWord('word-the', stages[4]['they'], CENTER_Y);
+    positionWord('word-need', stages[4]['need'], CENTER_Y);
+    positionWord('word-water', stages[4]['water'], CENTER_Y);
+  }, 14500);
+  
+  // ETAPA 5: they need to water
+  setTimeout(() => {
+    positionWord('word-to', stages[5]['to'], CENTER_Y);
+    positionWord('word-they', stages[5]['they'], CENTER_Y);
+    positionWord('word-need', stages[5]['need'], CENTER_Y);
+    positionWord('word-water', stages[5]['water'], CENTER_Y);
+    showWord('word-to');
+  }, 17000);
+}
+
+// Iniciar secuencia cuando cargue la página
+window.addEventListener('DOMContentLoaded', () => {
+  runSequence();
 });
 </script>
 
