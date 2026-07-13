@@ -2,16 +2,15 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Meta tag esencial para forzar el viewport correcto en dispositivos móviles -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ensamble Cognitivo</title>
+    <title>Ensamble Cognitivo - Ecos desde arriba</title>
     <style>
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            background-color: #0d1117; /* Fondo oscuro según referencias */
+            background-color: #0d1117;
             color: #e2e8f0;
             font-family: 'Times New Roman', Times, Georgia, serif;
             overflow: hidden;
@@ -31,24 +30,23 @@
 
         #camera {
             position: relative;
-            /* El contenedor se desplaza para centrar la acción. La transición se activa en JS. */
             white-space: nowrap;
         }
 
         .word {
             position: absolute;
             top: 50%;
-            /* translateY(-50%) mantiene el texto centrado verticalmente */
             transform: translateY(-50%);
-            /* Tamaño de fuente fluido para evitar cortes en móvil */
             font-size: clamp(24px, 7.5vw, 42px);
             opacity: 0;
             white-space: nowrap;
         }
 
+        /* AJUSTE APLICADO: Ecos claramente visibles por encima */
         .echo {
-            color: #64748b; /* Color distinto para ser claramente visible pero actuar como eco */
-            z-index: -1;
+            color: #94a3b8;
+            z-index: 2;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -67,12 +65,11 @@
     </div>
 
     <script>
-        // Esperamos a que las fuentes estén cargadas para obtener medidas exactas
         document.fonts.ready.then(() => {
-            const gap = window.innerWidth * 0.03; // Espaciado dinámico basado en el ancho de la pantalla
+            const gap = window.innerWidth * 0.03; 
             const measureWidth = (id) => document.getElementById(id).getBoundingClientRect().width;
 
-            // 1. Medición real de todos los elementos
+            // Medición
             const wThe = measureWidth('the');
             const wY = measureWidth('y');
             const wNeed = measureWidth('need');
@@ -81,17 +78,16 @@
             const wNecesidad = measureWidth('necesidad');
             const wAgua = measureWidth('agua');
 
-            // 2. Cálculo de posiciones relativas absolutas
+            // Posiciones
             const pThe = 0;
-            const pY = pThe + wThe; // Se ancla exactamente al final de "the"
+            const pY = pThe + wThe;
             const pNeed = pY + wY + gap;
             const pTo = pNeed + wNeed + gap;
             
-            // Posiciones de "water": inicial (junto a need) y final (tras insertar "to")
             const pWaterInit = pNeed + wNeed + gap;
             const pWaterFinal = pTo + wTo + gap;
 
-            // 3. Asignación de posiciones iniciales en el DOM
+            // Asignación de X
             const setX = (id, x) => document.getElementById(id).style.left = `${x}px`;
             setX('the', pThe);
             setX('y', pY);
@@ -99,11 +95,10 @@
             setX('to', pTo);
             setX('water', pWaterInit);
 
-            // Centramos los ecos exactamente detrás de sus palabras objetivo
+            // Centramos horizontalmente los ecos respecto a su palabra en inglés
             setX('necesidad', pNeed + (wNeed - wNecesidad) / 2);
             setX('agua', pWaterInit + (wWater - wAgua) / 2);
 
-            // 4. Utilidad para centrar la cámara dinámicamente
             const camera = document.getElementById('camera');
             
             const setCameraTransition = (enabled) => {
@@ -115,7 +110,6 @@
                 camera.style.transform = `translateX(${-center}px)`;
             };
 
-            // Utilidades de animación
             const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
             const anim = async (id, keyframes, options) => {
                 const element = document.getElementById(id);
@@ -123,40 +117,40 @@
                 await animation.finished;
             };
 
-            // 5. Secuencia de la coreografía
             async function playChoreography() {
-                // Ajuste inicial de la cámara sin transición para evitar barridos extraños
                 setCameraTransition(false);
                 centerView(pNeed, pNeed + wNeed);
-                void camera.offsetWidth; // Forzar reflow
+                void camera.offsetWidth; 
                 setCameraTransition(true);
 
                 // Paso 1: Aparece 'need'
                 await anim('need', [{opacity: 0}, {opacity: 1}], {duration: 600, easing: 'ease-out'});
-                await wait(400);
+                await wait(200); // Pequeña pausa para que se asiente
 
-                // Paso 2: 'necesidad' emerge por detrás y desaparece
-                anim('necesidad', [
-                    {opacity: 0, transform: 'translateY(-50%) scale(0.85)'},
-                    {opacity: 0.8, transform: 'translateY(-50%) scale(1.15)', offset: 0.3},
-                    {opacity: 0.8, transform: 'translateY(-50%) scale(1.15)', offset: 0.7},
-                    {opacity: 0, transform: 'translateY(-50%) scale(1.3)'}
-                ], {duration: 2500, easing: 'ease-in-out'});
-                await wait(2700);
+                // Paso 2: 'necesidad' emerge por encima claramente y con await directo
+                await anim('necesidad', [
+                    { opacity: 0, transform: 'translateY(-120%) scale(0.96)' },
+                    { opacity: 0.9, transform: 'translateY(-95%) scale(1)', offset: 0.25 },
+                    { opacity: 0.9, transform: 'translateY(-95%) scale(1)', offset: 0.70 },
+                    { opacity: 0, transform: 'translateY(-135%) scale(1.04)' }
+                ], { duration: 2200, easing: 'ease-in-out' });
+                
+                await wait(300); // Respiración antes de la siguiente palabra
 
                 // Paso 3: Aparece 'water' a la derecha
                 centerView(pNeed, pWaterInit + wWater);
                 await anim('water', [{opacity: 0}, {opacity: 1}], {duration: 600, easing: 'ease-out'});
-                await wait(400);
+                await wait(200);
 
-                // Paso 4: 'agua' emerge por detrás de 'water'
-                anim('agua', [
-                    {opacity: 0, transform: 'translateY(-50%) scale(0.85)'},
-                    {opacity: 0.8, transform: 'translateY(-50%) scale(1.15)', offset: 0.3},
-                    {opacity: 0.8, transform: 'translateY(-50%) scale(1.15)', offset: 0.7},
-                    {opacity: 0, transform: 'translateY(-50%) scale(1.3)'}
-                ], {duration: 2500, easing: 'ease-in-out'});
-                await wait(2700);
+                // Paso 4: 'agua' emerge por encima
+                await anim('agua', [
+                    { opacity: 0, transform: 'translateY(-120%) scale(0.96)' },
+                    { opacity: 0.9, transform: 'translateY(-95%) scale(1)', offset: 0.25 },
+                    { opacity: 0.9, transform: 'translateY(-95%) scale(1)', offset: 0.70 },
+                    { opacity: 0, transform: 'translateY(-135%) scale(1.04)' }
+                ], { duration: 2200, easing: 'ease-in-out' });
+                
+                await wait(300);
 
                 // Paso 5: 'the' se desplaza delante de 'need'
                 centerView(pThe, pWaterInit + wWater);
@@ -166,33 +160,30 @@
                 ], {duration: 800, easing: 'ease-out'});
                 await wait(400);
 
-                // Paso 6: 'y' se une físicamente al final de 'the'
+                // Paso 6: 'y' se une a 'the'
                 await anim('y', [
                     {opacity: 0, transform: 'translate(-15px, -50%)'},
                     {opacity: 1, transform: 'translate(0px, -50%)'}
                 ], {duration: 600, easing: 'ease-out'});
                 await wait(800);
 
-                // Paso 7: Aparece 'to' y 'water' se desplaza para abrir espacio
+                // Paso 7: Aparece 'to' y 'water' se desplaza
                 centerView(pThe, pWaterFinal + wWater);
                 
-                // 'water' se mueve simultáneamente
                 anim('water', [
                     {left: `${pWaterInit}px`},
                     {left: `${pWaterFinal}px`}
                 ], {duration: 800, easing: 'ease-in-out'});
 
-                // 'to' aparece en el espacio abierto
                 await anim('to', [
                     {opacity: 0, transform: 'translateY(-50%) scale(0.8)'},
                     {opacity: 1, transform: 'translateY(-50%) scale(1)'}
                 ], {duration: 800, easing: 'ease-out', delay: 150});
 
-                // Paso 8: El resultado final permanece visible al menos 3 segundos
+                // Paso 8: Lectura final
                 await wait(3500);
             }
 
-            // Iniciamos la secuencia con un pequeño respiro después de cargar
             setTimeout(playChoreography, 600);
         });
     </script>
