@@ -1,287 +1,200 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fenómeno 001 — Ensamble Cognitivo</title>
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    <meta charset="UTF-8">
+    <!-- Meta tag esencial para forzar el viewport correcto en dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ensamble Cognitivo</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0d1117; /* Fondo oscuro según referencias */
+            color: #e2e8f0;
+            font-family: 'Times New Roman', Times, Georgia, serif;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-html, body {
-  height: 100%;
-  overflow: hidden;
-  background: #0a0e27;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+        #stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-#assembly-svg {
-  width: 100%;
-  height: 100%;
-  max-width: 100vw;
-  max-height: 100vh;
-}
+        #camera {
+            position: relative;
+            /* El contenedor se desplaza para centrar la acción. La transición se activa en JS. */
+            white-space: nowrap;
+        }
 
-.word-group {
-  opacity: 0;
-  transition: 
-    transform 1400ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 500ms ease;
-}
+        .word {
+            position: absolute;
+            top: 50%;
+            /* translateY(-50%) mantiene el texto centrado verticalmente */
+            transform: translateY(-50%);
+            /* Tamaño de fuente fluido para evitar cortes en móvil */
+            font-size: clamp(24px, 7.5vw, 42px);
+            opacity: 0;
+            white-space: nowrap;
+        }
 
-.word-group.visible {
-  opacity: 1;
-}
-
-.word-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 80px;
-  font-weight: 400;
-  fill: #e8eaf6;
-}
-
-.echo-text {
-  font-family: 'Inter', sans-serif;
-  font-size: 32px;
-  font-weight: 300;
-  fill: #b8bcd4;
-  opacity: 0;
-  filter: blur(1.5px);
-  transform-origin: center;
-  transition: 
-    opacity 800ms ease,
-    transform 1200ms ease;
-}
-
-.echo-text.visible {
-  opacity: 0.75;
-  transform: scale(1.08);
-}
-
-.echo-text.fade-out {
-  opacity: 0;
-  transform: scale(0.94);
-}
-
-.floating-letter {
-  font-family: 'Playfair Display', serif;
-  font-size: 80px;
-  font-weight: 400;
-  fill: #e8eaf6;
-  opacity: 0;
-  transition: 
-    transform 1400ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 500ms ease;
-}
-
-.floating-letter.visible {
-  opacity: 1;
-}
-
-.floating-letter.integrated {
-  opacity: 0;
-}
-</style>
+        .echo {
+            color: #64748b; /* Color distinto para ser claramente visible pero actuar como eco */
+            z-index: -1;
+        }
+    </style>
 </head>
 <body>
 
-<svg id="assembly-svg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid meet">
-  
-  <!-- need -->
-  <g id="word-need" class="word-group">
-    <text class="word-text" x="0" y="0">need</text>
-    <text class="echo-text" id="echo-need" x="0" y="-20">necesidad</text>
-  </g>
-  
-  <!-- water -->
-  <g id="word-water" class="word-group">
-    <text class="word-text" x="0" y="0">water</text>
-    <text class="echo-text" id="echo-water" x="0" y="-20">agua</text>
-  </g>
-  
-  <!-- the -->
-  <g id="word-the" class="word-group">
-    <text class="word-text" x="0" y="0">the</text>
-  </g>
-  
-  <!-- y (flotante) -->
-  <text id="letter-y" class="floating-letter" x="0" y="0">y</text>
-  
-  <!-- to -->
-  <g id="word-to" class="word-group">
-    <text class="word-text" x="0" y="0">to</text>
-  </g>
-  
-</svg>
+    <div id="stage">
+        <div id="camera">
+            <span id="the" class="word">the</span>
+            <span id="y" class="word">y</span>
+            <span id="need" class="word">need</span>
+            <span id="necesidad" class="word echo">necesidad</span>
+            <span id="to" class="word">to</span>
+            <span id="water" class="word">water</span>
+            <span id="agua" class="word echo">agua</span>
+        </div>
+    </div>
 
-<script>
-// Configuración
-const SVG_WIDTH = 1200;
-const SVG_HEIGHT = 400;
-const CENTER_X = SVG_WIDTH / 2;
-const CENTER_Y = SVG_HEIGHT / 2 + 25;
-const WORD_SPACING = 50;
-const MARGIN_PERCENT = 0.08;
+    <script>
+        // Esperamos a que las fuentes estén cargadas para obtener medidas exactas
+        document.fonts.ready.then(() => {
+            const gap = window.innerWidth * 0.03; // Espaciado dinámico basado en el ancho de la pantalla
+            const measureWidth = (id) => document.getElementById(id).getBoundingClientRect().width;
 
-// Anchos aproximados de palabras (con font-size 80px)
-const wordWidths = {
-  'need': 120,
-  'water': 160,
-  'the': 80,
-  'they': 130,
-  'to': 70,
-  'y': 30
-};
+            // 1. Medición real de todos los elementos
+            const wThe = measureWidth('the');
+            const wY = measureWidth('y');
+            const wNeed = measureWidth('need');
+            const wTo = measureWidth('to');
+            const wWater = measureWidth('water');
+            const wNecesidad = measureWidth('necesidad');
+            const wAgua = measureWidth('agua');
 
-// Calcular posiciones para cada estado (centrado horizontal)
-function calculateStatePositions(words) {
-  const totalWidth = words.reduce((sum, word, index) => {
-    return sum + wordWidths[word] + (index < words.length - 1 ? WORD_SPACING : 0);
-  }, 0);
-  
-  const startX = CENTER_X - totalWidth / 2;
-  const positions = {};
-  let currentX = startX;
-  
-  words.forEach(word => {
-    positions[word] = currentX;
-    currentX += wordWidths[word] + WORD_SPACING;
-  });
-  
-  return positions;
-}
+            // 2. Cálculo de posiciones relativas absolutas
+            const pThe = 0;
+            const pY = pThe + wThe; // Se ancla exactamente al final de "the"
+            const pNeed = pY + wY + gap;
+            const pTo = pNeed + wNeed + gap;
+            
+            // Posiciones de "water": inicial (junto a need) y final (tras insertar "to")
+            const pWaterInit = pNeed + wNeed + gap;
+            const pWaterFinal = pTo + wTo + gap;
 
-// Definir los 5 estados
-const states = {
-  1: calculateStatePositions(['need']),
-  2: calculateStatePositions(['need', 'water']),
-  3: calculateStatePositions(['the', 'need', 'water']),
-  4: calculateStatePositions(['they', 'need', 'water']),
-  5: calculateStatePositions(['they', 'need', 'to', 'water'])
-};
+            // 3. Asignación de posiciones iniciales en el DOM
+            const setX = (id, x) => document.getElementById(id).style.left = `${x}px`;
+            setX('the', pThe);
+            setX('y', pY);
+            setX('need', pNeed);
+            setX('to', pTo);
+            setX('water', pWaterInit);
 
-// Función para posicionar una palabra
-function positionWord(wordId, x, y) {
-  const group = document.getElementById(wordId);
-  if (group) {
-    group.style.transform = `translate(${x}px, ${y}px)`;
-  }
-}
+            // Centramos los ecos exactamente detrás de sus palabras objetivo
+            setX('necesidad', pNeed + (wNeed - wNecesidad) / 2);
+            setX('agua', pWaterInit + (wWater - wAgua) / 2);
 
-// Función para mostrar una palabra
-function showWord(wordId) {
-  const group = document.getElementById(wordId);
-  if (group) {
-    group.classList.add('visible');
-  }
-}
+            // 4. Utilidad para centrar la cámara dinámicamente
+            const camera = document.getElementById('camera');
+            
+            const setCameraTransition = (enabled) => {
+                camera.style.transition = enabled ? 'transform 0.8s ease-in-out' : 'none';
+            };
 
-// Función para mostrar eco
-function showEcho(echoId) {
-  const echo = document.getElementById(echoId);
-  if (echo) {
-    echo.classList.add('visible');
-  }
-}
+            const centerView = (startX, endX) => {
+                const center = startX + (endX - startX) / 2;
+                camera.style.transform = `translateX(${-center}px)`;
+            };
 
-// Función para ocultar eco
-function hideEcho(echoId) {
-  const echo = document.getElementById(echoId);
-  if (echo) {
-    echo.classList.add('fade-out');
-  }
-}
+            // Utilidades de animación
+            const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+            const anim = async (id, keyframes, options) => {
+                const element = document.getElementById(id);
+                const animation = element.animate(keyframes, { fill: 'forwards', ...options });
+                await animation.finished;
+            };
 
-// Secuencia de animación
-function runSequence() {
-  // ESTADO 1: need
-  setTimeout(() => {
-    positionWord('word-need', states[1]['need'], CENTER_Y);
-    showWord('word-need');
-  }, 500);
-  
-  // Eco "necesidad" - emerge desde atrás
-  setTimeout(() => {
-    showEcho('echo-need');
-  }, 2000);
-  
-  setTimeout(() => {
-    hideEcho('echo-need');
-  }, 3200);
-  
-  // ESTADO 2: need water
-  setTimeout(() => {
-    positionWord('word-need', states[2]['need'], CENTER_Y);
-    positionWord('word-water', states[2]['water'], CENTER_Y);
-    showWord('word-water');
-  }, 4500);
-  
-  // Eco "agua" - emerge desde atrás
-  setTimeout(() => {
-    showEcho('echo-water');
-  }, 6000);
-  
-  setTimeout(() => {
-    hideEcho('echo-water');
-  }, 7200);
-  
-  // ESTADO 3: the need water
-  setTimeout(() => {
-    positionWord('word-the', states[3]['the'], CENTER_Y);
-    positionWord('word-need', states[3]['need'], CENTER_Y);
-    positionWord('word-water', states[3]['water'], CENTER_Y);
-    showWord('word-the');
-  }, 8500);
-  
-  // ESTADO 4: they need water (the + y = they)
-  setTimeout(() => {
-    // Posicionar "y" al final de "the"
-    const theX = states[3]['the'];
-    const yX = theX + wordWidths['the'];
-    const letterY = document.getElementById('letter-y');
-    letterY.style.transform = `translate(${yX}px, ${CENTER_Y}px)`;
-    letterY.classList.add('visible');
-  }, 10500);
-  
-  // Integrar "y" y transformar "the" en "they"
-  setTimeout(() => {
-    const letterY = document.getElementById('letter-y');
-    letterY.classList.add('integrated');
-    
-    // Cambiar "the" a "they" y reposicionar
-    const theGroup = document.getElementById('word-the');
-    const theText = theGroup.querySelector('.word-text');
-    theText.textContent = 'they';
-    
-    positionWord('word-the', states[4]['they'], CENTER_Y);
-    positionWord('word-need', states[4]['need'], CENTER_Y);
-    positionWord('word-water', states[4]['water'], CENTER_Y);
-  }, 12000);
-  
-  // ESTADO 5: they need to water
-  // Primero mover water para abrir espacio, luego aparecer to
-  setTimeout(() => {
-    positionWord('word-water', states[5]['water'], CENTER_Y);
-  }, 13500);
-  
-  setTimeout(() => {
-    positionWord('word-to', states[5]['to'], CENTER_Y);
-    positionWord('word-they', states[5]['they'], CENTER_Y);
-    positionWord('word-need', states[5]['need'], CENTER_Y);
-    showWord('word-to');
-  }, 14000);
-}
+            // 5. Secuencia de la coreografía
+            async function playChoreography() {
+                // Ajuste inicial de la cámara sin transición para evitar barridos extraños
+                setCameraTransition(false);
+                centerView(pNeed, pNeed + wNeed);
+                void camera.offsetWidth; // Forzar reflow
+                setCameraTransition(true);
 
-// Iniciar secuencia cuando cargue la página
-window.addEventListener('DOMContentLoaded', () => {
-  runSequence();
-});
-</script>
+                // Paso 1: Aparece 'need'
+                await anim('need', [{opacity: 0}, {opacity: 1}], {duration: 600, easing: 'ease-out'});
+                await wait(400);
 
+                // Paso 2: 'necesidad' emerge por detrás y desaparece
+                anim('necesidad', [
+                    {opacity: 0, transform: 'translateY(-50%) scale(0.85)'},
+                    {opacity: 0.8, transform: 'translateY(-50%) scale(1.15)', offset: 0.3},
+                    {opacity: 0.8, transform: 'translateY(-50%) scale(1.15)', offset: 0.7},
+                    {opacity: 0, transform: 'translateY(-50%) scale(1.3)'}
+                ], {duration: 2500, easing: 'ease-in-out'});
+                await wait(2700);
+
+                // Paso 3: Aparece 'water' a la derecha
+                centerView(pNeed, pWaterInit + wWater);
+                await anim('water', [{opacity: 0}, {opacity: 1}], {duration: 600, easing: 'ease-out'});
+                await wait(400);
+
+                // Paso 4: 'agua' emerge por detrás de 'water'
+                anim('agua', [
+                    {opacity: 0, transform: 'translateY(-50%) scale(0.85)'},
+                    {opacity: 0.8, transform: 'translateY(-50%) scale(1.15)', offset: 0.3},
+                    {opacity: 0.8, transform: 'translateY(-50%) scale(1.15)', offset: 0.7},
+                    {opacity: 0, transform: 'translateY(-50%) scale(1.3)'}
+                ], {duration: 2500, easing: 'ease-in-out'});
+                await wait(2700);
+
+                // Paso 5: 'the' se desplaza delante de 'need'
+                centerView(pThe, pWaterInit + wWater);
+                await anim('the', [
+                    {opacity: 0, transform: 'translate(calc(-50% - 25px), -50%)'},
+                    {opacity: 1, transform: 'translate(0px, -50%)'}
+                ], {duration: 800, easing: 'ease-out'});
+                await wait(400);
+
+                // Paso 6: 'y' se une físicamente al final de 'the'
+                await anim('y', [
+                    {opacity: 0, transform: 'translate(-15px, -50%)'},
+                    {opacity: 1, transform: 'translate(0px, -50%)'}
+                ], {duration: 600, easing: 'ease-out'});
+                await wait(800);
+
+                // Paso 7: Aparece 'to' y 'water' se desplaza para abrir espacio
+                centerView(pThe, pWaterFinal + wWater);
+                
+                // 'water' se mueve simultáneamente
+                anim('water', [
+                    {left: `${pWaterInit}px`},
+                    {left: `${pWaterFinal}px`}
+                ], {duration: 800, easing: 'ease-in-out'});
+
+                // 'to' aparece en el espacio abierto
+                await anim('to', [
+                    {opacity: 0, transform: 'translateY(-50%) scale(0.8)'},
+                    {opacity: 1, transform: 'translateY(-50%) scale(1)'}
+                ], {duration: 800, easing: 'ease-out', delay: 150});
+
+                // Paso 8: El resultado final permanece visible al menos 3 segundos
+                await wait(3500);
+            }
+
+            // Iniciamos la secuencia con un pequeño respiro después de cargar
+            setTimeout(playChoreography, 600);
+        });
+    </script>
 </body>
 </html>
