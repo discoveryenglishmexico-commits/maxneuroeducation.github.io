@@ -524,12 +524,21 @@ async function playAssembly(mainText, pronounText) {
     const elMain = document.getElementById('wordMain');
     const elPronoun = document.getElementById('wordPronoun');
 
+    // SOLUCIÓN: Limpiamos por completo las animaciones anteriores.
+    // Esto evita que la palabra anterior afecte la posición de la nueva palabra.
+    elMain.getAnimations().forEach(a => a.cancel());
+    elPronoun.getAnimations().forEach(a => a.cancel());
+
     elMain.textContent = mainText;
     elPronoun.textContent = pronounText;
 
     // Reseteo de posiciones iniciales: Principal en el centro, pronombre abajo
     elMain.style.transform = 'translate(-50%, -50%)';
     elPronoun.style.transform = 'translate(-50%, 150%)';
+    
+    // SOLUCIÓN: Forzamos al navegador a leer los nuevos tamaños antes de arrancar
+    void elMain.offsetWidth;
+    void elPronoun.offsetWidth;
 
     // 1. Aparece palabra principal
     await anim('wordMain', [{opacity: 0}, {opacity: 1}], {duration: 800, easing: 'ease-out'});
@@ -539,7 +548,7 @@ async function playAssembly(mainText, pronounText) {
     await anim('wordPronoun', [{opacity: 0}, {opacity: 1}], {duration: 800, easing: 'ease-out'});
     await wait(2000); 
 
-    // Calcular medidas reales de texto
+    // Calcular medidas reales de texto después del reseteo
     const wMain = elMain.getBoundingClientRect().width;
     const wPronoun = elPronoun.getBoundingClientRect().width;
     const gap = window.innerWidth * 0.02; // Separación dinámica fluida
