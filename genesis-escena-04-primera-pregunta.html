@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Discovery MAX Neuroeducation — La Primera Pregunta</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ========================================
+   PROYECTO GÉNESIS — EXPERIENCIA 04
+   ======================================== */
+
+:root {
+  --bg-deep: #0a0e27;
+  --bg-darker: #050816;
+  --text-primary: #e8eaf6;
+  --text-secondary: #b8bcd4;
+  --accent-blue: #667eea;
+  
+  --transition-slow: 2000ms;
+  --transition-medium: 1200ms;
+  --transition-fast: 600ms;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+}
+
+/* ========================================
+   CANVAS DE FONDO
+   ======================================== */
+#backgroundCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.4;
+}
+
+/* ========================================
+   CONTENEDORES
+   ======================================== */
+.scene-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* ========================================
+   MARCA — Superior
+   ======================================== */
+.brand-header {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0;
+  transition: opacity var(--transition-slow) ease-in;
+  z-index: 20;
+}
+
+.brand-header.visible { opacity: 1; }
+
+.brand-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.brand-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+/* ========================================
+   MENSAJES TEXTUALES Y PALABRAS
+   ======================================== */
+.message-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 15;
+}
+
+.message-group {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem; 
+  pointer-events: none;
+}
+
+.message-part {
+  opacity: 0;
+  transition: opacity 600ms ease-in-out; /* Fade suave y fluido */
+  width: 100%;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.message-part.visible { opacity: 1; }
+
+.text-standard {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.text-word-flash {
+  font-family: 'Times New Roman', Times, Georgia, serif;
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+/* ========================================
+   BOTÓN FINAL
+   ======================================== */
+.cta-container {
+  position: absolute;
+  bottom: 8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0;
+  transition: opacity var(--transition-slow) ease-in;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.cta-container.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.cta-button {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--accent-blue);
+  padding: 1.2rem 3rem;
+  cursor: pointer;
+  transition: all var(--transition-fast) ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-blue);
+  transition: left var(--transition-fast) ease;
+  z-index: -1;
+}
+
+.cta-button:hover::before { left: 0; }
+.cta-button:hover { color: var(--bg-deep); border-color: var(--accent-blue); }
+
+.cta-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  margin-top: 1rem;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+
+/* ========================================
+   CONTROLES DISCRETOS
+   ======================================== */
+.controls {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 100;
+  transition: opacity var(--transition-medium) ease, visibility var(--transition-medium) ease;
+}
+
+.controls.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.control-button {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity var(--transition-fast) ease;
+  letter-spacing: 0.1em;
+}
+
+.control-button:hover { opacity: 1; }
+
+/* ========================================
+   OVERLAY DE TRANSICIÓN
+   ======================================== */
+.transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-darker);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-medium) ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.transition-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.transition-message {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  opacity: 0;
+  transition: opacity var(--transition-medium) ease;
+}
+
+.transition-message.visible { opacity: 1; }
+
+/* Responsive móvil */
+@media (max-width: 768px) {
+  .brand-header { top: 1.5rem; }
+  .brand-name { font-size: 0.65rem; }
+  .brand-subtitle { font-size: 0.55rem; }
+  .cta-container { bottom: 6rem; }
+  .cta-button { padding: 1rem 2rem; font-size: 0.8rem; }
+  .controls { bottom: 1rem; right: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  #backgroundCanvas { display: none; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="backgroundCanvas"></canvas>
+
+<div class="scene-container">
+  
+  <header class="brand-header" id="brandHeader">
+    <div class="brand-name">Discovery Max Neuroeducation</div>
+    <div class="brand-subtitle">Neurocognitive English Training</div>
+  </header>
+  
+  <div class="message-container">
+    
+    <!-- Contenedor único para inyectar las palabras dinámicamente -->
+    <div class="message-group">
+      <div class="message-part text-word-flash" id="flashWordContainer"></div>
+    </div>
+    
+    <!-- Frases de Cierre -->
+    <div class="message-group">
+      <div class="message-part text-standard" id="msg1">¿Cuántas reconociste?</div>
+    </div>
+    <div class="message-group">
+      <div class="message-part text-standard" id="msg2">No necesitabas traducirlas.</div>
+    </div>
+    <div class="message-group">
+      <div class="message-part text-standard" id="msg3">Sólo reconocerlas.</div>
+    </div>
+    <div class="message-group">
+      <div class="message-part text-standard" id="msg4">Y eso cambia mucho más de lo que imaginas.</div>
+    </div>
+
+  </div>
+  
+  <!-- Botón Final -->
+  <div class="cta-container" id="ctaContainer">
+    <button class="cta-button" id="ctaButton">Continuar la exploración</button>
+    <div class="cta-subtitle">Siguiente estación: Las conexiones</div>
+  </div>
+  
+</div>
+
+<div class="controls" id="interfaceControls">
+  <button class="control-button" id="skipButton">Omitir introducción</button>
+  <button class="control-button" id="audioButton">🔊 Activar experiencia sonora</button>
+</div>
+
+<div class="transition-overlay" id="transitionOverlay">
+  <div class="transition-message" id="transitionMessage">Una nueva conexión está por crearse.</div>
+</div>
+
+<audio id="ambientAudio" loop>
+  <source src="ambient-discovery.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* ========================================
+   MOTOR GRÁFICO (Canvas)
+   ======================================== */
+const canvas = document.getElementById('backgroundCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [], lines = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.15;
+    this.vy = (Math.random() - 0.5) * 0.15;
+    this.radius = Math.random() * 1.2;
+    this.opacity = Math.random() * 0.4 + 0.1;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(102, 126, 234, ${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+class Line {
+  constructor() { this.reset(); }
+  reset() {
+    this.x1 = Math.random() * canvas.width;
+    this.y1 = Math.random() * canvas.height;
+    this.x2 = this.x1 + (Math.random() - 0.5) * 150;
+    this.y2 = this.y1 + (Math.random() - 0.5) * 150;
+    this.opacity = 0; this.fadeIn = true;
+    this.life = Math.random() * 200 + 100; this.age = 0;
+  }
+  update() {
+    this.age++;
+    if (this.fadeIn) {
+      this.opacity += 0.004;
+      if (this.opacity >= 0.12) this.fadeIn = false;
+    } else { this.opacity -= 0.004; }
+    if (this.age > this.life || this.opacity <= 0) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.moveTo(this.x1, this.y1); ctx.lineTo(this.x2, this.y2);
+    ctx.strokeStyle = `rgba(102, 126, 234, ${this.opacity})`;
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+  }
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+for (let i = 0; i < 40; i++) particles.push(new Particle());
+for (let i = 0; i < 4; i++) lines.push(new Line());
+
+function animateCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  lines.forEach(l => { l.update(); l.draw(); });
+  requestAnimationFrame(animateCanvas);
+}
+animateCanvas();
+
+/* ========================================
+   LÓGICA DE SECUENCIA Y TIMING
+   ======================================== */
+const state = {
+  isSkipping: false,
+  activeTimers: []
+};
+
+const clearTimeouts = () => {
+  state.activeTimers.forEach(clearTimeout);
+  state.activeTimers = [];
+};
+
+const wait = (ms) => new Promise(resolve => {
+  if(state.isSkipping) return resolve();
+  const id = setTimeout(resolve, ms);
+  state.activeTimers.push(id);
+});
+
+const hideAllMessages = () => {
+  document.querySelectorAll('.message-part').forEach(el => {
+    el.style.transition = state.isSkipping ? 'none' : 'opacity 800ms ease';
+    el.classList.remove('visible');
+  });
+};
+
+/* ========================================
+   ORQUESTADOR DE ESCENA
+   ======================================== */
+async function runMasterSequence() {
+    await wait(500);
+    if(!state.isSkipping) document.getElementById('brandHeader').classList.add('visible');
+    await wait(800);
+    
+    // Lista de palabras a mostrar
+    const words = ["HAND", "HOUSE", "WATER", "MATCH", "PLAY", "DREAM", "LIGHT", "BOOK", "CAN", "BACK", "HEAD", "LAST", "TABLE", "LOVE", "WORK", "BEAR"];
+    const flashContainer = document.getElementById('flashWordContainer');
+    
+    // Ciclo fluido de palabras
+    for (let word of words) {
+        if (state.isSkipping) break;
+        flashContainer.textContent = word;
+        flashContainer.classList.add('visible');
+        await wait(800); // Mantiene visible ~800ms (rango 700-900ms)
+        
+        flashContainer.classList.remove('visible');
+        await wait(250); // Pequeño respiro antes de la siguiente palabra
+    }
+    
+    // Silencio visual de 1 segundo
+    if(!state.isSkipping) await wait(1000);
+    
+    // M1
+    if(!state.isSkipping) document.getElementById('msg1').classList.add('visible');
+    await wait(3200);
+    hideAllMessages();
+    await wait(1000); 
+
+    // M2
+    if(!state.isSkipping) document.getElementById('msg2').classList.add('visible');
+    await wait(3000);
+    hideAllMessages();
+    await wait(1000);
+
+    // M3
+    if(!state.isSkipping) document.getElementById('msg3').classList.add('visible');
+    await wait(3000);
+    hideAllMessages();
+    await wait(1000); 
+
+    // M4
+    if(!state.isSkipping) document.getElementById('msg4').classList.add('visible');
+    await wait(3500);
+    hideAllMessages();
+    await wait(1200);
+
+    await playClosingSequence();
+}
+
+async function playClosingSequence() {
+    hideAllMessages(); 
+    document.getElementById('ctaContainer').classList.add('visible');
+    document.getElementById('interfaceControls').classList.add('hidden');
+}
+
+/* ========================================
+   CONTROLES E INTERACCIÓN
+   ======================================== */
+document.getElementById('skipButton').addEventListener('click', () => {
+    if (state.isSkipping) return;
+    state.isSkipping = true;
+    
+    clearTimeouts();
+    
+    document.querySelectorAll('.message-part').forEach(el => {
+        el.style.transition = 'none';
+        el.classList.remove('visible');
+    });
+
+    setTimeout(() => {
+        state.isSkipping = false; 
+        playClosingSequence();
+    }, 100);
+});
+
+const audio = document.getElementById('ambientAudio');
+const audioBtn = document.getElementById('audioButton');
+audioBtn.addEventListener('click', async () => {
+    try {
+        if (audio.paused) {
+            await audio.play();
+            audioBtn.textContent = '🔊 Silenciar experiencia';
+        } else {
+            audio.pause();
+            audioBtn.textContent = '🔊 Activar experiencia sonora';
+        }
+    } catch (e) {
+        audioBtn.textContent = 'Experiencia sonora aún no disponible';
+        setTimeout(() => { audioBtn.textContent = '🔊 Activar experiencia sonora'; }, 3000);
+    }
+});
+
+// Transición final
+document.getElementById('ctaButton').addEventListener('click', () => {
+    const overlay = document.getElementById('transitionOverlay');
+    const msg = document.getElementById('transitionMessage');
+    overlay.classList.add('active');
+    setTimeout(() => msg.classList.add('visible'), 300);
+    setTimeout(() => {
+        // Navegación hacia Las Conexiones
+        window.location.href = 'genesis-escena-05-conexiones.html';
+    }, 2500);
+});
+
+window.addEventListener('load', () => {
+    setTimeout(runMasterSequence, 100);
+});
+</script>
+</body>
+</html>
