@@ -128,7 +128,7 @@ html, body {
 
 .message-part {
   opacity: 0;
-  transition: opacity 600ms ease-in-out; /* Fade suave y fluido */
+  transition: opacity 600ms ease-in-out; 
   width: 100%;
   padding: 0 1rem;
   text-align: center;
@@ -472,10 +472,10 @@ async function runMasterSequence() {
         if (state.isSkipping) break;
         flashContainer.textContent = word;
         flashContainer.classList.add('visible');
-        await wait(800); // Mantiene visible ~800ms (rango 700-900ms)
+        await wait(800); 
         
         flashContainer.classList.remove('visible');
-        await wait(250); // Pequeño respiro antes de la siguiente palabra
+        await wait(250); 
     }
     
     // Silencio visual de 1 segundo
@@ -551,15 +551,17 @@ audioBtn.addEventListener('click', async () => {
     }
 });
 
-// Transición final
+// ========================================
+// AQUÍ CORREGIMOS EL ENLACE HACIA EL INTERRUPTOR
+// ========================================
 document.getElementById('ctaButton').addEventListener('click', () => {
     const overlay = document.getElementById('transitionOverlay');
     const msg = document.getElementById('transitionMessage');
     overlay.classList.add('active');
     setTimeout(() => msg.classList.add('visible'), 300);
     setTimeout(() => {
-        // Navegación hacia Las Conexiones
-        window.location.href = 'genesis-escena-05-conexiones.html';
+        // Enlace correcto actualizado a genesis-escena-05-interruptor.html
+        window.location.href = 'genesis-escena-05-interruptor.html';
     }, 2500);
 });
 
