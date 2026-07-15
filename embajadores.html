@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa de Embajadores - Discovery MAX</title>
+    <style>
+        /* =========================================
+           1. VARIABLES DE COLOR Y FUENTES
+           ========================================= */
+        :root {
+            --primary-color: #1a233a; /* Azul marino profundo */
+            --accent-color: #f26b5b;  /* Coral vibrante */
+            --bg-color: #f8f9fa;      /* Gris muy claro para el fondo */
+            --text-color: #333333;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           2. ESTILOS DE LAS SECCIONES
+           ========================================= */
+        section {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .hero h2 {
+            font-weight: 300;
+            max-width: 600px;
+        }
+
+        h2.section-title {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Contenedores tipo tarjeta para organizar información */
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            max-width: 1000px;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            flex: 1;
+            min-width: 250px;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+        }
+
+        /* =========================================
+           3. ANIMACIONES DE ENSAMBLAJE (MAGIA CSS)
+           ========================================= */
+        /* Estado inicial: oculto y desplazado hacia abajo */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        /* Estado final: visible y en su posición original */
+        .reveal-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Retrasos escalonados para que las piezas no aparezcan al mismo tiempo */
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+        .delay-3 { transition-delay: 0.6s; }
+    </style>
+</head>
+<body>
+
+    <!-- SECCIÓN 1: INTRODUCCIÓN -->
+    <section class="hero">
+        <div class="reveal-item">
+            <h1>Programa de Embajadores</h1>
+            <h2>Conviértete en un Co-founder. Comparte una nueva forma de aprender. Inspira a tu comunidad.</h2>
+            <p style="color: var(--accent-color); font-weight: bold; margin-top: 2rem;">Discovery MAX Neuroeducation</p>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 2: EL MENSAJE CLAVE -->
+    <section>
+        <h2 class="section-title reveal-item">Tu rol es compartir una experiencia, no realizar una venta</h2>
+        <div class="grid-container">
+            <!-- Usamos las clases reveal-item y delay para el ensamblaje escalonado -->
+            <div class="card reveal-item delay-1">
+                <h3>No necesitas</h3>
+                <p>Ser profesor.</p>
+            </div>
+            <div class="card reveal-item delay-2">
+                <h3>No necesitas</h3>
+                <p>Ser vendedor.</p>
+            </div>
+            <div class="card reveal-item delay-3">
+                <h3>No requieres</h3>
+                <p>Experiencia en marketing.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 3: EL CAMINO (PASOS) -->
+    <section style="background-color: #e9ecef;">
+        <h2 class="section-title reveal-item">Un camino de cinco pasos diseñado sin fricciones</h2>
+        <div class="grid-container" style="flex-direction: column; align-items: center;">
+            <div class="card reveal-item delay-1" style="width: 100%; max-width: 600px; text-align: left;">
+                <p><strong>1. Solicita:</strong> Pide tu incorporación al programa de embajadores.</p>
+            </div>
+            <div class="card reveal-item delay-2" style="width: 100%; max-width: 600px; text-align: left;">
+                <p><strong>2. Recibe:</strong> Obtén tu acceso completo al entrenamiento en la plataforma.</p>
+            </div>
+            <div class="card reveal-item delay-3" style="width: 100%; max-width: 600px; text-align: left;">
+                <p><strong>3. Tu Código:</strong> Recibe tu Código Personal Discovery.</p>
+            </div>
+            <div class="card reveal-item delay-1" style="width: 100%; max-width: 600px; text-align: left;">
+                <p><strong>4. Comparte:</strong> Difunde el contenido en tus redes sociales o en persona.</p>
+            </div>
+            <div class="card reveal-item delay-2" style="width: 100%; max-width: 600px; text-align: left;">
+                <p><strong>5. Gana:</strong> Las inscripciones con tu código generan comisiones automáticas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 4: CIERRE -->
+    <section class="hero">
+        <h2 class="reveal-item">Empieza a transformar vidas hoy mismo.</h2>
+        <p class="reveal-item delay-1">El mundo necesita una mejor manera de aprender. Únete a la comunidad de Co-founders y sé parte de la solución.</p>
+        <button class="reveal-item delay-2" style="margin-top: 2rem; padding: 1rem 2rem; background-color: var(--accent-color); color: white; border: none; border-radius: 5px; font-size: 1.2rem; cursor: pointer;">Solicita tu incorporación</button>
+    </section>
+
+    <!-- =========================================
+         4. JAVASCRIPT: EL MOTOR DE ANIMACIÓN
+         ========================================= -->
+    <script>
+        // 1. Configuramos el "observador". 
+        // rootMargin ayuda a que la animación empiece un poco antes de que el elemento esté en el centro de la pantalla.
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -100px 0px',
+            threshold: 0.1
+        };
+
+        // 2. Creamos la función que decide qué hacer cuando se ve un elemento
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                // Si el elemento entra en la pantalla...
+                if (entry.isIntersecting) {
+                    // Le añadimos la clase que activa el CSS de movimiento y aparición
+                    entry.target.classList.add('is-visible');
+                    // Dejamos de observarlo para que la animación solo ocurra una vez
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // 3. Buscamos todos los elementos en el HTML que tengan la clase 'reveal-item'
+        const elementsToReveal = document.querySelectorAll('.reveal-item');
+
+        // 4. Le decimos a nuestro observador que vigile cada uno de esos elementos
+        elementsToReveal.forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
