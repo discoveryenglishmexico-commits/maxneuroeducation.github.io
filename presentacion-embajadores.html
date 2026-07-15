@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovery MAX - Programa de Embajadores</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================
+           1. VARIABLES Y ESTILOS BASE
+           ========================================= */
+        :root {
+            --bg-dark: #0a0e27;      /* Azul muy oscuro (estilo Discovery) */
+            --bg-light: #f4f6f9;     /* Gris claro para contrastar */
+            --primary: #1a233a;      /* Azul marino */
+            --accent: #f26b5b;       /* Naranja/Coral */
+            --text-dark: #333333;
+            --text-light: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* =========================================
+           2. ESTRUCTURA DE SECCIONES
+           ========================================= */
+        section {
+            min-height: 100vh; /* Cada sección ocupa al menos toda la pantalla */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .dark-section {
+            background-color: var(--primary);
+            color: var(--text-light);
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        /* Tipografía */
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--accent); margin-bottom: 1rem; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
+        .dark-section h2 { color: var(--text-light); }
+        h2.color-primary { color: var(--primary); }
+        p { font-size: 1.2rem; margin-bottom: 1rem; }
+
+        /* =========================================
+           3. CUADRÍCULAS Y TARJETAS (GRIDS)
+           ========================================= */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2.5rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-top: 5px solid var(--accent);
+            color: var(--text-dark);
+        }
+
+        .card-dark {
+            background: var(--bg-dark);
+            color: var(--text-light);
+            border-top: 5px solid var(--accent);
+        }
+
+        /* Imágenes y Logos */
+        .logo { max-width: 200px; margin-bottom: 2rem; }
+        .feature-img { max-width: 100%; border-radius: 10px; margin-bottom: 1rem; }
+        .profile-circle { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--accent); margin-bottom: 1rem; }
+
+        /* Listas limpias */
+        ul { list-style: none; text-align: left; margin: 0 auto; display: inline-block; }
+        ul li { margin-bottom: 1rem; font-size: 1.2rem; padding-left: 2rem; position: relative; }
+        ul li::before { content: '✓'; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
+        
+        .list-cross li::before { content: '✗'; color: #d32f2f; }
+
+        /* =========================================
+           4. CLASES DE ANIMACIÓN (ENSAMBLAJE)
+           ========================================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px); /* Desplazado hacia abajo */
+            transition: all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0); /* Posición final */
+        }
+
+        /* Retrasos para que aparezcan uno por uno */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.3s; }
+        .delay-3 { transition-delay: 0.5s; }
+        .delay-4 { transition-delay: 0.7s; }
+        .delay-5 { transition-delay: 0.9s; }
+    </style>
+</head>
+<body>
+
+    <!-- DIAPOSITIVA 1: PORTADA -->
+    <!-- INSTRUCCIÓN: Cambia "tu-logo.png" por el archivo de tu logo -->
+    <section class="dark-section">
+        <div class="container">
+            <img src="tu-logo.png" alt="Discovery Neuroeducation" class="logo reveal">
+            <h1 class="reveal delay-1">Programa de Embajadores</h1>
+            <h2 class="reveal delay-2">Conviértete en un Co-founder.</h2>
+            <p class="reveal delay-3">Comparte una nueva forma de aprender. Inspira a tu comunidad. Genera ingresos extra a tu ritmo.</p>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 2: EL RETO Y LA MISIÓN -->
+    <section>
+        <div class="container">
+            <h2 class="color-primary reveal">La metodología tradicional falla, pero el aprendizaje no tiene por qué ser así.</h2>
+            
+            <div class="grid-2">
+                <div class="card reveal delay-1">
+                    <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem;">El Reto</h3>
+                    <p>Miles de personas creen que aprender inglés es demasiado difícil. Nosotros sabemos que el problema no son ellos; es la metodología que utilizan.</p>
+                </div>
+                <div class="card reveal delay-2">
+                    <h3 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.5rem;">Nuestra Misión</h3>
+                    <p>Llevar la neuroeducación al mayor número posible de personas. Buscamos construir una Comunidad vibrante que aprenda, comparta y crezca junta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 3: TU ROL -->
+    <!-- INSTRUCCIÓN: Cambia las rutas por imágenes de las insignias cruzadas si las tienes -->
+    <section class="dark-section">
+        <div class="container">
+            <h2 class="reveal">Tu rol es compartir una experiencia, no realizar una venta.</h2>
+            <div class="grid-3">
+                <div class="reveal delay-1">
+                    <img src="insignia-1.png" alt="No profesor" class="feature-img">
+                    <h3>No necesitas ser profesor.</h3>
+                </div>
+                <div class="reveal delay-2">
+                    <img src="insignia-2.png" alt="No vendedor" class="feature-img">
+                    <h3>No necesitas ser vendedor.</h3>
+                </div>
+                <div class="reveal delay-3">
+                    <img src="insignia-3.png" alt="No marketing" class="feature-img">
+                    <h3>No requieres experiencia en marketing.</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 4: PERFILES -->
+    <!-- INSTRUCCIÓN: Agrega las fotos de los perfiles en el atributo src="" -->
+    <section>
+        <div class="container">
+            <h2 class="color-primary reveal">Una oportunidad diseñada para adaptarse a tu estilo de vida.</h2>
+            <p class="reveal delay-1">Cualquier persona mayor de edad con ganas de ayudar y generar ingresos en su tiempo libre puede participar.</p>
+            
+            <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="reveal delay-1">
+                    <img src="foto-estudiante.jpg" class="profile-circle" alt="Estudiante">
+                    <h3>Estudiantes</h3>
+                    <p>Flexibilidad entre clases.</p>
+                </div>
+                <div class="reveal delay-2">
+                    <img src="foto-ama-casa.jpg" class="profile-circle" alt="Amas de casa">
+                    <h3>Amas de casa</h3>
+                    <p>Ingresos desde el hogar.</p>
+                </div>
+                <div class="reveal delay-3">
+                    <img src="foto-profesionista.jpg" class="profile-circle" alt="Profesionistas">
+                    <h3>Profesionistas</h3>
+                    <p>Un ingreso paralelo.</p>
+                </div>
+                <div class="reveal delay-4">
+                    <img src="foto-emprendedor.jpg" class="profile-circle" alt="Emprendedores">
+                    <h3>Emprendedores</h3>
+                    <p>Expansión de tu red.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 5: LO QUE NECESITAS (4 PILARES) -->
+    <section class="dark-section">
+        <div class="container">
+            <h2 class="reveal">Todo lo que necesitas para triunfar, desde el primer día.</h2>
+            <div class="grid-2">
+                <div class="card card-dark reveal delay-1">
+                    <h3 style="color: var(--accent);">Acceso Total.</h3>
+                    <p>Entrena con la plataforma Discovery Max para vivir la experiencia desde dentro.</p>
+                </div>
+                <div class="card card-dark reveal delay-2">
+                    <h3 style="color: var(--accent);">Ingresos Flexibles.</h3>
+                    <p>Gana regalías por cada recomendación sin límites, sin cuotas y sin compras mínimas.</p>
+                </div>
+                <div class="card card-dark reveal delay-3">
+                    <h3 style="color: var(--accent);">Kit de Contenidos.</h3>
+                    <p>Material listo para publicar: videos, imágenes y textos. No empiezas desde cero.</p>
+                </div>
+                <div class="card card-dark reveal delay-4">
+                    <h3 style="color: var(--accent);">Capacitación Continua.</h3>
+                    <p>Aprende a usar tus redes y a recomendar el método de manera ética.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 6: LOS 5 PASOS -->
+    <section>
+        <div class="container">
+            <h2 class="color-primary reveal">Un camino de cinco pasos diseñado sin fricciones.</h2>
+            <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; margin-top: 2rem;">
+                <div class="card reveal delay-1" style="width: 100%; text-align: left;">
+                    <h3 style="color: var(--primary);">1. Solicita</h3>
+                    <p>Pide tu incorporación al programa de embajadores.</p>
+                </div>
+                <div class="card reveal delay-2" style="width: 100%; text-align: left;">
+                    <h3 style="color: var(--primary);">2. Recibe</h3>
+                    <p>Obtén tu acceso completo al entrenamiento en la plataforma.</p>
+                </div>
+                <div class="card reveal delay-3" style="width: 100%; text-align: left;">
+                    <h3 style="color: var(--primary);">3. Tu Código</h3>
+                    <p>Recibe tu Código Personal Discovery (Ej. DISCOVERY-ANA).</p>
+                </div>
+                <div class="card reveal delay-4" style="width: 100%; text-align: left;">
+                    <h3 style="color: var(--primary);">4. Comparte</h3>
+                    <p>Difunde el contenido en Facebook, Instagram, TikTok, WhatsApp o en persona.</p>
+                </div>
+                <div class="card reveal delay-5" style="width: 100%; text-align: left;">
+                    <h3 style="color: var(--primary);">5. Gana</h3>
+                    <p>Las inscripciones realizadas con tu código generan comisiones automáticas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 7: FILOSOFÍA -->
+    <section class="dark-section">
+        <div class="container">
+            <h2 class="reveal">Una filosofía radicalmente distinta al modelo tradicional.</h2>
+            <div class="grid-2">
+                <div class="card reveal delay-1">
+                    <h3 style="color: #d32f2f; margin-bottom: 1rem;">Lo que NO hacemos</h3>
+                    <ul class="list-cross">
+                        <li>No es un sistema multinivel.</li>
+                        <li>No hay inversiones para participar.</li>
+                        <li>No obligamos a comprar productos.</li>
+                        <li>No existen mensualidades ni cuotas.</li>
+                        <li>No necesitas reclutar personas.</li>
+                        <li>No existen metas obligatorias.</li>
+                    </ul>
+                </div>
+                <div class="card reveal delay-2">
+                    <h3 style="color: #2e7d32; margin-bottom: 1rem;">Lo que SÍ hacemos</h3>
+                    <ul>
+                        <li>Promovemos una educación basada en neurociencias.</li>
+                        <li>Generamos ingresos puros por recomendación.</li>
+                        <li>Compartimos conocimiento real y útil.</li>
+                        <li>Flexibilidad absoluta de tiempo.</li>
+                        <li>Construimos una comunidad de aprendizaje.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 8: CIERRE Y QR -->
+    <!-- INSTRUCCIÓN: Cambia "codigo-qr.png" por tu imagen de QR -->
+    <section>
+        <div class="container">
+            <h1 class="reveal">Empieza a transformar vidas hoy mismo.</h1>
+            <p class="reveal delay-1">El mundo necesita una mejor manera de aprender. Únete a la comunidad de Co-founders y sé parte de la solución.</p>
+            
+            <div class="reveal delay-2" style="margin-top: 3rem;">
+                <img src="codigo-qr.png" alt="Código QR de Registro" style="max-width: 250px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <h3 style="color: var(--primary); margin-top: 1rem;">[ESCANEA PARA REGISTRO]</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         5. JAVASCRIPT: MOTOR DE INTERSECTION OBSERVER
+         ========================================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Configuración del observador
+            const observerOptions = {
+                root: null,
+                // Inicia la animación un poco antes de que el elemento llegue al centro
+                rootMargin: '0px 0px -15% 0px', 
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Agrega la clase 'active' que dispara la animación CSS
+                        entry.target.classList.add('active');
+                        // Deja de observar para que la animación solo ocurra una vez
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Selecciona todos los elementos con la clase 'reveal' y los observa
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
