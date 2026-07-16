@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discovery MAX - Programa de Embajadores</title>
+    
+    <!-- Fuentes de Google -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Librería de Íconos Automáticos (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         /* =========================================
            1. VARIABLES Y ESTILOS BASE
            ========================================= */
         :root {
-            --bg-dark: #0a0e27;      /* Azul muy oscuro (estilo Discovery) */
-            --bg-light: #f4f6f9;     /* Gris claro para contrastar */
+            --bg-dark: #0a0e27;      /* Azul oscuro Discovery */
+            --bg-light: #f4f6f9;     /* Gris muy claro */
             --primary: #1a233a;      /* Azul marino */
             --accent: #f26b5b;       /* Naranja/Coral */
             --text-dark: #333333;
@@ -36,12 +42,12 @@
            2. ESTRUCTURA DE SECCIONES
            ========================================= */
         section {
-            min-height: 100vh; /* Cada sección ocupa al menos toda la pantalla */
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 5rem 2rem;
+            padding: 6rem 2rem;
             text-align: center;
             position: relative;
         }
@@ -52,30 +58,32 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             width: 100%;
+            margin: 0 auto;
         }
 
         /* Tipografía */
         h1 { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--accent); margin-bottom: 1rem; }
-        h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; color: var(--primary); }
         .dark-section h2 { color: var(--text-light); }
-        h2.color-primary { color: var(--primary); }
-        p { font-size: 1.2rem; margin-bottom: 1rem; }
+        p { font-size: 1.2rem; margin-bottom: 1rem; color: #4a5568; }
+        .dark-section p { color: #e2e8f0; }
 
         /* =========================================
            3. CUADRÍCULAS Y TARJETAS (GRIDS)
            ========================================= */
         .grid-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
+            align-items: center;
         }
 
         .grid-3 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
@@ -84,9 +92,10 @@
             background: white;
             padding: 2.5rem 1.5rem;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
             border-top: 5px solid var(--accent);
-            color: var(--text-dark);
+            text-align: center;
+            height: 100%;
         }
 
         .card-dark {
@@ -95,47 +104,72 @@
             border-top: 5px solid var(--accent);
         }
 
-        /* Imágenes y Logos */
-        .logo { max-width: 200px; margin-bottom: 2rem; }
-        .feature-img { max-width: 100%; border-radius: 10px; margin-bottom: 1rem; }
-        .profile-circle { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--accent); margin-bottom: 1rem; }
+        .card-dark p {
+            color: #cbd5e1;
+        }
 
-        /* Listas limpias */
-        ul { list-style: none; text-align: left; margin: 0 auto; display: inline-block; }
-        ul li { margin-bottom: 1rem; font-size: 1.2rem; padding-left: 2rem; position: relative; }
-        ul li::before { content: '✓'; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
-        
-        .list-cross li::before { content: '✗'; color: #d32f2f; }
+        .highlight-box {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            font-size: 1.1rem;
+            box-shadow: 0 15px 35px rgba(26, 35, 58, 0.2);
+        }
+
+        .highlight-box p {
+            color: white;
+            margin: 0;
+        }
+
+        /* Íconos Generales */
+        .icon-large {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .icon-cross {
+            color: #d32f2f;
+        }
+
+        /* Imágenes Placeholders */
+        .img-placeholder {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
 
         /* =========================================
            4. CLASES DE ANIMACIÓN (ENSAMBLAJE)
            ========================================= */
         .reveal {
             opacity: 0;
-            transform: translateY(60px); /* Desplazado hacia abajo */
+            transform: translateY(50px);
             transition: all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .reveal.active {
             opacity: 1;
-            transform: translateY(0); /* Posición final */
+            transform: translateY(0);
         }
 
-        /* Retrasos para que aparezcan uno por uno */
         .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.3s; }
-        .delay-3 { transition-delay: 0.5s; }
-        .delay-4 { transition-delay: 0.7s; }
-        .delay-5 { transition-delay: 0.9s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
     </style>
 </head>
 <body>
 
     <!-- DIAPOSITIVA 1: PORTADA -->
-    <!-- INSTRUCCIÓN: Cambia "tu-logo.png" por el archivo de tu logo -->
     <section class="dark-section">
         <div class="container">
-            <img src="tu-logo.png" alt="Discovery Neuroeducation" class="logo reveal">
+            <!-- Imagen genérica para tu logo -->
+            <img src="https://placehold.co/300x100/1a233a/ffffff?text=Tu+Logo+Discovery+Aqui" alt="Logo Discovery" class="reveal" style="margin-bottom: 2rem; border-radius: 8px;">
             <h1 class="reveal delay-1">Programa de Embajadores</h1>
             <h2 class="reveal delay-2">Conviértete en un Co-founder.</h2>
             <p class="reveal delay-3">Comparte una nueva forma de aprender. Inspira a tu comunidad. Genera ingresos extra a tu ritmo.</p>
@@ -145,14 +179,15 @@
     <!-- DIAPOSITIVA 2: EL RETO Y LA MISIÓN -->
     <section>
         <div class="container">
-            <h2 class="color-primary reveal">La metodología tradicional falla, pero el aprendizaje no tiene por qué ser así.</h2>
-            
+            <h2 class="reveal">La metodología tradicional falla, pero el aprendizaje no tiene por qué ser así.</h2>
             <div class="grid-2">
                 <div class="card reveal delay-1">
+                    <i class="fas fa-exclamation-triangle icon-large"></i>
                     <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem;">El Reto</h3>
                     <p>Miles de personas creen que aprender inglés es demasiado difícil. Nosotros sabemos que el problema no son ellos; es la metodología que utilizan.</p>
                 </div>
                 <div class="card reveal delay-2">
+                    <i class="fas fa-rocket icon-large"></i>
                     <h3 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.5rem;">Nuestra Misión</h3>
                     <p>Llevar la neuroeducación al mayor número posible de personas. Buscamos construir una Comunidad vibrante que aprenda, comparta y crezca junta.</p>
                 </div>
@@ -160,167 +195,270 @@
         </div>
     </section>
 
-    <!-- DIAPOSITIVA 3: TU ROL -->
-    <!-- INSTRUCCIÓN: Cambia las rutas por imágenes de las insignias cruzadas si las tienes -->
+    <!-- DIAPOSITIVA 3: TU ROL (CORREGIDA CON TEXTO VERDE) -->
     <section class="dark-section">
         <div class="container">
             <h2 class="reveal">Tu rol es compartir una experiencia, no realizar una venta.</h2>
             <div class="grid-3">
-                <div class="reveal delay-1">
-                    <img src="insignia-1.png" alt="No profesor" class="feature-img">
+                <div class="card card-dark reveal delay-1">
+                    <i class="fas fa-chalkboard-teacher icon-large"></i>
+                    <i class="fas fa-times icon-cross" style="font-size: 4rem; position: absolute; margin-left: -2.5rem; opacity: 0.8;"></i>
                     <h3>No necesitas ser profesor.</h3>
                 </div>
-                <div class="reveal delay-2">
-                    <img src="insignia-2.png" alt="No vendedor" class="feature-img">
+                <div class="card card-dark reveal delay-2">
+                    <i class="fas fa-hand-holding-dollar icon-large"></i>
+                    <i class="fas fa-times icon-cross" style="font-size: 4rem; position: absolute; margin-left: -2.5rem; opacity: 0.8;"></i>
                     <h3>No necesitas ser vendedor.</h3>
                 </div>
-                <div class="reveal delay-3">
-                    <img src="insignia-3.png" alt="No marketing" class="feature-img">
+                <div class="card card-dark reveal delay-3">
+                    <i class="fas fa-bullhorn icon-large"></i>
+                    <i class="fas fa-times icon-cross" style="font-size: 4rem; position: absolute; margin-left: -2.5rem; opacity: 0.8;"></i>
                     <h3>No requieres experiencia en marketing.</h3>
                 </div>
             </div>
+            
+            <!-- Aquí está el bloque azul oscuro que marcaste en verde -->
+            <div class="highlight-box reveal delay-4">
+                <p>Un Co-founder Discovery es una persona que cree en una nueva forma de aprender inglés, vive la experiencia y decide compartirla con su círculo. Tú compartes en tus redes sociales; la transformación hace el resto.</p>
+            </div>
         </div>
     </section>
 
-    <!-- DIAPOSITIVA 4: PERFILES -->
-    <!-- INSTRUCCIÓN: Agrega las fotos de los perfiles en el atributo src="" -->
+    <!-- DIAPOSITIVA 4: OPORTUNIDAD Y ESTILO DE VIDA (6 PERFILES) -->
     <section>
         <div class="container">
-            <h2 class="color-primary reveal">Una oportunidad diseñada para adaptarse a tu estilo de vida.</h2>
+            <h2 class="reveal">Una oportunidad diseñada para adaptarse a tu estilo de vida.</h2>
             <p class="reveal delay-1">Cualquier persona mayor de edad con ganas de ayudar y generar ingresos en su tiempo libre puede participar.</p>
             
-            <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-                <div class="reveal delay-1">
-                    <img src="foto-estudiante.jpg" class="profile-circle" alt="Estudiante">
-                    <h3>Estudiantes</h3>
-                    <p>Flexibilidad entre clases.</p>
+            <div class="grid-3">
+                <div class="card reveal delay-1" style="text-align: left; display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-user-graduate icon-large" style="margin: 0;"></i>
+                    <div>
+                        <h3 style="color: var(--primary);">Estudiantes</h3>
+                        <p style="margin: 0; font-size: 1rem;">Flexibilidad entre clases.</p>
+                    </div>
                 </div>
-                <div class="reveal delay-2">
-                    <img src="foto-ama-casa.jpg" class="profile-circle" alt="Amas de casa">
-                    <h3>Amas de casa</h3>
-                    <p>Ingresos desde el hogar.</p>
+                <div class="card reveal delay-2" style="text-align: left; display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-home icon-large" style="margin: 0;"></i>
+                    <div>
+                        <h3 style="color: var(--primary);">Amas de casa</h3>
+                        <p style="margin: 0; font-size: 1rem;">Ingresos desde el hogar.</p>
+                    </div>
                 </div>
-                <div class="reveal delay-3">
-                    <img src="foto-profesionista.jpg" class="profile-circle" alt="Profesionistas">
-                    <h3>Profesionistas</h3>
-                    <p>Un ingreso paralelo.</p>
+                <div class="card reveal delay-3" style="text-align: left; display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-briefcase icon-large" style="margin: 0;"></i>
+                    <div>
+                        <h3 style="color: var(--primary);">Profesionistas</h3>
+                        <p style="margin: 0; font-size: 1rem;">Un ingreso paralelo.</p>
+                    </div>
                 </div>
-                <div class="reveal delay-4">
-                    <img src="foto-emprendedor.jpg" class="profile-circle" alt="Emprendedores">
-                    <h3>Emprendedores</h3>
-                    <p>Expansión de tu red.</p>
+                <div class="card reveal delay-4" style="text-align: left; display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-chart-line icon-large" style="margin: 0;"></i>
+                    <div>
+                        <h3 style="color: var(--primary);">Emprendedores</h3>
+                        <p style="margin: 0; font-size: 1rem;">Expansión de tu red.</p>
+                    </div>
+                </div>
+                <div class="card reveal delay-5" style="text-align: left; display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-couch icon-large" style="margin: 0;"></i>
+                    <div>
+                        <h3 style="color: var(--primary);">Jubilados</h3>
+                        <p style="margin: 0; font-size: 1rem;">Comparte tu sabiduría.</p>
+                    </div>
+                </div>
+                <div class="card reveal delay-5" style="text-align: left; display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-mobile-screen icon-large" style="margin: 0;"></i>
+                    <div>
+                        <h3 style="color: var(--primary);">Creadores de contenido</h3>
+                        <p style="margin: 0; font-size: 1rem;">Monetiza tu audiencia.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- DIAPOSITIVA 5: LO QUE NECESITAS (4 PILARES) -->
+    <!-- DIAPOSITIVA 5: RED IMPULSADA POR PERSONAS REALES -->
     <section class="dark-section">
         <div class="container">
-            <h2 class="reveal">Todo lo que necesitas para triunfar, desde el primer día.</h2>
+            <h2 class="reveal">Una red impulsada por personas reales</h2>
+            
+            <!-- Imagen genérica para el diagrama circular -->
+            <img src="https://placehold.co/800x400/1a233a/ffffff?text=Grafico+Comunidad+Discovery" alt="Gráfico Comunidad" class="img-placeholder reveal delay-1" style="margin: 2rem 0;">
+            
+            <div class="card card-dark reveal delay-2" style="background-color: rgba(255,255,255,0.1); border: none;">
+                <p style="color: white; margin: 0;">Cualquier persona mayor de edad con redes sociales y disposición para ayudar puede generar ingresos en su tiempo libre.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 6: TRANSFORMACIÓN Y RECOMPENSA -->
+    <section>
+        <div class="container">
+            <h2 class="reveal">La mejor recomendación nace de una transformación personal.</h2>
+            
+            <div class="grid-2 reveal delay-1">
+                <img src="https://placehold.co/400x300/e2e8f0/1a233a?text=Imagen+App/Celular" alt="App Discovery" class="img-placeholder">
+                <img src="https://placehold.co/400x300/e2e8f0/1a233a?text=Grafica+de+Crecimiento" alt="Crecimiento y Monedas" class="img-placeholder">
+            </div>
+
             <div class="grid-2">
-                <div class="card card-dark reveal delay-1">
-                    <h3 style="color: var(--accent);">Acceso Total.</h3>
-                    <p>Entrena con la plataforma Discovery Max para vivir la experiencia desde dentro.</p>
+                <div class="card reveal delay-2">
+                    <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem;">La Experiencia</h3>
+                    <p>Mientras formes parte activa del programa, tienes acceso a Discovery Max. Creemos que cuando alguien vive una transformación, recomendarla surge de forma natural.</p>
                 </div>
+                <div class="card reveal delay-3">
+                    <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem;">La Recompensa</h3>
+                    <p>Cada vez que una persona se inscribe con tu código, recibes tu comisión.</p>
+                    <p style="background: var(--primary); color: white; border-radius: 20px; padding: 5px 15px; display: inline-block; font-size: 0.9rem; margin-top: 0.5rem;">✓ Tú decides cuánto tiempo dedicar</p>
+                    <p style="background: var(--primary); color: white; border-radius: 20px; padding: 5px 15px; display: inline-block; font-size: 0.9rem;">✓ Sin metas obligatorias</p>
+                    <p style="background: var(--primary); color: white; border-radius: 20px; padding: 5px 15px; display: inline-block; font-size: 0.9rem;">✓ Sin horarios</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 7: MENSAJE EXACTO Y CAPACITACIÓN -->
+    <section class="dark-section">
+        <div class="container">
+            <div class="grid-2">
+                <div class="reveal delay-1">
+                    <img src="https://placehold.co/500x400/1a233a/ffffff?text=Celular+con+Burbujas+de+Chat" alt="Celular y Redes" class="img-placeholder" style="border: none; box-shadow: none;">
+                </div>
+                <div style="text-align: left;">
+                    <h2 class="reveal delay-2" style="font-size: 2.5rem;">Te entregamos el mensaje exacto para conectar con tu audiencia.</h2>
+                    <div class="card reveal delay-3" style="text-align: left; margin-top: 2rem;">
+                        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Capacitación Continua</h3>
+                        <p style="color: #4a5568;">Te enseñamos paso a paso cómo compartir el método correctamente, cómo responder dudas frecuentes y cómo generar recomendaciones manteniendo tu autenticidad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 8: LOS 5 PASOS -->
+    <section>
+        <div class="container">
+            <h2 class="reveal">Un camino de cinco pasos diseñado sin fricciones.</h2>
+            <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; margin-top: 2rem;">
+                <div class="card reveal delay-1" style="width: 100%; text-align: left; display: flex; align-items: center; gap: 1.5rem;">
+                    <h3 style="color: var(--accent); font-size: 2rem;">1</h3>
+                    <div>
+                        <h3 style="color: var(--primary);">Solicita</h3>
+                        <p style="margin:0;">Pide tu incorporación al programa de embajadores.</p>
+                    </div>
+                </div>
+                <div class="card reveal delay-2" style="width: 100%; text-align: left; display: flex; align-items: center; gap: 1.5rem;">
+                    <h3 style="color: var(--accent); font-size: 2rem;">2</h3>
+                    <div>
+                        <h3 style="color: var(--primary);">Recibe</h3>
+                        <p style="margin:0;">Obtén tu acceso completo al entrenamiento en la plataforma.</p>
+                    </div>
+                </div>
+                <div class="card reveal delay-3" style="width: 100%; text-align: left; display: flex; align-items: center; gap: 1.5rem;">
+                    <h3 style="color: var(--accent); font-size: 2rem;">3</h3>
+                    <div>
+                        <h3 style="color: var(--primary);">Tu Código</h3>
+                        <p style="margin:0;">Recibe tu Código Personal Discovery (Ej. DISCOVERY-ANA).</p>
+                    </div>
+                </div>
+                <div class="card reveal delay-4" style="width: 100%; text-align: left; display: flex; align-items: center; gap: 1.5rem;">
+                    <h3 style="color: var(--accent); font-size: 2rem;">4</h3>
+                    <div>
+                        <h3 style="color: var(--primary);">Comparte</h3>
+                        <p style="margin:0;">Difunde el contenido en Facebook, Instagram, TikTok, WhatsApp o en persona.</p>
+                    </div>
+                </div>
+                <div class="card reveal delay-5" style="width: 100%; text-align: left; display: flex; align-items: center; gap: 1.5rem;">
+                    <h3 style="color: var(--accent); font-size: 2rem;">5</h3>
+                    <div>
+                        <h3 style="color: var(--primary);">Gana</h3>
+                        <p style="margin:0;">Las inscripciones realizadas con tu código generan comisiones automáticas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 9: HONESTIDAD RADICAL -->
+    <section class="dark-section">
+        <div class="container">
+            <h2 class="reveal">Nuestro compromiso se basa en la honestidad radical.</h2>
+            <p class="reveal delay-1">Como Co-founder Discovery, representas a una comunidad educativa. Nos comprometemos a:</p>
+            
+            <div class="grid-2" style="position: relative;">
+                <!-- Ícono de escudo central visible solo en pantallas grandes -->
+                <i class="fas fa-shield-alt icon-large reveal delay-2" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 8rem; opacity: 0.1;"></i>
+                
                 <div class="card card-dark reveal delay-2">
-                    <h3 style="color: var(--accent);">Ingresos Flexibles.</h3>
-                    <p>Gana regalías por cada recomendación sin límites, sin cuotas y sin compras mínimas.</p>
+                    <h3 style="color: var(--accent);">Honestidad</h3>
+                    <p>Hablar siempre con la verdad sobre el método.</p>
                 </div>
                 <div class="card card-dark reveal delay-3">
-                    <h3 style="color: var(--accent);">Kit de Contenidos.</h3>
-                    <p>Material listo para publicar: videos, imágenes y textos. No empiezas desde cero.</p>
+                    <h3 style="color: var(--accent);">Respeto</h3>
+                    <p>Tratar con absoluto profesionalismo y respeto a todas las personas.</p>
                 </div>
                 <div class="card card-dark reveal delay-4">
-                    <h3 style="color: var(--accent);">Capacitación Continua.</h3>
-                    <p>Aprende a usar tus redes y a recomendar el método de manera ética.</p>
+                    <h3 style="color: var(--accent);">Realismo</h3>
+                    <p>Nunca prometer resultados irreales o mágicos.</p>
+                </div>
+                <div class="card card-dark reveal delay-5">
+                    <h3 style="color: var(--accent);">Oficialidad</h3>
+                    <p>Compartir únicamente información y recursos oficiales de Discovery Max.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- DIAPOSITIVA 6: LOS 5 PASOS -->
+    <!-- DIAPOSITIVA 10: ECOSISTEMA (CICLO) -->
     <section>
         <div class="container">
-            <h2 class="color-primary reveal">Un camino de cinco pasos diseñado sin fricciones.</h2>
-            <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; margin-top: 2rem;">
-                <div class="card reveal delay-1" style="width: 100%; text-align: left;">
-                    <h3 style="color: var(--primary);">1. Solicita</h3>
-                    <p>Pide tu incorporación al programa de embajadores.</p>
+            <h2 class="reveal">El ecosistema que transforma el aprendizaje en recompensa.</h2>
+            
+            <div class="grid-2" style="position: relative; margin-top: 4rem;">
+                <!-- Cerebro central placeholder -->
+                <img src="https://placehold.co/150x150/e2e8f0/1a233a?text=Cerebro" alt="Cerebro" class="reveal delay-2" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 50%; z-index: 5;">
+                
+                <div class="card reveal delay-1" style="background: var(--primary); color: white;">
+                    <h3 style="color: var(--accent);">APRENDE.</h3>
+                    <p style="color: white;">Vive la metodología Discovery por ti mismo.</p>
                 </div>
-                <div class="card reveal delay-2" style="width: 100%; text-align: left;">
-                    <h3 style="color: var(--primary);">2. Recibe</h3>
-                    <p>Obtén tu acceso completo al entrenamiento en la plataforma.</p>
+                <div class="card reveal delay-2" style="background: var(--primary); color: white;">
+                    <h3 style="color: var(--accent);">COMPARTE.</h3>
+                    <p style="color: white;">Recomienda tu experiencia de forma natural y ética.</p>
                 </div>
-                <div class="card reveal delay-3" style="width: 100%; text-align: left;">
-                    <h3 style="color: var(--primary);">3. Tu Código</h3>
-                    <p>Recibe tu Código Personal Discovery (Ej. DISCOVERY-ANA).</p>
+                <div class="card reveal delay-3" style="background: var(--primary); color: white;">
+                    <h3 style="color: var(--accent);">GANA.</h3>
+                    <p style="color: white;">Recibe ingresos reales por el valor que aportas.</p>
                 </div>
-                <div class="card reveal delay-4" style="width: 100%; text-align: left;">
-                    <h3 style="color: var(--primary);">4. Comparte</h3>
-                    <p>Difunde el contenido en Facebook, Instagram, TikTok, WhatsApp o en persona.</p>
-                </div>
-                <div class="card reveal delay-5" style="width: 100%; text-align: left;">
-                    <h3 style="color: var(--primary);">5. Gana</h3>
-                    <p>Las inscripciones realizadas con tu código generan comisiones automáticas.</p>
+                <div class="card reveal delay-4" style="background: var(--primary); color: white;">
+                    <h3 style="color: var(--accent);">TRANSFORMA.</h3>
+                    <p style="color: white;">Ayuda a otros a vencer su barrera con el inglés.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- DIAPOSITIVA 7: FILOSOFÍA -->
+    <!-- DIAPOSITIVA 11: CIERRE Y QR -->
     <section class="dark-section">
         <div class="container">
-            <h2 class="reveal">Una filosofía radicalmente distinta al modelo tradicional.</h2>
-            <div class="grid-2">
-                <div class="card reveal delay-1">
-                    <h3 style="color: #d32f2f; margin-bottom: 1rem;">Lo que NO hacemos</h3>
-                    <ul class="list-cross">
-                        <li>No es un sistema multinivel.</li>
-                        <li>No hay inversiones para participar.</li>
-                        <li>No obligamos a comprar productos.</li>
-                        <li>No existen mensualidades ni cuotas.</li>
-                        <li>No necesitas reclutar personas.</li>
-                        <li>No existen metas obligatorias.</li>
-                    </ul>
-                </div>
-                <div class="card reveal delay-2">
-                    <h3 style="color: #2e7d32; margin-bottom: 1rem;">Lo que SÍ hacemos</h3>
-                    <ul>
-                        <li>Promovemos una educación basada en neurociencias.</li>
-                        <li>Generamos ingresos puros por recomendación.</li>
-                        <li>Compartimos conocimiento real y útil.</li>
-                        <li>Flexibilidad absoluta de tiempo.</li>
-                        <li>Construimos una comunidad de aprendizaje.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- DIAPOSITIVA 8: CIERRE Y QR -->
-    <!-- INSTRUCCIÓN: Cambia "codigo-qr.png" por tu imagen de QR -->
-    <section>
-        <div class="container">
             <h1 class="reveal">Empieza a transformar vidas hoy mismo.</h1>
-            <p class="reveal delay-1">El mundo necesita una mejor manera de aprender. Únete a la comunidad de Co-founders y sé parte de la solución.</p>
+            <p class="reveal delay-1" style="max-width: 600px; margin: 0 auto 2rem auto;">El mundo necesita una mejor manera de aprender. Únete a la comunidad de Co-founders y sé parte de la solución.</p>
             
-            <div class="reveal delay-2" style="margin-top: 3rem;">
-                <img src="codigo-qr.png" alt="Código QR de Registro" style="max-width: 250px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                <h3 style="color: var(--primary); margin-top: 1rem;">[ESCANEA PARA REGISTRO]</h3>
+            <div class="reveal delay-2" style="margin-top: 3rem; background: white; padding: 2rem; border-radius: 15px; display: inline-block;">
+                <!-- Imagen genérica para tu Código QR -->
+                <img src="https://placehold.co/200x200/ffffff/1a233a?text=Codigo+QR" alt="Código QR de Registro" class="img-placeholder" style="box-shadow: none;">
+                <h3 style="color: var(--primary); margin-top: 1rem; font-size: 1.2rem;">[ESCANEA PARA REGISTRO]</h3>
             </div>
         </div>
     </section>
 
     <!-- =========================================
-         5. JAVASCRIPT: MOTOR DE INTERSECTION OBSERVER
+         5. JAVASCRIPT: MOTOR DE ANIMACIÓN
          ========================================= -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Configuración del observador
             const observerOptions = {
                 root: null,
-                // Inicia la animación un poco antes de que el elemento llegue al centro
                 rootMargin: '0px 0px -15% 0px', 
                 threshold: 0.1
             };
@@ -328,15 +466,12 @@
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Agrega la clase 'active' que dispara la animación CSS
                         entry.target.classList.add('active');
-                        // Deja de observar para que la animación solo ocurra una vez
                         observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
-            // Selecciona todos los elementos con la clase 'reveal' y los observa
             const revealElements = document.querySelectorAll('.reveal');
             revealElements.forEach(el => observer.observe(el));
         });
