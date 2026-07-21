@@ -5,23 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ECUC & Discovery MAX - El Laboratorio Comestible</title>
     
-    <!-- Fuentes: Playfair para elegancia culinaria, Inter para lectura clara -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <!-- Fuentes elegantes y refinadas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* =========================================
-           1. VARIABLES DE COLOR (Energía y Elegancia)
+           1. VARIABLES DE COLOR (Azul vibrante y Blanco)
            ========================================= */
         :root {
-            --primary-blue: #0A192F;    /* Azul profundo y elegante */
+            --primary-blue: #0056b3;    /* Azul rey moderno y vibrante */
             --pure-white: #FFFFFF;      /* Blanco limpio */
-            --bg-light: #F7FAFC;        /* Fondo suave */
+            --bg-light: #F8FAFC;        /* Gris casi blanco para suavizar fondos */
             
-            /* Colores Estratégicos */
-            --accent-yellow: #F6AD55;   /* Mostaza/Dorado - Creatividad/Panadería */
-            --accent-red: #E53E3E;      /* Rojo - Fuego/Pasión/Mitos */
-            --accent-green: #48BB78;    /* Verde - Frescura/Triunfo/Crecimiento */
+            /* Colores de acento para íconos */
+            --accent-red: #E53E3E;      /* Rojo para mitos */
+            --accent-green: #38A169;    /* Verde para realidades/triunfos */
         }
 
         * {
@@ -33,20 +32,21 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--pure-white);
-            color: var(--primary-blue);
-            line-height: 1.6;
+            color: #333333;
+            line-height: 1.7;
             overflow-x: hidden;
         }
 
         h1, h2, h3, .serif-font {
             font-family: 'Playfair Display', serif;
+            font-weight: 500; /* Letra más delgada y elegante */
         }
 
         /* =========================================
-           2. MENÚ DE NAVEGACIÓN (Basado en captura)
+           2. MENÚ DE NAVEGACIÓN (Hamburguesa)
            ========================================= */
         nav {
-            background-color: rgba(10, 25, 47, 0.95);
+            background-color: var(--primary-blue);
             position: fixed;
             width: 100%;
             top: 0;
@@ -55,14 +55,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .logo-text {
             color: var(--pure-white);
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.2rem;
+            font-weight: 500;
             letter-spacing: 1px;
+        }
+
+        /* Ícono de menú para móviles */
+        .menu-toggle {
+            color: var(--pure-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none; /* Se oculta en PC, se muestra en móvil */
         }
 
         .nav-links {
@@ -76,109 +84,127 @@
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 300;
-            transition: color 0.3s;
+            transition: opacity 0.3s;
         }
 
         .nav-links a:hover {
-            color: var(--accent-yellow);
+            opacity: 0.7;
+        }
+
+        /* Responsive Menú */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            .nav-links {
+                display: none; /* Oculto por defecto */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-blue);
+                padding: 1rem 2rem;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            .nav-links.active {
+                display: flex; /* Se muestra al hacer clic */
+            }
+            .nav-links li {
+                margin-bottom: 1rem;
+            }
         }
 
         /* =========================================
-           3. CABECERA CON VIDEO YOUTUBE
+           3. SECCIÓN HERO (VIDEO INDEPENDIENTE)
            ========================================= */
         .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background-color: var(--primary-blue);
+            padding: 8rem 2rem 5rem 2rem; /* Espacio superior para el menú */
             text-align: center;
             color: var(--pure-white);
-            overflow: hidden;
-            background-color: var(--primary-blue);
         }
 
-        .video-container {
+        .hero h1 {
+            font-size: clamp(2rem, 4vw, 3.5rem); /* Letra más pequeña y refinada */
+            color: var(--pure-white); /* Cambiado de amarillo a blanco */
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            color: var(--pure-white);
+        }
+
+        .hero-quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 3rem;
+            color: var(--pure-white); /* Cambiado a blanco */
+            opacity: 0.9;
+        }
+
+        /* Contenedor del video */
+        .video-wrapper {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+            height: 0;
+        }
+
+        .video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Evita que el usuario pause el video accidentalmente */
-            z-index: 0;
-        }
-
-        .video-container iframe {
-            width: 100vw;
-            height: 56.25vw; /* 16:9 aspect ratio */
-            min-height: 100vh;
-            min-width: 177.77vh; /* 16:9 aspect ratio */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0.4; /* Oscurecemos el video para leer el texto */
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            padding: 2rem;
-            background: rgba(10, 25, 47, 0.6);
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
-            max-width: 800px;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 6vw, 5rem);
-            color: var(--accent-yellow);
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
         }
 
         /* =========================================
            4. SECCIONES Y DISEÑO
            ========================================= */
         section {
-            padding: 6rem 2rem;
-            max-width: 1200px;
+            padding: 5rem 2rem;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
             margin-bottom: 3rem;
             color: var(--primary-blue);
         }
 
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
 
         .card {
             background: var(--pure-white);
-            border-radius: 15px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
             transition: transform 0.3s ease;
+            border: 1px solid #eaeaea;
         }
 
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
         }
 
         .img-delicious {
             width: 100%;
-            height: 250px;
+            height: 220px;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         /* =========================================
@@ -187,7 +213,7 @@
         .flip-card {
             background-color: transparent;
             width: 100%;
-            height: 400px;
+            height: 380px;
             perspective: 1000px;
             cursor: pointer;
         }
@@ -211,19 +237,24 @@
             height: 100%;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            border-radius: 15px;
+            border-radius: 12px;
             padding: 2rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
         }
 
         .flip-card-front {
-            background: linear-gradient(135deg, var(--primary-blue), #1a365d);
+            background: var(--primary-blue);
             color: var(--pure-white);
-            border: 2px solid var(--accent-yellow);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .flip-card-front h3 {
+            font-size: 1.4rem;
+            color: var(--pure-white);
         }
 
         .flip-card-back {
@@ -231,21 +262,27 @@
             color: var(--primary-blue);
             transform: rotateY(180deg);
             overflow: hidden;
-            padding: 0; /* Quitamos padding para que la imagen llene el fondo */
+            padding: 0; 
         }
 
         .flip-card-back img {
             width: 100%;
-            height: 60%;
+            height: 55%;
             object-fit: cover;
         }
 
         .flip-card-back .content {
-            height: 40%;
-            padding: 1rem;
+            height: 45%;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
+        }
+
+        .flip-card-back .content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
         }
 
         /* =========================================
@@ -253,7 +290,7 @@
            ========================================= */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(30px);
             transition: all 0.8s ease-out;
         }
 
@@ -269,7 +306,12 @@
     <!-- MENÚ DE NAVEGACIÓN -->
     <nav>
         <div class="logo-text">ECUC × Discovery</div>
-        <ul class="nav-links">
+        <!-- Botón de Menú para Celulares -->
+        <div class="menu-toggle" id="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+        <!-- Enlaces del Menú -->
+        <ul class="nav-links" id="nav-links">
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#quienes-somos">Quiénes somos</a></li>
             <li><a href="#cursos">Cursos</a></li>
@@ -280,60 +322,59 @@
         </ul>
     </nav>
 
-    <!-- 1. INICIO: VIDEO HERO -->
+    <!-- 1. INICIO: HERO CON VIDEO -->
     <header id="inicio" class="hero">
-        <div class="video-container">
-            <!-- Video de YouTube incrustado. autoplay, mute y loop activados -->
-            <iframe src="https://www.youtube.com/embed/46VRgCO0hiM?autoplay=1&mute=1&loop=1&playlist=46VRgCO0hiM&controls=0&showinfo=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
-        </div>
-        <div class="hero-content reveal active">
+        <div class="reveal active">
             <h1>El Laboratorio Comestible</h1>
-            <p>Redefiniendo la educación a través de la ciencia, la resiliencia y el arte culinario[span_3](start_span)[span_3](end_span)[span_4](start_span)[span_4](end_span).</p>
-            <h3 style="color: var(--accent-green); font-style: italic;">"No solo formamos chefs. Construimos los líderes del mañana[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span)."</h3>
+            <p>Redefiniendo la educación a través de la ciencia, la resiliencia y el arte culinario.</p>
+            <p class="hero-quote">"No solo formamos chefs. Construimos los líderes del mañana."</p>
+        </div>
+        
+        <!-- Video Integrado (Limpio y con botón de Play nativo) -->
+        <div class="video-wrapper reveal active">
+            <iframe src="https://www.youtube.com/embed/46VRgCO0hiM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </header>
 
     <!-- 2. QUIÉNES SOMOS: MITO VS REALIDAD -->
     <section id="quienes-somos">
-        <h2 class="section-title reveal">Más allá de jugar a la comidita[span_7](start_span)[span_7](end_span)</h2>
+        <h2 class="section-title reveal">Más allá de jugar a la comidita</h2>
         <div class="grid-2">
-            <!-- Tarjeta Roja (El Mito) -->
-            <div class="card reveal" style="border-top: 5px solid var(--accent-red);">
-                <i class="fas fa-times-circle" style="font-size: 3rem; color: var(--accent-red); margin-bottom: 1rem;"></i>
+            <div class="card reveal" style="border-top: 4px solid var(--accent-red);">
+                <i class="fas fa-times" style="font-size: 2.5rem; color: var(--accent-red); margin-bottom: 1rem;"></i>
                 <h3 style="color: var(--accent-red); margin-bottom: 1rem;">El Mito</h3>
-                <p><strong>La expectativa:</strong> Una actividad recreativa superficial o una guardería glorificada[span_8](start_span)[span_8](end_span).</p>
-                <p><strong>El resultado:</strong> Imitación sin fundamentos y tolerancia a la mediocridad[span_9](start_span)[span_9](end_span).</p>
+                <p style="font-size: 0.95rem;"><strong>La expectativa:</strong> Una actividad recreativa superficial o una guardería glorificada.</p>
+                <p style="font-size: 0.95rem;"><strong>El resultado:</strong> Imitación sin fundamentos y tolerancia a la mediocridad.</p>
             </div>
             
-            <!-- Tarjeta Verde (La Realidad) -->
-            <div class="card reveal" style="border-top: 5px solid var(--accent-green);">
-                <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
+            <div class="card reveal" style="border-top: 4px solid var(--accent-green);">
+                <i class="fas fa-check" style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
                 <h3 style="color: var(--accent-green); margin-bottom: 1rem;">La Realidad ECUC</h3>
-                <p><strong>El estándar:</strong> Un campo de entrenamiento para la vida real, donde la gastronomía es una ciencia aplicada[span_10](start_span)[span_10](end_span).</p>
-                <p><strong>El resultado:</strong> Individuos que transforman el caos en orden a través del método[span_11](start_span)[span_11](end_span).</p>
+                <p style="font-size: 0.95rem;"><strong>El estándar:</strong> Un campo de entrenamiento para la vida real, donde la gastronomía es una ciencia aplicada.</p>
+                <p style="font-size: 0.95rem;"><strong>El resultado:</strong> Individuos que transforman el caos en orden a través del método.</p>
             </div>
         </div>
     </section>
 
     <!-- LA FÓRMULA DEL LABORATORIO -->
     <section style="background-color: var(--bg-light); max-width: 100%;">
-        <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
-            <h2 class="section-title reveal">La Fórmula del Siglo XXI[span_12](start_span)[span_12](end_span)</h2>
+        <div style="max-width: 1100px; margin: 0 auto;">
+            <h2 class="section-title reveal">La Fórmula del Siglo XXI</h2>
             <div class="grid-3">
                 <div class="reveal">
                     <img src="https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?auto=format&fit=crop&w=600&q=80" alt="Ingredientes precisos" class="img-delicious">
-                    <h3 style="color: var(--primary-blue);">Precisión Absoluta</h3>
-                    <p>Respeto estricto a procesos, gramajes y tiempos innegociables[span_13](start_span)[span_13](end_span)[span_14](start_span)[span_14](end_span).</p>
+                    <h3 style="color: var(--primary-blue); font-size: 1.3rem;">Precisión Absoluta</h3>
+                    <p style="font-size: 0.95rem;">Respeto estricto a procesos, gramajes y tiempos innegociables.</p>
                 </div>
                 <div class="reveal">
-                    <img src="https://images.unsplash.com/photo-1556910103-1c02745a872f?auto=format&fit=crop&w=600&q=80" alt="Chef cocinando con fuego" class="img-delicious">
-                    <h3 style="color: var(--accent-yellow);">Agilidad Creativa</h3>
-                    <p>Capacidad de resolver crisis y adaptar el método en tiempo real[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span).</p>
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745a872f?auto=format&fit=crop&w=600&q=80" alt="Chef cocinando" class="img-delicious">
+                    <h3 style="color: var(--primary-blue); font-size: 1.3rem;">Agilidad Creativa</h3>
+                    <p style="font-size: 0.95rem;">Capacidad de resolver crisis y adaptar el método en tiempo real.</p>
                 </div>
                 <div class="reveal">
                     <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80" alt="Platillo terminado" class="img-delicious">
-                    <h3 style="color: var(--accent-green);">Éxito Tangible</h3>
-                    <p>Un experimento científico riguroso que, al final, te puedes comer[span_17](start_span)[span_17](end_span)[span_18](start_span)[span_18](end_span).</p>
+                    <h3 style="color: var(--primary-blue); font-size: 1.3rem;">Éxito Tangible</h3>
+                    <p style="font-size: 0.95rem;">Un experimento científico riguroso que, al final, te puedes comer.</p>
                 </div>
             </div>
         </div>
@@ -341,49 +382,49 @@
 
     <!-- 3. CURSOS: JUNIOR Y DIPLOMADOS -->
     <section id="cursos">
-        <h2 class="section-title reveal">Nuestros Programas[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span)</h2>
+        <h2 class="section-title reveal">Nuestros Programas</h2>
         <div class="grid-2">
             <div class="card reveal">
-                <h3 style="color: var(--accent-yellow); font-size: 1.8rem; margin-bottom: 1rem;">Junior Chef: El Caos Organizado[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span)</h3>
-                <p>No enseñamos recetas infantiles. Adaptamos un oficio estricto al nivel infantil[span_23](start_span)[span_23](end_span)[span_24](start_span)[span_24](end_span).</p>
-                <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                    <li><strong>Mentalidad de Brigada:</strong> Colaboración estratégica bajo presión[span_25](start_span)[span_25](end_span)[span_26](start_span)[span_26](end_span).</li>
-                    <li><strong>Resultados Tangibles:</strong> Seguridad personal inquebrantable[span_27](start_span)[span_27](end_span)[span_28](start_span)[span_28](end_span).</li>
-                    <li><strong>Independencia Temprana:</strong> Herramientas de supervivencia[span_29](start_span)[span_29](end_span)[span_30](start_span)[span_30](end_span).</li>
+                <h3 style="color: var(--primary-blue); font-size: 1.5rem; margin-bottom: 1rem;">Junior Chef: El Caos Organizado</h3>
+                <p style="font-size: 0.95rem;">No enseñamos recetas infantiles. Adaptamos un oficio estricto al nivel infantil.</p>
+                <ul style="margin-top: 1rem; padding-left: 1.5rem; font-size: 0.95rem;">
+                    <li><strong>Mentalidad de Brigada:</strong> Colaboración estratégica.</li>
+                    <li><strong>Resultados Tangibles:</strong> Seguridad personal inquebrantable.</li>
+                    <li><strong>Independencia Temprana:</strong> Herramientas de supervivencia.</li>
                 </ul>
             </div>
             
             <div class="card reveal">
-                <h3 style="color: var(--primary-blue); font-size: 1.8rem; margin-bottom: 1rem;">Diplomados Profesionales[span_31](start_span)[span_31](end_span)</h3>
-                <p>Para jóvenes y adultos que buscan ingresos extras o la excelencia profesional[span_32](start_span)[span_32](end_span).</p>
-                <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                    <li><strong>Excelencia Culinaria:</strong> Gastronomía, repostería y panadería[span_33](start_span)[span_33](end_span).</li>
-                    <li><strong>Flexibilidad Estratégica:</strong> Horarios adaptables[span_34](start_span)[span_34](end_span).</li>
-                    <li><strong>Todo Incluido:</strong> Materiales, insumos y uniforme desde el primer día[span_35](start_span)[span_35](end_span).</li>
+                <h3 style="color: var(--primary-blue); font-size: 1.5rem; margin-bottom: 1rem;">Diplomados Profesionales</h3>
+                <p style="font-size: 0.95rem;">Para jóvenes y adultos que buscan ingresos extras o la excelencia profesional.</p>
+                <ul style="margin-top: 1rem; padding-left: 1.5rem; font-size: 0.95rem;">
+                    <li><strong>Excelencia Culinaria:</strong> Gastronomía y repostería.</li>
+                    <li><strong>Flexibilidad Estratégica:</strong> Horarios adaptables.</li>
+                    <li><strong>Todo Incluido:</strong> Materiales y uniforme desde el primer día.</li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- 4. MASTER CLASSES (FLASHCARDS INNOVADORAS) -->
+    <!-- 4. MASTER CLASSES (FLASHCARDS) -->
     <section id="master-classes" style="background-color: var(--primary-blue); max-width: 100%;">
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <h2 class="section-title reveal" style="color: var(--pure-white);">Dominando las Tendencias Globales[span_36](start_span)[span_36](end_span)</h2>
-            <p class="reveal" style="color: var(--pure-white); text-align: center; margin-bottom: 3rem;">Master Classes intensivas de 1 día que conectan con la vanguardia gastronómica mundial. <span style="color: var(--accent-yellow);">Pasa el cursor sobre las tarjetas para descubrir.</span>[span_37](start_span)[span_37](end_span)</p>
+        <div style="max-width: 1100px; margin: 0 auto;">
+            <h2 class="section-title reveal" style="color: var(--pure-white);">Dominando las Tendencias Globales</h2>
+            <p class="reveal" style="color: var(--pure-white); text-align: center; margin-bottom: 3rem; font-weight: 300;">Master Classes intensivas. Pasa el cursor sobre las tarjetas para descubrir.</p>
             
             <div class="grid-3">
                 <!-- Flashcard 1 -->
                 <div class="flip-card reveal">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <i class="fas fa-question-circle" style="font-size: 3rem; color: var(--accent-yellow); margin-bottom: 1rem;"></i>
+                            <i class="fas fa-question-circle" style="font-size: 2.5rem; color: var(--pure-white); margin-bottom: 1rem; opacity: 0.8;"></i>
                             <h3>¿Qué tendencia crujiente domina la panadería internacional?</h3>
                         </div>
                         <div class="flip-card-back">
                             <img src="https://images.unsplash.com/photo-1621236378699-8597faf6a176?auto=format&fit=crop&w=500&q=80" alt="Rollos de panadería">
                             <div class="content">
-                                <h3 style="color: var(--accent-yellow);">El Auténtico New York Roll[span_38](start_span)[span_38](end_span)</h3>
-                                <p style="font-size: 0.9rem;">Crujiente, dominando la panadería.[span_39](start_span)[span_39](end_span)</p>
+                                <h3>El Auténtico New York Roll</h3>
+                                <p style="font-size: 0.85rem; color: #555;">Crujiente, dominando la panadería.</p>
                             </div>
                         </div>
                     </div>
@@ -393,14 +434,14 @@
                 <div class="flip-card reveal">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <i class="fas fa-question-circle" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
+                            <i class="fas fa-question-circle" style="font-size: 2.5rem; color: var(--pure-white); margin-bottom: 1rem; opacity: 0.8;"></i>
                             <h3>¿Cuál es el secreto de la masa perfecta y la fermentación profesional?</h3>
                         </div>
                         <div class="flip-card-back">
                             <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500&q=80" alt="Pizza horneada">
                             <div class="content">
-                                <h3 style="color: var(--accent-green);">Master Class de Pizza[span_40](start_span)[span_40](end_span)</h3>
-                                <p style="font-size: 0.9rem;">Masa perfecta, fermentación y horneado.[span_41](start_span)[span_41](end_span)</p>
+                                <h3>Master Class de Pizza</h3>
+                                <p style="font-size: 0.85rem; color: #555;">Masa perfecta y horneado ideal.</p>
                             </div>
                         </div>
                     </div>
@@ -410,14 +451,14 @@
                 <div class="flip-card reveal">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <i class="fas fa-question-circle" style="font-size: 3rem; color: var(--accent-red); margin-bottom: 1rem;"></i>
+                            <i class="fas fa-question-circle" style="font-size: 2.5rem; color: var(--pure-white); margin-bottom: 1rem; opacity: 0.8;"></i>
                             <h3>¿Cómo llevar la tradición mexicana a la alta gastronomía?</h3>
                         </div>
                         <div class="flip-card-back">
                             <img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?auto=format&fit=crop&w=500&q=80" alt="Pan dulce">
                             <div class="content">
-                                <h3 style="color: var(--accent-red);">Panadería de Vanguardia[span_42](start_span)[span_42](end_span)</h3>
-                                <p style="font-size: 0.9rem;">Conchas gourmet listas para emprender.[span_43](start_span)[span_43](end_span)</p>
+                                <h3>Panadería de Vanguardia</h3>
+                                <p style="font-size: 0.85rem; color: #555;">Conchas gourmet para emprender.</p>
                             </div>
                         </div>
                     </div>
@@ -430,33 +471,49 @@
     <section id="resenas">
         <div class="grid-2">
             <div class="reveal">
-                <h2 style="color: var(--primary-blue); margin-bottom: 1rem;">Liderazgo y Compromiso Social[span_44](start_span)[span_44](end_span)</h2>
-                <p><strong>Inclusión Activa:</strong> La verdadera excelencia culinaria no deja a nadie atrás. ECUC es un ecosistema inclusivo que integra la responsabilidad social con el rigor técnico[span_45](start_span)[span_45](end_span).</p>
+                <h2 style="color: var(--primary-blue); font-size: 1.8rem; margin-bottom: 1rem;">Liderazgo y Compromiso Social</h2>
+                <p style="font-size: 0.95rem;"><strong>Inclusión Activa:</strong> La verdadera excelencia culinaria no deja a nadie atrás. ECUC es un ecosistema inclusivo que integra la responsabilidad social con el rigor técnico.</p>
                 <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80" alt="Chef enseñando" class="img-delicious" style="margin-top: 1.5rem;">
             </div>
-            <div class="reveal" style="background: var(--bg-light); padding: 2rem; border-radius: 15px;">
-                <h2 style="color: var(--primary-blue); margin-bottom: 1rem;">Transparencia Total[span_46](start_span)[span_46](end_span)[span_47](start_span)[span_47](end_span)</h2>
-                <p>No imagines nuestro modelo, evalúalo. Te invitamos a evaluarlo en tiempo real[span_48](start_span)[span_48](end_span)[span_49](start_span)[span_49](end_span).</p>
-                <ul style="list-style: none; margin-top: 1.5rem;">
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-mobile-alt" style="color: var(--accent-yellow); font-size: 1.5rem; margin-right: 10px;"></i> <strong>Neuroaprendizaje Abierto:</strong> Exponemos el trabajo real en redes sociales[span_50](start_span)[span_50](end_span)[span_51](start_span)[span_51](end_span).</li>
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-star" style="color: var(--accent-yellow); font-size: 1.5rem; margin-right: 10px;"></i> <strong>Ver para Creer:</strong> Calificados con 5 estrellas[span_52](start_span)[span_52](end_span).</li>
-                    <li><i class="fas fa-map-marker-alt" style="color: var(--accent-red); font-size: 1.5rem; margin-right: 10px;"></i> <strong>Presencia:</strong> Sedes Revolución y Paseos del Sol[span_53](start_span)[span_53](end_span)[span_54](start_span)[span_54](end_span).</li>
+            <div class="reveal" style="background: var(--bg-light); padding: 2rem; border-radius: 12px; border: 1px solid #eaeaea;">
+                <h2 style="color: var(--primary-blue); font-size: 1.8rem; margin-bottom: 1rem;">Transparencia Total</h2>
+                <p style="font-size: 0.95rem;">No imagines nuestro modelo. Te invitamos a evaluarlo en tiempo real.</p>
+                <ul style="list-style: none; margin-top: 1.5rem; font-size: 0.95rem;">
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-mobile-alt" style="color: var(--primary-blue); font-size: 1.2rem; margin-right: 10px;"></i> <strong>Neuroaprendizaje Abierto:</strong> Exponemos el trabajo real en redes sociales.</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-star" style="color: var(--primary-blue); font-size: 1.2rem; margin-right: 10px;"></i> <strong>Ver para Creer:</strong> Calificados con 5 estrellas.</li>
+                    <li><i class="fas fa-map-marker-alt" style="color: var(--primary-blue); font-size: 1.2rem; margin-right: 10px;"></i> <strong>Presencia:</strong> Sedes Revolución y Paseos del Sol.</li>
                 </ul>
             </div>
         </div>
     </section>
 
     <!-- FOOTER / CONTACTO -->
-    <footer id="contacto" style="background-color: var(--primary-blue); color: var(--pure-white); padding: 4rem 2rem; text-align: center;">
-        <h3 class="serif-font reveal" style="font-size: 2rem; color: var(--accent-yellow); margin-bottom: 1rem;">Tu lugar en el laboratorio te espera[span_55](start_span)[span_55](end_span).</h3>
-        <p class="reveal">Transforma el caos en excelencia. Contáctanos para disponibilidad inmediata[span_56](start_span)[span_56](end_span).</p>
-        <a href="#" class="reveal" style="display: inline-block; margin-top: 2rem; background-color: var(--accent-green); color: var(--pure-white); padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.2rem; transition: transform 0.3s;"><i class="fab fa-whatsapp"></i> Iniciar Chat</a>
+    <footer id="contacto" style="background-color: #f1f5f9; padding: 4rem 2rem; text-align: center; border-top: 1px solid #e2e8f0;">
+        <h3 class="serif-font reveal" style="font-size: 1.8rem; color: var(--primary-blue); margin-bottom: 1rem;">Tu lugar en el laboratorio te espera.</h3>
+        <p class="reveal" style="font-size: 0.95rem; color: #555;">Transforma el caos en excelencia. Contáctanos para disponibilidad inmediata.</p>
+        <a href="#" class="reveal" style="display: inline-block; margin-top: 1.5rem; background-color: var(--primary-blue); color: var(--pure-white); padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-size: 1rem; transition: opacity 0.3s;"><i class="fab fa-whatsapp"></i> Iniciar Chat</a>
     </footer>
 
-    <!-- SCRIPT DE ANIMACIONES -->
+    <!-- SCRIPT DE ANIMACIONES Y MENÚ MÓVIL -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Animación al hacer Scroll (Intersection Observer)
+            
+            // 1. Lógica del Menú Hamburguesa
+            const menuToggle = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // Cerrar menú al hacer clic en un enlace (en móvil)
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // 2. Animación al hacer Scroll (Intersection Observer)
             const observerOptions = {
                 root: null,
                 rootMargin: '0px 0px -10% 0px',
