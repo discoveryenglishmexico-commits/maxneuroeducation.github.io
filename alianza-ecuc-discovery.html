@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovery MAX & ECUC - El Laboratorio Comestible</title>
+    
+    <!-- Fuentes Elegantes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Íconos (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           1. VARIABLES DE COLOR (ALIANZA)
+           ========================================= */
+        :root {
+            --bg-discovery: #0a0e27; /* Azul Discovery */
+            --bg-ecuc: #121212;      /* Negro Culinario */
+            --accent-gold: #d4af37;  /* Dorado ECUC */
+            --accent-coral: #f26b5b; /* Coral Discovery */
+            --text-light: #f8f9fa;
+            --text-dark: #222222;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--text-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, .quote {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* =========================================
+           2. INTRO DE VIDEO A PANTALLA COMPLETA
+           ========================================= */
+        .video-header {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        .video-header video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            opacity: 0.6; /* Oscurece el video para que el texto resalte */
+        }
+
+        .video-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--text-light);
+            padding: 0 2rem;
+        }
+
+        .video-content h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+        }
+
+        /* =========================================
+           3. ESTRUCTURA DE SECCIONES
+           ========================================= */
+        section {
+            padding: 6rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .bg-dark {
+            background: linear-gradient(135deg, var(--bg-discovery) 0%, var(--bg-ecuc) 100%);
+            color: var(--text-light);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 3rem;
+            color: var(--bg-discovery);
+        }
+
+        .bg-dark h2 {
+            color: var(--accent-gold);
+        }
+
+        /* =========================================
+           4. GRIDS Y TARJETAS
+           ========================================= */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 3rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            text-align: left;
+            border-bottom: 4px solid var(--accent-gold);
+        }
+
+        .card-dark {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            border-bottom: 4px solid var(--accent-coral);
+        }
+
+        /* Iconos */
+        .icon-large {
+            font-size: 3.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        /* Imágenes */
+        .img-fluid {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Tabla de Comparación */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .comparison-table th {
+            background-color: var(--bg-discovery);
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+        }
+        .comparison-table td:first-child { font-weight: bold; color: var(--bg-discovery); }
+
+        /* =========================================
+           5. ANIMACIONES DE ENSAMBLAJE
+           ========================================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. INTRO DE VIDEO -->
+    <header class="video-header">
+        <!-- Reemplaza el src con tu video de 20 segundos -->
+        <video autoplay muted loop playsinline>
+            <source src="ruta-a-tu-video-intro.mp4" type="video/mp4">
+        </video>
+        
+        <div class="video-content">
+            <h1 class="reveal">El Laboratorio Comestible</h1>
+            <p class="reveal delay-1" style="font-size: 1.5rem; max-width: 800px; margin: 0 auto;">Redefiniendo la educación a través de la ciencia, la resiliencia y el arte culinario[cite: 6, 7].</p>
+            <div class="reveal delay-2" style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem; align-items: center;">
+                <span style="font-weight: bold; letter-spacing: 2px;">DISCOVERY MAX</span>
+                <span style="color: var(--accent-gold);">×</span>
+                <span style="font-weight: bold; letter-spacing: 2px;">ECUC</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. QUOTE PRINCIPAL -->
+    <section>
+        <div class="container reveal">
+            <h2 class="quote" style="font-size: clamp(2rem, 5vw, 4rem); font-style: italic; margin: 0;">"No solo formamos chefs. Construimos los líderes, emprendedores y solucionadores de problemas del mañana[cite: 6, 7]."</h2>
+        </div>
+    </section>
+
+    <!-- 3. EL MITO VS LA REALIDAD -->
+    <section class="bg-dark">
+        <div class="container">
+            <h2 class="reveal">Más allá de jugar a la comidita[cite: 7]</h2>
+            <div class="grid-2">
+                <div class="card card-dark reveal delay-1">
+                    <h3 style="color: #d32f2f; margin-bottom: 1rem;">EL MITO</h3>
+                    <p><strong>La expectativa:</strong> Una actividad recreativa superficial o una guardería glorificada para mantener a los alumnos ocupados[cite: 7].</p>
+                    <p><strong>El resultado:</strong> Imitación sin fundamentos y tolerancia a la mediocridad[cite: 7].</p>
+                </div>
+                <div class="card card-dark reveal delay-2" style="border-bottom-color: var(--accent-gold);">
+                    <h3 style="color: var(--accent-gold); margin-bottom: 1rem;">LA REALIDAD ECUC</h3>
+                    <p><strong>El estándar:</strong> Un campo de entrenamiento para la vida real, donde la gastronomía es una ciencia aplicada que exige respeto absoluto por la materia prima[cite: 7].</p>
+                    <p><strong>El resultado:</strong> Individuos que transforman el caos en orden a través del método[cite: 7].</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. LA FÓRMULA DEL LABORATORIO -->
+    <section>
+        <div class="container">
+            <h2 class="reveal">La Fórmula del Laboratorio Comestible[cite: 6, 7]</h2>
+            <p class="reveal delay-1" style="font-size: 1.2rem; margin-bottom: 4rem;">En el siglo XXI, la integración de la gastronomía con una mentalidad emprendedora es un imperativo estratégico[cite: 6, 7].</p>
+            
+            <div class="grid-3">
+                <div class="reveal delay-1">
+                    <i class="fas fa-balance-scale icon-large"></i>
+                    <h3>Precisión Absoluta</h3>
+                    <p>Respeto estricto a procesos, gramajes y tiempos innegociables[cite: 6, 7].</p>
+                </div>
+                <div class="reveal delay-2" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <i class="fas fa-plus" style="font-size: 3rem; color: var(--accent-coral); margin-bottom: 1rem;"></i>
+                    <i class="fas fa-lightbulb icon-large"></i>
+                    <h3>Agilidad Creativa</h3>
+                    <p>Capacidad de resolver crisis y adaptar el método en tiempo real[cite: 6, 7].</p>
+                </div>
+                <div class="reveal delay-3" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <i class="fas fa-equals" style="font-size: 3rem; color: var(--bg-discovery); margin-bottom: 1rem;"></i>
+                    <i class="fas fa-bread-slice icon-large"></i>
+                    <h3>Éxito Tangible</h3>
+                    <p>Un experimento científico riguroso que, al final, te puedes comer[cite: 6, 7].</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. EL ADN (CICLO DE CRECIMIENTO) -->
+    <section class="bg-dark">
+        <div class="container">
+            <h2 class="reveal">El ADN de ECUC: Un ciclo de crecimiento[cite: 6, 7]</h2>
+            <p class="reveal delay-1" style="margin-bottom: 3rem;">Nuestros valores son herramientas operativas que gestionan la frustración y construyen el éxito profesional mediante la dinámica de una brigada real[cite: 6, 7].</p>
+            
+            <div class="grid-3">
+                <div class="card card-dark reveal delay-1">
+                    <h3 style="color: var(--accent-gold);">1. Disciplina Científica[cite: 6, 7]</h3>
+                    <p><strong>El concepto:</strong> Tiempos de horneado y medidas innegociables[cite: 6, 7].</p>
+                    <p><strong>La práctica:</strong> Atención microscópica al detalle y al proceso químico[cite: 6, 7].</p>
+                </div>
+                <div class="card card-dark reveal delay-2">
+                    <h3 style="color: var(--accent-gold);">2. Resiliencia Activa[cite: 6, 7]</h3>
+                    <p><strong>El concepto:</strong> El error no es un fracaso, es una lección visual directa[cite: 6, 7].</p>
+                    <p><strong>La práctica:</strong> Ante una salsa cortada, no hay rendición; hay análisis y ajuste[cite: 6, 7].</p>
+                </div>
+                <div class="card card-dark reveal delay-3">
+                    <h3 style="color: var(--accent-gold);">3. Autonomía Real[cite: 6, 7]</h3>
+                    <p><strong>El concepto:</strong> Dominar el fuego y el método otorga independencia[cite: 6, 7].</p>
+                    <p><strong>La práctica:</strong> Herramientas de supervivencia que forjan un carácter inquebrantable para la vida adulta[cite: 6, 7].</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. LA CURVA DE RESILIENCIA -->
+    <section>
+        <div class="container">
+            <h2 class="reveal">La Curva de Resiliencia: Salvar el Platillo[cite: 6, 7]</h2>
+            <p class="reveal delay-1" style="margin-bottom: 3rem;">A diferencia de un deporte donde el juego continúa tras un error, el horno no perdona. Aquí, las consecuencias son visuales, inmediatas y exigen una solución[cite: 6, 7].</p>
+            
+            <div class="grid-2 reveal delay-2" style="background: var(--bg-light); padding: 2rem; border-radius: 10px;">
+                <div>
+                    <h3 style="color: var(--bg-discovery);"><i class="fas fa-play-circle"></i> Inicio</h3>
+                    <p>Planificación y preparación de ingredientes[cite: 6, 7].</p>
+                </div>
+                <div>
+                    <h3 style="color: #d32f2f;"><i class="fas fa-exclamation-triangle"></i> La Crisis</h3>
+                    <p>El pastel se hunde o la salsa se corta. (El valle de frustración)[cite: 6, 7].</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--accent-coral);"><i class="fas fa-sync-alt"></i> El Pivote ECUC</h3>
+                    <p>Intervención metodológica: El alumno analiza el error químico y ajusta el proceso[cite: 6, 7].</p>
+                </div>
+                <div>
+                    <h3 style="color: #2e7d32;"><i class="fas fa-trophy"></i> El Triunfo</h3>
+                    <p>El platillo es salvado. Se genera neuroaprendizaje profundo y seguridad personal[cite: 6, 7].</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. EL NUEVO ESTÁNDAR EDUCATIVO (TABLA) -->
+    <section class="bg-dark">
+        <div class="container">
+            <h2 class="reveal">El Nuevo Estándar Educativo[cite: 6, 7]</h2>
+            <p class="reveal delay-1">La convergencia de ciencia, emprendimiento y valores crea un perfil capaz de ver soluciones donde otros ven problemas[cite: 6, 7].</p>
+            
+            <div class="reveal delay-2" style="overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Enfoque</th>
+                            <th>Educación Gastronómica Tradicional[cite: 6, 7]</th>
+                            <th style="background: var(--accent-gold); color: var(--bg-discovery);">Modelo ECUC (Innovación + Ciencia)[cite: 7]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Metodología</td>
+                            <td>Pasatiempo o actividad recreativa[cite: 6, 7] <br> Seguimiento de recetario (Imitación)[cite: 6, 7]</td>
+                            <td>Centro de desarrollo de habilidades de vida[cite: 6, 7] <br> Aplicación del Método Científico y Técnico[cite: 6, 7]</td>
+                        </tr>
+                        <tr>
+                            <td>Manejo del Error</td>
+                            <td>Frustración y abandono[cite: 6, 7]</td>
+                            <td>Resiliencia activa: Salvar el plato[cite: 6, 7]</td>
+                        </tr>
+                        <tr>
+                            <td>Perfil de Egreso</td>
+                            <td>Conocimiento técnico local[cite: 6, 7]</td>
+                            <td>Autonomía, confianza y mentalidad de brigada profesional[cite: 6, 7]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. PROGRAMAS (JUNIOR CHEF Y DIPLOMADOS) -->
+    <section>
+        <div class="container">
+            <h2 class="reveal">Nuestros Programas[cite: 6, 7]</h2>
+            
+            <!-- Junior Chef -->
+            <div class="card reveal delay-1" style="margin-bottom: 3rem; background: var(--bg-light);">
+                <h3 style="color: var(--bg-discovery); font-size: 2rem;">Programa Junior Chef: El Caos Organizado[cite: 6, 7]</h3>
+                <p>No enseñamos recetas infantiles. Adaptamos un oficio profesional estricto al nivel infantil[cite: 6, 7].</p>
+                <div class="grid-3" style="margin-top: 2rem;">
+                    <div>
+                        <h4 style="color: var(--accent-coral);">1. Mentalidad de Brigada</h4>
+                        <p>Los niños operan bajo una estructura de cocina real, aprendiendo colaboración estratégica bajo presión[cite: 6, 7].</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-coral);">2. Resultados Tangibles</h4>
+                        <p>La satisfacción de crear algo valioso desde cero fomenta una seguridad personal inquebrantable[cite: 6, 7].</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-coral);">3. Independencia Temprana</h4>
+                        <p>Dotamos a los niños de una herramienta de supervivencia básica, cambiando totalmente su relación con el entorno[cite: 6, 7].</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diplomados -->
+            <div class="card reveal delay-2">
+                <h3 style="color: var(--accent-gold); font-size: 2rem;">Diplomados: Transformando la Pasión en Ventaja Competitiva[cite: 7]</h3>
+                <p>Para jóvenes y adultos que buscan ingresos extras o la excelencia profesional. Convertimos el amor por los postres en una oportunidad real para crecer y liderar proyectos productivos[cite: 7].</p>
+                <div class="grid-3" style="margin-top: 2rem;">
+                    <div>
+                        <h4>Excelencia Culinaria</h4>
+                        <p>Estudia de la mano de los mejores chefs de la industria[cite: 7].</p>
+                    </div>
+                    <div>
+                        <h4>Flexibilidad Estratégica</h4>
+                        <p>Costos accesibles y horarios adaptables (Sábados en Sede Revolución, Lunes en Sede Paseos del Sol)[cite: 7].</p>
+                    </div>
+                    <div>
+                        <h4>Modelo Todo Incluido</h4>
+                        <p>Inmersión total sin fricciones: Materiales, insumos y uniforme proporcionados desde el primer día[cite: 7].</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. MASTER CLASSES -->
+    <section class="bg-dark">
+        <div class="container">
+            <h2 class="reveal">Dominando las Tendencias Globales[cite: 7]</h2>
+            <p class="reveal delay-1">Nuestras Master Classes de 1 día (sin conocimientos previos requeridos) te conectan con la vanguardia gastronómica mundial[cite: 7].</p>
+            
+            <div class="grid-3">
+                <div class="card card-dark reveal delay-1">
+                    <img src="https://placehold.co/400x250/121212/d4af37?text=Foto+New+York+Roll" alt="New York Roll" class="img-fluid">
+                    <h3 style="color: var(--accent-gold);">El Auténtico New York Roll[cite: 7]</h3>
+                    <p>Crujiente, con rellenos en tendencia, dominando la panadería internacional[cite: 7].</p>
+                </div>
+                <div class="card card-dark reveal delay-2">
+                    <img src="https://placehold.co/400x250/121212/d4af37?text=Foto+Pizza" alt="Pizza" class="img-fluid">
+                    <h3 style="color: var(--accent-gold);">Master Class de Pizza[cite: 7]</h3>
+                    <p>Masa perfecta, fermentación y horneado profesional[cite: 7].</p>
+                </div>
+                <div class="card card-dark reveal delay-3">
+                    <img src="https://placehold.co/400x250/121212/d4af37?text=Foto+Concha" alt="Concha" class="img-fluid">
+                    <h3 style="color: var(--accent-gold);">Panadería Mexicana de Vanguardia[cite: 7]</h3>
+                    <p>Conchas rellenas listas para emprender[cite: 7].</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. LIDERAZGO Y TRANSPARENCIA -->
+    <section>
+        <div class="container">
+            <div class="grid-2">
+                <div class="reveal delay-1" style="text-align: left;">
+                    <h2 style="margin-bottom: 1rem; text-align: left;">Liderazgo y Compromiso Social[cite: 6]</h2>
+                    <p><strong>Inclusión Activa:</strong> La verdadera excelencia culinaria no deja a nadie atrás. ECUC es un ecosistema inclusivo que integra la responsabilidad social con el rigor técnico[cite: 6].</p>
+                    <p><strong>Gastronomía con Propósito:</strong> Creación de iniciativas como el recetario benéfico 'Detrás de la cocina', demostrando que la empatía y la alta cocina comparten la misma raíz[cite: 6].</p>
+                </div>
+                <div class="reveal delay-2" style="text-align: left; background: var(--bg-light); padding: 2rem; border-radius: 10px;">
+                    <h2 style="margin-bottom: 1rem; text-align: left; font-size: 2rem;">Transparencia Total: El Laboratorio en Vivo[cite: 6, 7]</h2>
+                    <p>No tienes que imaginar cómo funciona nuestro modelo. Te invitamos a evaluarlo en tiempo real[cite: 7].</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1rem;"><i class="fas fa-eye" style="color: var(--accent-coral);"></i> <strong>Neuroaprendizaje Abierto:</strong> A través de nuestras redes sociales exponemos el trabajo real de nuestras brigadas[cite: 6, 7].</li>
+                        <li style="margin-bottom: 1rem;"><i class="fas fa-star" style="color: var(--accent-coral);"></i> <strong>Ver para Creer:</strong> Evalúa el caos organizado y convéncete de nuestra metodología antes de inscribirte[cite: 6, 7].</li>
+                        <li><i class="fas fa-map-marker-alt" style="color: var(--accent-coral);"></i> <strong>Presencia Estratégica:</strong> Operando con excelencia en nuestras dos sedes de Jalisco: Revolución (Guadalajara) y Paseos del Sol (Zapopan)[cite: 7].</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. CIERRE Y CONTACTO -->
+    <section class="bg-dark" style="text-align: center;">
+        <div class="container reveal">
+            <h2 class="quote" style="font-size: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: 3rem; color: white;">"Si alguien logra dominar una paciencia férrea frente a un horno o desarrolla la creatividad para salvar un platillo desde la infancia... ¿cómo se traducirá esa misma capacidad de adaptación cuando tenga que lidiar con crisis reales o resolver problemas complejos en su vida adulta?[cite: 7]"</h2>
+            
+            <h3 style="color: var(--accent-gold); font-size: 2rem; margin-bottom: 1rem;">Tu lugar en el laboratorio te espera[cite: 7].</h3>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Transforma el caos en excelencia. Contáctanos vía WhatsApp para disponibilidad inmediata[cite: 6, 7].</p>
+            
+            <a href="#" style="display: inline-block; background-color: #25D366; color: white; padding: 1rem 3rem; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.2rem; transition: transform 0.3s;"><i class="fab fa-whatsapp"></i> Contactar por WhatsApp</a>
+        </div>
+    </section>
+
+    <!-- =========================================
+         6. SCRIPT PARA LAS ANIMACIONES
+         ========================================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -10% 0px', 
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
