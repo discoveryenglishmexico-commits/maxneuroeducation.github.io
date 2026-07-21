@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenador Ocular - Flexor Visual DALPA</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        dalpa: {
+                            light: '#338cd8',
+                            DEFAULT: '#0072CE',
+                            dark: '#005ba5',
+                        },
+                        cream: '#FDF6E3',
+                        darkbg: '#121212',
+                        darkcard: '#1e1e1e'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Transiciones suaves para cambio de tema */
+        body { transition: background-color 0.3s ease, color 0.3s ease; }
+        .theme-cream { background-color: #FDF6E3; color: #1a202c; }
+        .theme-dark { background-color: #121212; color: #e2e8f0; }
+        .theme-light { background-color: #ffffff; color: #1a202c; }
+
+        .theme-dark .panel { background-color: #1e1e1e; border-color: #333; }
+        .theme-cream .panel { background-color: #f7eed5; border-color: #e2d8b8; }
+        .theme-light .panel { background-color: #f8fafc; border-color: #e2e8f0; }
+
+        /* Estilos del Reader */
+        #reader-container {
+            position: relative;
+            height: 60vh;
+            overflow-y: hidden; /* Ocultar scroll, JS lo moverá */
+            mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+        }
+
+        .word-block {
+            opacity: 0.15;
+            transition: all 0.1s ease;
+            transform: scale(0.95);
+        }
+
+        .theme-dark .word-block { opacity: 0.2; }
+
+        .word-block.active {
+            opacity: 1 !important;
+            transform: scale(1.05);
+            font-weight: 600;
+            color: #0072CE;
+        }
+
+        .theme-dark .word-block.active { color: #338cd8; }
+
+        /* Modo 2: Punto de fijación */
+        .fixation-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444; /* Rojo brillante */
+            border-radius: 50%;
+            margin: 0 2rem;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+        }
+
+        /* Modo 3: Línea central */
+        .center-line-guide {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: repeating-linear-gradient(to bottom, #0072CE80, #0072CE80 10px, transparent 10px, transparent 20px);
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        /* Custom Scrollbar para el textarea */
+        textarea::-webkit-scrollbar { width: 6px; }
+        textarea::-webkit-scrollbar-track { background: transparent; }
+        textarea::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .theme-dark textarea::-webkit-scrollbar-thumb { background: #475569; }
+
+        /* Modal blur */
+        .glass-modal {
+            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.6);
+        }
+    </style>
+</head>
+<body class="theme-light antialiased min-h-screen flex flex-col font-sans">
+
+    <!-- Navbar -->
+    <header class="w-full border-b px-6 py-4 flex items-center justify-between panel z-10 transition-colors">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded bg-dalpa flex items-center justify-center text-white font-bold text-xl">D</div>
+            <h1 class="text-xl font-bold tracking-tight">Flexor Visual <span class="text-dalpa">DALPA</span></h1>
+        </div>
+        <div class="flex gap-2">
+            <button onclick="setTheme('light')" class="w-8 h-8 rounded-full bg-white border border-gray-300 shadow-sm hover:scale-110 transition-transform" title="Modo Claro"></button>
+            <button onclick="setTheme('cream')" class="w-8 h-8 rounded-full bg-cream border border-gray-300 shadow-sm hover:scale-110 transition-transform" title="Anti-Reflejo"></button>
+            <button onclick="setTheme('dark')" class="w-8 h-8 rounded-full bg-darkbg border border-gray-600 shadow-sm hover:scale-110 transition-transform" title="Modo Oscuro"></button>
+        </div>
+    </header>
+
+    <main class="flex-1 flex flex-col lg:flex-row w-full max-w-screen-2xl mx-auto overflow-hidden">
+        
+        <!-- Sidebar Controles -->
+        <aside class="w-full lg:w-80 panel border-r p-6 flex flex-col gap-6 overflow-y-auto">
+            
+            <!-- Entrada de Texto -->
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-semibold uppercase tracking-wider text-gray-500">Texto de Práctica</label>
+                <textarea id="textInput" rows="4" class="w-full p-3 rounded-xl border bg-transparent text-sm focus:ring-2 focus:ring-dalpa focus:border-dalpa outline-none resize-none transition-colors" placeholder="Pega tu texto aquí...">La neuroeducación transforma la manera en que aprendemos. Al comprender cómo funciona el cerebro durante el proceso de lectura, podemos aplicar técnicas como la reducción de fijaciones y la expansión de la visión periférica. El Flexor Visual DALPA está diseñado específicamente para romper los malos hábitos de lectura tradicional, como la subvocalización y las regresiones constantes. Entrenar tus ojos unos minutos al día te permitirá absorber información a la velocidad del pensamiento.</textarea>
+            </div>
+
+            <!-- Modos -->
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-semibold uppercase tracking-wider text-gray-500">Modo de Entrenamiento</label>
+                <div class="grid grid-cols-1 gap-2">
+                    <button onclick="setMode(1)" id="btnMode1" class="mode-btn w-full text-left px-4 py-3 rounded-xl border-2 border-dalpa bg-dalpa/10 text-dalpa font-semibold transition-all">
+                        1. Flexor Vertical
+                        <span class="block text-xs font-normal opacity-80 mt-1">Columna rápida anti-regresión</span>
+                    </button>
+                    <button onclick="setMode(2)" id="btnMode2" class="mode-btn w-full text-left px-4 py-3 rounded-xl border-2 border-transparent hover:border-gray-300 font-semibold transition-all">
+                        2. Visión Periférica
+                        <span class="block text-xs font-normal opacity-80 mt-1">Expansión con punto central</span>
+                    </button>
+                    <button onclick="setMode(3)" id="btnMode3" class="mode-btn w-full text-left px-4 py-3 rounded-xl border-2 border-transparent hover:border-gray-300 font-semibold transition-all">
+                        3. Enfoque Central
+                        <span class="block text-xs font-normal opacity-80 mt-1">Línea guía geométrica</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sliders -->
+            <div class="flex flex-col gap-5 mt-2">
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center">
+                        <label class="text-sm font-semibold text-gray-500">Velocidad</label>
+                        <span id="speedValue" class="text-dalpa font-bold">300 PPM</span>
+                    </div>
+                    <input type="range" id="speedSlider" min="100" max="1000" step="50" value="300" class="w-full accent-dalpa h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center">
+                        <label class="text-sm font-semibold text-gray-500">Tamaño de Fuente</label>
+                        <span id="fontValue" class="text-sm">Mediana</span>
+                    </div>
+                    <input type="range" id="fontSlider" min="20" max="64" step="4" value="32" class="w-full accent-dalpa h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="mt-auto pt-6 flex gap-3">
+                <button id="btnStart" onclick="toggleTraining()" class="flex-1 bg-dalpa hover:bg-dalpa-dark text-white font-bold py-4 rounded-xl shadow-lg shadow-dalpa/30 transition-all transform hover:-translate-y-1">
+                    INICIAR
+                </button>
+                <button id="btnReset" onclick="resetTraining()" class="px-4 bg-gray-200 text-gray-700 hover:bg-gray-300 font-bold rounded-xl transition-colors hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Área de Lectura Principal -->
+        <section class="flex-1 flex items-center justify-center p-8 relative">
+            <div id="reader-container" class="w-full max-w-3xl flex flex-col items-center pt-[25vh] pb-[35vh]">
+                <!-- El contenido dinámico se inyectará aquí -->
+                <div class="text-center text-gray-400 opacity-50 flex flex-col items-center justify-center h-full gap-4">
+                    <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                    <p class="text-lg">Configura tu entrenamiento y presiona INICIAR</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Launch Marketing CTA -->
+    <div id="marketingModal" class="fixed inset-0 glass-modal z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-500">
+        <div class="bg-white dark:bg-darkcard w-full max-w-lg rounded-3xl p-10 text-center shadow-2xl mx-4 transform scale-95 transition-transform duration-500 delay-100" id="modalContent">
+            <div class="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">¡Excelente entrenamiento!</h2>
+            <p class="text-gray-600 dark:text-gray-300 text-lg mb-8 leading-relaxed">
+                Tus ojos se están adaptando a la velocidad de la luz. <strong class="text-dalpa dark:text-dalpa-light">Este es solo el 5%</strong> de lo que aprenderás y lograrás en nuestro Curso DALPA Completo.
+            </p>
+            <a href="#" class="block w-full bg-dalpa hover:bg-dalpa-dark text-white text-lg font-bold py-4 px-8 rounded-2xl shadow-xl shadow-dalpa/40 hover:shadow-dalpa/60 transition-all transform hover:-translate-y-1 mb-4">
+                Acelerar mi Comprensión al 100% Ahora
+            </a>
+            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-sm font-semibold transition-colors">
+                Seguir practicando versión gratuita
+            </button>
+        </div>
+    </div>
+
+    <!-- Lógica de la Aplicación -->
+    <script>
+        // Estado Global
+        let state = {
+            mode: 1, // 1, 2, 3
+            wpm: 300,
+            fontSize: 32,
+            isPlaying: false,
+            blocks: [],
+            currentIndex: 0,
+            intervalId: null
+        };
+
+        const DOM = {
+            textInput: document.getElementById('textInput'),
+            container: document.getElementById('reader-container'),
+            speedSlider: document.getElementById('speedSlider'),
+            speedValue: document.getElementById('speedValue'),
+            fontSlider: document.getElementById('fontSlider'),
+            fontValue: document.getElementById('fontValue'),
+            btnStart: document.getElementById('btnStart'),
+            btnReset: document.getElementById('btnReset'),
+            modal: document.getElementById('marketingModal'),
+            modalContent: document.getElementById('modalContent')
+        };
+
+        // Configuración de Temas
+        function setTheme(theme) {
+            document.body.className = `theme-${theme} antialiased min-h-screen flex flex-col font-sans transition-colors duration-300`;
+            const panelColors = {
+                'light': 'border-gray-200',
+                'cream': 'border-[#e2d8b8]',
+                'dark': 'border-[#333]'
+            };
+            // Las clases de Tailwind 'dark:' no se usan directamente aquí, basamos estilos en clases del body para control explícito
+        }
+
+        // Configuración de Modos (UI de Botones)
+        function setMode(modeId) {
+            if(state.isPlaying) return; // No cambiar modo mientras lee
+            state.mode = modeId;
+            
+            // UI Update
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('border-dalpa', 'bg-dalpa/10', 'text-dalpa');
+                btn.classList.add('border-transparent');
+            });
+            const activeBtn = document.getElementById(`btnMode${modeId}`);
+            activeBtn.classList.remove('border-transparent');
+            activeBtn.classList.add('border-dalpa', 'bg-dalpa/10', 'text-dalpa');
+            
+            prepareText(); // Re-parsear texto con reglas del nuevo modo
+        }
+
+        // Eventos de Sliders
+        DOM.speedSlider.addEventListener('input', (e) => {
+            state.wpm = e.target.value;
+            DOM.speedValue.textContent = `${state.wpm} PPM`;
+            if (state.isPlaying) {
+                // Reiniciar el timer con la nueva velocidad dinámicamente
+                clearInterval(state.intervalId);
+                startInterval();
+            }
+        });
+
+        DOM.fontSlider.addEventListener('input', (e) => {
+            state.fontSize = e.target.value;
+            let label = "Pequeña";
+            if (state.fontSize > 28) label = "Mediana";
+            if (state.fontSize > 44) label = "Grande";
+            if (state.fontSize > 56) label = "Extra Grande";
+            DOM.fontValue.textContent = label;
+            
+            // Actualizar tamaño en tiempo real si el texto está preparado
+            document.querySelectorAll('.word-block').forEach(el => {
+                el.style.fontSize = `${state.fontSize}px`;
+            });
+        });
+
+        // Procesamiento de Texto
+        function prepareText() {
+            const rawText = DOM.textInput.value.trim().replace(/\s+/g, ' ');
+            if (!rawText) return;
+            
+            const words = rawText.split(' ');
+            state.blocks = [];
+            
+            // Chunking basado en Modo
+            if (state.mode === 1) {
+                // Modo 1: 1 palabra por bloque
+                state.blocks = words.map(w => [w]);
+            } else if (state.mode === 2) {
+                // Modo 2: 2 palabras por bloque
+                for (let i = 0; i < words.length; i += 2) {
+                    state.blocks.push([words[i], words[i+1] || '']);
+                }
+            } else if (state.mode === 3) {
+                // Modo 3: 4 palabras por bloque (Renglón corto)
+                for (let i = 0; i < words.length; i += 4) {
+                    state.blocks.push(words.slice(i, i + 4));
+                }
+            }
+
+            renderBlocks();
+            state.currentIndex = 0;
+        }
+
+        // Renderizado del DOM
+        function renderBlocks() {
+            DOM.container.innerHTML = '';
+            
+            // Agregar línea guía para Modo 3
+            if (state.mode === 3) {
+                const guide = document.createElement('div');
+                guide.className = 'center-line-guide';
+                DOM.container.appendChild(guide);
+            }
+
+            state.blocks.forEach((blockWords, index) => {
+                const blockDiv = document.createElement('div');
+                blockDiv.className = 'word-block flex items-center justify-center min-h-[1.5em] my-2 w-full z-10 relative';
+                blockDiv.style.fontSize = `${state.fontSize}px`;
+                blockDiv.id = `block-${index}`;
+
+                if (state.mode === 1 || state.mode === 3) {
+                    // Texto centrado normal
+                    blockDiv.innerHTML = `<span class="text-center px-4">${blockWords.join(' ')}</span>`;
+                } else if (state.mode === 2) {
+                    // Modo 2: Visión periférica (Palabra - Punto - Palabra)
+                    blockDiv.innerHTML = `
+                        <div class="flex-1 text-right pr-4">${blockWords[0]}</div>
+                        <div class="fixation-dot"></div>
+                        <div class="flex-1 text-left pl-4">${blockWords[1]}</div>
+                    `;
+                }
+                
+                DOM.container.appendChild(blockDiv);
+            });
+        }
+
+        // Lógica de Reproducción
+        function toggleTraining() {
+            if (state.isPlaying) {
+                pauseTraining();
+            } else {
+                if (state.currentIndex >= state.blocks.length || state.blocks.length === 0) {
+                    prepareText();
+                }
+                playTraining();
+            }
+        }
+
+        function playTraining() {
+            state.isPlaying = true;
+            DOM.textInput.disabled = true;
+            DOM.btnStart.textContent = "PAUSAR";
+            DOM.btnStart.classList.replace('bg-dalpa', 'bg-red-500');
+            DOM.btnStart.classList.replace('hover:bg-dalpa-dark', 'hover:bg-red-600');
+            DOM.btnStart.classList.replace('shadow-dalpa/30', 'shadow-red-500/30');
+            DOM.btnReset.classList.remove('hidden');
+
+            startInterval();
+        }
+
+        function pauseTraining() {
+            state.isPlaying = false;
+            clearInterval(state.intervalId);
+            DOM.btnStart.textContent = "CONTINUAR";
+            resetStartButtonStyles();
+        }
+
+        function resetTraining() {
+            pauseTraining();
+            DOM.textInput.disabled = false;
+            DOM.btnStart.textContent = "INICIAR";
+            DOM.btnReset.classList.add('hidden');
+            prepareText();
+        }
+
+        function resetStartButtonStyles() {
+            DOM.btnStart.classList.replace('bg-red-500', 'bg-dalpa');
+            DOM.btnStart.classList.replace('hover:bg-red-600', 'hover:bg-dalpa-dark');
+            DOM.btnStart.classList.replace('shadow-red-500/30', 'shadow-dalpa/30');
+        }
+
+        function startInterval() {
+            // Calcular milisegundos reales basados en WPM y el tamaño del bloque
+            // Ej: 300 WPM = 5 words/sec = 200ms per word.
+            // Si bloque tiene 2 palabras (Modo 2) = 400ms per block.
+            const wordsPerMinute = parseInt(state.wpm);
+            const msPerWord = 60000 / wordsPerMinute;
+            
+            let wordsPerBlock = 1;
+            if(state.mode === 2) wordsPerBlock = 2;
+            if(state.mode === 3) wordsPerBlock = 4;
+            
+            const intervalTime = msPerWord * wordsPerBlock;
+
+            highlightBlock(); // Highlight first before interval hits
+
+            state.intervalId = setInterval(() => {
+                state.currentIndex++;
+                if (state.currentIndex >= state.blocks.length) {
+                    finishTraining();
+                } else {
+                    highlightBlock();
+                }
+            }, intervalTime);
+        }
+
+        function highlightBlock() {
+            // Remover activo previo
+            const prev = document.querySelector('.word-block.active');
+            if (prev) prev.classList.remove('active');
+
+            // Agregar activo actual
+            const currentEl = document.getElementById(`block-${state.currentIndex}`);
+            if (currentEl) {
+                currentEl.classList.add('active');
+                
+                // Centrar dinámicamente en el contenedor
+                currentEl.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        }
+
+        // Finalización y Modal
+        function finishTraining() {
+            resetTraining();
+            showModal();
+        }
+
+        function showModal() {
+            DOM.modal.classList.remove('hidden');
+            // Trigger reflow para transición
+            void DOM.modal.offsetWidth;
+            DOM.modal.classList.remove('opacity-0');
+            DOM.modalContent.classList.remove('scale-95');
+            DOM.modalContent.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            DOM.modal.classList.add('opacity-0');
+            DOM.modalContent.classList.remove('scale-100');
+            DOM.modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                DOM.modal.classList.add('hidden');
+            }, 500); // Mismo tiempo que la duración de transición
+        }
+
+        // Inicialización
+        DOM.textInput.addEventListener('input', () => {
+            if(!state.isPlaying) prepareText();
+        });
+        
+        // Setup Inicial
+        setTheme('light');
+        setMode(1);
+
+    </script>
+</body>
+</html>
