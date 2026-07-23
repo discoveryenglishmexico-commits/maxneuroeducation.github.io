@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexor Visual DALPA PRO - Entrenador de Lectura Rápida</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        dalpa: { light: '#338cd8', DEFAULT: '#0072CE', dark: '#005ba5' },
+                        surface: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f1f5f9; color: #0f172a; }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        
+        /* Contenedor de lectura */
+        #reader-window {
+            position: relative;
+            height: 60vh;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+            mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+        }
+
+        #text-scroller {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            will-change: transform;
+        }
+
+        .word-block {
+            padding: 0.5rem 1rem;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            color: #334155;
+            transition: color 0.2s;
+        }
+
+        /* Guías Visuales de los Modos */
+        .guide-overlay { pointer-events: none; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 10; display: none; }
+        
+        /* Modo 1: Ranura central */
+        #guide-mode1 {
+            top: 50%; bottom: auto; height: 3.5rem; transform: translateY(-50%);
+            border-top: 2px solid #0072CE; border-bottom: 2px solid #0072CE;
+            background: rgba(0, 114, 206, 0.05);
+        }
+
+        /* Modo 2: Línea punteada roja central */
+        #guide-mode2 {
+            left: 50%; right: auto; width: 2px; transform: translateX(-50%);
+            background: repeating-linear-gradient(to bottom, #ef4444, #ef4444 8px, transparent 8px, transparent 16px);
+        }
+
+        /* Modo 3: Guía central semitransparente azul */
+        #guide-mode3 {
+            left: 50%; right: auto; width: 40px; transform: translateX(-50%);
+            background: rgba(0, 114, 206, 0.1);
+            border-left: 1px solid rgba(0, 114, 206, 0.3); border-right: 1px solid rgba(0, 114, 206, 0.3);
+        }
+
+        /* Estilos Modo 2 (Columnas) */
+        .mode-2-row { display: flex; justify-content: center; align-items: center; }
+        .mode-2-col { flex: 1; }
+        .mode-2-col.left { text-align: right; }
+        .mode-2-col.right { text-align: left; }
+        .mode-2-spacer { width: var(--m2-gap, 60px); transition: width 0.3s ease; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-dalpa flex items-center justify-center text-white font-bold text-2xl shadow-md">D</div>
+            <div>
+                <h1 class="text-xl font-bold tracking-tight text-gray-900 leading-tight">Flexor Visual <span class="text-dalpa">PRO</span></h1>
+                <p class="text-xs text-gray-500 font-medium">Entrenamiento Avanzado</p>
+            </div>
+        </div>
+        <button id="btnRoutine" onclick="startRoutine()" class="hidden md:flex items-center gap-2 bg-gradient-to-r from-purple-600 to-dalpa text-white px-5 py-2.5 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 text-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            Rutina 10 Minutos
+        </button>
+    </header>
+
+    <main class="flex-1 flex flex-col lg:flex-row w-full max-w-[1600px] mx-auto p-4 lg:p-6 gap-6">
+        
+        <!-- Sidebar Configuración -->
+        <aside class="w-full lg:w-[350px] glass-panel rounded-2xl p-5 flex flex-col gap-6 h-fit shrink-0">
+            
+            <!-- Carga de Texto -->
+            <div>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">1. Carga de Texto</label>
+                <textarea id="customText" rows="4" class="w-full p-3 rounded-xl border border-gray-300 bg-gray-50 text-sm focus:ring-2 focus:ring-dalpa outline-none resize-none transition-all" placeholder="Pega tu texto aquí...">La neuroplasticidad permite que tu cerebro se adapte y optimice nuevos patrones de lectura. Al entrenar tu visión periférica y reducir las regresiones visuales, logras consumir bloques enteros de información en fracciones de segundo. El método DALPA entrena directamente los músculos oculares y las rutas neuronales para una comprensión instantánea sin subvocalización.</textarea>
+            </div>
+
+            <!-- Modos -->
+            <div>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">2. Modo de Ejercicio</label>
+                <div class="grid gap-2">
+                    <button onclick="setMode(1)" id="btnM1" class="mode-btn w-full text-left px-4 py-3 rounded-xl border-2 border-dalpa bg-dalpa/5 text-dalpa font-semibold transition-all text-sm">
+                        Modo 1: Flujo Vertical Rápido
+                    </button>
+                    <button onclick="setMode(2)" id="btnM2" class="mode-btn w-full text-left px-4 py-3 rounded-xl border-2 border-transparent bg-gray-50 hover:bg-gray-100 font-semibold text-gray-600 transition-all text-sm">
+                        Modo 2: Visión Periférica
+                    </button>
+                    <button onclick="setMode(3)" id="btnM3" class="mode-btn w-full text-left px-4 py-3 rounded-xl border-2 border-transparent bg-gray-50 hover:bg-gray-100 font-semibold text-gray-600 transition-all text-sm">
+                        Modo 3: Centro del Renglón
+                    </button>
+                </div>
+            </div>
+
+            <!-- Controles Ajustables -->
+            <div class="space-y-4">
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-xs font-bold text-gray-500 uppercase">Velocidad</label>
+                        <span id="lblWpm" class="text-dalpa font-bold text-sm">300 PPM</span>
+                    </div>
+                    <input type="range" id="wpmSlider" min="150" max="1200" step="50" value="300" class="w-full accent-dalpa h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <div id="gapControl" class="hidden">
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-xs font-bold text-gray-500 uppercase">Separación Periférica</label>
+                        <span id="lblGap" class="text-gray-600 font-bold text-sm">Normal</span>
+                    </div>
+                    <input type="range" id="gapSlider" min="20" max="250" step="10" value="60" class="w-full accent-red-500 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-xs font-bold text-gray-500 uppercase">Tiempo Límite (Minutos)</label>
+                        <span id="lblTimerLimit" class="text-gray-600 font-bold text-sm">3 min</span>
+                    </div>
+                    <input type="range" id="timerSlider" min="1" max="10" step="1" value="3" class="w-full accent-gray-600 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="mt-2 flex gap-2">
+                <button id="btnPlay" onclick="togglePlay()" class="flex-1 bg-dalpa hover:bg-dalpa-dark text-white font-bold py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                    INICIAR
+                </button>
+                <button onclick="resetApp()" class="px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                </button>
+            </div>
+            
+            <button onclick="startRoutine()" class="md:hidden w-full bg-gradient-to-r from-purple-600 to-dalpa text-white px-5 py-3 rounded-xl font-bold shadow-lg text-sm">
+                RUTINA 10 MINUTOS
+            </button>
+        </aside>
+
+        <!-- Área Principal: Dashboard y Lector -->
+        <section class="flex-1 flex flex-col gap-6">
+            
+            <!-- Dashboard (Estadísticas en Vivo) -->
+            <div class="grid grid-cols-3 gap-4">
+                <div class="glass-panel rounded-2xl p-4 flex flex-col items-center justify-center text-center">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wide">Palabras Procesadas</span>
+                    <span id="statWords" class="text-3xl font-black text-gray-800">0</span>
+                </div>
+                <div class="glass-panel rounded-2xl p-4 flex flex-col items-center justify-center text-center">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wide">Tiempo Transcurrido</span>
+                    <span id="statElapsed" class="text-3xl font-black text-gray-800">00:00</span>
+                </div>
+                <div class="glass-panel border-dalpa/30 border-2 rounded-2xl p-4 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-dalpa/5"></div>
+                    <span class="text-xs font-bold text-dalpa uppercase tracking-wide relative z-10">Cuenta Regresiva</span>
+                    <span id="statCountdown" class="text-3xl font-black text-dalpa relative z-10">03:00</span>
+                </div>
+            </div>
+
+            <!-- Ventana del Lector -->
+            <div class="glass-panel rounded-2xl flex-1 relative flex flex-col items-center justify-center p-4">
+                <div id="routineBanner" class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-md z-20 hidden">
+                    RUTINA ACTIVA - ETAPA 1/3
+                </div>
+
+                <div id="reader-window" class="w-full max-w-4xl rounded-xl">
+                    <!-- Guías Estáticas -->
+                    <div id="guide-mode1" class="guide-overlay"></div>
+                    <div id="guide-mode2" class="guide-overlay"></div>
+                    <div id="guide-mode3" class="guide-overlay"></div>
+                    
+                    <!-- Contenedor Animado -->
+                    <div id="text-scroller">
+                        <div class="h-full flex flex-col items-center justify-center opacity-50 text-gray-400 py-32">
+                            <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            <p class="text-lg font-medium">Presiona INICIAR para comenzar</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal CTA / Resultados -->
+    <div id="modalCTA" class="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-[100] hidden items-center justify-center opacity-0 transition-opacity duration-300">
+        <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none w-full h-full"></canvas>
+        <div class="bg-white w-full max-w-lg rounded-3xl p-8 text-center shadow-2xl relative transform scale-95 transition-transform duration-300 mx-4" id="modalBox">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span class="text-4xl">🚀</span>
+            </div>
+            <h2 class="text-3xl font-black text-gray-900 mb-2">¡Entrenamiento Completado!</h2>
+            <p class="text-gray-600 mb-6 text-lg">Tu cerebro ha logrado un nuevo hito.</p>
+            
+            <div class="bg-gray-50 rounded-2xl p-4 mb-8 grid grid-cols-2 gap-4 border border-gray-100">
+                <div>
+                    <p class="text-xs font-bold text-gray-400 uppercase">Palabras Leídas</p>
+                    <p id="modalWords" class="text-2xl font-black text-dalpa">0</p>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-gray-400 uppercase">Velocidad</p>
+                    <p id="modalWpm" class="text-2xl font-black text-dalpa">0 PPM</p>
+                </div>
+            </div>
+
+            <p class="text-gray-500 text-sm mb-4">¿Estás listo para dominar la lectura fotográfica y multiplicar tu productividad?</p>
+            <a href="#" class="block w-full bg-dalpa hover:bg-dalpa-dark text-white text-lg font-bold py-4 px-8 rounded-xl shadow-xl shadow-dalpa/30 transition-transform transform hover:-translate-y-1">
+                Inscríbete al Método DALPA Completo
+            </a>
+        </div>
+    </div>
+
+    <!-- Script de Lógica Principal -->
+    <script>
+        // --- ESTADO GLOBAL ---
+        const state = {
+            mode: 1, // 1, 2, 3[span_2](start_span)[span_2](end_span)
+            wpm: 300,
+            targetMinutes: 3,
+            gapSize: 60,
+            textBlocks: [],
+            isPlaying: false,
+            
+            // Sistema de renderizado y tiempo[span_3](start_span)[span_3](end_span)
+            animationFrame: null,
+            lastFrameTime: 0,
+            scrollY: 0,
+            blockHeight: 40, 
+            pixelsPerSecond: 0,
+            totalScrollLimit: 0,
+            wordsProcessed: 0,
+            
+            // Relojes
+            clockInterval: null,
+            elapsedSeconds: 0,
+            countdownSeconds: 180,
+
+            // Sistema de Rutina[span_4](start_span)[span_4](end_span)
+            isRoutine: false,
+            routinePhase: 0 // 0: off, 1: M1(3m), 2: pause, 3: M2(3m), 4: pause, 5: M3(4m)
+        };
+
+        const DOM = {
+            text: document.getElementById('customText'),
+            scroller: document.getElementById('text-scroller'),
+            btnPlay: document.getElementById('btnPlay'),
+            wpmSlider: document.getElementById('wpmSlider'),
+            timerSlider: document.getElementById('timerSlider'),
+            gapSlider: document.getElementById('gapSlider'),
+            gapControl: document.getElementById('gapControl'),
+            statWords: document.getElementById('statWords'),
+            statElapsed: document.getElementById('statElapsed'),
+            statCountdown: document.getElementById('statCountdown'),
+            modal: document.getElementById('modalCTA'),
+            modalBox: document.getElementById('modalBox'),
+            routineBanner: document.getElementById('routineBanner')
+        };
+
+        // --- INICIALIZACIÓN Y EVENTOS ---
+        function init() {
+            DOM.wpmSlider.addEventListener('input', (e) => {
+                state.wpm = e.target.value;
+                document.getElementById('lblWpm').textContent = `${state.wpm} PPM`;
+                calculateScrollSpeed();
+            });
+            DOM.timerSlider.addEventListener('input', (e) => {
+                if(!state.isPlaying && !state.isRoutine) {
+                    state.targetMinutes = parseInt(e.target.value);
+                    document.getElementById('lblTimerLimit').textContent = `${state.targetMinutes} min`;
+                    state.countdownSeconds = state.targetMinutes * 60;
+                    updateClocksUI();
+                }
+            });
+            DOM.gapSlider.addEventListener('input', (e) => {
+                state.gapSize = e.target.value;
+                document.documentElement.style.setProperty('--m2-gap', `${state.gapSize}px`);
+                let label = state.gapSize < 80 ? "Estrecha" : (state.gapSize < 160 ? "Media" : "Amplia");
+                document.getElementById('lblGap').textContent = label;
+            });
+            
+            setMode(1);
+        }
+
+        function setMode(m) {
+            if(state.isPlaying) return;
+            state.mode = m;
+            
+            // UI Botones
+            document.querySelectorAll('.mode-btn').forEach(b => {
+                b.classList.replace('border-dalpa', 'border-transparent');
+                b.classList.replace('bg-dalpa/5', 'bg-gray-50');
+                b.classList.replace('text-dalpa', 'text-gray-600');
+            });
+            const activeBtn = document.getElementById(`btnM${m}`);
+            activeBtn.classList.replace('border-transparent', 'border-dalpa');
+            activeBtn.classList.replace('bg-gray-50', 'bg-dalpa/5');
+            activeBtn.classList.replace('text-gray-600', 'text-dalpa');
+
+            // Guías[span_5](start_span)[span_5](end_span)
+            document.querySelectorAll('.guide-overlay').forEach(el => el.style.display = 'none');
+            document.getElementById(`guide-mode${m}`).style.display = 'block';
+
+            // Controles específicos
+            DOM.gapControl.classList.toggle('hidden', m !== 2);
+            
+            parseText();
+        }
+
+        function parseText() {
+            const raw = DOM.text.value.trim().replace(/\s+/g, ' ');
+            if(!raw) return;
+            const words = raw.split(' ');
+            state.textBlocks = [];
+            
+            if (state.mode === 1) {
+                // 1 palabra
+                state.textBlocks = words.map(w => [w]);
+            } else if (state.mode === 2) {
+                // 2 palabras[span_6](start_span)[span_6](end_span)
+                for (let i = 0; i < words.length; i += 2) {
+                    state.textBlocks.push([words[i], words[i+1] || '']);
+                }
+            } else if (state.mode === 3) {
+                // Renglones cortos (~4 palabras)[span_7](start_span)[span_7](end_span)
+                for (let i = 0; i < words.length; i += 4) {
+                    state.textBlocks.push(words.slice(i, i + 4));
+                }
+            }
+            renderBlocks();
+        }
+
+        function renderBlocks() {
+            DOM.scroller.innerHTML = '';
+            
+            // Espaciador inicial para que el texto empiece desde abajo y suba al centro
+            const padTop = document.createElement('div');
+            padTop.style.height = '50vh';
+            DOM.scroller.appendChild(padTop);
+
+            state.textBlocks.forEach(block => {
+                const div = document.createElement('div');
+                div.className = 'word-block';
+                
+                if (state.mode === 1 || state.mode === 3) {
+                    div.innerHTML = `<span>${block.join(' ')}</span>`;
+                } else if (state.mode === 2) {
+                    div.innerHTML = `
+                        <div class="mode-2-row">
+                            <div class="mode-2-col left"><span>${block[0]}</span></div>
+                            <div class="mode-2-spacer"></div>
+                            <div class="mode-2-col right"><span>${block[1]}</span></div>
+                        </div>
+                    `;
+                }
+                DOM.scroller.appendChild(div);
+            });
+
+            const padBottom = document.createElement('div');
+            padBottom.style.height = '50vh';
+            DOM.scroller.appendChild(padBottom);
+
+            // Medir para cálculos de animación
+            DOM.scroller.style.transform = `translateY(0px)`;
+            setTimeout(() => {
+                const blocks = document.querySelectorAll('.word-block');
+                if(blocks.length > 0) {
+                    state.blockHeight = blocks[0].offsetHeight;
+                    state.totalScrollLimit = blocks.length * state.blockHeight;
+                }
+            }, 50);
+        }
+
+        // --- LÓGICA DE REPRODUCCIÓN (SCROLL DINÁMICO) ---[span_8](start_span)[span_8](end_span)
+        function togglePlay() {
+            if(state.isPlaying) pause();
+            else play();
+        }
+
+        function play() {
+            if(state.textBlocks.length === 0) parseText();
+            state.isPlaying = true;
+            DOM.text.disabled = true;
+            DOM.btnPlay.innerHTML = `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg> PAUSAR`;
+            DOM.btnPlay.classList.replace('bg-dalpa', 'bg-amber-500');
+            
+            calculateScrollSpeed();
+            state.lastFrameTime = performance.now();
+            state.animationFrame = requestAnimationFrame(scrollLoop);
+            
+            if(!state.clockInterval) {
+                state.clockInterval = setInterval(clockTick, 1000);
+            }
+        }
+
+        function pause() {
+            state.isPlaying = false;
+            cancelAnimationFrame(state.animationFrame);
+            clearInterval(state.clockInterval);
+            state.clockInterval = null;
+            
+            DOM.btnPlay.innerHTML = `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg> CONTINUAR`;
+            DOM.btnPlay.classList.replace('bg-amber-500', 'bg-dalpa');
+        }
+
+        function resetApp() {
+            pause();
+            state.scrollY = 0;
+            state.elapsedSeconds = 0;
+            state.wordsProcessed = 0;
+            state.isRoutine = false;
+            state.routinePhase = 0;
+            DOM.routineBanner.classList.add('hidden');
+            
+            // Reset manual de timer slider
+            state.countdownSeconds = state.targetMinutes * 60; 
+            
+            DOM.text.disabled = false;
+            DOM.btnPlay.innerHTML = `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg> INICIAR`;
+            DOM.btnPlay.classList.replace('bg-amber-500', 'bg-dalpa');
+            
+            updateClocksUI();
+            DOM.statWords.textContent = '0';
+            parseText();
+        }
+
+        function calculateScrollSpeed() {
+            // WPM -> Bloques por minuto -> Tiempo por bloque -> Pixeles por segundo
+            let wordsPerBlock = state.mode === 1 ? 1 : (state.mode === 2 ? 2 : 4);
+            let blocksPerMinute = state.wpm / wordsPerBlock;
+            let blocksPerSecond = blocksPerMinute / 60;
+            state.pixelsPerSecond = state.blockHeight * blocksPerSecond;
+        }
+
+        function scrollLoop(timestamp) {
+            if(!state.isPlaying) return;
+            
+            const deltaTime = (timestamp - state.lastFrameTime) / 1000;
+            state.lastFrameTime = timestamp;
+            
+            state.scrollY += state.pixelsPerSecond * deltaTime;
+            DOM.scroller.style.transform = `translateY(-${state.scrollY}px)`;
+
+            // Calcular palabras procesadas basadas en el scroll
+            let currentBlockIndex = Math.floor(state.scrollY / state.blockHeight);
+            let wordsPerBlock = state.mode === 1 ? 1 : (state.mode === 2 ? 2 : 4);
+            let estimatedWords = currentBlockIndex * wordsPerBlock;
+            if (estimatedWords > state.wordsProcessed && estimatedWords <= (state.textBlocks.length * wordsPerBlock)) {
+                state.wordsProcessed = estimatedWords;
+                DOM.statWords.textContent = state.wordsProcessed;
+            }
+
+            // Fin del texto
+            if (state.scrollY >= state.totalScrollLimit) {
+                finishSession(true);
+                return;
+            }
+
+            state.animationFrame = requestAnimationFrame(scrollLoop);
+        }
+
+        // --- RELOJES Y RUTINA ---[span_9](start_span)[span_9](end_span)
+        function clockTick() {
+            state.elapsedSeconds++;
+            state.countdownSeconds--;
+            
+            updateClocksUI();
+
+            if (state.countdownSeconds <= 0) {
+                playDing();
+                if(state.isRoutine) {
+                    advanceRoutine();
+                } else {
+                    finishSession(false);
+                }
+            }
+        }
+
+        function updateClocksUI() {
+            const format = (sec) => {
+                let m = Math.floor(sec / 60).toString().padStart(2, '0');
+                let s = (sec % 60).toString().padStart(2, '0');
+                return `${m}:${s}`;
+            };
+            DOM.statElapsed.textContent = format(state.elapsedSeconds);
+            DOM.statCountdown.textContent = format(Math.max(0, state.countdownSeconds));
+        }
+
+        // --- RUTINA 10 MINUTOS ---[span_10](start_span)[span_10](end_span)
+        function startRoutine() {
+            resetApp();
+            state.isRoutine = true;
+            state.routinePhase = 1;
+            DOM.routineBanner.classList.remove('hidden');
+            setupRoutinePhase();
+        }
+
+        function advanceRoutine() {
+            pause();
+            state.routinePhase++;
+            
+            if (state.routinePhase === 2 || state.routinePhase === 4) {
+                // Pausas de 10 seg
+                DOM.routineBanner.textContent = "PAUSA DE DESCANSO OCULAR (10s)";
+                DOM.routineBanner.classList.replace('bg-purple-600', 'bg-green-500');
+                state.countdownSeconds = 10;
+                updateClocksUI();
+                state.clockInterval = setInterval(() => {
+                    state.countdownSeconds--;
+                    updateClocksUI();
+                    if(state.countdownSeconds <= 0) {
+                        clearInterval(state.clockInterval);
+                        state.clockInterval = null;
+                        advanceRoutine();
+                    }
+                }, 1000);
+            } else if (state.routinePhase === 3 || state.routinePhase === 5) {
+                setupRoutinePhase();
+            } else if (state.routinePhase > 5) {
+                finishSession(false);
+            }
+        }
+
+        function setupRoutinePhase() {
+            DOM.routineBanner.classList.replace('bg-green-500', 'bg-purple-600');
+            if(state.routinePhase === 1) {
+                setMode(1);
+                state.countdownSeconds = 3 * 60; // 3 min[span_11](start_span)[span_11](end_span)
+                DOM.routineBanner.textContent = "RUTINA: MODO 1 (3 MIN)";
+            } else if(state.routinePhase === 3) {
+                setMode(2);
+                state.countdownSeconds = 3 * 60; // 3 min[span_12](start_span)[span_12](end_span)
+                DOM.routineBanner.textContent = "RUTINA: MODO 2 (3 MIN)";
+            } else if(state.routinePhase === 5) {
+                setMode(3);
+                state.countdownSeconds = 4 * 60; // 4 min[span_13](start_span)[span_13](end_span)
+                DOM.routineBanner.textContent = "RUTINA: MODO 3 (4 MIN)";
+            }
+            // Repetir texto temporalmente para que alcance el tiempo
+            if(state.textBlocks.length < 500) {
+                DOM.text.value = DOM.text.value + " " + DOM.text.value + " " + DOM.text.value;
+            }
+            parseText();
+            play();
+        }
+
+        // --- FINALIZACIÓN Y MODAL ---[span_14](start_span)[span_14](end_span)
+        function finishSession(outOfText) {
+            pause();
+            document.getElementById('modalWords').textContent = state.wordsProcessed;
+            document.getElementById('modalWpm').textContent = `${state.wpm} PPM`;
+            
+            DOM.modal.classList.remove('hidden');
+            DOM.modal.classList.add('flex');
+            setTimeout(() => {
+                DOM.modal.classList.remove('opacity-0');
+                DOM.modalBox.classList.remove('scale-95');
+            }, 50);
+            
+            fireConfetti();
+        }
+
+        function closeModal() {
+            DOM.modal.classList.add('opacity-0');
+            DOM.modalBox.classList.add('scale-95');
+            setTimeout(() => {
+                DOM.modal.classList.add('hidden');
+                DOM.modal.classList.remove('flex');
+                resetApp();
+            }, 300);
+        }
+
+        // --- UTILIDADES ---
+        function playDing() {
+            // Ding sutil con AudioContext[span_15](start_span)[span_15](end_span)
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, ctx.currentTime);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1);
+                osc.start();
+                osc.stop(ctx.currentTime + 1);
+            } catch(e) { console.log("Audio not supported"); }
+        }
+
+        function fireConfetti() {
+            // Sistema de confeti nativo simple[span_16](start_span)[span_16](end_span)
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            const colors = ['#0072CE', '#3b82f6', '#93c5fd', '#ffffff', '#e2e8f0'];
+            
+            for(let i=0; i<100; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2 + 100,
+                    r: Math.random() * 6 + 2,
+                    dx: Math.random() * 20 - 10,
+                    dy: Math.random() * -20 - 5,
+                    color: colors[Math.floor(Math.random() * colors.length)]
+                });
+            }
+
+            let frame = 0;
+            function animate() {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                let active = false;
+                particles.forEach(p => {
+                    p.dy += 0.5; // gravedad
+                    p.x += p.dx;
+                    p.y += p.dy;
+                    if(p.y < canvas.height) active = true;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                });
+                if(active && frame < 200) {
+                    frame++;
+                    requestAnimationFrame(animate);
+                } else {
+                    ctx.clearRect(0,0,canvas.width,canvas.height);
+                }
+            }
+            animate();
+        }
+
+        // Iniciar app
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
