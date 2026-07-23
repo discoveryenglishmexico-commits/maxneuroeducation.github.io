@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexor Visual DALPA PRO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Contenedor de lectura y animación */
+        #reader-window {
+            position: relative;
+            overflow: hidden;
+            /* Centrar verticalmente el primer renglón (asumiendo altura de renglón de 3rem = 48px) */
+            padding-top: calc(50% - 24px); 
+            padding-bottom: calc(50% - 24px);
+        }
+        
+        #scrolling-content {
+            transition: transform 0.15s linear;
+        }
+
+        .row-item {
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        /* Guías visuales */
+        #guide-m1 {
+            position: absolute; top: 50%; left: 0; right: 0;
+            height: 48px; margin-top: -24px;
+            border-top: 2px solid #6366f1; border-bottom: 2px solid #6366f1;
+            background: rgba(99, 102, 241, 0.05);
+            pointer-events: none; display: none; z-index: 10;
+        }
+        
+        #guide-m2 {
+            position: absolute; top: 0; bottom: 0; left: 50%;
+            width: 0px; border-left: 2px dashed #ef4444;
+            pointer-events: none; display: none; z-index: 10;
+        }
+        
+        #guide-m3 {
+            position: absolute; top: 0; bottom: 0; left: 50%;
+            width: 80px; margin-left: -40px;
+            background: rgba(99, 102, 241, 0.1);
+            pointer-events: none; display: none; z-index: 10;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        /* Modal Backdrop blur */
+        .modal-backdrop { backdrop-filter: blur(5px); }
+        
+        /* Ocultar elementos */
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen flex flex-col md:flex-row overflow-hidden">
+
+    <!-- SIDEBAR / CONTROLES -->
+    <aside class="w-full md:w-80 bg-white border-r border-slate-200 flex flex-col shadow-sm z-20 h-auto md:h-full overflow-y-auto shrink-0">
+        <div class="p-6 border-b border-slate-100">
+            <h1 class="text-xl font-bold text-indigo-600 flex items-center gap-2">
+                <i class="fa-solid fa-eye"></i> DALPA <span class="text-slate-800">PRO</span>
+            </h1>
+            <p class="text-xs text-slate-500 mt-1">Entrenamiento de Lectura Rápida</p>
+        </div>
+
+        <div class="p-6 flex-1 flex flex-col gap-6">
+            <!-- Botón Cargar Texto -->
+            <button onclick="openTextModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2 px-4 rounded-lg transition text-sm flex items-center justify-center gap-2">
+                <i class="fa-solid fa-file-lines"></i> Configurar Texto
+            </button>
+
+            <!-- Selector de Modo -->
+            <div>
+                <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 block">Modo de Ejercicio</label>
+                <div class="flex flex-col gap-2">
+                    <label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-50 transition" id="lbl-m1">
+                        <input type="radio" name="mode" value="1" checked onchange="changeMode(1)" class="text-indigo-600 focus:ring-indigo-500">
+                        <span class="text-sm font-medium">1. Flexor Central (Ojo-Cerebro)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-50 transition" id="lbl-m2">
+                        <input type="radio" name="mode" value="2" onchange="changeMode(2)" class="text-indigo-600 focus:ring-indigo-500">
+                        <span class="text-sm font-medium">2. Visión Periférica (Pares)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-50 transition" id="lbl-m3">
+                        <input type="radio" name="mode" value="3" onchange="changeMode(3)" class="text-indigo-600 focus:ring-indigo-500">
+                        <span class="text-sm font-medium">3. Adaptación de Renglón</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Controles Deslizantes -->
+            <div class="space-y-5">
+                <!-- PPM -->
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <label class="text-xs font-semibold text-slate-500 uppercase">Velocidad (PPM)</label>
+                        <span id="wpm-val" class="text-xs font-bold text-indigo-600">300</span>
+                    </div>
+                    <input type="range" id="wpm-slider" min="100" max="1000" step="50" value="300" oninput="updateWPM(this.value)" class="w-full accent-indigo-600">
+                </div>
+                
+                <!-- Tiempo -->
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <label class="text-xs font-semibold text-slate-500 uppercase">Tiempo (Minutos)</label>
+                        <span id="time-val" class="text-xs font-bold text-indigo-600">3</span>
+                    </div>
+                    <input type="range" id="time-slider" min="1" max="10" step="1" value="3" oninput="updateTimeSetting(this.value)" class="w-full accent-indigo-600">
+                </div>
+
+                <!-- Dificultad Periférica (Solo M2) -->
+                <div id="gap-control" class="hidden">
+                    <div class="flex justify-between mb-1">
+                        <label class="text-xs font-semibold text-slate-500 uppercase">Dificultad Periférica</label>
+                    </div>
+                    <input type="range" id="gap-slider" min="20" max="250" step="10" value="80" oninput="updateGap(this.value)" class="w-full accent-red-500">
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-slate-100 bg-slate-50 flex flex-col gap-3">
+            <div class="flex gap-2">
+                <button id="btn-play" onclick="togglePlay()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg shadow-md transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play"></i> Iniciar
+                </button>
+                <button onclick="resetExercise()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-4 rounded-lg transition">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+            <!-- RUTINA AUTOMATIZADA -->
+            <button onclick="startRoutine()" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-3 rounded-lg shadow-lg transition flex items-center justify-center gap-2 mt-2">
+                <i class="fa-solid fa-bolt"></i> Rutina 10 Minutos
+            </button>
+        </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL (DASHBOARD & LECTOR) -->
+    <main class="flex-1 flex flex-col relative h-full">
+        <!-- Dashboard / Live Stats -->
+        <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-6 lg:px-12 shrink-0 z-20">
+            <div class="flex items-center gap-6">
+                <div class="flex flex-col">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tiempo Restante</span>
+                    <span id="live-timer" class="text-2xl font-bold text-slate-800 font-mono">03:00</span>
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <div class="flex flex-col">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Palabras Proc.</span>
+                    <span id="live-words" class="text-2xl font-bold text-indigo-600 font-mono">0</span>
+                </div>
+            </div>
+            <div id="status-badge" class="hidden md:flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold uppercase tracking-wide">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                En progreso
+            </div>
+        </header>
+
+        <!-- Lector Visual -->
+        <div class="flex-1 bg-slate-100 p-4 lg:p-8 overflow-hidden flex flex-col">
+            <div class="w-full max-w-4xl mx-auto flex-1 bg-white rounded-2xl shadow-sm border border-slate-200 relative" id="reader-window">
+                
+                <!-- Guías -->
+                <div id="guide-m1"></div>
+                <div id="guide-m2"></div>
+                <div id="guide-m3"></div>
+
+                <!-- Contenido Dinámico -->
+                <div id="scrolling-content" class="w-full">
+                    <!-- Los renglones se inyectan aquí -->
+                    <div class="text-center text-slate-400 mt-20">Cargando texto...</div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL: CONFIGURAR TEXTO -->
+    <div id="modal-text" class="fixed inset-0 bg-slate-900/40 modal-backdrop hidden items-center justify-center z-50 p-4">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h2 class="text-lg font-bold text-slate-800">Cargar Texto de Entrenamiento</h2>
+                <button onclick="closeTextModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark fa-lg"></i></button>
+            </div>
+            <div class="p-6">
+                <textarea id="custom-text-input" class="w-full h-64 p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none text-slate-600 resize-none" placeholder="Pega tu texto aquí..."></textarea>
+            </div>
+            <div class="p-6 border-t border-slate-100 flex justify-end gap-3 bg-slate-50">
+                <button onclick="closeTextModal()" class="px-5 py-2 rounded-lg font-medium text-slate-600 hover:bg-slate-200 transition">Cancelar</button>
+                <button onclick="saveText()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium shadow-md transition">Guardar y Formatear</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: PAUSA DE RUTINA -->
+    <div id="modal-pause" class="fixed inset-0 bg-slate-900/80 modal-backdrop hidden items-center justify-center z-50 p-4">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-8 text-center">
+            <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-mug-hot"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">¡Pausa Breve!</h2>
+            <p class="text-slate-500 mb-6" id="pause-msg">Preparando el siguiente ejercicio...</p>
+            <div class="text-5xl font-bold font-mono text-indigo-600 mb-4" id="pause-timer">10</div>
+            <button onclick="skipPause()" class="text-sm text-slate-400 hover:text-slate-600 underline">Saltar pausa</button>
+        </div>
+    </div>
+
+    <!-- MODAL: CTA FINAL (VENTA) -->
+    <div id="modal-cta" class="fixed inset-0 bg-slate-900/90 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none z-10"></canvas>
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden relative z-20 transform scale-95 transition-transform duration-300" id="cta-card">
+            <div class="bg-gradient-to-br from-indigo-600 to-purple-700 p-8 text-center text-white">
+                <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-md">
+                    <i class="fa-solid fa-trophy text-4xl text-yellow-300"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-2">¡Entrenamiento Completado!</h2>
+                <p class="text-indigo-100">Tu cerebro ha superado un nuevo límite.</p>
+            </div>
+            <div class="p-8 bg-white text-center">
+                <div class="flex justify-center gap-8 mb-8">
+                    <div>
+                        <div class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">Procesadas</div>
+                        <div class="text-3xl font-bold text-slate-800 font-mono" id="cta-words">0</div>
+                        <div class="text-xs text-slate-400">Palabras</div>
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">Velocidad</div>
+                        <div class="text-3xl font-bold text-indigo-600 font-mono" id="cta-wpm">0</div>
+                        <div class="text-xs text-slate-400">PPM</div>
+                    </div>
+                </div>
+                <p class="text-slate-600 mb-6 font-medium">¿Listo para leer hasta 3 veces más rápido con comprensión total?</p>
+                <button onclick="location.reload()" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition transform hover:-translate-y-1">
+                    Inscríbete al Método DALPA Completo
+                </button>
+                <button onclick="closeCTA()" class="mt-4 text-sm text-slate-400 hover:text-slate-600">Cerrar y volver al panel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGICA JAVASCRIPT -->
+    <script>
+        // --- ESTADO DE LA APLICACIÓN ---
+        const state = {
+            mode: 1, // 1, 2, 3
+            text: "El cerebro humano es una máquina fascinante capaz de procesar información a velocidades increíbles si se entrena correctamente. La lectura rápida no consiste en saltarse palabras, sino en ampliar el campo visual periférico y reducir la subvocalización. Con el Método DALPA, aprenderás a usar tus ojos como un escáner, capturando bloques de información en lugar de sílabas sueltas. Sigue practicando diariamente y notarás cómo tu comprensión y velocidad aumentan de forma natural y sin esfuerzo.",
+            wordsArray: [],
+            rowsArray: [], // Arreglo procesado según el modo
+            wpm: 300,
+            durationSeconds: 180, 
+            timeLeft: 180,
+            wordsProcessed: 0,
+            currentRow: 0,
+            gapM2: 80, // px
+            isRunning: false,
+            
+            // Intervalos
+            scrollInterval: null,
+            timerInterval: null,
+            
+            // Rutina automática
+            isRoutineActive: false,
+            routineStep: 0, // 1=M1, 2=Pause, 3=M2, 4=Pause, 5=M3
+            pauseTimer: 0,
+            pauseInterval: null
+        };
+
+        const ROW_HEIGHT = 48; // px
+
+        // --- INICIALIZACIÓN ---
+        window.onload = () => {
+            state.wordsArray = parseWords(state.text);
+            document.getElementById('custom-text-input').value = state.text;
+            setupMode(state.mode);
+        };
+
+        // --- PROCESAMIENTO DE TEXTO ---
+        function parseWords(rawText) {
+            return rawText.replace(/\s+/g, ' ').trim().split(' ').filter(w => w.length > 0);
+        }
+
+        function buildRows(mode) {
+            const words = state.wordsArray;
+            let rows = [];
+            
+            if (mode === 1) {
+                // Modo 1: 1 palabra por renglón
+                rows = words.map(w => [w]);
+            } else if (mode === 2) {
+                // Modo 2: 2 palabras por renglón (extremos)
+                for (let i = 0; i < words.length; i += 2) {
+                    rows.push([words[i], words[i+1] || '']);
+                }
+            } else if (mode === 3) {
+                // Modo 3: Bloques de ~6 palabras
+                for (let i = 0; i < words.length; i += 6) {
+                    rows.push(words.slice(i, i + 6));
+                }
+            }
+            return rows;
+        }
+
+        function renderDOM() {
+            const container = document.getElementById('scrolling-content');
+            container.innerHTML = '';
+            
+            state.rowsArray.forEach(rowWords => {
+                const div = document.createElement('div');
+                div.className = 'row-item';
+                
+                if (state.mode === 1) {
+                    div.textContent = rowWords[0];
+                } 
+                else if (state.mode === 2) {
+                    div.style.width = '100%';
+                    div.style.padding = `0 calc(50% - ${state.gapM2}px - 20px)`; 
+                    div.innerHTML = `<span class="w-1/2 text-right pr-4">${rowWords[0]}</span><span class="w-1/2 text-left pl-4">${rowWords[1]}</span>`;
+                } 
+                else if (state.mode === 3) {
+                    div.textContent = rowWords.join(' ');
+                }
+                
+                container.appendChild(div);
+            });
+            
+            // Reset position
+            state.currentRow = 0;
+            updateScrollPosition(0);
+        }
+
+        // --- CONTROLES DE INTERFAZ ---
+        function changeMode(m) {
+            if (state.isRunning && !state.isRoutineActive) togglePlay(); // Pausa si se cambia manual
+            state.mode = m;
+            
+            // UI Guides
+            document.getElementById('guide-m1').style.display = (m === 1) ? 'block' : 'none';
+            document.getElementById('guide-m2').style.display = (m === 2) ? 'block' : 'none';
+            document.getElementById('guide-m3').style.display = (m === 3) ? 'block' : 'none';
+            
+            // Gap control visibility
+            document.getElementById('gap-control').style.display = (m === 2) ? 'block' : 'none';
+
+            // Radios UI Update (Highlight)
+            [1,2,3].forEach(i => {
+                document.getElementById(`lbl-m${i}`).classList.remove('border-indigo-500', 'bg-indigo-50');
+                if(i === m) document.getElementById(`lbl-m${i}`).classList.add('border-indigo-500', 'bg-indigo-50');
+                document.querySelector(`input[name="mode"][value="${i}"]`).checked = (i === m);
+            });
+
+            setupMode(m);
+        }
+
+        function setupMode(m) {
+            state.rowsArray = buildRows(m);
+            renderDOM();
+            updateStatsUI();
+        }
+
+        function updateWPM(val) {
+            state.wpm = parseInt(val);
+            document.getElementById('wpm-val').textContent = val;
+            if (state.isRunning) {
+                // Reiniciar intervalo con nueva velocidad
+                clearInterval(state.scrollInterval);
+                startScrolling();
+            }
+        }
+
+        function updateTimeSetting(val) {
+            if(state.i
