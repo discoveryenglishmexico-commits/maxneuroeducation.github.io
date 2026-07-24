@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECUC | El Laboratorio Comestible</title>
+    
+    <!-- Tailwind CSS (CDN para implementación rápida) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para Íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        ecuc: {
+                            dark: '#111827',
+                            light: '#F9FAFB',
+                            gold: '#D4AF37',
+                            accent: '#3B82F6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos personalizados para animaciones sutiles SaaS */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .ingredient-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ingredient-btn:active {
+            transform: scale(0.95);
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-ecuc-light text-gray-800 font-sans antialiased selection:bg-ecuc-gold selection:text-white">
+
+    <!-- NAVEGACIÓN -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <i class="fas fa-utensils text-ecuc-gold text-2xl"></i>
+                    <span class="font-serif font-semibold text-2xl tracking-tight text-ecuc-dark">ECUC</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#historia" class="text-sm font-medium text-gray-600 hover:text-ecuc-gold transition-colors">Nuestra Historia</a>
+                    <a href="#neurociencia" class="text-sm font-medium text-gray-600 hover:text-ecuc-gold transition-colors">Neurociencia</a>
+                    <a href="#laboratorio" class="text-sm font-medium text-gray-600 hover:text-ecuc-gold transition-colors">Laboratorio</a>
+                    <a href="#programas" class="text-sm font-medium text-gray-600 hover:text-ecuc-gold transition-colors">Programas</a>
+                    <a href="#alianzas" class="text-sm font-medium text-gray-600 hover:text-ecuc-gold transition-colors">Alianzas</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center fade-in">
+            <span class="text-ecuc-gold font-semibold tracking-wider uppercase text-sm mb-4 block">Escuela Culinaria Creativa</span>
+            <h1 class="text-5xl md:text-7xl font-serif font-bold text-ecuc-dark mb-6 leading-tight">
+                El Laboratorio <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-ecuc-dark to-gray-500">Comestible</span>
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto font-light leading-relaxed">
+                Plataforma gastronómica de vanguardia. Redefiniendo la educación a través de la ciencia, la resiliencia y el arte culinario con un profundo sentido humano.
+            </p>
+            <div class="mt-10 flex justify-center gap-4">
+                <a href="#laboratorio" class="px-8 py-4 bg-ecuc-dark text-white rounded-full font-medium hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl">
+                    Entrar al Laboratorio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. NUESTRA HISTORIA & 3. MODELO MODULAR -->
+    <section id="historia" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-serif font-bold text-ecuc-dark mb-6">10 Años Forjando Líderes</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Fundada hace 10 años, ECUC nació con una visión clara: en el mundo moderno, estudiar una carrera completa bajo esquemas rígidos termina siendo esclavizante.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Nuestra propuesta es revolucionaria: un alumno define sus inquietudes a través del ensayo. Nuestro modelo educativo se basa en módulos que no siguen un orden estricto, ya que pueden ser integrados acorde a las necesidades, el ritmo o los gustos de cada individuo.
+                    </p>
+                </div>
+                <div class="bg-ecuc-light p-10 rounded-3xl border border-gray-100 shadow-sm relative">
+                    <i class="fas fa-quote-left text-4xl text-ecuc-gold opacity-20 absolute top-6 left-6"></i>
+                    <h3 class="text-2xl font-serif text-ecuc-dark mb-4 relative z-10 mt-4">Autonomía y Maestría</h3>
+                    <p class="text-gray-600 relative z-10">
+                        Cada módulo es una pieza de un rompecabezas mayor. No formamos seguidores de recetas, formamos solucionadores de problemas con pensamiento crítico.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. NEUROCIENCIA CULINARIA -->
+    <section id="neurociencia" class="py-24 bg-ecuc-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-serif font-bold mb-6 text-ecuc-gold">La Neurociencia de la Alimentación</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
+                    Las áreas gastronómicas van más allá de cocinar; se trata de lo más sagrado que tenemos: la nutrición. 
+                    Tu cerebro representa apenas el 2% de tu peso corporal, pero consume aproximadamente el 20% de tus calorías y oxígeno diarios[cite: 9].
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-gray-800 rounded-2xl p-8 border border-gray-700 hover:border-ecuc-gold transition-colors">
+                    <i class="fas fa-brain text-ecuc-gold text-3xl mb-6"></i>
+                    <h3 class="text-xl font-semibold mb-4">El Escudo Protector</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Los flavonoides presentes en los arándanos y el chocolate negro (al menos 70% cacao) mejoran el flujo sanguíneo hacia el cerebro[cite: 8]. Actúan como un escudo, reduciendo el estrés oxidativo y la inflamación que ralentizan nuestras funciones cognitivas[cite: 8].
+                    </p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-gray-800 rounded-2xl p-8 border border-gray-700 hover:border-ecuc-gold transition-colors">
+                    <i class="fas fa-project-diagram text-ecuc-gold text-3xl mb-6"></i>
+                    <h3 class="text-xl font-semibold mb-4">Neuroplasticidad</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        La neuroplasticidad es la capacidad del cerebro para cambiar, aprender y crear nuevas conexiones[cite: 9]. El cerebro es 60% grasa, y la mitad de esa grasa es del tipo Omega-3 (DHA)[cite: 8], fundamental para construir las membranas de las neuronas[cite: 9].
+                    </p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-gray-800 rounded-2xl p-8 border border-gray-700 hover:border-ecuc-gold transition-colors">
+                    <i class="fas fa-leaf text-ecuc-gold text-3xl mb-6"></i>
+                    <h3 class="text-xl font-semibold mb-4">El Segundo Cerebro</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        La conciencia nutricional traslada las decisiones del cerebro impulsivo (Amígdala) a la Corteza Prefrontal[cite: 9]. Además, más del 90% de la serotonina y un gran porcentaje de la dopamina se producen en el intestino, no en la cabeza[cite: 9].
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. LABORATORIO INTERACTIVO -->
+    <section id="laboratorio" class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-serif font-bold text-ecuc-dark mb-4">Arma tu New York Roll Neurocognitivo</h2>
+            <p class="text-gray-600 mb-12">Experimenta en nuestro Laboratorio Comestible. Agrega ingredientes y descubre su impacto.</p>
+            
+            <div class="flex flex-col lg:flex-row gap-12 items-start">
+                
+                <!-- Ingredientes (Botones) -->
+                <div class="w-full lg:w-1/2 grid grid-cols-2 gap-4" id="ingredients-panel">
+                    <button onclick="addIngredient('Masa Madre', 'La base estructural. Fermentación que apoya la microbiota intestinal.', 'bg-yellow-100')" class="ingredient-btn p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-2 hover:bg-yellow-50">
+                        <i class="fas fa-bread-slice text-yellow-600 text-2xl"></i>
+                        <span class="font-medium text-gray-700">Masa Madre</span>
+                    </button>
+                    <button onclick="addIngredient('Chocolate 70%', 'Aumento del flujo sanguíneo; neurogénesis[cite: 8]. Rico en flavonoides antioxidantes.', 'bg-brown-100')" class="ingredient-btn p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-2 hover:bg-orange-50">
+                        <i class="fas fa-cookie text-orange-800 text-2xl"></i>
+                        <span class="font-medium text-gray-700">Chocolate 70%</span>
+                    </button>
+                    <button onclick="addIngredient('Nueces', 'Construcción y reparación de membranas neuronales[cite: 8]. Rico en Omega-3.', 'bg-amber-100')" class="ingredient-btn p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-2 hover:bg-amber-50">
+                        <i class="fas fa-seedling text-amber-700 text-2xl"></i>
+                        <span class="font-medium text-gray-700">Nueces Ralladas</span>
+                    </button>
+                    <button onclick="addIngredient('Matcha', 'Enfoque sostenido estimulando ondas alfa[cite: 8]. Combina cafeína con L-teanina.', 'bg-green-100')" class="ingredient-btn p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-2 hover:bg-green-50">
+                        <i class="fas fa-leaf text-green-600 text-2xl"></i>
+                        <span class="font-medium text-gray-700">Polvo de Matcha</span>
+                    </button>
+                    <button onclick="resetRecipe()" class="col-span-2 mt-4 text-sm text-gray-500 hover:text-red-500 underline">Reiniciar Receta</button>
+                </div>
+
+                <!-- Canvas de la Receta -->
+                <div class="w-full lg:w-1/2 bg-ecuc-light rounded-3xl p-8 border border-gray-200 min-h-[400px] flex flex-col relative shadow-inner">
+                    <h3 class="text-2xl font-serif text-ecuc-dark mb-6 border-b pb-4">Tu Creación</h3>
+                    
+                    <div id="recipe-canvas" class="flex-1 flex flex-col gap-4">
+                        <p id="empty-state" class="text-gray-400 italic text-center mt-10">Selecciona ingredientes para armar tu platillo.</p>
+                        <!-- Aquí se inyectan los ingredientes dinámicamente vía JS -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. PROGRAMAS PROFESIONALES -->
+    <section id="programas" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-serif font-bold text-center text-ecuc-dark mb-16">Especialización Dirigida</h2>
+            
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+                Nuestro modelo educativo se basa en Diplomados profesionales. En cada diplomado terminado, el alumno adquiere una especialidad avalada por la ciencia y el rigor técnico.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Diplomado 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-bread-slice text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-ecuc-dark mb-3">Diplomado en Panadería</h3>
+                    <p class="text-gray-500 text-sm">Domina la química de la fermentación y las masas. Desde masa madre hasta bollería europea.</p>
+                </div>
+                <!-- Diplomado 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-birthday-cake text-pink-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-ecuc-dark mb-3">Diplomado en Repostería</h3>
+                    <p class="text-gray-500 text-sm">Precisión molecular aplicada al dulce. Entiende cómo el azúcar y las grasas estructuran el sabor.</p>
+                </div>
+                <!-- Diplomado 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-fire-burner text-orange-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-ecuc-dark mb-3">Diplomado en Gastronomía</h3>
+                    <p class="text-gray-500 text-sm">Control absoluto de temperaturas y técnicas de vanguardia para la alta cocina.</p>
+                </div>
+            </div>
+
+            <!-- Master Classes & Jr Chef -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-ecuc-dark text-white p-8 rounded-2xl flex items-center gap-6">
+                    <i class="fas fa-star text-4xl text-ecuc-gold"></i>
+                    <div>
+                        <h4 class="text-lg font-bold">Master Classes</h4>
+                        <p class="text-sm text-gray-400">Actualización intensiva en tendencias globales (Ej. New York Roll).</p>
+                    </div>
+                </div>
+                <div class="bg-ecuc-gold text-white p-8 rounded-2xl flex items-center gap-6">
+                    <i class="fas fa-child text-4xl"></i>
+                    <div>
+                        <h4 class="text-lg font-bold">Jr. Chef</h4>
+                        <p class="text-sm text-white/90">Cocina, Aprende y Diviértete. Formando mentes resilientes desde la infancia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. ALIANZAS E INTEGRACIONES COGNITIVAS -->
+    <section id="alianzas" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-serif font-bold text-ecuc-dark mb-4">El Ecosistema de Alto Rendimiento</h2>
+            <p class="text-gray-600 mb-16 max-w-3xl mx-auto">
+                La culinaria se vive de manera presencial en nuestras instalaciones, apoyada por una robusta plataforma web con tareas, actividades y recetas. Además, potenciamos tu perfil profesional con alianzas digitales exclusivas de vanguardia.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                <!-- Discovery Max -->
+                <div class="p-8 border border-gray-200 rounded-3xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fas fa-language text-8xl text-blue-500"></i>
+                    </div>
+                    <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider">Online</span>
+                    <h3 class="text-2xl font-bold mt-6 mb-4 text-ecuc-dark">Discovery MAX Neuroeducation</h3>
+                    <p class="text-gray-600 mb-6">
+                        Integra el bilingüismo a tu perfil. "Los Verbos en inglés no existen". Aprende inglés a través de neurociencia aplicada y desbloquea oportunidades internacionales en las mejores cocinas del mundo.
+                    </p>
+                    <a href="https://discoveryenglishmexico-commits.github.io/maxneuroeducation.github.io/flexor-pro.html" target="_blank" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center gap-2">
+                        Explorar Discovery MAX <i class="fas fa-arrow-right text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- DALPA -->
+                <div class="p-8 border border-gray-200 rounded-3xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fas fa-eye text-8xl text-purple-500"></i>
+                    </div>
+                    <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold uppercase tracking-wider">Online</span>
+                    <h3 class="text-2xl font-bold mt-6 mb-4 text-ecuc-dark">Método DALPA PRO</h3>
+                    <p class="text-gray-600 mb-6">
+                        Entrenamiento Mental y Ocular. Entrena los movimientos de tus ojos para leer hasta 9 veces más rápido, manteniendo hasta el 100% de comprensión. Absorbe recetarios y teoría gastronómica en tiempo récord.
+                    </p>
+                    <button class="text-purple-600 font-semibold hover:text-purple-800 flex items-center gap-2">
+                        Conocer DALPA <i class="fas fa-arrow-right text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-ecuc-dark py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl font-serif text-white mb-6">ECUC Escuela Culinaria Creativa</h2>
+            <p class="text-gray-400 text-sm mb-8">Formando líderes y expertos gastronómicos desde hace 10 años.</p>
+            <div class="flex justify-center gap-6 text-gray-400">
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-whatsapp text-xl"></i></a>
+            </div>
+            <p class="text-gray-600 text-xs mt-12">&copy; 2026 ECUC. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- LÓGICA JAVASCRIPT -->
+    <script>
+        // Set para almacenar ingredientes agregados y no repetir
+        const addedIngredients = new Set();
+        const canvas = document.getElementById('recipe-canvas');
+        const emptyState = document.getElementById('empty-state');
+
+        function addIngredient(name, neuroInfo, colorClass) {
+            if (addedIngredients.has(name)) return; // Evita duplicados
+            
+            // Ocultar mensaje de estado vacío
+            if (addedIngredients.size === 0) {
+                emptyState.style.display = 'none';
+            }
+
+            addedIngredients.add(name);
+
+            // Crear el elemento visual de la receta
+            const item = document.createElement('div');
+            item.className = `p-4 rounded-lg shadow-sm border border-gray-100 flex flex-col gap-2 fade-in bg-white border-l-4 border-ecuc-gold`;
+            
+            item.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <h4 class="font-bold text-gray-800">${name}</h4>
+                    <i class="fas fa-check-circle text-green-500"></i>
+                </div>
+                <div class="bg-blue-50 p-3 rounded text-sm text-blue-800 flex gap-3 items-start mt-2 border border-blue-100">
+                    <i class="fas fa-brain mt-1"></i>
+                    <p>${neuroInfo}</p>
+                </div>
+            `;
+            
+            canvas.appendChild(item);
+        }
+
+        function resetRecipe() {
+            addedIngredients.clear();
+            canvas.innerHTML = '';
+            canvas.appendChild(emptyState);
+            emptyState.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
