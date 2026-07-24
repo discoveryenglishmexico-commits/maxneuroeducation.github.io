@@ -12,17 +12,20 @@
         body { font-family: 'Inter', sans-serif; }
         
         /* Contenedor de lectura y animación */
-        #reader-window {
-            position: relative;
-            overflow: hidden;
-            /* Centrar verticalmente el primer renglón (asumiendo altura de renglón de 3rem = 48px) */
-            padding-top: calc(50% - 24px); 
-            padding-bottom: calc(50% - 24px);
-        }
-        
-        #scrolling-content {
-            transition: transform 0.15s linear;
-        }
+#reader-window {
+    position: relative;
+    overflow: hidden;
+}
+
+#scrolling-content {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    margin-top: -24px; /* Centra exactamente el primer renglón de 48px */
+    transition: transform 0.15s linear;
+}
+
 
         .row-item {
             height: 48px;
