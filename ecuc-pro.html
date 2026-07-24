@@ -14,6 +14,9 @@
     <!-- FontAwesome para Íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- LIBRERÍA NUEVA: Canvas Confetti para la animación de éxito -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -36,7 +39,7 @@
     </script>
 
     <style>
-        /* Estilos personalizados para animaciones sutiles SaaS */
+        /* Estilos personalizados para animaciones SaaS */
         .glass-nav {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
@@ -49,11 +52,22 @@
             transform: scale(0.95);
         }
         .fade-in {
-            animation: fadeIn 0.8s ease-in-out;
+            animation: fadeIn 0.8s ease-in-out forwards;
         }
+        
+        /* Animación para que los elementos aparezcan suavemente */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* NUEVA ANIMACIÓN: Rotación lenta para el trofeo de éxito */
+        .spin-slow {
+            animation: spin 4s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -127,7 +141,7 @@
                 <h2 class="text-4xl font-serif font-bold mb-6 text-ecuc-gold">La Neurociencia de la Alimentación</h2>
                 <p class="text-xl text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
                     Las áreas gastronómicas van más allá de cocinar; se trata de lo más sagrado que tenemos: la nutrición. 
-                    Tu cerebro representa apenas el 2% de tu peso corporal, pero consume aproximadamente el 20% de tus calorías y oxígeno diarios[cite: 9].
+                    Tu cerebro representa apenas el 2% de tu peso corporal, pero consume aproximadamente el 20% de tus calorías y oxígeno diarios.
                 </p>
             </div>
 
@@ -137,7 +151,7 @@
                     <i class="fas fa-brain text-ecuc-gold text-3xl mb-6"></i>
                     <h3 class="text-xl font-semibold mb-4">El Escudo Protector</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Los flavonoides presentes en los arándanos y el chocolate negro (al menos 70% cacao) mejoran el flujo sanguíneo hacia el cerebro[cite: 8]. Actúan como un escudo, reduciendo el estrés oxidativo y la inflamación que ralentizan nuestras funciones cognitivas[cite: 8].
+                        Los flavonoides presentes en los arándanos y el chocolate negro mejoran el flujo sanguíneo hacia el cerebro. Actúan como un escudo, reduciendo el estrés oxidativo y la inflamación.
                     </p>
                 </div>
                 <!-- Card 2 -->
@@ -145,7 +159,7 @@
                     <i class="fas fa-project-diagram text-ecuc-gold text-3xl mb-6"></i>
                     <h3 class="text-xl font-semibold mb-4">Neuroplasticidad</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        La neuroplasticidad es la capacidad del cerebro para cambiar, aprender y crear nuevas conexiones[cite: 9]. El cerebro es 60% grasa, y la mitad de esa grasa es del tipo Omega-3 (DHA)[cite: 8], fundamental para construir las membranas de las neuronas[cite: 9].
+                        La neuroplasticidad es la capacidad del cerebro para cambiar, aprender y crear nuevas conexiones. El cerebro necesita grasas de calidad (Omega-3) para construir las membranas de las neuronas.
                     </p>
                 </div>
                 <!-- Card 3 -->
@@ -153,45 +167,45 @@
                     <i class="fas fa-leaf text-ecuc-gold text-3xl mb-6"></i>
                     <h3 class="text-xl font-semibold mb-4">El Segundo Cerebro</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        La conciencia nutricional traslada las decisiones del cerebro impulsivo (Amígdala) a la Corteza Prefrontal[cite: 9]. Además, más del 90% de la serotonina y un gran porcentaje de la dopamina se producen en el intestino, no en la cabeza[cite: 9].
+                        La conciencia nutricional traslada las decisiones a tu corteza prefrontal. Más del 90% de la serotonina y un gran porcentaje de la dopamina se producen en el intestino, no en la cabeza.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 5. LABORATORIO INTERACTIVO -->
+    <!-- 5. LABORATORIO INTERACTIVO MEJORADO -->
     <section id="laboratorio" class="py-24 bg-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-4xl font-serif font-bold text-ecuc-dark mb-4">Arma tu New York Roll Neurocognitivo</h2>
-            <p class="text-gray-600 mb-12">Experimenta en nuestro Laboratorio Comestible. Agrega ingredientes y descubre su impacto.</p>
+            <p class="text-gray-600 mb-12">Experimenta en nuestro Laboratorio Comestible. Agrega los 4 ingredientes y descubre su impacto.</p>
             
             <div class="flex flex-col lg:flex-row gap-12 items-start">
                 
                 <!-- Ingredientes (Botones) -->
                 <div class="w-full lg:w-1/2 grid grid-cols-2 gap-4" id="ingredients-panel">
-                    <button onclick="addIngredient('Masa Madre', 'La base estructural. Fermentación que apoya la microbiota intestinal.', 'bg-yellow-100')" class="ingredient-btn p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-2 hover:bg-yellow-50">
+                    <button id="btn-masa" onclick="addIngredient('Masa Madre', 'La base estructural. Fermentación que apoya la microbiota intestinal.', 'btn-masa')" class="ingredient-btn p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-2 hover:bg-yellow-50 bg-white">
                         <i class="fas fa-bread-slice text-yellow-600 text-2xl"></i>
                         <span class="font-medium text-gray-700">Masa Madre</span>
                     </button>
-                    <button onclick="addIngredient('Chocolate 70%', 'Aumento del flujo sanguíneo; neurogénesis[cite: 8]. Rico en flavonoides antioxidantes.', 'bg-brown-100')" class="ingredient-btn p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-2 hover:bg-orange-50">
+                    <button id="btn-choco" onclick="addIngredient('Chocolate 70%', 'Aumento del flujo sanguíneo; neurogénesis. Rico en flavonoides.', 'btn-choco')" class="ingredient-btn p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-2 hover:bg-orange-50 bg-white">
                         <i class="fas fa-cookie text-orange-800 text-2xl"></i>
                         <span class="font-medium text-gray-700">Chocolate 70%</span>
                     </button>
-                    <button onclick="addIngredient('Nueces', 'Construcción y reparación de membranas neuronales[cite: 8]. Rico en Omega-3.', 'bg-amber-100')" class="ingredient-btn p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-2 hover:bg-amber-50">
+                    <button id="btn-nueces" onclick="addIngredient('Nueces', 'Construcción y reparación de membranas neuronales. Rico en Omega-3.', 'btn-nueces')" class="ingredient-btn p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-2 hover:bg-amber-50 bg-white">
                         <i class="fas fa-seedling text-amber-700 text-2xl"></i>
                         <span class="font-medium text-gray-700">Nueces Ralladas</span>
                     </button>
-                    <button onclick="addIngredient('Matcha', 'Enfoque sostenido estimulando ondas alfa[cite: 8]. Combina cafeína con L-teanina.', 'bg-green-100')" class="ingredient-btn p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-2 hover:bg-green-50">
+                    <button id="btn-matcha" onclick="addIngredient('Matcha', 'Enfoque sostenido estimulando ondas alfa. Combina cafeína con L-teanina.', 'btn-matcha')" class="ingredient-btn p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-2 hover:bg-green-50 bg-white">
                         <i class="fas fa-leaf text-green-600 text-2xl"></i>
                         <span class="font-medium text-gray-700">Polvo de Matcha</span>
                     </button>
-                    <button onclick="resetRecipe()" class="col-span-2 mt-4 text-sm text-gray-500 hover:text-red-500 underline">Reiniciar Receta</button>
+                    <button onclick="resetRecipe()" class="col-span-2 mt-4 text-sm text-gray-500 hover:text-red-500 underline transition-colors">Reiniciar Receta</button>
                 </div>
 
                 <!-- Canvas de la Receta -->
                 <div class="w-full lg:w-1/2 bg-ecuc-light rounded-3xl p-8 border border-gray-200 min-h-[400px] flex flex-col relative shadow-inner">
-                    <h3 class="text-2xl font-serif text-ecuc-dark mb-6 border-b pb-4">Tu Creación</h3>
+                    <h3 class="text-2xl font-serif text-ecuc-dark mb-6 border-b pb-4">Tu Creación Científica</h3>
                     
                     <div id="recipe-canvas" class="flex-1 flex flex-col gap-4">
                         <p id="empty-state" class="text-gray-400 italic text-center mt-10">Selecciona ingredientes para armar tu platillo.</p>
@@ -209,7 +223,7 @@
             <h2 class="text-4xl font-serif font-bold text-center text-ecuc-dark mb-16">Especialización Dirigida</h2>
             
             <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-                Nuestro modelo educativo se basa en Diplomados profesionales. En cada diplomado terminado, el alumno adquiere una especialidad avalada por la ciencia y el rigor técnico.
+                Nuestro modelo educativo se basa en Diplomados profesionales. En cada diplomado terminado, el alumno ha adquirido una especialidad respaldada por la ciencia y el rigor técnico.
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -264,7 +278,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-4xl font-serif font-bold text-ecuc-dark mb-4">El Ecosistema de Alto Rendimiento</h2>
             <p class="text-gray-600 mb-16 max-w-3xl mx-auto">
-                La culinaria se vive de manera presencial en nuestras instalaciones, apoyada por una robusta plataforma web con tareas, actividades y recetas. Además, potenciamos tu perfil profesional con alianzas digitales exclusivas de vanguardia.
+                La culinaria se vive de manera presencial en nuestras instalaciones, apoyada por una robusta plataforma web. Además, potenciamos tu perfil profesional con alianzas digitales exclusivas de vanguardia.
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
@@ -315,27 +329,36 @@
         </div>
     </footer>
 
-    <!-- LÓGICA JAVASCRIPT -->
+    <!-- LÓGICA JAVASCRIPT: Interacción y Animaciones -->
     <script>
-        // Set para almacenar ingredientes agregados y no repetir
+        // Set para almacenar ingredientes agregados y evitar repetidos
         const addedIngredients = new Set();
         const canvas = document.getElementById('recipe-canvas');
         const emptyState = document.getElementById('empty-state');
+        const totalIngredients = 4; // Número total de ingredientes para completar la receta
 
-        function addIngredient(name, neuroInfo, colorClass) {
-            if (addedIngredients.has(name)) return; // Evita duplicados
+        function addIngredient(name, neuroInfo, buttonId) {
+            // Validamos si el ingrediente ya fue agregado
+            if (addedIngredients.has(name)) return; 
             
-            // Ocultar mensaje de estado vacío
+            // Ocultar mensaje inicial "Selecciona ingredientes"
             if (addedIngredients.size === 0) {
                 emptyState.style.display = 'none';
             }
 
+            // Agregamos el ingrediente a nuestro Set de control
             addedIngredients.add(name);
 
-            // Crear el elemento visual de la receta
+            // Cambiamos el estilo del botón para indicar que ya fue seleccionado (Feedback visual UI/UX)
+            const btn = document.getElementById(buttonId);
+            btn.classList.add('opacity-50', 'cursor-not-allowed', 'border-ecuc-gold');
+            btn.classList.remove('hover:bg-yellow-50', 'hover:bg-orange-50', 'hover:bg-amber-50', 'hover:bg-green-50');
+
+            // Creamos el elemento visual (la tarjeta) que aparecerá en el "Canvas"
             const item = document.createElement('div');
             item.className = `p-4 rounded-lg shadow-sm border border-gray-100 flex flex-col gap-2 fade-in bg-white border-l-4 border-ecuc-gold`;
             
+            // Inyectamos el HTML de la tarjeta con la información neurocientífica
             item.innerHTML = `
                 <div class="flex items-center justify-between">
                     <h4 class="font-bold text-gray-800">${name}</h4>
@@ -347,14 +370,62 @@
                 </div>
             `;
             
+            // Agregamos la tarjeta al Canvas
             canvas.appendChild(item);
+
+            // LÓGICA DE RECOMPENSA: Verificar si se completó la receta
+            if (addedIngredients.size === totalIngredients) {
+                triggerSuccessAnimation();
+            }
         }
 
+        // Función para disparar la animación de éxito y generar el sentimiento de orgullo
+        function triggerSuccessAnimation() {
+            // 1. Disparar confeti desde el centro de la pantalla
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#D4AF37', '#111827', '#ffffff'] // Colores de la marca ECUC
+            });
+
+            // 2. Crear y mostrar la Tarjeta de Éxito y Orgullo
+            setTimeout(() => {
+                const successMsg = document.createElement('div');
+                // Utilizamos la clase 'spin-slow' en el ícono para un efecto premium
+                successMsg.className = "mt-4 p-6 bg-ecuc-dark text-white rounded-2xl text-center fade-in shadow-2xl border border-ecuc-gold";
+                successMsg.innerHTML = `
+                    <div class="flex justify-center mb-4">
+                        <i class="fas fa-award text-ecuc-gold text-6xl spin-slow"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold text-ecuc-gold mb-3">¡Laboratorio Completado!</h3>
+                    <p class="text-sm font-light text-gray-300">
+                        Has integrado ciencia, nutrición y arte culinario a la perfección. 
+                        Este es el nivel de excelencia y conciencia que te espera. 
+                        <strong>¡Siéntete orgulloso, futuro líder ECUC!</strong>
+                    </p>
+                `;
+                canvas.appendChild(successMsg);
+            }, 800); // Pequeño retraso para que el confeti sea la primera sorpresa
+        }
+
+        // Función para reiniciar el laboratorio y permitir al usuario jugar de nuevo
         function resetRecipe() {
+            // Limpiar la memoria
             addedIngredients.clear();
+            
+            // Restaurar el diseño visual
             canvas.innerHTML = '';
             canvas.appendChild(emptyState);
             emptyState.style.display = 'block';
+
+            // Restaurar todos los botones a su estado original
+            const buttons = document.querySelectorAll('.ingredient-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('opacity-50', 'cursor-not-allowed', 'border-ecuc-gold');
+                // Restauramos las clases hover (una solución simple es recargar la clase base de fondo blanco)
+                btn.classList.add('bg-white');
+            });
         }
     </script>
 </body>
