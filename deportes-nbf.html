@@ -167,6 +167,79 @@ header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 
   </footer>
 </div>
 
+<!-- FIREBASE SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA12GJUgOXzlW5LW46Rco9rzFGzh1-oIWo",
+    authDomain: "noxen-virtual-pro.firebaseapp.com",
+    projectId: "noxen-virtual-pro",
+    storageBucket: "noxen-virtual-pro.firebasestorage.app",
+    messagingSenderId: "991137114602",
+    appId: "1:991137114602:web:519bc570f08a838e376a93",
+    measurementId: "G-CJN9D4YGG5"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  window.firebaseAuth = auth;
+  window.firebaseDb = db;
+  window.firebaseUser = null;
+
+  onAuthStateChanged(auth, (user) => {
+    window.firebaseUser = user;
+    if (user) {
+      console.log('✅ Usuario logueado en Diagnóstico NBF:', user.email);
+      loadPreviousProgress();
+    } else {
+      console.log('❌ No hay usuario logueado - Progreso no se guardará');
+    }
+  });
+
+  window.saveNBFProgress = async function(quizData) {
+    if (!window.firebaseUser) {
+      console.warn('️ Sin usuario - Progreso no guardado');
+      return false;
+    }
+    
+    try {
+      await setDoc(doc(db, "users", window.firebaseUser.uid), {
+        nbfDiagnosis: quizData,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+      console.log('✅ Progreso NBF guardado en Firestore');
+      return true;
+    } catch (error) {
+      console.error('❌ Error guardando progreso NBF:', error);
+      return false;
+    }
+  };
+
+  window.loadPreviousProgress = async function() {
+    if (!window.firebaseUser) return null;
+    
+    try {
+      const docSnap = await getDoc(doc(db, "users", window.firebaseUser.uid));
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data.nbfDiagnosis) {
+          console.log('✅ Progreso NBF anterior cargado');
+          return data.nbfDiagnosis;
+        }
+      }
+      return null;
+    } catch (error) {
+      console.error('❌ Error cargando progreso:', error);
+      return null;
+    }
+  };
+</script>
+
 <script>
 // ---------- SISTEMA DE AUDIO Y VOZ NEURAL ----------
 let audioCtx;
@@ -189,16 +262,14 @@ function playNeuralSound(isCorrect) {
   gainNode.connect(audioCtx.destination);
   
   if (isCorrect) {
-    // Sonido de Acierto: Campana ascendente brillante
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(440, audioCtx.currentTime); // A4
-    osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); // A5
+    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
     gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
     osc.start(audioCtx.currentTime);
     osc.stop(audioCtx.currentTime + 0.3);
   } else {
-    // Sonido de Error: Alerta grave
     osc.type = 'sawtooth';
     osc.frequency.setValueAtTime(150, audioCtx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
@@ -211,18 +282,12 @@ function playNeuralSound(isCorrect) {
 
 function speakNeuralVoice(isCorrect) {
   if (!('speechSynthesis' in window)) return;
-  
-  // Cancela cualquier voz que esté hablando en este momento
   window.speechSynthesis.cancel();
-  
-  // Frases futuristas
   const text = isCorrect ? "Estructura neural validada." : "Atención. Filtro hispano detectado.";
   const utterance = new SpeechSynthesisUtterance(text);
-  
-  utterance.lang = 'es-ES'; // Español
-  utterance.rate = 1.1; // Ligeramente rápido
-  utterance.pitch = isCorrect ? 1.2 : 0.9; // Más agudo si es correcto, más grave si es error
-  
+  utterance.lang = 'es-ES';
+  utterance.rate = 1.1;
+  utterance.pitch = isCorrect ? 1.2 : 0.9;
   window.speechSynthesis.speak(utterance);
 }
 // ---------------------------------------------------
@@ -262,7 +327,7 @@ const questions = [
         pattern: /\blittle\s+mat\b/i,
         message: "⚠️ 'Little mat' es gramatical pero cambia el significado. 'Small mat' es la forma natural para tamaño físico.",
         example: "✅ Preferible: 'a small mat' (tamaño) vs 'a little mat' (afectivo)",
-        nbfExplanation: "🧠 Según NBF: 'Small' es adjetivo de tamaño objetivo; 'little' implica connotación emocional/afectiva."
+        nbfExplanation: " Según NBF: 'Small' es adjetivo de tamaño objetivo; 'little' implica connotación emocional/afectiva."
       }
     }
   },
@@ -293,13 +358,13 @@ const questions = [
         pattern: /much\s+time/i,
         message: "⚠️ 'Much time' es correcto gramaticalmente, pero 'long' es la forma idiomática natural con 'take'.",
         example: "✅ Más natural: 'It doesn't take me LONG' (no 'much time')",
-        nbfExplanation: "🧠 Según NBF: 'Long' funciona como adverbio de tiempo en esta estructura fija; 'much time' es traducción literal del español."
+        nbfExplanation: " Según NBF: 'Long' funciona como adverbio de tiempo en esta estructura fija; 'much time' es traducción literal del español."
       },
       missingTo: {
         pattern: /go\s+down\s+hill/i,
         message: "❌ Filtro: Activación sin 'to'. 'Go' necesita 'to' para funcionar como sustantivo funcional después de 'take me long'.",
         example: "✅ Correcto: '...to GO down a hill'",
-        nbfExplanation: "🧠 Según NBF: La partícula 'to' activa el sustantivo funcional 'go'. Sin 'to', es solo sustantivo, no acción."
+        nbfExplanation: " Según NBF: La partícula 'to' activa el sustantivo funcional 'go'. Sin 'to', es solo sustantivo, no acción."
       }
     }
   },
@@ -386,7 +451,7 @@ const questions = [
         pattern: /in\s+pairs\.?\s*usually\s+wear/i,
         message: "❌ Filtro: Omisión de Sujeto en segunda oración. Cada oración independiente requiere su propio sujeto.",
         example: "✅ Correcto: '...in pairs. WE usually wear...'",
-        nbfExplanation: "🧠 Según NBF: Cada oración independiente necesita su propio 'botón de PLAY' (pronombre sujeto)."
+        nbfExplanation: " Según NBF: Cada oración independiente necesita su propio 'botón de PLAY' (pronombre sujeto)."
       },
       wrongVerb: {
         pattern: /\buse\s+white\s+clothes\b/i,
@@ -539,31 +604,46 @@ function validateAnswer(userText, question) {
   return { correct: false, message: "❌ Revisa la estructura NBF.", example: `✅ Patrón esperado: ${question.rules.structure}`, nbfExplanation: question.rules.nbfNote, errorType: "structure_error" };
 }
 
-function submitAnswer() {
+async function submitAnswer() {
   const userText = document.getElementById('user-input').value.trim();
   if (!userText) return alert('⚠️ Escribe una respuesta antes de verificar.');
   
   const q = questions[currentQ];
   const validation = validateAnswer(userText, q);
   
-  answers.push({ q: currentQ, correct: validation.correct, text: userText, filter: q.filter, errorType: validation.errorType });
+  const answerData = { 
+    q: currentQ, 
+    correct: validation.correct, 
+    text: userText, 
+    filter: q.filter, 
+    errorType: validation.errorType,
+    timestamp: new Date().toISOString()
+  };
+  
+  answers.push(answerData);
+  
+  // Guardar progreso parcial en Firebase
+  if (window.firebaseUser) {
+    const progressData = {
+      quizId: 'nbf_diagnosis_sports',
+      currentQuestion: currentQ,
+      answers: answers,
+      startedAt: startTime,
+      inProgress: true
+    };
+    await window.saveNBFProgress(progressData);
+  }
   
   const fb = document.getElementById('feedback-box');
   fb.style.display = 'block';
   
   if (validation.correct) {
-    // ------------------------------------
-    // ACTIVACIÓN DE AUDIO NEURAL (CORRECTO)
-    // ------------------------------------
     playNeuralSound(true);
     speakNeuralVoice(true);
     
     fb.className = 'feedback correct';
     fb.innerHTML = `<strong style="font-family:'Orbitron', sans-serif;">${validation.message}</strong><div class="nbf-note">${validation.example}</div>`;
   } else {
-    // ------------------------------------
-    // ACTIVACIÓN DE AUDIO NEURAL (ERROR)
-    // ------------------------------------
     playNeuralSound(false);
     speakNeuralVoice(false);
     
@@ -587,7 +667,7 @@ function nextQuestion() {
   else showResults();
 }
 
-function showResults() {
+async function showResults() {
   document.getElementById('quiz-screen').classList.add('hidden');
   document.getElementById('results-screen').classList.remove('hidden');
   
@@ -611,7 +691,22 @@ function showResults() {
   else if (score < 70) rec = "<span style='color:var(--warning); font-size:1.5rem;'>🟡</span> <strong>Fase 2: Reensamblaje Cognitivo.</strong> Tienes conocimiento fragmentado. Cometes errores sistemáticos porque tu cerebro busca 'navajas suizas' (verbos compactos) en lugar de 'piezas Lego'. Enfócate en automatizar los 7 Elementos Determinantes.";
   else rec = "<span style='color:var(--neon-emerald); font-size:1.5rem;'>🟢</span> <strong>Fase 3: Integración Profunda.</strong> Tu estructura es sólida, pero aún traduces mentalmente. El siguiente paso es la Producción Espontánea.";
   
-  // AQUI INYECTAMOS EL BOTON DE REGRESO AL CENTRO DE MANDO
+  // Guardar resultados finales en Firebase
+  if (window.firebaseUser) {
+    const finalData = {
+      quizId: 'nbf_diagnosis_sports',
+      completed: true,
+      score: score,
+      totalQuestions: questions.length,
+      correctAnswers: correctCount,
+      dominantFilter: dominantFilter,
+      totalTime: time,
+      answers: answers,
+      completedAt: new Date().toISOString()
+    };
+    await window.saveNBFProgress(finalData);
+  }
+  
   document.getElementById('nbf-recommendation').innerHTML = `
     <strong style="font-family:'Orbitron', sans-serif; font-size:1.2rem; color: var(--neon-blue);">💡 Tu Ruta NBF Deportiva:</strong><br><br>
     <span style="font-size:1rem; line-height: 1.6;">${rec}</span>
