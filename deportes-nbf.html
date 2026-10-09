@@ -188,6 +188,56 @@ header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 
   const db = getFirestore(app);
 
   window.firebaseAuth = auth;
+  // ========================================
+// BOTÓN DE LOGIN/REGISTRO
+// ========================================
+window.addEventListener('DOMContentLoaded', () => {
+  const header = document.querySelector('header');
+  const loginDiv = document.createElement('div');
+  loginDiv.id = 'auth-buttons';
+  loginDiv.style.cssText = 'margin-top: 20px; text-align: center;';
+  loginDiv.innerHTML = `
+    <button id="login-btn" class="btn secondary" style="font-size: 0.8rem; padding: 10px 20px;">
+       Ingresar / Registrarse
+    </button>
+    <div id="user-info" style="display: none; margin-top: 10px; color: var(--neon-emerald); font-family: 'Orbitron', sans-serif;">
+      ✅ Conectado como: <span id="user-email"></span>
+      <button id="logout-btn" class="btn secondary" style="margin-left: 10px; font-size: 0.7rem;">Salir</button>
+    </div>
+  `;
+  header.appendChild(loginDiv);
+  
+  // Escuchar cambios de autenticación
+  if (window.firebaseAuth) {
+    window.firebaseAuth.onAuthStateChanged((user) => {
+      if (user) {
+        document.getElementById('login-btn').style.display = 'none';
+        document.getElementById('user-info').style.display = 'block';
+        document.getElementById('user-email').textContent = user.email;
+        console.log('✅ Usuario logueado:', user.email);
+      } else {
+        document.getElementById('login-btn').style.display = 'inline-block';
+        document.getElementById('user-info').style.display = 'none';
+        console.log('❌ No hay usuario logueado');
+      }
+    });
+  }
+  
+  // Botón de login
+  document.getElementById('login-btn').addEventListener('click', () => {
+    alert('⚠️ Para registrarte o iniciar sesión, ve primero a:\n\nhttps://discoveryenglishmexico-commits.github.io/NOXEN-VIRTUAL-PRO-DEMO/\n\nAllí puedes crear tu cuenta y luego regresar a hacer el diagnóstico.');
+  });
+  
+  // Botón de logout
+  document.getElementById('logout-btn')?.addEventListener('click', () => {
+    if (window.firebaseAuth) {
+      window.firebaseAuth.signOut().then(() => {
+        console.log('👋 Usuario cerró sesión');
+        location.reload();
+      });
+    }
+  });
+});
   window.firebaseDb = db;
   window.firebaseUser = null;
 
