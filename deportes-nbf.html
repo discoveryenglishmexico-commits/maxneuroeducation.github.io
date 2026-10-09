@@ -93,6 +93,11 @@ header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 
 .stat .label { font-family: 'Rajdhani', sans-serif; font-size: 14px; color: var(--muted); margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
 
 .hidden { display: none !important; }
+
+#auth-buttons { margin-top: 20px; text-align: center; }
+#auth-buttons .btn { animation: none; font-size: 0.8rem; padding: 10px 20px; }
+#user-info { color: var(--neon-emerald); font-family: 'Orbitron', sans-serif; font-size: 0.85rem; }
+
 @media (max-width: 600px) { header h1 { font-size: 22px; } .card { padding: 20px; } }
 </style>
 </head>
@@ -170,7 +175,7 @@ header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 
 <!-- FIREBASE SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -188,56 +193,6 @@ header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 
   const db = getFirestore(app);
 
   window.firebaseAuth = auth;
-  // ========================================
-// BOTÓN DE LOGIN/REGISTRO
-// ========================================
-window.addEventListener('DOMContentLoaded', () => {
-  const header = document.querySelector('header');
-  const loginDiv = document.createElement('div');
-  loginDiv.id = 'auth-buttons';
-  loginDiv.style.cssText = 'margin-top: 20px; text-align: center;';
-  loginDiv.innerHTML = `
-    <button id="login-btn" class="btn secondary" style="font-size: 0.8rem; padding: 10px 20px;">
-       Ingresar / Registrarse
-    </button>
-    <div id="user-info" style="display: none; margin-top: 10px; color: var(--neon-emerald); font-family: 'Orbitron', sans-serif;">
-      ✅ Conectado como: <span id="user-email"></span>
-      <button id="logout-btn" class="btn secondary" style="margin-left: 10px; font-size: 0.7rem;">Salir</button>
-    </div>
-  `;
-  header.appendChild(loginDiv);
-  
-  // Escuchar cambios de autenticación
-  if (window.firebaseAuth) {
-    window.firebaseAuth.onAuthStateChanged((user) => {
-      if (user) {
-        document.getElementById('login-btn').style.display = 'none';
-        document.getElementById('user-info').style.display = 'block';
-        document.getElementById('user-email').textContent = user.email;
-        console.log('✅ Usuario logueado:', user.email);
-      } else {
-        document.getElementById('login-btn').style.display = 'inline-block';
-        document.getElementById('user-info').style.display = 'none';
-        console.log('❌ No hay usuario logueado');
-      }
-    });
-  }
-  
-  // Botón de login
-  document.getElementById('login-btn').addEventListener('click', () => {
-    alert('⚠️ Para registrarte o iniciar sesión, ve primero a:\n\nhttps://discoveryenglishmexico-commits.github.io/NOXEN-VIRTUAL-PRO-DEMO/\n\nAllí puedes crear tu cuenta y luego regresar a hacer el diagnóstico.');
-  });
-  
-  // Botón de logout
-  document.getElementById('logout-btn')?.addEventListener('click', () => {
-    if (window.firebaseAuth) {
-      window.firebaseAuth.signOut().then(() => {
-        console.log('👋 Usuario cerró sesión');
-        location.reload();
-      });
-    }
-  });
-});
   window.firebaseDb = db;
   window.firebaseUser = null;
 
@@ -253,7 +208,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   window.saveNBFProgress = async function(quizData) {
     if (!window.firebaseUser) {
-      console.warn('️ Sin usuario - Progreso no guardado');
+      console.warn('⚠️ Sin usuario - Progreso no guardado');
       return false;
     }
     
@@ -291,6 +246,86 @@ window.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
+// ---------- BOTÓN DE LOGIN/REGISTRO ----------
+window.addEventListener('DOMContentLoaded', () => {
+  const header = document.querySelector('header');
+  const loginDiv = document.createElement('div');
+  loginDiv.id = 'auth-buttons';
+  loginDiv.style.cssText = 'margin-top: 20px; text-align: center;';
+  loginDiv.innerHTML = `
+    <button id="login-btn" class="btn secondary" style="font-size: 0.8rem; padding: 10px 20px;">
+      🔐 Ingresar / Registrarse
+    </button>
+    <div id="user-info" style="display: none; margin-top: 10px; color: var(--neon-emerald); font-family: 'Orbitron', sans-serif;">
+      ✅ Conectado como: <span id="user-email"></span>
+      <button id="logout-btn" class="btn secondary" style="margin-left: 10px; font-size: 0.7rem;">Salir</button>
+    </div>
+  `;
+  header.appendChild(loginDiv);
+  
+  if (window.firebaseAuth) {
+    window.firebaseAuth.onAuthStateChanged((user) => {
+      if (user) {
+        document.getElementById('login-btn').style.display = 'none';
+        document.getElementById('user-info').style.display = 'block';
+        document.getElementById('user-email').textContent = user.email;
+        console.log('✅ Usuario logueado:', user.email);
+        setTimeout(checkPreviousProgress, 1000);
+      } else {
+        document.getElementById('login-btn').style.display = 'inline-block';
+        document.getElementById('user-info').style.display = 'none';
+        console.log('❌ No hay usuario logueado');
+      }
+    });
+  }
+  
+  document.getElementById('login-btn').addEventListener('click', () => {
+    alert('⚠️ Para registrarte o iniciar sesión, ve primero a:\n\nhttps://discoveryenglishmexico-commits.github.io/NOXEN-VIRTUAL-PRO-DEMO/\n\nAllí puedes crear tu cuenta y luego regresar a hacer el diagnóstico.');
+  });
+  
+  document.getElementById('logout-btn')?.addEventListener('click', () => {
+    if (window.firebaseAuth) {
+      window.firebaseAuth.signOut().then(() => {
+        console.log('👋 Usuario cerró sesión');
+        location.reload();
+      });
+    }
+  });
+});
+
+// ---------- CARGAR PROGRESO ANTERIOR ----------
+async function checkPreviousProgress() {
+  if (!window.firebaseUser) return;
+  
+  try {
+    const previousData = await window.loadPreviousProgress();
+    
+    if (previousData && previousData.quizId === 'nbf_diagnosis_sports' && previousData.inProgress) {
+      const lastQuestion = previousData.currentQuestion || 0;
+      const savedAnswers = previousData.answers || [];
+      
+      const continuar = confirm(
+        ` Detectamos progreso anterior:\n\n` +
+        `✅ Respondiste ${savedAnswers.length} de ${questions.length} preguntas\n` +
+        ` Última pregunta: ${lastQuestion + 1}\n\n` +
+        `¿Quieres continuar donde lo dejaste?`
+      );
+      
+      if (continuar) {
+        currentQ = lastQuestion;
+        answers = savedAnswers;
+        startTime = Date.now() - (previousData.elapsedTime || 0);
+        document.getElementById('intro-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.remove('hidden');
+        loadQuestion();
+        console.log('✅ Progreso anterior cargado');
+      }
+    }
+  } catch (error) {
+    console.error('❌ Error cargando progreso:', error);
+  }
+}
+
 // ---------- SISTEMA DE AUDIO Y VOZ NEURAL ----------
 let audioCtx;
 
@@ -408,13 +443,13 @@ const questions = [
         pattern: /much\s+time/i,
         message: "⚠️ 'Much time' es correcto gramaticalmente, pero 'long' es la forma idiomática natural con 'take'.",
         example: "✅ Más natural: 'It doesn't take me LONG' (no 'much time')",
-        nbfExplanation: " Según NBF: 'Long' funciona como adverbio de tiempo en esta estructura fija; 'much time' es traducción literal del español."
+        nbfExplanation: "🧠 Según NBF: 'Long' funciona como adverbio de tiempo en esta estructura fija; 'much time' es traducción literal del español."
       },
       missingTo: {
         pattern: /go\s+down\s+hill/i,
         message: "❌ Filtro: Activación sin 'to'. 'Go' necesita 'to' para funcionar como sustantivo funcional después de 'take me long'.",
         example: "✅ Correcto: '...to GO down a hill'",
-        nbfExplanation: " Según NBF: La partícula 'to' activa el sustantivo funcional 'go'. Sin 'to', es solo sustantivo, no acción."
+        nbfExplanation: "🧠 Según NBF: La partícula 'to' activa el sustantivo funcional 'go'. Sin 'to', es solo sustantivo, no acción."
       }
     }
   },
@@ -501,7 +536,7 @@ const questions = [
         pattern: /in\s+pairs\.?\s*usually\s+wear/i,
         message: "❌ Filtro: Omisión de Sujeto en segunda oración. Cada oración independiente requiere su propio sujeto.",
         example: "✅ Correcto: '...in pairs. WE usually wear...'",
-        nbfExplanation: " Según NBF: Cada oración independiente necesita su propio 'botón de PLAY' (pronombre sujeto)."
+        nbfExplanation: "🧠 Según NBF: Cada oración independiente necesita su propio 'botón de PLAY' (pronombre sujeto)."
       },
       wrongVerb: {
         pattern: /\buse\s+white\s+clothes\b/i,
@@ -528,7 +563,7 @@ const questions = [
     commonErrors: {
       missingSubject: {
         pattern: /^go\s+around/i,
-        message: "❌ Filtro: Omisión de Sujeto. 'Go' sin sujeto = orden.",
+        message: " Filtro: Omisión de Sujeto. 'Go' sin sujeto = orden.",
         example: "✅ Correcto: 'WE go around a track...'",
         nbfExplanation: "🧠 Según NBF: Sin 'We', 'go' se interpreta como imperativo, no como acción declarativa."
       },
@@ -588,7 +623,7 @@ const questions = [
         pattern: /^do\s+this/i,
         message: "❌ Filtro: Omisión de Sujeto. 'Do' sin 'I' = imperativo.",
         example: "✅ Correcto: 'I do this...'",
-        nbfExplanation: "🧠 Según NBF: El pronombre 'I' es el activador del sustantivo funcional 'do'."
+        nbfExplanation: " Según NBF: El pronombre 'I' es el activador del sustantivo funcional 'do'."
       },
       wrongOrder: {
         pattern: /at\s+an?\s+outdoor\s+pool\s+.*\s+times\s+a\s+week/i,
@@ -651,7 +686,7 @@ function validateAnswer(userText, question) {
     return { correct: false, message: `❌ Faltan elementos estructurales: ${missingElements.join(', ')}`, example: `✅ Debe incluir: ${question.rules.structure}`, errorType: "missing_element" };
   }
   
-  return { correct: false, message: "❌ Revisa la estructura NBF.", example: `✅ Patrón esperado: ${question.rules.structure}`, nbfExplanation: question.rules.nbfNote, errorType: "structure_error" };
+  return { correct: false, message: " Revisa la estructura NBF.", example: `✅ Patrón esperado: ${question.rules.structure}`, nbfExplanation: question.rules.nbfNote, errorType: "structure_error" };
 }
 
 async function submitAnswer() {
@@ -679,6 +714,7 @@ async function submitAnswer() {
       currentQuestion: currentQ,
       answers: answers,
       startedAt: startTime,
+      elapsedTime: Date.now() - startTime,
       inProgress: true
     };
     await window.saveNBFProgress(progressData);
@@ -739,13 +775,14 @@ async function showResults() {
   let rec = "";
   if (score < 40) rec = "<span style='color:var(--neon-fuchsia); font-size:1.5rem;'>🔴</span> <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'autoengaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural antes de avanzar.";
   else if (score < 70) rec = "<span style='color:var(--warning); font-size:1.5rem;'>🟡</span> <strong>Fase 2: Reensamblaje Cognitivo.</strong> Tienes conocimiento fragmentado. Cometes errores sistemáticos porque tu cerebro busca 'navajas suizas' (verbos compactos) en lugar de 'piezas Lego'. Enfócate en automatizar los 7 Elementos Determinantes.";
-  else rec = "<span style='color:var(--neon-emerald); font-size:1.5rem;'>🟢</span> <strong>Fase 3: Integración Profunda.</strong> Tu estructura es sólida, pero aún traduces mentalmente. El siguiente paso es la Producción Espontánea.";
+  else rec = "<span style='color:var(--neon-emerald); font-size:1.5rem;'></span> <strong>Fase 3: Integración Profunda.</strong> Tu estructura es sólida, pero aún traduces mentalmente. El siguiente paso es la Producción Espontánea.";
   
   // Guardar resultados finales en Firebase
   if (window.firebaseUser) {
     const finalData = {
       quizId: 'nbf_diagnosis_sports',
       completed: true,
+      inProgress: false,
       score: score,
       totalQuestions: questions.length,
       correctAnswers: correctCount,
