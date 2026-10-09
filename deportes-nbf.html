@@ -114,7 +114,7 @@ header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 
   </header>
 
   <div id="intro-screen" class="card">
-    <h3 style="margin-bottom:20px; font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 1.5rem;">📋 Instrucciones</h3>
+    <h3 style="margin-bottom:20px; font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 1.5rem;"> Instrucciones</h3>
     <ul style="padding-left:20px; color:var(--muted); font-size:16px; line-height:2;">
       <li>Leerás una idea en <strong style="color:var(--text);">español coloquial</strong> sobre actividades físicas.</li>
       <li>Escribe tu versión pensando como nativo del inglés <strong style="color:var(--neon-fuchsia);">sin pensar demasiado</strong>.</li>
@@ -122,7 +122,7 @@ header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 
       <li>El sistema validará <strong style="color:var(--neon-emerald);">estructura, no vocabulario exacto</strong>.</li>
       <li>Recibirás feedback visual y auditivo sobre <strong style="color:var(--text);">qué filtro español activaste</strong>.</li>
     </ul>
-    <button class="btn" onclick="startQuiz()" style="width:100%; margin-top:30px;"> Iniciar Diagnóstico</button>
+    <button class="btn" onclick="startQuiz()" style="width:100%; margin-top:30px;">🚀 Iniciar Diagnóstico</button>
   </div>
 
   <div id="quiz-screen" class="hidden">
@@ -196,22 +196,27 @@ header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 
   window.firebaseDb = db;
   window.firebaseUser = null;
 
-  // Función para guardar progreso
+  // ✅ FUNCIÓN CORREGIDA: Limpia valores undefined antes de guardar
   window.saveNBFProgress = async function(quizData) {
     if (!window.firebaseUser) {
-      console.warn('⚠️ Sin usuario - Progreso no guardado');
+      console.warn('️ Sin usuario - Progreso no guardado');
       return false;
     }
     
     try {
+      // Convertir undefined a null (Firestore no acepta undefined)
+      const cleanData = JSON.parse(JSON.stringify(quizData, (key, value) => 
+        value === undefined ? null : value
+      ));
+      
       await setDoc(doc(db, "users", window.firebaseUser.uid), {
-        nbfDiagnosis: quizData,
+        nbfDiagnosis: cleanData,
         updatedAt: new Date().toISOString()
       }, { merge: true });
       console.log('✅ Progreso NBF guardado en Firestore');
       return true;
     } catch (error) {
-      console.error('❌ Error guardando progreso NBF:', error);
+      console.error(' Error guardando progreso NBF:', error);
       return false;
     }
   };
@@ -254,12 +259,12 @@ header p { color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 
         if (userEmail) userEmail.textContent = user.email;
       }
       
-      // Cargar progreso después de 1 segundo (para asegurar que todo esté listo)
+      // Cargar progreso después de 1.5 segundos
       setTimeout(() => {
         if (typeof checkPreviousProgress === 'function') {
           checkPreviousProgress();
         }
-      }, 1000);
+      }, 1500);
     } else {
       console.log('❌ No hay usuario logueado - Progreso no se guardará');
       
@@ -297,7 +302,7 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('logout-btn')?.addEventListener('click', () => {
     if (window.firebaseAuth) {
       window.firebaseAuth.signOut().then(() => {
-        console.log('👋 Usuario cerró sesión');
+        console.log(' Usuario cerró sesión');
         location.reload();
       });
     }
@@ -306,7 +311,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // ---------- CARGAR PROGRESO ANTERIOR ----------
 async function checkPreviousProgress() {
-  console.log(' Verificando progreso anterior...');
+  console.log('🔍 Verificando progreso anterior...');
   console.log('Usuario:', window.firebaseUser);
   
   if (!window.firebaseUser) {
@@ -316,7 +321,7 @@ async function checkPreviousProgress() {
   
   try {
     const previousData = await window.loadPreviousProgress();
-    console.log('Datos cargados:', previousData);
+    console.log('📦 Datos cargados:', previousData);
     
     if (previousData && previousData.quizId === 'nbf_diagnosis_sports' && previousData.inProgress) {
       const lastQuestion = previousData.currentQuestion || 0;
@@ -340,7 +345,7 @@ async function checkPreviousProgress() {
         loadQuestion();
         console.log('✅ Progreso anterior cargado y restaurado');
       } else {
-        console.log('🔄 Usuario eligió empezar de nuevo');
+        console.log(' Usuario eligió empezar de nuevo');
       }
     } else {
       console.log('ℹ️ No hay progreso en curso para restaurar');
@@ -420,7 +425,7 @@ const questions = [
     commonErrors: {
       missingSubject: {
         pattern: /^(wear|carry|bring)/i,
-        message: " Filtro: Omisión de Sujeto. Sin 'I' al inicio, el cerebro interpreta esto como imperativo ('¡Lleva...!').",
+        message: "❌ Filtro: Omisión de Sujeto. Sin 'I' al inicio, el cerebro interpreta esto como imperativo ('¡Lleva...!').",
         example: "✅ Correcto: 'I wear comfortable clothes...'",
         nbfExplanation: "🧠 Según NBF: El pronombre 'I' es el botón de PLAY que activa los sustantivos funcionales 'wear' y 'carry'. Sin él, no hay verbo, solo imperativo."
       },
@@ -434,7 +439,7 @@ const questions = [
         pattern: /\blittle\s+mat\b/i,
         message: "⚠️ 'Little mat' es gramatical pero cambia el significado. 'Small mat' es la forma natural para tamaño físico.",
         example: "✅ Preferible: 'a small mat' (tamaño) vs 'a little mat' (afectivo)",
-        nbfExplanation: " Según NBF: 'Small' es adjetivo de tamaño objetivo; 'little' implica connotación emocional/afectiva."
+        nbfExplanation: "🧠 Según NBF: 'Small' es adjetivo de tamaño objetivo; 'little' implica connotación emocional/afectiva."
       }
     }
   },
@@ -529,7 +534,7 @@ const questions = [
         pattern: /^play\s+with/i,
         message: "❌ Filtro: Omisión de Sujeto. 'Play' sin sujeto = imperativo.",
         example: "✅ Correcto: 'WE play with racquets...'",
-        nbfExplanation: "🧠 Según NBF: El sujeto 'We' es obligatorio para activar 'play' y 'try' como acciones."
+        nbfExplanation: " Según NBF: El sujeto 'We' es obligatorio para activar 'play' y 'try' como acciones."
       },
       wrongPreposition: {
         pattern: /\bthrough\s+the\s+net\b|\bunder\s+the\s+net\b/i,
@@ -564,7 +569,7 @@ const questions = [
         pattern: /\buse\s+white\s+clothes\b/i,
         message: "⚠️ 'Use' es gramatical, pero 'wear' es el verbo natural para ropa. NBF prioriza el vocabulario contextual.",
         example: "✅ Más natural: 'we WEAR white clothes'",
-        nbfExplanation: " Según NBF: 'Wear' = llevar puesto (ropa); 'use' = utilizar (herramienta/objeto)."
+        nbfExplanation: "🧠 Según NBF: 'Wear' = llevar puesto (ropa); 'use' = utilizar (herramienta/objeto)."
       }
     }
   },
@@ -591,7 +596,7 @@ const questions = [
       },
       wrongComparative: {
         pattern: /\bso\s+fast\s+as\s+possible\b|\bvery\s+fast\s+possible\b/i,
-        message: " Filtro: Estructura comparativa incorrecta. La forma fija es 'as + adjetivo + as + possible'.",
+        message: "❌ Filtro: Estructura comparativa incorrecta. La forma fija es 'as + adjetivo + as + possible'.",
         example: "✅ Correcto: 'as FAST as possible'",
         nbfExplanation: "🧠 Según NBF: 'As...as' es estructura fija de comparación de igualdad; 'so...as' es arcaico/negativo."
       }
@@ -616,7 +621,7 @@ const questions = [
         pattern: /^play\s+in\s+teams/i,
         message: "❌ Filtro: Omisión de Sujeto. Cada verbo principal requiere su sujeto explícito.",
         example: "✅ Correcto: 'WE play in teams...'",
-        nbfExplanation: " Según NBF: El pronombre 'We' activa ambos verbos 'play' y 'hit' como acciones coordinadas."
+        nbfExplanation: "🧠 Según NBF: El pronombre 'We' activa ambos verbos 'play' y 'hit' como acciones coordinadas."
       },
       wrongPrepositionOrder: {
         pattern: /with\s+hands\s+over\s+net/i,
@@ -645,11 +650,11 @@ const questions = [
         pattern: /^do\s+this/i,
         message: "❌ Filtro: Omisión de Sujeto. 'Do' sin 'I' = imperativo.",
         example: "✅ Correcto: 'I do this...'",
-        nbfExplanation: "🧠 Según NBF: El pronombre 'I' es el activador del sustantivo funcional 'do'."
+        nbfExplanation: " Según NBF: El pronombre 'I' es el activador del sustantivo funcional 'do'."
       },
       wrongOrder: {
         pattern: /at\s+an?\s+outdoor\s+pool\s+.*\s+times\s+a\s+week/i,
-        message: "⚠️ En inglés, la frecuencia generalmente va ANTES del lugar específico.",
+        message: "️ En inglés, la frecuencia generalmente va ANTES del lugar específico.",
         example: "✅ Preferible: '...times a week AT an outdoor pool'",
         nbfExplanation: "🧠 Según NBF: El orden adverbial en inglés es: MODO → FRECUENCIA → LUGAR → TIEMPO."
       }
@@ -723,7 +728,7 @@ async function submitAnswer() {
     correct: validation.correct, 
     text: userText, 
     filter: q.filter, 
-    errorType: validation.errorType,
+    errorType: validation.errorType || null,
     timestamp: new Date().toISOString()
   };
   
@@ -737,12 +742,13 @@ async function submitAnswer() {
       answers: answers,
       startedAt: startTime,
       elapsedTime: Date.now() - startTime,
-      inProgress: true
+      inProgress: true,
+      completed: false
     };
     
     console.log('💾 Guardando progreso:', progressData);
     const saved = await window.saveNBFProgress(progressData);
-    console.log('Progreso guardado:', saved);
+    console.log(' Progreso guardado:', saved);
   }
   
   const fb = document.getElementById('feedback-box');
@@ -798,7 +804,7 @@ async function showResults() {
   document.getElementById('time-val').textContent = time + 's';
   
   let rec = "";
-  if (score < 40) rec = "<span style='color:var(--neon-fuchsia); font-size:1.5rem;'></span> <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'autoengaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural antes de avanzar.";
+  if (score < 40) rec = "<span style='color:var(--neon-fuchsia); font-size:1.5rem;'>🔴</span> <strong>Fase 1: Descontaminación Mental Urgente.</strong> Tu cerebro opera 100% en modo traducción. Necesitas romper el 'autoengaño' de la comprensión pasiva. El Método NBF comenzará reconfigurando tu base estructural antes de avanzar.";
   else if (score < 70) rec = "<span style='color:var(--warning); font-size:1.5rem;'>🟡</span> <strong>Fase 2: Reensamblaje Cognitivo.</strong> Tienes conocimiento fragmentado. Cometes errores sistemáticos porque tu cerebro busca 'navajas suizas' (verbos compactos) en lugar de 'piezas Lego'. Enfócate en automatizar los 7 Elementos Determinantes.";
   else rec = "<span style='color:var(--neon-emerald); font-size:1.5rem;'>🟢</span> <strong>Fase 3: Integración Profunda.</strong> Tu estructura es sólida, pero aún traduces mentalmente. El siguiente paso es la Producción Espontánea.";
   
